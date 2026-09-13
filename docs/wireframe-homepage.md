@@ -549,39 +549,52 @@ Pas de réseau ajouté juste pour décorer
 
 # Palette proposée
 
+## Direction après retour d'Adèle
+
+La structure de la maquette est conservée, mais l'ambiance couleur doit être plus lumineuse et moins sépia
+
+Référence préférée : **V2**
+
+Principes :
+
+- base ivoire claire et lumineuse
+- davantage de verts naturels visibles
+- verts mousse et olive plus présents
+- brun, cuivre et sépia uniquement en touches
+- éviter un rendu général beige/brun monochrome
+- conserver beaucoup d'air et de blanc chaud
+
 ## Fond principal
 
-Ivoire chaud
+Ivoire clair
 
-Exemples de direction :
-
-- #F4F0E8
-- #F8F5EF
+- #F6F3ED
+- #FBF9F5
 
 ## Texte
 
 Charbon doux
 
-- #24241F
+- #20211D
 
 ## Vert principal
 
 Olive / sauge
 
-- #66705E
-- #727A68
+- #5F6959
+- #7A836F
 
 ## Vert profond
 
-- #414A3D
+- #3F463C
 
 ## Accent terre / signature
 
-Brun rosé ou terre cuite très désaturée
+Brun rosé ou cuivre doux, utilisé avec parcimonie
 
-- #9A6E5B
+- #B7836E
 
-À ajuster à partir de vraies photos des œuvres et de la signature
+À recalibrer définitivement sur les vraies œuvres et le logo
 
 ---
 
