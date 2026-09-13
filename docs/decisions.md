@@ -22,11 +22,14 @@
 
 ### Multilingue
 - Le site sera multilingue dès sa conception
+- Langues actées : **français, anglais, espagnol et chinois simplifié**
+- Codes prévus : `fr`, `en`, `es`, `zh-CN`
+- Le français reste la langue source
 - L'architecture, les contenus, les URLs et les composants doivent être pensés pour plusieurs langues dès le départ
 - Éviter toute traduction ajoutée en rustine après développement
 - Prévoir un sélecteur de langue simple et discret
 - Les textes doivent rester naturels dans chaque langue, pas être traduits mot à mot
-- Les langues exactes restent à confirmer
+- Prévoir les différences de longueur de texte et de typographie entre langues
 
 ### En attente
 - Réponses au questionnaire de 58 questions
