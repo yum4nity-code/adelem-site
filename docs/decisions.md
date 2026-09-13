@@ -20,6 +20,14 @@
 - Homepage immersive, pages d'achat fonctionnelles
 - Les sculptures font partie du langage AdeleM
 
+### Multilingue
+- Le site sera multilingue dès sa conception
+- L'architecture, les contenus, les URLs et les composants doivent être pensés pour plusieurs langues dès le départ
+- Éviter toute traduction ajoutée en rustine après développement
+- Prévoir un sélecteur de langue simple et discret
+- Les textes doivent rester naturels dans chaque langue, pas être traduits mot à mot
+- Les langues exactes restent à confirmer
+
 ### En attente
 - Réponses au questionnaire de 58 questions
 - Positionnement définitif
@@ -28,9 +36,9 @@
 - Poids du sur-mesure
 - Place personnelle d'AdeleM sur le site
 
-
 ### Logo officiel
 - La signature manuscrite « AdeleM » est le logo de la marque
+- Le `m` final est en minuscule et Adèle y tient explicitement
 - Version retenue : petit `m` final avec longue barre descendante
 - Fichier source retrouvé dans les conversations : `Logo manuscrit élégant AdeleM.png`
 - Ne pas remplacer cette signature par un logotype typographique générique
