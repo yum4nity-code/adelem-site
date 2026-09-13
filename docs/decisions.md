@@ -20,6 +20,15 @@
 - Homepage immersive, pages d'achat fonctionnelles
 - Les sculptures font partie du langage AdeleM
 
+### Direction artistique — retour Adèle
+- Adèle trouve la maquette de direction trop triste et trop sépia
+- Elle préfère la V2 sur ce point
+- Revenir à une base plus lumineuse
+- Faire davantage ressortir les verts naturels
+- Garder le sépia, le brun et la terre uniquement par touches
+- Éviter une ambiance générale beige/brune trop monochrome
+- Conserver en revanche la structure, le calme, l'élégance et la respiration de la nouvelle direction
+
 ### Multilingue
 - Le site sera multilingue dès sa conception
 - Langues actées : **français, anglais, espagnol et chinois simplifié**
