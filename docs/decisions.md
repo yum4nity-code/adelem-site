@@ -27,3 +27,10 @@
 - Cible prioritaire
 - Poids du sur-mesure
 - Place personnelle d'AdeleM sur le site
+
+
+### Logo officiel
+- La signature manuscrite « AdeleM » est le logo de la marque
+- Version retenue : petit `m` final avec longue barre descendante
+- Fichier source retrouvé dans les conversations : `Logo manuscrit élégant AdeleM.png`
+- Ne pas remplacer cette signature par un logotype typographique générique
