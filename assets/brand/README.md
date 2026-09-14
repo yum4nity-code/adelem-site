@@ -1,43 +1,49 @@
 # AdeleM — kit logo
 
-Kit préparé à partir du visuel validé : fond vert-noir, signature cuivre/pêche et matière végétale sombre.
+Kit construit à partir du visuel validé : fond vert-noir, signature cuivre/pêche et matière végétale sombre.
 
 ## Couleurs de référence
 - Vert-noir : `#080905`
 - Encre : `#11130F`
 - Cuivre / pêche : `#E3AF96`
+- Cuivre profond : `#AD7965`
 - Ivoire : `#F4F1E9`
 - Papier : `#FAF8F3`
+- Mousse : `#68745F`
 
-## Quel fichier utiliser
+## Versions disponibles
 
-### Site internet / réseaux sociaux
-- `web/adelem-emblem-1024.webp` : emblème carré HD, léger
-- `web/adelem-emblem-512.webp` : usage courant sur le site
-- `web/adelem-lockup-dark-1600x600.webp` : version horizontale sombre
-- `web/adelem-lockup-light-1600x600.webp` : version horizontale claire
-- `web/apple-touch-icon-180.png` : raccourci iPhone/iPad
-- `web/favicon-48.png` : favicon navigateur
+### Logo
+- `logo/adelem-emblem-dark.svg` — emblème rond botanique, fond sombre
+- `logo/adelem-emblem-minimal.svg` — emblème rond sans végétal
+- `logo/adelem-wordmark-copper.svg` — signature seule cuivre
+- `logo/adelem-wordmark-dark.svg` — signature seule sombre
+- `logo/adelem-wordmark-white.svg` — signature seule ivoire
 
-### Logo seul
-- `logo/adelem-emblem-circle.webp` : emblème rond avec extérieur transparent
-- `logo/adelem-wordmark-copper.svg` : signature cuivre seule, fond transparent
-- `logo/adelem-wordmark-dark.svg` : signature sombre
-- `logo/adelem-wordmark-white.svg` : signature claire
+### Web
+- `web/adelem-lockup-dark.svg` — version horizontale sombre
+- `web/adelem-lockup-light.svg` — version horizontale claire
+- `web/favicon.svg` — favicon / icône web
+- `brand-tokens.css` — palette utilisable directement dans le site
 
-Les SVG de la signature sont vectorisés et peuvent être agrandis sans pixellisation. L'emblème botanique complet reste une image raster, car il contient des textures végétales et des nuances photographiques.
+### Impression / cartes de visite
+- `print/adelem-emblem-print.svg` — emblème complet
+- `print/adelem-wordmark-copper.svg` — signature cuivre
+- `print/adelem-wordmark-dark.svg` — version une couleur sombre
+- `print/adelem-wordmark-white.svg` — version claire
 
-### Cartes de visite / impression
-- `print/adelem-wordmark-copper.svg` : **à privilégier** pour la signature sur une carte de visite
-- `print/adelem-wordmark-dark.svg` / `white.svg` : variantes une couleur
-- `print/adelem-emblem-cmyk-300dpi.jpg` : emblème complet en CMJN, 300 dpi, pour imprimeur
+## Quel format utiliser
 
-### Master
-- `master/adelem-emblem-master.webp` : version HD de référence de l'emblème complet
+**Site internet** — SVG en priorité : net à toutes les tailles et très léger
+
+**Logo sur documents / cartes de visite** — SVG : scalable, propre pour l'impression et facilement convertible en PDF par l'imprimeur
+
+**Photo de profil / WhatsApp / réseaux** — exporter l'emblème rond en PNG ou JPG carré. Le visuel validé sert de référence raster
 
 ## Règles simples
-- Ne pas déformer les proportions
-- Ne pas changer la couleur cuivre sans validation
-- Garder une zone de respiration autour de la signature
-- Pour les petits usages, préférer l'emblème rond
-- Pour les cartes, documents et entêtes, préférer la signature SVG
+- Ne jamais déformer les proportions
+- Ne pas modifier la couleur cuivre sans validation
+- Garder de la respiration autour de la signature
+- Pour les petits usages, privilégier l'emblème rond
+- Pour les cartes, documents et entêtes, privilégier la signature seule
+- Le végétal reste discret : il accompagne le logo, il ne l'envahit pas
