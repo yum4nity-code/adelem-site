@@ -12,11 +12,11 @@ La V4 reste intacte et en ligne pendant tout ce travail.
 
 ## Étape 1 — Langage éditorial
 
-- [ ] Remplacer les titres-commentaires par des titres courts
-- [ ] Réduire les surtitres aux informations utiles
-- [ ] Réécrire les textes pour qu’ils suggèrent sans expliquer
-- [ ] Garder 1 à 3 mots pour les grands titres quand c’est possible
-- [ ] Ne pas commenter notre propre stratégie commerciale
+- [x] Remplacer les titres-commentaires par des titres courts
+- [x] Réduire les surtitres aux informations utiles
+- [x] Réécrire les textes pour qu’ils suggèrent sans expliquer
+- [x] Garder 1 à 3 mots pour les grands titres quand c’est possible
+- [x] Ne pas commenter notre propre stratégie commerciale
 
 Titres cibles :
 - Matière
