@@ -16,3 +16,47 @@ jobs:
           npx -y @netlify/mcp@latest
           --site-id b7879588-731e-402d-a773-2c48208e8eaf
           --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..K1zoOQGG4_c_f6Oq.t4m1vEQe3EWwysVM2F26oJ2KujHkDU0ZRF9UUQArI6LU12ImBFjKwu-1H6N5Dh4QsBIbdGnNmzPS-R1G95SuFT-9cwo0PE9UpjI2ZO-AiR8W0M6UkN-_pFM2q_UI8GKos2AjFChTXoGu38BaCnkuxioFzExbOMrLHDZjnVphLRojD6CyHrm3RLJMyXejkXDaldSe69ZqjXvyvcXtSpdNwhgqepXX0BuXK1Ss1UFLSC_UzEyhs6PJGfCpDJh6h0MzNzR7G3sFWhg6vScLIS6tFnh8anznbLhjGHZy931w6a7qzjrPtSInxlJ5YsAYE6SZRt8eLoI3X__c3QJBI_12AWVoZKYv9NUwSG0mZYd-pOaNT7LCmqOoTOazz0qiwhTQOWTXHNpv.aYyLnCntFY6tEiMS0lBpkw"
+      - uses: browser-actions/setup-chrome@v1
+      - name: Install Selenium
+        run: python -m pip install --quiet selenium
+      - name: Capture desktop and mobile
+        run: |
+          cat > /tmp/capture.py <<'PY'
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
+          import time
+
+          URL="https://adelem-v5-preview.netlify.app/"
+
+          def shot(width,height,name,scroll=None):
+              opts=Options()
+              opts.add_argument("--headless=new")
+              opts.add_argument("--no-sandbox")
+              opts.add_argument("--disable-dev-shm-usage")
+              opts.add_argument(f"--window-size={width},{height}")
+              d=webdriver.Chrome(options=opts)
+              try:
+                  d.get(URL)
+                  time.sleep(4)
+                  if scroll:
+                      d.execute_script(scroll)
+                      time.sleep(1)
+                  d.save_screenshot(name)
+              finally:
+                  d.quit()
+
+          shot(1440,1200,"desktop-hero.png")
+          shot(1440,1200,"desktop-gesture.png","document.querySelector('.gesture').scrollIntoView({block:'start'})")
+          shot(390,844,"mobile-hero.png")
+          shot(390,844,"mobile-gesture.png","document.querySelector('.gesture').scrollIntoView({block:'start'})")
+          PY
+          python /tmp/capture.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: adelem-v5-visual-qa
+          path: |
+            desktop-hero.png
+            desktop-gesture.png
+            mobile-hero.png
+            mobile-gesture.png
+          if-no-files-found: error
