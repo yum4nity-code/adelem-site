@@ -1,1 +1,3 @@
-The requested file reference is not currently visible. Use files.search or files.list to rediscover the file, then retry with a returned ref_id or file_id.
+// Image override intentionally disabled.
+// The previous commit accidentally stored a file-transfer error message here.
+// Keep the current remote placeholders until validated image binaries can be added through a supported binary-safe path.
