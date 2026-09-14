@@ -100,7 +100,7 @@ function syncMaterialReveal(){
 
   if(window.innerWidth<=900){
     materialStage.style.setProperty('--mat-b',(44*geometry).toFixed(2)+'vh');
-    materialStage.style.setProperty('--mat-scale',(1.68-.54*geometry).toFixed(4));
+    materialStage.style.setProperty('--mat-scale',(2.10-.55*geometry).toFixed(4));
     materialStage.style.setProperty('--mat-copy-o',copy.toFixed(4));
     materialStage.style.setProperty('--mat-copy-y',(28*(1-copy)).toFixed(1)+'px');
     materialStage.style.setProperty('--mat-index-o',index.toFixed(4));
@@ -111,8 +111,8 @@ function syncMaterialReveal(){
   materialStage.style.setProperty('--mat-l',(3.6*geometry).toFixed(2)+'vw');
   materialStage.style.setProperty('--mat-t',(5.5*geometry).toFixed(2)+'vh');
   materialStage.style.setProperty('--mat-b',(5.5*geometry).toFixed(2)+'vh');
-  materialStage.style.setProperty('--mat-scale',(1.68-.54*geometry).toFixed(4));
-  materialStage.style.setProperty('--mat-x',(8+24*geometry).toFixed(2)+'%');
+  materialStage.style.setProperty('--mat-scale',(2.70-.72*geometry).toFixed(4));
+  materialStage.style.setProperty('--mat-x',(54+10*geometry).toFixed(2)+'%');
   materialStage.style.setProperty('--mat-copy-o',copy.toFixed(4));
   materialStage.style.setProperty('--mat-copy-y',(28*(1-copy)).toFixed(1)+'px');
   materialStage.style.setProperty('--mat-index-o',index.toFixed(4));
