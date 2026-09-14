@@ -2576,3 +2576,16 @@ body:has(.hero-portal) .site-nav .logo{
     object-position:88% 50%;
   }
 }
+
+
+/* V6 — mobile bespoke alignment correction */
+@media(max-width:900px){
+  .bespoke-heading{
+    transform:translateY(5vh);
+    padding-top:0;
+  }
+  .bespoke-heading h3{
+    font-size:16vw;
+    line-height:.88;
+  }
+}
