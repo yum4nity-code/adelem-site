@@ -84,6 +84,6 @@ Critère : le logo devient une signature, jamais une décoration plaquée.
 
 ## Étape 7 — Preview Vercel séparée
 
-- [ ] publier la V5 homepage corrigée sur un projet preview séparé
-- [ ] ne pas toucher à la V4
-- [ ] ne pas fusionner dans main avant validation visuelle
+- [x] publier la V5 homepage corrigée sur un projet preview séparé
+- [x] ne pas toucher à la V4
+- [x] ne pas fusionner dans main avant validation visuelle
