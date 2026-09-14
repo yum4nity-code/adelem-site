@@ -170,3 +170,16 @@ La galerie facilite la décision.
 
 La prochaine livraison doit porter uniquement sur l’ouverture.  
 Pas de refonte simultanée des blocs suivants.
+
+
+---
+
+## Correction ciblée — 14 septembre
+
+Ordre immédiat :
+
+1. [ ] Restaurer la verdure réelle du logo original dans sa présence graphique
+2. [ ] Remplacer l’image d’ouverture par un tableau végétal dense et plein
+3. [ ] Remplacer l’image « Le geste » par une main travaillant une composition végétale dense
+4. [ ] Publier une preview séparée
+5. [ ] Valider uniquement ces trois corrections avant de continuer
