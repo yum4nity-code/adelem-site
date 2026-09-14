@@ -87,3 +87,15 @@ Critère : le logo devient une signature, jamais une décoration plaquée.
 - [x] publier la V5 homepage corrigée sur un projet preview séparé
 - [x] ne pas toucher à la V4
 - [x] ne pas fusionner dans main avant validation visuelle
+
+
+---
+
+## Revue mobile — corrections après capture utilisateur
+
+- [x] remplacer Bodoni Moda par Fraunces
+- [x] augmenter la lisibilité des titres sur Android
+- [x] éclaircir l’ouverture pour éviter une ambiance trop sombre
+- [x] réduire fortement l’espace mort dans « Le geste »
+- [x] masquer le texte vertical atelier sur petit mobile
+- [x] réduire la taille du logo mobile pour limiter les collisions avec le contenu
