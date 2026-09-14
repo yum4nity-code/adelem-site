@@ -29,7 +29,7 @@
     });
     hero
       .set('.hero-portal-media',{clipPath:'inset(0vh 0vw 0vh 0vw)'})
-      .set('.hero-portal-image',{scale:1.38,xPercent:2})
+      .set('.hero-portal-image',{scale:1.82,xPercent:5})
       .set('.hero-portal-copy',{autoAlpha:0,y:34})
       .set('.hero-round-badge',{autoAlpha:0,scale:.86,rotate:-9})
       .set('.hero-portal-cartel',{autoAlpha:0})
@@ -191,7 +191,7 @@
     });
     hero
       .set('.hero-portal-media',{clipPath:'inset(0)'})
-      .set('.hero-portal-image',{scale:1.30})
+      .set('.hero-portal-image',{scale:1.58,xPercent:2})
       .set('.hero-portal-copy',{autoAlpha:0,y:24})
       .set('.hero-round-badge',{autoAlpha:0,scale:.84,rotate:-8})
       .to('.hero-portal-media',{clipPath:'inset(8vh 5vw 35vh 5vw)',duration:1},0)
