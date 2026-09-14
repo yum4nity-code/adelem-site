@@ -116,7 +116,8 @@
 
       <figure class="viewing-room-artwork">
         <div class="viewing-room-image">
-          <img src="/assets/generated/adelem-hero.webp" alt="Œuvre végétale Adelem dans un cadre ancien restauré">
+          <img class="viewing-room-main" src="/assets/generated/adelem-gallery-angle.webp" alt="Vue d’ensemble d’une œuvre végétale encadrée">
+          <img class="viewing-room-alt" src="/assets/generated/adelem-gallery-room.webp" alt="" aria-hidden="true">
         </div>
         <figcaption>
           <span>Pièce unique</span>
@@ -134,7 +135,7 @@
 
   <section class="frames frames-story">
     <div class="frames-image">
-      <img src="/assets/generated/adelem-hero.webp" alt="Œuvre Adelem dans un cadre ancien restauré">
+      <img src="/assets/generated/adelem-gallery-room.webp" alt="Détail d’une œuvre végétale dans son cadre ancien restauré">
       <div class="frames-index"><span>04</span><i></i><span>Cadres anciens</span></div>
     </div>
     <div class="frames-copy">
@@ -146,24 +147,28 @@
   </section>
 
   <section class="bespoke-stage" id="sur-mesure">
-    <div class="bespoke-heading reveal">
-      <div class="eyebrow">Pensé pour un lieu</div>
-      <h3>Sur<br><em>mesure</em></h3>
-      <p>Le projet part d’un espace, pas d’un catalogue. Le lieu apporte ses contraintes ; Adelem garde la liberté de la composition.</p>
+    <div class="bespoke-sticky">
+      <div class="bespoke-heading">
+        <div class="eyebrow">Pensé pour un lieu</div>
+        <h3>Sur<br><em>mesure</em></h3>
+        <p>Le projet part d’un espace, pas d’un catalogue. Le lieu apporte ses contraintes ; Adelem garde la liberté de la composition.</p>
+      </div>
+
+      <div class="bespoke-frame-ghost" aria-hidden="true">
+        <span>Le cadre trouvé impose aussi le format</span>
+        <i class="frame-axis axis-x"></i>
+        <i class="frame-axis axis-y"></i>
+      </div>
+
+      <ol class="bespoke-map" aria-label="Déroulement d’un projet sur mesure">
+        <li><span>01</span><strong>Votre espace</strong><small>Dimensions, lumière, présence souhaitée.</small></li>
+        <li><span>02</span><strong>Une direction</strong><small>Format, cadre disponible, matière et équilibre.</small></li>
+        <li><span>03</span><strong>La composition</strong><small>Une création Adelem, jamais la copie d’une pièce existante.</small></li>
+        <li><span>04</span><strong>La livraison</strong><small>Une pièce terminée pour le lieu qui l’a déclenchée.</small></li>
+      </ol>
+
+      <p class="bespoke-foot">Les dimensions dépendent aussi des cadres anciens trouvés. Cette contrainte fait partie de la singularité de la pièce.</p>
     </div>
-
-    <div class="bespoke-frame-ghost" aria-hidden="true">
-      <span>Le cadre trouvé impose aussi le format</span>
-    </div>
-
-    <ol class="bespoke-map reveal" aria-label="Déroulement d’un projet sur mesure">
-      <li><span>01</span><strong>Votre espace</strong><small>Dimensions, lumière, présence souhaitée.</small></li>
-      <li><span>02</span><strong>Une direction</strong><small>Format, cadre disponible, matière et équilibre.</small></li>
-      <li><span>03</span><strong>La composition</strong><small>Une création Adelem, jamais la copie d’une pièce existante.</small></li>
-      <li><span>04</span><strong>La livraison</strong><small>Une pièce terminée pour le lieu qui l’a déclenchée.</small></li>
-    </ol>
-
-    <p class="bespoke-foot reveal">Les dimensions dépendent aussi des cadres anciens trouvés. Cette contrainte fait partie de la singularité de la pièce.</p>
   </section>
 
   <section class="closing" id="contact">
@@ -175,6 +180,9 @@
 </main>
 
 <script src="assets/generated-images.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 <script src="assets/home.js"></script>
+<script src="assets/motion.js"></script>
 </body>
 </html>
