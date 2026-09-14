@@ -2177,3 +2177,32 @@ body:has(.hero-portal) .site-nav .logo{
   .closing-wordmark{width:70vw}
   .closing-facts{max-width:78vw;font-size:8px;line-height:1.9}
 }
+
+
+/* V5 — BRAND SEAL / exact round Adelem mark */
+.hero-round-badge{
+  position:absolute;
+  z-index:5;
+  right:4.6vw;
+  bottom:5.2vh;
+  width:clamp(108px,10vw,156px);
+  height:auto;
+  opacity:var(--hero-cartel-o);
+  transform:rotate(-4deg) scale(.96);
+  filter:drop-shadow(0 18px 34px rgba(0,0,0,.28));
+  pointer-events:none;
+}
+.closing-wordmark{display:none}
+.closing-badge{
+  width:clamp(220px,27vw,410px);
+  height:auto;
+  filter:drop-shadow(0 28px 70px rgba(0,0,0,.26));
+}
+@media(max-width:900px){
+  .hero-round-badge{
+    right:5vw;
+    bottom:4.5vh;
+    width:96px;
+  }
+  .closing-badge{width:min(72vw,360px)}
+}
