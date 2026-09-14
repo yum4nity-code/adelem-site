@@ -2631,3 +2631,12 @@ body:has(.hero-portal) .site-nav .logo{
   .bespoke-frame-ghost{top:31vh}
   .bespoke-map{margin-top:29vh}
 }
+
+
+/* V6 — time proof */
+.gesture-sequence-summary h2 em{
+  font-size:.42em;
+  font-weight:300;
+  letter-spacing:-.02em;
+  color:#d9a38d;
+}
