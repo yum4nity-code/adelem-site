@@ -148,60 +148,63 @@ L’utilisateur veut pouvoir suivre très facilement l’avancement car les gros
 
 ## Board actuel
 
-### 1A — Logo / badge
-Direction visuelle validée.
-Signature exacte déjà présente dans le repo.
-Ne pas régénérer ni redessiner le logo.
+### Homepage — socle artistique
+Statut : **reconstruite et contrôlée en desktop + mobile**.
 
-### 1B — Tableau d’accueil
-Image dense générée et retrouvée dans la Library :
-`Framed Moss Forest in Antique Gold.png`.
+Séquences actives :
+- **Ouverture** : immersion dans la matière puis recul révélant l’œuvre encadrée
+- **Matière** : macro tactile puis resserrement et apparition de l’explication
+- **Le geste** : suite Chercher → Restaurer → Composer → Déplacer → Retirer → Recommencer, puis preuve factuelle des 8 à 10 jours possibles sur un grand format
+- **Œuvres** : viewing room sombre, une pièce à la fois, lecture Ensemble → Relief → Matière
+- **Cadres anciens** : cadre restauré présenté comme partie constitutive de l’œuvre
+- **Sculptures** : traitement typographique abstrait, sans photo stock prétendant montrer le travail réel
+- **Sur mesure** : méthode en quatre étapes, sans faux intérieur décoratif
+- **Sortie** : signature Adelem exacte + faits, aucun CTA inventé
 
-Statut : **validée visuellement et branchée via Google Drive public**.
+Principe de création consigné dans :
+`docs/adelem-creative-persona.md`.
 
-Asset web :
-`/Google Drive/Adelem-assets/adelem-hero.webp` — ~113 Ko.
-
-L’URL Drive publique est déclarée dans `assets/generated-images.js`. Le placeholder distant reste uniquement en fallback de sécurité.
-
-### 1C — Le geste
-Image générée et retrouvée dans la Library :
-`Crafting a Gilded Mosswork мастерpiece.png`.
-
-Statut : **validée visuellement et branchée via Google Drive public**.
-
-Asset web :
-`/Google Drive/Adelem-assets/adelem-geste.webp` — ~97 Ko.
-
-L’URL Drive publique est déclarée dans `assets/generated-images.js`. Le placeholder distant reste uniquement en fallback de sécurité.
-
-### 1D — Intégration
-Le commit `b29f65f` prétendait brancher les images validées, mais le fichier `assets/generated-images.js` contenait en réalité un message d’erreur de transfert de fichier.
-
-Ce fichier a été neutralisé proprement dans `89bf073`.
-
-Les deux images validées sont désormais stockées hors GitHub dans Google Drive :
+### Assets validés
+Ne pas régénérer :
 - `/Google Drive/Adelem-assets/adelem-hero.webp` — ~113 Ko
 - `/Google Drive/Adelem-assets/adelem-geste.webp` — ~97 Ko
 
-Le code V5 dispose maintenant d'un override externe sûr :
-- `assets/generated-images.js` contient uniquement les deux URLs configurables
-- `assets/home.js` applique l'override si l'URL existe
-- si l'asset externe échoue, le placeholder actuel reste en fallback
+GitHub ne transporte pas ces binaires.
+Le workflow QA les télécharge depuis Drive avant de lancer le site local.
 
-Commits : `4b6e261` puis `b43dfce`.
+**Interdit :** base64, fragmentation ou chunks GitHub pour ces images.
 
-**Interdit :** ne plus transférer ces images vers GitHub en base64/chunks.
+### QA visuelle
+Le contrôle n’est plus dépendant d’un hébergeur.
 
-### 1E — Contrôle
-- sortie nettoyée des phrases explicitement rejetées : `f185e74`
-- orthographe textuelle de marque alignée sur **Adelem** : `ab56e93`
-- deux assets V5 publics sur Drive et branchés avec fallback : `32f7644`
-- permissions vérifiées : `anyone → reader` sur les deux WebP
-- preview Netlify créée et déployée avec succès
-- premier contrôle réel : les URLs Drive directes ont déclenché le fallback dans le navigateur
-- correction : les WebP sont désormais téléchargés depuis Drive pendant le deploy puis servis par Netlify depuis `/assets/generated/`
-- contrôle actif : nouvelles captures desktop/mobile du hero et de « Le geste »
+Workflow :
+`.github/workflows/adelem-visual-qa.yml`
+
+Il :
+1. récupère les deux WebP depuis Drive
+2. lance `site-v5/` localement
+3. capture automatiquement desktop et mobile
+4. capture aussi plusieurs états intermédiaires des séquences scrollées
+
+Dernier contrôle mobile : Œuvres, Cadres anciens, Sculptures / Sur mesure et sortie passent visuellement.
+
+### Preview publique
+La preview Netlify `adelem-v5-preview.netlify.app` existe mais **n’est plus la source de vérité** : le compte Netlify a refusé les nouveaux déploiements pour dépassement de crédits.
+
+Le workflow Netlify a été supprimé pour éviter de continuer à consommer / échouer.
+
+Tant qu’un nouvel hébergement public stable n’est pas validé :
+- GitHub = code
+- Google Drive = binaires validés
+- GitHub Actions = QA visuelle réelle
+
+### Étape active
+**Construire la galerie / page Œuvres**.
+
+La homepage crée le désir.
+La galerie doit maintenant changer de régime : compréhension rapide, disponibilité, dimensions, matières, prix et acquisition.
+
+Ne rien inventer : tant que les données réelles d’une œuvre manquent, utiliser un état explicitement incomplet plutôt qu’un faux prix ou une fausse disponibilité.
 
 ## Audit anti-générique
 
@@ -255,8 +258,9 @@ Ont été explicitement rejetés :
 
 ## Priorité de reprise
 
-1. **Ne pas régénérer 1B ni 1C** : les deux images sont validées et branchées via Drive
-2. Faire le contrôle réel desktop/mobile
-3. Corriger uniquement ce qui est visible sur ce contrôle
-4. Continuer ensuite la homepage écran par écran
-5. Conserver GitHub pour le code et Drive/CDN pour les assets binaires lourds
+1. Construire **Œuvres** comme vraie galerie marchande
+2. Construire le gabarit **fiche œuvre**
+3. Construire **Atelier / savoir-faire**
+4. Construire **Sur mesure**
+5. Rebrancher ensuite une preview publique stable
+6. Ne rendre accessibles dans la navigation que les pages réellement terminées
