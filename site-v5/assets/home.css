@@ -2050,7 +2050,7 @@ body:has(.hero-portal) .site-nav .logo{
   color:#62645d;
 }
 #sur-mesure .portal-copy::after{
-  content:"01  Votre espace\A02  Une direction\A03  La composition\A04  La livraison";
+  content:"01  Votre espace\A 02  Une direction\A 03  La composition\A 04  La livraison";
   white-space:pre-line;
   display:block;
   margin-top:5.5vh;
