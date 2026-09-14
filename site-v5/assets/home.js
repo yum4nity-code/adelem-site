@@ -85,3 +85,48 @@ function requestHeroSync(){
 syncHeroPortal();
 window.addEventListener('scroll',requestHeroSync,{passive:true});
 window.addEventListener('resize',requestHeroSync,{passive:true});
+
+
+const materialReveal=document.querySelector('.material-reveal');
+const materialStage=document.querySelector('.material-reveal-stage');
+
+function syncMaterialReveal(){
+  if(!materialReveal||!materialStage) return;
+  const travel=Math.max(1,materialReveal.offsetHeight-window.innerHeight);
+  const p=clamp01(-materialReveal.getBoundingClientRect().top/travel);
+  const copy=clamp01((p-.42)/.30);
+  const index=clamp01((p-.22)/.34);
+
+  if(window.innerWidth<=900){
+    materialStage.style.setProperty('--mat-b',(44*p).toFixed(2)+'vh');
+    materialStage.style.setProperty('--mat-scale',(1.68-.54*p).toFixed(4));
+    materialStage.style.setProperty('--mat-copy-o',copy.toFixed(4));
+    materialStage.style.setProperty('--mat-copy-y',(28*(1-copy)).toFixed(1)+'px');
+    materialStage.style.setProperty('--mat-index-o',index.toFixed(4));
+    return;
+  }
+
+  materialStage.style.setProperty('--mat-r',(43*p).toFixed(2)+'vw');
+  materialStage.style.setProperty('--mat-l',(3.6*p).toFixed(2)+'vw');
+  materialStage.style.setProperty('--mat-t',(5.5*p).toFixed(2)+'vh');
+  materialStage.style.setProperty('--mat-b',(5.5*p).toFixed(2)+'vh');
+  materialStage.style.setProperty('--mat-scale',(1.68-.54*p).toFixed(4));
+  materialStage.style.setProperty('--mat-x',(8+24*p).toFixed(2)+'%');
+  materialStage.style.setProperty('--mat-copy-o',copy.toFixed(4));
+  materialStage.style.setProperty('--mat-copy-y',(28*(1-copy)).toFixed(1)+'px');
+  materialStage.style.setProperty('--mat-index-o',index.toFixed(4));
+}
+
+let materialTicking=false;
+function requestMaterialSync(){
+  if(materialTicking) return;
+  materialTicking=true;
+  requestAnimationFrame(function(){
+    syncMaterialReveal();
+    materialTicking=false;
+  });
+}
+
+syncMaterialReveal();
+window.addEventListener('scroll',requestMaterialSync,{passive:true});
+window.addEventListener('resize',requestMaterialSync,{passive:true});
