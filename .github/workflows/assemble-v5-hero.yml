@@ -1,0 +1,53 @@
+name: Assemble Adelem V5 hero
+
+on:
+  push:
+    branches: [v5-homepage-art-direction]
+    paths:
+      - 'site-v5/assets/generated-transfer/hero.ready'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble and verify hero asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          ready="site-v5/assets/generated-transfer/hero.ready"
+          if [ ! -f "$ready" ]; then
+            echo "No ready marker; nothing to assemble."
+            exit 0
+          fi
+
+          mkdir -p site-v5/assets/generated
+          cat site-v5/assets/generated-transfer/hero.part*.b64 | base64 --decode > site-v5/assets/generated/hero.webp
+
+          expected="$(tr -d '\r\n ' < "$ready")"
+          actual="$(sha256sum site-v5/assets/generated/hero.webp | awk '{print $1}')"
+
+          echo "expected=$expected"
+          echo "actual=$actual"
+          test "$actual" = "$expected"
+
+      - name: Commit verified hero asset
+        shell: bash
+        run: |
+          ready="site-v5/assets/generated-transfer/hero.ready"
+          if [ ! -f "$ready" ]; then
+            echo "No ready marker; nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site-v5/assets/generated/hero.webp
+          git rm site-v5/assets/generated-transfer/hero.part*.b64
+          git rm site-v5/assets/generated-transfer/hero.ready
+          git commit -m "Assemble verified Adelem V5 hero asset [skip ci]"
+          git push
