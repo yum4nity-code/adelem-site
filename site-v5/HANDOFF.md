@@ -198,7 +198,8 @@ Commits : `4b6e261` puis `b43dfce`.
 - orthographe textuelle de marque alignée sur **Adelem** : `ab56e93`
 - deux assets V5 publics sur Drive et branchés avec fallback : `32f7644`
 - permissions vérifiées : `anyone → reader` sur les deux WebP
-- prochain contrôle : preview réelle desktop/mobile
+- preview Netlify créée et déployée avec succès
+- contrôle actif : captures réelles desktop/mobile du hero et de « Le geste »
 
 ## Audit anti-générique
 
