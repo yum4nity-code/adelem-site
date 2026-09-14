@@ -2,7 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">\n<link rel="icon" href="assets/logo/favicon/favicon.ico" sizes="any">\n<link rel="apple-touch-icon" href="assets/logo/favicon/favicon-180.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3efe7">
+<link rel="icon" href="assets/logo/favicon/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/logo/favicon/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/logo/favicon/favicon-180.png">
 <title>Adelem — Maquette premium</title>
 <meta name="description" content="Maquette de site Adelem — tableaux en végétaux naturels stabilisés.">
 <style>
@@ -96,9 +101,9 @@ nav.scrolled .brand-logo{filter:none}
   justify-self:end;align-self:end;max-width:290px;
   border-top:1px solid var(--line);padding-top:18px;font-size:12px;line-height:1.6;
 }
-.intro-mark{
-  position:absolute;right:-2vw;top:7vw;font-family:"Italiana";font-size:18vw;
-  opacity:.028;line-height:1;pointer-events:none;
+.intro-logo-seal{
+  position:absolute;right:2.5vw;top:5vw;width:clamp(170px,19vw,330px);
+  opacity:.16;pointer-events:none;user-select:none;
 }
 
 .parallax-panel{
@@ -201,6 +206,7 @@ nav.scrolled .brand-logo{filter:none}
   .hero-bottom{grid-template-columns:1fr}
   .scrollcue{justify-self:start}
   .intro{grid-template-columns:1fr;padding:22vw 7vw}
+  .intro-logo-seal{width:150px;right:-18px;top:24px;opacity:.11}
   .intro aside{justify-self:start;margin-top:60px}
   .collection{padding:18vw 5vw}
   .collection-head{display:block;margin-bottom:9vw}
@@ -229,7 +235,7 @@ nav.scrolled .brand-logo{filter:none}
 <div class="noise"></div>
 
 <nav id="nav">
-  <a href="#top"><img class="brand-logo" src="assets/logo/vector/adelem-wordmark-copper.svg" alt="Adelem"></a>
+  <a class="brand-link" href="#top" aria-label="Adelem accueil"><img class="brand-logo" src="assets/logo/vector/adelem-wordmark-copper.svg" alt="Adelem"></a>
   <div class="nav-links">
     <a href="#pieces">Pièces</a>
     <a href="#atelier">Atelier</a>
@@ -252,7 +258,7 @@ nav.scrolled .brand-logo{filter:none}
 </section>
 
 <section class="intro">
-  <div class="intro-mark">A</div>
+  <img class="intro-logo-seal" src="assets/logo/vector/adelem-badge-transparent.svg" alt="" aria-hidden="true">
   <div class="statement reveal">
     <div class="kicker">Adelem</div>
     <h2>Une présence naturelle.<br>Un vrai travail de main.</h2>
@@ -346,7 +352,7 @@ nav.scrolled .brand-logo{filter:none}
 <footer class="footer" id="contact">
   <div class="footer-grid">
     <div>
-      <img class="logo-footer" src="assets/logo/vector/adelem-wordmark-copper.svg" alt="Adelem">
+      <a href="#top" aria-label="Adelem retour en haut"><img class="logo-footer" src="assets/logo/vector/adelem-wordmark-copper.svg" alt="Adelem"></a>
       <h2>Parlons de votre mur.</h2>
     </div>
     <div>
