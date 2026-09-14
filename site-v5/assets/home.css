@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap');
 
 :root{
   --paper:#f2eee6;
@@ -94,7 +94,7 @@ button{font:inherit}
   gap:12px;
 }
 .menu-panel a{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(42px,8vw,92px);
   line-height:1;
 }
@@ -110,17 +110,17 @@ button{font:inherit}
   position:absolute;
   right:-3vw;
   top:0;
-  width:64vw;
+  width:66vw;
   height:100%;
   object-fit:cover;
-  filter:saturate(.75) contrast(1.04);
+  filter:saturate(.95) contrast(1.02) brightness(1.16);
 }
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
   background:
-    linear-gradient(90deg,rgba(7,9,7,.98) 0%,rgba(7,9,7,.89) 34%,rgba(7,9,7,.16) 73%,rgba(7,9,7,.38) 100%);
+    linear-gradient(90deg,rgba(9,12,8,.88) 0%,rgba(9,12,8,.72) 35%,rgba(9,12,8,.07) 74%,rgba(9,12,8,.16) 100%);
   z-index:1;
 }
 .hero::after{
@@ -155,7 +155,7 @@ button{font:inherit}
 .hero-kicker{color:#dbad98;margin-bottom:22px}
 .hero-title{
   margin:0;
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(74px,10.2vw,155px);
   font-weight:400;
   line-height:.86;
@@ -213,7 +213,7 @@ button{font:inherit}
 }
 .material-caption .eyebrow{color:var(--moss)}
 .material-caption h2{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-weight:400;
   font-size:clamp(54px,6.3vw,95px);
   line-height:.94;
@@ -229,7 +229,7 @@ button{font:inherit}
   position:absolute;
   right:-.05em;
   bottom:-.2em;
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:19vw;
   line-height:.8;
   color:rgba(18,19,15,.035);
@@ -249,7 +249,7 @@ button{font:inherit}
   justify-content:space-between;
 }
 .gesture-copy h2{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(58px,6.8vw,104px);
   line-height:.91;
   letter-spacing:-.045em;
@@ -302,7 +302,7 @@ button{font:inherit}
   margin-bottom:7vw;
 }
 .gallery-head h2{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(68px,8.3vw,126px);
   line-height:.86;
   letter-spacing:-.05em;
@@ -382,7 +382,7 @@ button{font:inherit}
 }
 .frames-copy .eyebrow{color:#c99a85}
 .frames-copy h2{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(60px,6.7vw,100px);
   line-height:.92;
   font-weight:400;
@@ -428,7 +428,7 @@ button{font:inherit}
   z-index:2;
 }
 .portal-copy h3{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(58px,6vw,90px);
   font-weight:400;
   line-height:.92;
@@ -450,7 +450,7 @@ button{font:inherit}
   align-items:center;
 }
 .private h2{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(62px,7vw,110px);
   line-height:.9;
   letter-spacing:-.045em;
@@ -494,7 +494,7 @@ button{font:inherit}
 }
 .closing-inner{position:relative;z-index:2}
 .closing h2{
-  font-family:"Bodoni Moda",Georgia,serif;
+  font-family:"Fraunces",Georgia,serif;
   font-size:clamp(64px,8vw,124px);
   line-height:.9;
   font-weight:400;
@@ -527,8 +527,8 @@ button{font:inherit}
 
 @media(max-width:900px){
   .nav-links{display:none}.menu-btn{display:block}.site-nav{height:94px;padding:0 6vw}.logo{width:132px;height:74px}
-  .hero-image{width:100%;right:0;opacity:.66}
-  .hero::before{background:linear-gradient(180deg,rgba(7,9,7,.35) 0%,rgba(7,9,7,.9) 67%,#070907 100%)}
+  .hero-image{width:100%;right:0;opacity:.9;filter:saturate(1) contrast(1.01) brightness(1.12)}
+  .hero::before{background:linear-gradient(180deg,rgba(6,9,6,.08) 0%,rgba(6,9,6,.32) 42%,rgba(6,9,6,.82) 78%,#090c09 100%)}
   .hero-copy{padding:26vh 6vw 10vh;justify-content:flex-end}
   .hero-title{font-size:17vw;line-height:.88;max-width:none}
   .hero-title span{margin-left:.45em}
@@ -641,4 +641,57 @@ button{font:inherit}
 }
 @media(max-width:560px){
   .hero-seal{width:128px;opacity:.10}
+}
+
+/* V5 mobile readability + rhythm correction */
+.hero-title,
+.material-caption h2,
+.gesture-copy h2,
+.gallery-head h2,
+.frames-copy h2,
+.portal-copy h3,
+.private h2,
+.closing h2{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:400;
+  letter-spacing:-.035em;
+}
+
+@media(max-width:560px){
+  .site-nav{height:92px}
+  .logo{width:126px;height:70px}
+
+  .hero-copy{padding-top:22vh;padding-bottom:9vh}
+  .hero-title{font-size:13.7vw;line-height:.96;letter-spacing:-.03em}
+  .hero-title span{margin-left:.25em}
+  .hero-copy p{margin-top:24px;margin-left:5vw;max-width:84vw;line-height:1.66}
+
+  .gesture{min-height:auto}
+  .gesture-copy{
+    min-height:auto;
+    padding:132px 7vw 54px;
+    justify-content:flex-start;
+    gap:34px;
+  }
+  .gesture-copy h2{
+    font-size:12.3vw;
+    line-height:.98;
+    margin:12px 0 0;
+  }
+  .gesture-copy p{
+    margin:0;
+    max-width:88vw;
+    line-height:1.65;
+  }
+  .gesture-side{display:none}
+  .gesture-photo{min-height:56svh}
+
+  .material-caption h2,
+  .gallery-head h2,
+  .frames-copy h2,
+  .portal-copy h3,
+  .private h2,
+  .closing h2{
+    letter-spacing:-.025em;
+  }
 }
