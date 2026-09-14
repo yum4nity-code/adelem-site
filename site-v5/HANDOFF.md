@@ -199,7 +199,9 @@ Commits : `4b6e261` puis `b43dfce`.
 - deux assets V5 publics sur Drive et branchés avec fallback : `32f7644`
 - permissions vérifiées : `anyone → reader` sur les deux WebP
 - preview Netlify créée et déployée avec succès
-- contrôle actif : captures réelles desktop/mobile du hero et de « Le geste »
+- premier contrôle réel : les URLs Drive directes ont déclenché le fallback dans le navigateur
+- correction : les WebP sont désormais téléchargés depuis Drive pendant le deploy puis servis par Netlify depuis `/assets/generated/`
+- contrôle actif : nouvelles captures desktop/mobile du hero et de « Le geste »
 
 ## Audit anti-générique
 
