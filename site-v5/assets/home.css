@@ -2613,3 +2613,21 @@ body:has(.hero-portal) .site-nav .logo{
     margin-top:31vh;
   }
 }
+
+
+/* V6 — final mobile bespoke title */
+@media(max-width:900px){
+  .bespoke-heading{transform:translateY(7vh)}
+  .bespoke-heading h3{
+    font-size:15vw;
+    line-height:.92;
+    white-space:nowrap;
+  }
+  .bespoke-heading h3 br{display:none}
+  .bespoke-heading h3 em{
+    display:inline;
+    margin-left:.10em;
+  }
+  .bespoke-frame-ghost{top:31vh}
+  .bespoke-map{margin-top:29vh}
+}
