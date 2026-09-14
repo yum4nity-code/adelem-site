@@ -2589,3 +2589,27 @@ body:has(.hero-portal) .site-nav .logo{
     line-height:.88;
   }
 }
+
+
+/* V6 — bespoke readability pass */
+.bespoke-heading h3{color:#f5f0e7}
+.bespoke-map li{
+  color:rgba(245,240,231,.34);
+}
+.bespoke-map li strong,
+.bespoke-map li small{
+  transition:color .2s linear;
+}
+.bespoke-map li.active strong{color:#fff8ef}
+.bespoke-map li.active small{color:rgba(245,240,231,.80)}
+@media(max-width:900px){
+  .bespoke-heading{
+    transform:translateY(10vh);
+  }
+  .bespoke-frame-ghost{
+    top:34vh;
+  }
+  .bespoke-map{
+    margin-top:31vh;
+  }
+}
