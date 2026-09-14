@@ -2451,3 +2451,100 @@ body:has(.hero-portal) .site-nav .logo{
 .viewing-room-alt{opacity:0}
 .frames-story .frames-image img{transform:none;object-position:center;will-change:transform}
 .closing-badge,.closing-facts{will-change:transform,opacity}
+
+
+/* V6 — BESPOKE STICKY SEQUENCE */
+.bespoke-stage{
+  min-height:205svh;
+  padding:0;
+  display:block;
+  background:#11130f;
+}
+.bespoke-sticky{
+  position:sticky;
+  top:0;
+  min-height:100svh;
+  padding:10vw 7vw 8vw;
+  display:grid;
+  grid-template-columns:.82fr 1.18fr;
+  gap:8vw;
+  align-items:end;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.015),transparent 25%),
+    radial-gradient(circle at 80% 24%,rgba(117,138,102,.10),transparent 26%),
+    #11130f;
+}
+.bespoke-sticky::before{
+  content:"";
+  position:absolute;
+  inset:5vw;
+  border:1px solid rgba(245,240,231,.08);
+  pointer-events:none;
+}
+.bespoke-heading,.bespoke-map,.bespoke-foot{position:relative;z-index:3}
+.bespoke-frame-ghost{z-index:2;will-change:transform,opacity}
+.bespoke-frame-ghost .frame-axis{
+  position:absolute;
+  display:block;
+  background:rgba(197,145,120,.22);
+}
+.bespoke-frame-ghost .axis-x{
+  left:-34px;right:-34px;top:50%;height:1px;
+  transform:scaleX(.12);
+}
+.bespoke-frame-ghost .axis-y{
+  top:-34px;bottom:-34px;left:50%;width:1px;
+  transform:scaleY(.12);
+}
+.bespoke-map li{transition:color .2s linear,border-color .2s linear}
+.bespoke-map li.active{
+  color:#fff8ef;
+  border-bottom-color:rgba(213,138,111,.42);
+}
+.bespoke-map li.active span{color:#e0a188}
+.bespoke-map li.active small{color:rgba(245,240,231,.76)}
+
+@media(max-width:900px){
+  .site-nav{
+    height:76px;
+    padding:0 5vw;
+    background:rgba(11,14,11,.12);
+  }
+  .site-nav.nav-scrolled{background:rgba(11,14,11,.80)}
+  .hero-round-badge{top:53vh;right:7vw;bottom:auto;width:86px}
+  .viewing-room-artwork{width:92vw;height:61svh}
+  .bespoke-stage{min-height:190svh}
+  .bespoke-sticky{
+    min-height:100svh;
+    padding:13vh 7vw 8vh;
+    grid-template-columns:1fr;
+    gap:5vh;
+    align-content:center;
+  }
+  .bespoke-frame-ghost{
+    position:absolute;
+    width:72vw;
+    right:14vw;
+    top:23vh;
+    margin:0;
+  }
+  .bespoke-heading{align-self:start}
+  .bespoke-map{margin-top:21vh}
+  .bespoke-foot{margin-top:0}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .site-nav{position:absolute}
+  .hero-portal-media,.material-reveal-media{clip-path:none!important}
+  .hero-portal-image,.material-reveal-media img,.gesture-sequence-image,
+  .viewing-room-artwork,.viewing-room-image img,.frames-story .frames-image img,
+  .bespoke-frame-ghost,.closing-badge{transform:none!important}
+  .hero-portal-copy,.hero-round-badge,.hero-portal-cartel,
+  .material-reveal-copy,.material-reveal-index,
+  .gesture-sequence-summary,.viewing-room-intro,
+  .bespoke-heading,.bespoke-map,.bespoke-foot,.closing-badge,.closing-facts{
+    opacity:1!important;
+    visibility:visible!important;
+  }
+}
