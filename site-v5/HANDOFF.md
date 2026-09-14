@@ -151,31 +151,34 @@ L’utilisateur veut pouvoir suivre très facilement l’avancement car les gros
 ### 1A — Logo / badge
 Direction visuelle validée.
 Signature exacte déjà présente dans le repo.
-Le nouveau master botanique enrichi reste à pousser comme binaire si on veut cette variante précise.
+Ne pas régénérer ni redessiner le logo.
 
 ### 1B — Tableau d’accueil
-À faire.
+Image dense générée et retrouvée dans la Library :
+`Framed Moss Forest in Antique Gold.png`.
 
-Utiliser une œuvre végétale :
-- dense
-- pleine
-- riche en matière
-- crédible
-- avec vrai relief
+Statut : **validée visuellement, intégration binaire GitHub en attente**.
+
+Le site affiche encore le placeholder distant actuel tant qu’un chemin de transfert binaire sûr n’est pas disponible.
 
 ### 1C — Le geste
-À faire.
+Image générée et retrouvée dans la Library :
+`Crafting a Gilded Mosswork мастерpiece.png`.
 
-Montrer :
-- des mains
-- une composition dense
-- un vrai travail de construction
+Statut : **validée visuellement, intégration binaire GitHub en attente**.
+
+Le site affiche encore le placeholder distant actuel tant qu’un chemin de transfert binaire sûr n’est pas disponible.
 
 ### 1D — Intégration
-Seulement après validation de 1B et 1C.
+Le commit `b29f65f` prétendait brancher les images validées, mais le fichier `assets/generated-images.js` contenait en réalité un message d’erreur de transfert de fichier.
+
+Ce fichier a été neutralisé proprement dans `89bf073`.
+Ne pas recommencer un transfert de plusieurs Mo via base64/chunks.
 
 ### 1E — Contrôle
-Vérification mobile et audit anti-générique.
+- sortie nettoyée des phrases explicitement rejetées : `f185e74`
+- orthographe textuelle de marque alignée sur **Adelem** : `ab56e93`
+- prochain contrôle : preview réelle desktop/mobile après intégration binaire sûre des deux images
 
 ## Audit anti-générique
 
@@ -229,8 +232,9 @@ Ont été explicitement rejetés :
 
 ## Priorité de reprise
 
-1. Reprendre 1B — tableau végétal dense de l’ouverture
-2. Validation utilisateur
-3. Reprendre 1C — Le geste
-4. Validation utilisateur
-5. Seulement ensuite intégrer et continuer la homepage
+1. **Ne pas régénérer 1B ni 1C** : les deux images existent et ont été retrouvées
+2. Trouver un chemin **binaire sûr** pour les intégrer au repo sans base64 massif
+3. Brancher uniquement 1B et vérifier la preview
+4. Brancher uniquement 1C et vérifier la preview
+5. Faire le contrôle mobile/desktop
+6. Continuer ensuite la homepage écran par écran
