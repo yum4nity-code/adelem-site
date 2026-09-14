@@ -24,3 +24,19 @@ const revealObserver=new IntersectionObserver(entries=>{
 },{threshold:.14});
 
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+
+function applyImageOverride(selector,url){
+  if(!url) return;
+  const img=document.querySelector(selector);
+  if(!img) return;
+  const fallback=img.currentSrc||img.src;
+  img.addEventListener('error',()=>{
+    if(img.src!==fallback) img.src=fallback;
+  },{once:true});
+  img.src=url;
+}
+
+const imageOverrides=window.ADELEM_IMAGE_OVERRIDES||{};
+applyImageOverride('.hero-artwork img',imageOverrides.hero);
+applyImageOverride('.gesture-photo img',imageOverrides.gesture);
