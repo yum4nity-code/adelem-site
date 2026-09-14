@@ -2069,3 +2069,75 @@ body:has(.hero-portal) .site-nav .logo{
   #sculptures .portal-copy::before,#sur-mesure .portal-copy::before{margin-bottom:7vh}
   #sur-mesure::before{inset:7vw}
 }
+
+
+/* V5 — FRAMES / provenance cue */
+.frames-story .frames-image{position:relative}
+.frames-index{
+  position:absolute;
+  z-index:3;
+  left:5vw;
+  top:6vh;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:rgba(247,243,235,.72);
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  text-shadow:0 1px 18px rgba(0,0,0,.35);
+}
+.frames-index i{
+  width:34px;
+  height:1px;
+  background:rgba(247,243,235,.45);
+}
+.frames-fact{
+  margin-top:34px;
+  padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.14);
+  max-width:430px;
+  color:rgba(255,255,255,.78);
+  font-size:10px;
+  line-height:1.7;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* V5 — CLOSING / signature, not slogan */
+.closing{
+  min-height:100svh;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(81,101,72,.12),transparent 30%),
+    #0b0e0b;
+}
+.closing-seal{
+  display:block;
+  width:min(70vw,900px);
+  opacity:.20;
+  filter:saturate(.85);
+}
+.closing-inner{
+  width:min(900px,86vw);
+}
+.closing-inner .eyebrow{
+  margin-bottom:22px;
+  color:rgba(255,255,255,.52);
+}
+.closing h2{
+  font-size:clamp(62px,7.5vw,116px);
+  font-weight:300;
+  letter-spacing:-.045em;
+  color:#f5f0e8;
+}
+.closing .text-link{
+  margin-top:34px;
+  color:rgba(255,255,255,.82);
+}
+@media(max-width:900px){
+  .frames-index{left:6vw;top:5vh;font-size:7px}
+  .frames-fact{font-size:9px}
+  .closing-seal{width:120vw;opacity:.16}
+}
