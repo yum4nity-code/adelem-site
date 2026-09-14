@@ -2206,3 +2206,35 @@ body:has(.hero-portal) .site-nav .logo{
   }
   .closing-badge{width:min(72vw,360px)}
 }
+
+
+/* V5 — DISTINCT EVIDENCE / stop repeating the same picture */
+.material-reveal-stage{
+  --mat-scale:2.70;
+  --mat-x:54%;
+}
+.frames-story .frames-image{
+  background:#0d0f0c;
+}
+.frames-story .frames-image img{
+  object-position:82% 48%;
+  transform:scale(1.62);
+  transform-origin:78% 46%;
+  filter:saturate(.68) contrast(1.06) brightness(.88);
+}
+.frames-story .frames-image::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(7,9,6,.04),rgba(7,9,6,.18)),
+    linear-gradient(180deg,rgba(7,9,6,.06),rgba(7,9,6,.18));
+  pointer-events:none;
+}
+@media(max-width:900px){
+  .material-reveal-stage{--mat-scale:2.10}
+  .frames-story .frames-image img{
+    object-position:78% 48%;
+    transform:scale(1.46);
+  }
+}
