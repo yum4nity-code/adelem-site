@@ -39,7 +39,7 @@ function applyImageOverride(selector,url){
 
 const imageOverrides=window.ADELEM_IMAGE_OVERRIDES||{};
 applyImageOverride('.hero-portal-image',imageOverrides.hero);
-applyImageOverride('.gesture-photo img',imageOverrides.gesture);
+applyImageOverride('.gesture-sequence-image',imageOverrides.gesture);
 
 
 const heroPortal=document.querySelector('.hero-portal');
@@ -131,3 +131,42 @@ function requestMaterialSync(){
 syncMaterialReveal();
 window.addEventListener('scroll',requestMaterialSync,{passive:true});
 window.addEventListener('resize',requestMaterialSync,{passive:true});
+
+
+const gestureSequence=document.querySelector('.gesture-sequence');
+const gestureStage=document.querySelector('.gesture-sequence-stage');
+const gestureWords=[...document.querySelectorAll('.gesture-sequence-verbs span')];
+
+function syncGestureSequence(){
+  if(!gestureSequence||!gestureStage) return;
+  const travel=Math.max(1,gestureSequence.offsetHeight-window.innerHeight);
+  const p=clamp01(-gestureSequence.getBoundingClientRect().top/travel);
+  const centers=[.10,.22,.34,.46,.58,.70];
+
+  gestureWords.forEach(function(word,index){
+    const distance=Math.abs(p-centers[index]);
+    const opacity=clamp01(1-distance/.085);
+    word.style.opacity=opacity.toFixed(4);
+    word.style.transform='translateY('+((1-opacity)*24).toFixed(1)+'px)';
+  });
+
+  const summary=clamp01((p-.76)/.18);
+  gestureStage.style.setProperty('--gesture-summary-o',summary.toFixed(4));
+  gestureStage.style.setProperty('--gesture-summary-y',((1-summary)*28).toFixed(1)+'px');
+  gestureStage.style.setProperty('--gesture-scale',(1.08-.055*p).toFixed(4));
+  gestureStage.style.setProperty('--gesture-x',(-2.6*p).toFixed(2)+'%');
+}
+
+let gestureTicking=false;
+function requestGestureSync(){
+  if(gestureTicking) return;
+  gestureTicking=true;
+  requestAnimationFrame(function(){
+    syncGestureSequence();
+    gestureTicking=false;
+  });
+}
+
+syncGestureSequence();
+window.addEventListener('scroll',requestGestureSync,{passive:true});
+window.addEventListener('resize',requestGestureSync,{passive:true});
