@@ -155,7 +155,7 @@
     bespoke
       .set('.bespoke-heading',{autoAlpha:1,y:0})
       .set('.bespoke-frame-ghost',{autoAlpha:.25,scale:1.30,rotate:.8})
-      .set(bespokeItems,{autoAlpha:.22,x:22})
+      .set(bespokeItems,{x:22})
       .set('.bespoke-foot',{autoAlpha:0,y:18})
       .to('.bespoke-frame-ghost',{autoAlpha:.72,scale:.90,rotate:0,duration:.42},0)
       .to('.axis-x',{scaleX:1,duration:.28,transformOrigin:'left center'},.18)
@@ -163,8 +163,8 @@
 
     bespokeItems.forEach((item,i)=>{
       const pos=.16+i*.17;
-      bespoke.to(item,{autoAlpha:1,x:0,duration:.12},pos);
-      if(i>0) bespoke.to(bespokeItems[i-1],{autoAlpha:.32,duration:.08},pos);
+      bespoke.to(item,{x:0,duration:.12},pos);
+      if(i>0) bespoke.to(bespokeItems[i-1],{x:0,duration:.08},pos);
     });
     bespoke.to('.bespoke-foot',{autoAlpha:1,y:0,duration:.12},.82);
 
@@ -273,13 +273,13 @@
     });
     bespoke
       .set('.bespoke-frame-ghost',{autoAlpha:.22,scale:1.08})
-      .set(bespokeItems,{autoAlpha:.20,x:14})
+      .set(bespokeItems,{x:14})
       .set('.bespoke-foot',{autoAlpha:0,y:14})
       .to('.bespoke-frame-ghost',{autoAlpha:.70,scale:.88,duration:.38},0);
     bespokeItems.forEach((item,i)=>{
       const pos=.18+i*.17;
-      bespoke.to(item,{autoAlpha:1,x:0,duration:.12},pos);
-      if(i>0) bespoke.to(bespokeItems[i-1],{autoAlpha:.34,duration:.08},pos);
+      bespoke.to(item,{x:0,duration:.12},pos);
+      if(i>0) bespoke.to(bespokeItems[i-1],{x:0,duration:.08},pos);
     });
     bespoke.to('.bespoke-foot',{autoAlpha:1,y:0,duration:.12},.82);
 
