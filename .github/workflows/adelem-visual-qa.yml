@@ -5,12 +5,24 @@ on:
       - v5-homepage-art-direction
     paths:
       - .github/workflows/adelem-visual-qa.yml
+      - site-v5/**
   workflow_dispatch:
 
 jobs:
   capture:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Pull validated images from Drive
+        working-directory: site-v5
+        run: |
+          mkdir -p assets/generated
+          curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1J3BenGQ1zOqhBAr7imvFc3hqYAkrwKtG&export=download&confirm=t" -o assets/generated/adelem-hero.webp
+          curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1FglPu2UJy8epXoWyFnL1GOxU1kym2kiE&export=download&confirm=t" -o assets/generated/adelem-geste.webp
+      - name: Start local V5
+        run: |
+          python -m http.server 4173 --directory site-v5 >/tmp/adelem-http.log 2>&1 &
+          sleep 2
       - uses: browser-actions/setup-chrome@v1
       - name: Install Selenium
         run: python -m pip install --quiet selenium
@@ -21,7 +33,7 @@ jobs:
           from selenium.webdriver.chrome.options import Options
           import time, os
 
-          URL="https://adelem-v5-preview.netlify.app/"
+          URL="http://127.0.0.1:4173/"
           sections=[
               ("hero",None),
               ("material",".material"),
