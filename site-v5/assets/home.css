@@ -2217,9 +2217,9 @@ body:has(.hero-portal) .site-nav .logo{
   background:#0d0f0c;
 }
 .frames-story .frames-image img{
-  object-position:82% 48%;
-  transform:scale(1.62);
-  transform-origin:78% 46%;
+  object-position:100% 50%;
+  transform:scale(1.18);
+  transform-origin:100% 50%;
   filter:saturate(.68) contrast(1.06) brightness(.88);
 }
 .frames-story .frames-image::after{
@@ -2234,8 +2234,8 @@ body:has(.hero-portal) .site-nav .logo{
 @media(max-width:900px){
   .material-reveal-stage{--mat-scale:2.10}
   .frames-story .frames-image img{
-    object-position:78% 48%;
-    transform:scale(1.46);
+    object-position:100% 50%;
+    transform:scale(1.12);
   }
 }
 
