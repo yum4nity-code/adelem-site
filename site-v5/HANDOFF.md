@@ -173,7 +173,19 @@ Le site affiche encore le placeholder distant actuel tant qu’un chemin de tran
 Le commit `b29f65f` prétendait brancher les images validées, mais le fichier `assets/generated-images.js` contenait en réalité un message d’erreur de transfert de fichier.
 
 Ce fichier a été neutralisé proprement dans `89bf073`.
-Ne pas recommencer un transfert de plusieurs Mo via base64/chunks.
+
+Les deux images validées sont désormais stockées hors GitHub dans Google Drive :
+- `/Google Drive/Adelem-assets/adelem-hero.webp` — ~113 Ko
+- `/Google Drive/Adelem-assets/adelem-geste.webp` — ~97 Ko
+
+Le code V5 dispose maintenant d'un override externe sûr :
+- `assets/generated-images.js` contient uniquement les deux URLs configurables
+- `assets/home.js` applique l'override si l'URL existe
+- si l'asset externe échoue, le placeholder actuel reste en fallback
+
+Commits : `4b6e261` puis `b43dfce`.
+
+**Interdit :** ne plus transférer ces images vers GitHub en base64/chunks.
 
 ### 1E — Contrôle
 - sortie nettoyée des phrases explicitement rejetées : `f185e74`
