@@ -40,7 +40,7 @@ jobs:
               ("gesture",".gesture"),
               ("gallery",".gallery"),
               ("frames",".frames"),
-              ("portal",".portal"),
+              ("bespoke",".bespoke-stage"),
               ("closing",".closing"),
           ]
 
