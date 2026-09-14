@@ -72,6 +72,10 @@ jobs:
                   d.save_screenshot("qa/desktop-hero-reveal.png")
               if section_progress(d,".material-reveal",.76):
                   d.save_screenshot("qa/desktop-material-reveal.png")
+              if section_progress(d,".gesture-sequence",.46):
+                  d.save_screenshot("qa/desktop-gesture-mid.png")
+              if section_progress(d,".gesture-sequence",.90):
+                  d.save_screenshot("qa/desktop-gesture-end.png")
           finally:
               d.quit()
 
@@ -93,6 +97,10 @@ jobs:
                   d.save_screenshot("qa/mobile-hero-reveal.png")
               if section_progress(d,".material-reveal",.76):
                   d.save_screenshot("qa/mobile-material-reveal.png")
+              if section_progress(d,".gesture-sequence",.46):
+                  d.save_screenshot("qa/mobile-gesture-mid.png")
+              if section_progress(d,".gesture-sequence",.90):
+                  d.save_screenshot("qa/mobile-gesture-end.png")
           finally:
               d.quit()
           PY
