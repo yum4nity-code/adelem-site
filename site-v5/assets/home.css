@@ -29,7 +29,7 @@ button{font:inherit}
 ::selection{background:var(--copper);color:white}
 
 .site-nav{
-  position:fixed;
+  position:absolute;
   inset:0 0 auto 0;
   height:108px;
   padding:0 4.5vw;
