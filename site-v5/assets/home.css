@@ -594,3 +594,36 @@ button{font:inherit}
   .closing h2{font-size:13vw;line-height:.94;margin:16px 0 24px}
   .closing p{font-size:14px;line-height:1.7}
 }
+
+/* V5 rhythm + gallery pass */
+.gallery{padding-top:12vw;padding-bottom:15vw}
+.gallery-head{max-width:1320px;margin-left:auto;margin-right:auto;margin-bottom:9vw}
+.art{
+  background:#171814;
+  padding:10px;
+  box-shadow:0 18px 50px rgba(22,20,15,.12);
+}
+.art-label{left:calc(1.2vw + 10px);bottom:calc(1.2vw + 10px)}
+.frames-copy{padding-right:9vw}
+#sculptures img{filter:saturate(.38) contrast(1.08) brightness(.76)}
+#sur-mesure img{filter:saturate(.68) contrast(1.02) brightness(.88)}
+.private{padding-top:14vw;padding-bottom:14vw}
+.private-card{box-shadow:0 22px 70px rgba(18,16,12,.14)}
+
+@media(max-width:900px){
+  .gallery{padding-top:20vw;padding-bottom:18vw}
+  .gallery-head{margin-bottom:12vw}
+  .art{padding:7px}
+  .frames-image{min-height:66svh}
+  .frames-copy{min-height:58svh}
+  .portal-block{min-height:76svh}
+  .private{padding-top:22vw;padding-bottom:22vw}
+}
+
+@media(max-width:560px){
+  .gallery{padding-top:18vw}
+  .gallery-head{margin-bottom:14vw}
+  .art-label{left:14px;bottom:14px}
+  .frames-image{min-height:60svh}
+  .portal-block{min-height:72svh}
+}
