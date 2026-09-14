@@ -1,0 +1,33 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/assets/generated/adelem-hero.webp",
+      "destination": "https://drive.usercontent.google.com/download?id=1J3BenGQ1zOqhBAr7imvFc3hqYAkrwKtG&export=download&confirm=t"
+    },
+    {
+      "source": "/assets/generated/adelem-geste.webp",
+      "destination": "https://drive.usercontent.google.com/download?id=1FglPu2UJy8epXoWyFnL1GOxU1kym2kiE&export=download&confirm=t"
+    },
+    {
+      "source": "/assets/generated/adelem-gallery-angle.webp",
+      "destination": "https://drive.usercontent.google.com/download?id=1knWuEwKtVuCGLUmDgXJ0uSa8HMtGmsUE&export=download&confirm=t"
+    },
+    {
+      "source": "/assets/generated/adelem-gallery-room.webp",
+      "destination": "https://drive.usercontent.google.com/download?id=1NZ25RyQbyh0dCmLUPLxiI_1ynMBmfS54&export=download&confirm=t"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' https: data:; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data:; object-src 'none'; base-uri 'self'"
+        }
+      ]
+    }
+  ]
+}
