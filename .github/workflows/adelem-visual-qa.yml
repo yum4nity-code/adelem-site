@@ -29,7 +29,6 @@ jobs:
               ("gallery",".gallery"),
               ("frames",".frames"),
               ("portal",".portal"),
-              ("private",".private"),
               ("closing",".closing"),
           ]
 
@@ -47,7 +46,10 @@ jobs:
               d.get(URL); time.sleep(4)
               for name,sel in sections:
                   if sel:
-                      d.execute_script(f"document.querySelector('{sel}').scrollIntoView({{block:'start'}})")
+                      el=d.execute_script("return document.querySelector(arguments[0])",sel)
+                      if not el:
+                          continue
+                      d.execute_script("arguments[0].scrollIntoView({block:'start'})",el)
                       time.sleep(.8)
                   else:
                       d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
