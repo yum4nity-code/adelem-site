@@ -94,7 +94,7 @@ jobs:
           d=browser(390,844)
           try:
               d.get(URL); time.sleep(4)
-              for name,sel in [sections[0],sections[3],sections[-1]]:
+              for name,sel in [sections[0],sections[3],sections[4],sections[5],sections[-1]]:
                   if sel:
                       el=d.execute_script("return document.querySelector(arguments[0])",sel)
                       if not el:
