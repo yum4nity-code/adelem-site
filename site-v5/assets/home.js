@@ -170,3 +170,48 @@ function requestGestureSync(){
 syncGestureSequence();
 window.addEventListener('scroll',requestGestureSync,{passive:true});
 window.addEventListener('resize',requestGestureSync,{passive:true});
+
+
+const viewingRoom=document.querySelector('.viewing-room');
+const viewingStage=document.querySelector('.viewing-room-stage');
+const viewingModes=[...document.querySelectorAll('.viewing-room-modes span')];
+
+function syncViewingRoom(){
+  if(!viewingRoom||!viewingStage) return;
+  const travel=Math.max(1,viewingRoom.offsetHeight-window.innerHeight);
+  const p=clamp01(-viewingRoom.getBoundingClientRect().top/travel);
+  const intro=1-clamp01((p-.18)/.18);
+  const focus=clamp01(p/.62);
+  const detail=clamp01((p-.34)/.58);
+
+  viewingStage.style.setProperty('--works-title-o',intro.toFixed(4));
+  viewingStage.style.setProperty('--works-title-y',((1-intro)*-18).toFixed(1)+'px');
+
+  if(window.innerWidth<=900){
+    viewingStage.style.setProperty('--works-outer',(.92+.08*focus).toFixed(4));
+    viewingStage.style.setProperty('--works-detail',(1+.40*detail).toFixed(4));
+  }else{
+    viewingStage.style.setProperty('--works-x',(17*(1-focus)).toFixed(2)+'vw');
+    viewingStage.style.setProperty('--works-outer',(.78+.22*focus).toFixed(4));
+    viewingStage.style.setProperty('--works-detail',(1+.48*detail).toFixed(4));
+  }
+
+  const active=p<.34?0:(p<.68?1:2);
+  viewingModes.forEach(function(mode,index){
+    mode.classList.toggle('active',index===active);
+  });
+}
+
+let worksTicking=false;
+function requestWorksSync(){
+  if(worksTicking) return;
+  worksTicking=true;
+  requestAnimationFrame(function(){
+    syncViewingRoom();
+    worksTicking=false;
+  });
+}
+
+syncViewingRoom();
+window.addEventListener('scroll',requestWorksSync,{passive:true});
+window.addEventListener('resize',requestWorksSync,{passive:true});
