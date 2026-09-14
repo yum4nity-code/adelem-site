@@ -1,0 +1,76 @@
+name: Adelem visual QA
+on:
+  push:
+    branches:
+      - v5-homepage-art-direction
+    paths:
+      - .github/workflows/adelem-visual-qa.yml
+  workflow_dispatch:
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-chrome@v1
+      - name: Install Selenium
+        run: python -m pip install --quiet selenium
+      - name: Capture live V5
+        run: |
+          cat > /tmp/capture.py <<'PY'
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
+          import time, os
+
+          URL="https://adelem-v5-preview.netlify.app/"
+          sections=[
+              ("hero",None),
+              ("material",".material"),
+              ("gesture",".gesture"),
+              ("gallery",".gallery"),
+              ("frames",".frames"),
+              ("portal",".portal"),
+              ("private",".private"),
+              ("closing",".closing"),
+          ]
+
+          def browser(w,h):
+              o=Options()
+              o.add_argument("--headless=new")
+              o.add_argument("--no-sandbox")
+              o.add_argument("--disable-dev-shm-usage")
+              o.add_argument(f"--window-size={w},{h}")
+              return webdriver.Chrome(options=o)
+
+          os.makedirs("qa",exist_ok=True)
+          d=browser(1440,1200)
+          try:
+              d.get(URL); time.sleep(4)
+              for name,sel in sections:
+                  if sel:
+                      d.execute_script(f"document.querySelector('{sel}').scrollIntoView({{block:'start'}})")
+                      time.sleep(.8)
+                  else:
+                      d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
+                  d.save_screenshot(f"qa/desktop-{name}.png")
+          finally:
+              d.quit()
+
+          d=browser(390,844)
+          try:
+              d.get(URL); time.sleep(4)
+              for name,sel in [sections[0],sections[3],sections[-1]]:
+                  if sel:
+                      d.execute_script(f"document.querySelector('{sel}').scrollIntoView({{block:'start'}})")
+                      time.sleep(.8)
+                  else:
+                      d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
+                  d.save_screenshot(f"qa/mobile-{name}.png")
+          finally:
+              d.quit()
+          PY
+          python /tmp/capture.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: adelem-live-visual-qa
+          path: qa/*.png
+          if-no-files-found: error
