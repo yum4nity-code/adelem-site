@@ -23,7 +23,7 @@ jobs:
         run: >
           npx -y @netlify/mcp@latest
           --site-id b7879588-731e-402d-a773-2c48208e8eaf
-          --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..R60Psj7PFrtsF-O7.9Z7rYz93dtyNziQKqjp4vgL3SlqU_8zEbtpBAOgUEnXSNVAwSqaO4NvqXS9RZpeKXahPz11bpJhRwsKq_leNf7MQMqk5lAm7nTlkxb1ybi9Flfh2ATFfgG-F6ICuFM-g_INEv2zwaSllt5V3L5GayaT7DbJBJHKUS9blOpjf1ARVo-iviQcMBhO-Dw3kYblFooHDKmqfAwN1So8zT9shwYX6Zshu1nYGEjKwAoUFgquD6BY9IZeR-H8R45aFJ8fO9MdK2qgju0TVt0aM6pBPicV279I2wcBPWKzLVrkJwg2UFASlmQmUNrx7Hx-Kwqzrk_QGceCnrK-siupNuv0Ev4T_TkklAokFExizA_jAERVCFseMiKZk0uEBecjEnaw786i-ZQBS.haQ1kNH-umbqXJNvR6P24Q"
+          --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..g2FJ-Nz8AWggBBqd.MgGYGNBMFOgA-7DdLcq0-JoVI1r6iApL-rA2gko_xrmSV-fIC6W84lM5cmgBpjLz48yg_cSHRzbyp1uvaDFUSx2yG9BhUQAdlkdqe8KWPNBK8RuFFcZyRjVgV195Qj8yTmktlZVUq9cuzgGSe2EQPQTiskNSfCBxLXgWVrzGVya91FbUyGWWu9eJFrjbgReaSxtueA_TotA807z99R-QgnOm1AekKs-HZEh2L0qVCAL7SLDa_5dCZ7xFSfiHF-STEA6rpR_ZxLqdfcWP-6Mjg843BpUfKHOgM1H9q_kcS-l_Ql_6K-0D0mfHpTyiOoK9OFaXRhVaZt0aIqHzXd8GwO2vScm_PjjJCOQOmWp9RktRMVIVpA8cZWuhxOQakWtQQmyhgAMf.1zENSR9F4bgtEJnjxroLNA"
       - uses: browser-actions/setup-chrome@v1
       - name: Install Selenium
         run: python -m pip install --quiet selenium
