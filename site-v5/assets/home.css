@@ -2141,3 +2141,5 @@ body:has(.hero-portal) .site-nav .logo{
   .frames-fact{font-size:9px}
   .closing-seal{width:120vw;opacity:.16}
 }
+
+.closing .text-link{display:none!important}
