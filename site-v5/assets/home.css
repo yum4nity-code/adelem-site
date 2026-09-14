@@ -1617,3 +1617,165 @@ body:has(.hero-portal) .site-nav .logo{
   .material-reveal-copy{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;margin:10vw 7vw 0;transform:none;opacity:1}
   .material-reveal-index{display:none}
 }
+
+
+/* V5 — GESTURE / craft sequence */
+.gesture.gesture-sequence{
+  position:relative;
+  min-height:230svh;
+  display:block;
+  background:#11130f;
+  color:#f5f0e7;
+}
+.gesture-sequence-stage{
+  --gesture-scale:1.08;
+  --gesture-x:0%;
+  --gesture-summary-o:0;
+  --gesture-summary-y:28px;
+  position:sticky;
+  top:0;
+  height:100svh;
+  overflow:hidden;
+  isolation:isolate;
+  background:#11130f;
+}
+.gesture-sequence-media{
+  position:absolute;
+  inset:0;
+  margin:0;
+  overflow:hidden;
+  z-index:1;
+}
+.gesture-sequence-image{
+  position:absolute;
+  inset:-2%;
+  width:104%;
+  height:104%;
+  object-fit:cover;
+  object-position:center;
+  transform:translateX(var(--gesture-x)) scale(var(--gesture-scale));
+  transform-origin:58% 50%;
+  filter:saturate(.78) contrast(1.04) brightness(.86);
+  will-change:transform;
+}
+.gesture-sequence-shade{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(8,10,7,.78) 0%,rgba(8,10,7,.48) 30%,rgba(8,10,7,.09) 63%,rgba(8,10,7,.12) 100%),
+    linear-gradient(180deg,rgba(8,10,7,.10),rgba(8,10,7,.12));
+}
+.gesture-sequence-index{
+  position:absolute;
+  z-index:3;
+  left:5.4vw;
+  top:6.5vh;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:rgba(247,242,233,.72);
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.gesture-sequence-index i{
+  width:34px;
+  height:1px;
+  background:rgba(247,242,233,.45);
+}
+.gesture-sequence-verbs{
+  position:absolute;
+  z-index:3;
+  left:6.2vw;
+  top:50%;
+  width:min(43vw,660px);
+  height:170px;
+  transform:translateY(-50%);
+  pointer-events:none;
+}
+.gesture-sequence-verbs span{
+  position:absolute;
+  inset:0 auto auto 0;
+  opacity:0;
+  transform:translateY(24px);
+  font-family:"Newsreader",Georgia,serif;
+  font-size:clamp(78px,8.8vw,136px);
+  font-weight:300;
+  line-height:.9;
+  letter-spacing:-.05em;
+  color:#f7f2e9;
+  text-shadow:0 8px 34px rgba(0,0,0,.26);
+  will-change:opacity,transform;
+}
+.gesture-sequence-summary{
+  position:absolute;
+  z-index:4;
+  left:6.2vw;
+  bottom:8vh;
+  width:min(36vw,520px);
+  opacity:var(--gesture-summary-o);
+  transform:translateY(var(--gesture-summary-y));
+  color:#f7f2e9;
+}
+.gesture-sequence-summary h2{
+  margin:0 0 18px;
+  font-family:"Newsreader",Georgia,serif;
+  font-size:clamp(54px,5.7vw,88px);
+  font-weight:300;
+  line-height:.92;
+  letter-spacing:-.04em;
+}
+.gesture-sequence-summary p{
+  max-width:470px;
+  margin:0;
+  color:rgba(247,242,233,.72);
+  font-size:13px;
+  line-height:1.75;
+}
+@media(max-width:900px){
+  .gesture.gesture-sequence{min-height:215svh}
+  .gesture-sequence-image{
+    object-position:60% center;
+    transform-origin:62% 50%;
+  }
+  .gesture-sequence-shade{
+    background:
+      linear-gradient(180deg,rgba(8,10,7,.12) 0%,rgba(8,10,7,.14) 42%,rgba(8,10,7,.72) 74%,rgba(8,10,7,.88) 100%);
+  }
+  .gesture-sequence-index{left:6vw;top:5vh;font-size:7px}
+  .gesture-sequence-verbs{
+    left:6vw;
+    right:6vw;
+    top:auto;
+    bottom:18vh;
+    width:auto;
+    height:92px;
+    transform:none;
+  }
+  .gesture-sequence-verbs span{
+    font-size:13.8vw;
+    line-height:.92;
+  }
+  .gesture-sequence-summary{
+    left:6vw;
+    right:6vw;
+    bottom:6vh;
+    width:auto;
+  }
+  .gesture-sequence-summary h2{font-size:12.5vw;margin-bottom:12px}
+  .gesture-sequence-summary p{max-width:86vw;font-size:12px;line-height:1.66}
+}
+@media(max-width:560px){
+  .gesture.gesture-sequence{min-height:205svh}
+  .gesture-sequence-verbs{bottom:20vh}
+  .gesture-sequence-summary h2{font-size:13.2vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .gesture.gesture-sequence{min-height:auto}
+  .gesture-sequence-stage{position:relative;height:auto;min-height:100svh}
+  .gesture-sequence-media{position:relative;height:68svh}
+  .gesture-sequence-image{transform:none}
+  .gesture-sequence-verbs{display:none}
+  .gesture-sequence-summary{position:relative;left:auto;right:auto;bottom:auto;width:auto;opacity:1;transform:none;padding:10vw 7vw 12vw}
+}
