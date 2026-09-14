@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Pull validated images from Drive
+        working-directory: site-v5
+        run: |
+          mkdir -p assets/generated
+          curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1J3BenGQ1zOqhBAr7imvFc3hqYAkrwKtG&export=download&confirm=t" -o assets/generated/adelem-hero.webp
+          curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1FglPu2UJy8epXoWyFnL1GOxU1kym2kiE&export=download&confirm=t" -o assets/generated/adelem-geste.webp
+          test $(stat -c%s assets/generated/adelem-hero.webp) -gt 50000
+          test $(stat -c%s assets/generated/adelem-geste.webp) -gt 50000
       - name: Deploy site-v5 to Netlify
         working-directory: site-v5
         run: >
