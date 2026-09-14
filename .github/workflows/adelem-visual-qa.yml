@@ -19,6 +19,8 @@ jobs:
           mkdir -p assets/generated
           curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1J3BenGQ1zOqhBAr7imvFc3hqYAkrwKtG&export=download&confirm=t" -o assets/generated/adelem-hero.webp
           curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1FglPu2UJy8epXoWyFnL1GOxU1kym2kiE&export=download&confirm=t" -o assets/generated/adelem-geste.webp
+          curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1knWuEwKtVuCGLUmDgXJ0uSa8HMtGmsUE&export=download&confirm=t" -o assets/generated/adelem-gallery-angle.webp
+          curl --fail --location --retry 3 "https://drive.usercontent.google.com/download?id=1NZ25RyQbyh0dCmLUPLxiI_1ynMBmfS54&export=download&confirm=t" -o assets/generated/adelem-gallery-room.webp
       - name: Start local V5
         run: |
           python -m http.server 4173 --directory site-v5 >/tmp/adelem-http.log 2>&1 &
@@ -80,14 +82,17 @@ jobs:
                       d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
                   d.save_screenshot(f"qa/desktop-{name}.png")
 
-              if section_progress(d,".hero-portal",.76):
-                  d.save_screenshot("qa/desktop-hero-reveal.png")
-              if section_progress(d,".material-reveal",.76):
-                  d.save_screenshot("qa/desktop-material-reveal.png")
-              if section_progress(d,".gesture-sequence",.46):
-                  d.save_screenshot("qa/desktop-gesture-mid.png")
-              if section_progress(d,".gesture-sequence",.90):
-                  d.save_screenshot("qa/desktop-gesture-end.png")
+              for pct in (.25,.50,.75):
+                  if section_progress(d,".hero-portal",pct):
+                      d.save_screenshot(f"qa/desktop-hero-{int(pct*100)}.png")
+                  if section_progress(d,".material-reveal",pct):
+                      d.save_screenshot(f"qa/desktop-material-{int(pct*100)}.png")
+                  if section_progress(d,".gesture-sequence",pct):
+                      d.save_screenshot(f"qa/desktop-gesture-{int(pct*100)}.png")
+                  if section_progress(d,".viewing-room",pct):
+                      d.save_screenshot(f"qa/desktop-works-{int(pct*100)}.png")
+                  if section_progress(d,".bespoke-stage",pct):
+                      d.save_screenshot(f"qa/desktop-bespoke-{int(pct*100)}.png")
           finally:
               d.quit()
 
@@ -105,14 +110,15 @@ jobs:
                       d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
                   d.save_screenshot(f"qa/mobile-{name}.png")
 
-              if section_progress(d,".hero-portal",.76):
-                  d.save_screenshot("qa/mobile-hero-reveal.png")
-              if section_progress(d,".material-reveal",.76):
-                  d.save_screenshot("qa/mobile-material-reveal.png")
-              if section_progress(d,".gesture-sequence",.46):
-                  d.save_screenshot("qa/mobile-gesture-mid.png")
-              if section_progress(d,".gesture-sequence",.90):
-                  d.save_screenshot("qa/mobile-gesture-end.png")
+              for pct in (.25,.50,.75):
+                  if section_progress(d,".hero-portal",pct):
+                      d.save_screenshot(f"qa/mobile-hero-{int(pct*100)}.png")
+                  if section_progress(d,".gesture-sequence",pct):
+                      d.save_screenshot(f"qa/mobile-gesture-{int(pct*100)}.png")
+                  if section_progress(d,".viewing-room",pct):
+                      d.save_screenshot(f"qa/mobile-works-{int(pct*100)}.png")
+                  if section_progress(d,".bespoke-stage",pct):
+                      d.save_screenshot(f"qa/mobile-bespoke-{int(pct*100)}.png")
           finally:
               d.quit()
           PY
