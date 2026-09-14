@@ -2414,3 +2414,40 @@ body:has(.hero-portal) .site-nav .logo{
     aspect-ratio:1.22/1;
   }
 }
+
+
+/* V6 — CINEMATIC MOTION */
+.site-nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:82px;
+  padding:0 4.5vw;
+  transform:translateY(0);
+  transition:transform .38s var(--ease),background .38s var(--ease),border-color .38s var(--ease);
+}
+.site-nav.nav-hidden{transform:translateY(-112%)}
+.site-nav.nav-scrolled{
+  background:rgba(11,14,11,.72);
+  -webkit-backdrop-filter:blur(14px) saturate(120%);
+  backdrop-filter:blur(14px) saturate(120%);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.site-nav .nav-links,.site-nav .menu-btn{mix-blend-mode:normal;color:#f7f3eb}
+.site-nav .logo{filter:drop-shadow(0 2px 15px rgba(0,0,0,.28))}
+.hero-portal-media{transform:none!important;clip-path:inset(0);will-change:clip-path}
+.hero-portal-image{transform:none;will-change:transform}
+.hero-portal-copy,.hero-round-badge,.hero-portal-cartel{will-change:transform,opacity}
+.material-reveal-media{clip-path:inset(0);will-change:clip-path}
+.material-reveal-media img{transform:none;object-position:58% center;will-change:transform}
+.material-reveal-copy,.material-reveal-index{will-change:transform,opacity}
+.gesture-sequence-image{transform:none;will-change:transform}
+.gesture-sequence-verbs span,.gesture-sequence-summary{will-change:transform,opacity}
+.viewing-room-artwork{transform:none;will-change:transform}
+.viewing-room-image img{transform:none;will-change:transform,opacity}
+.viewing-room-main,.viewing-room-alt{
+  position:absolute;inset:-2%;width:104%;height:104%;
+  object-fit:cover;object-position:center;
+}
+.viewing-room-alt{opacity:0}
+.frames-story .frames-image img{transform:none;object-position:center;will-change:transform}
+.closing-badge,.closing-facts{will-change:transform,opacity}
