@@ -40,6 +40,19 @@ jobs:
               o.add_argument(f"--window-size={w},{h}")
               return webdriver.Chrome(options=o)
 
+          def section_progress(d,selector,progress):
+              el=d.execute_script("return document.querySelector(arguments[0])",selector)
+              if not el:
+                  return False
+              d.execute_script("""
+                  const el=arguments[0], p=arguments[1];
+                  const top=el.getBoundingClientRect().top+window.scrollY;
+                  const travel=Math.max(0,el.offsetHeight-window.innerHeight);
+                  window.scrollTo(0,top+travel*p);
+              """,el,progress)
+              time.sleep(1.1)
+              return True
+
           os.makedirs("qa",exist_ok=True)
           d=browser(1440,1200)
           try:
@@ -54,6 +67,11 @@ jobs:
                   else:
                       d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
                   d.save_screenshot(f"qa/desktop-{name}.png")
+
+              if section_progress(d,".hero-portal",.76):
+                  d.save_screenshot("qa/desktop-hero-reveal.png")
+              if section_progress(d,".material-reveal",.76):
+                  d.save_screenshot("qa/desktop-material-reveal.png")
           finally:
               d.quit()
 
@@ -62,11 +80,19 @@ jobs:
               d.get(URL); time.sleep(4)
               for name,sel in [sections[0],sections[3],sections[-1]]:
                   if sel:
-                      d.execute_script(f"document.querySelector('{sel}').scrollIntoView({{block:'start'}})")
+                      el=d.execute_script("return document.querySelector(arguments[0])",sel)
+                      if not el:
+                          continue
+                      d.execute_script("arguments[0].scrollIntoView({block:'start'})",el)
                       time.sleep(.8)
                   else:
                       d.execute_script("window.scrollTo(0,0)"); time.sleep(.8)
                   d.save_screenshot(f"qa/mobile-{name}.png")
+
+              if section_progress(d,".hero-portal",.76):
+                  d.save_screenshot("qa/mobile-hero-reveal.png")
+              if section_progress(d,".material-reveal",.76):
+                  d.save_screenshot("qa/mobile-material-reveal.png")
           finally:
               d.quit()
           PY
