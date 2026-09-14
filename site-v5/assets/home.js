@@ -94,24 +94,25 @@ function syncMaterialReveal(){
   if(!materialReveal||!materialStage) return;
   const travel=Math.max(1,materialReveal.offsetHeight-window.innerHeight);
   const p=clamp01(-materialReveal.getBoundingClientRect().top/travel);
-  const copy=clamp01((p-.42)/.30);
+  const geometry=clamp01(p/.74);
+  const copy=clamp01((p-.46)/.24);
   const index=clamp01((p-.22)/.34);
 
   if(window.innerWidth<=900){
-    materialStage.style.setProperty('--mat-b',(44*p).toFixed(2)+'vh');
-    materialStage.style.setProperty('--mat-scale',(1.68-.54*p).toFixed(4));
+    materialStage.style.setProperty('--mat-b',(44*geometry).toFixed(2)+'vh');
+    materialStage.style.setProperty('--mat-scale',(1.68-.54*geometry).toFixed(4));
     materialStage.style.setProperty('--mat-copy-o',copy.toFixed(4));
     materialStage.style.setProperty('--mat-copy-y',(28*(1-copy)).toFixed(1)+'px');
     materialStage.style.setProperty('--mat-index-o',index.toFixed(4));
     return;
   }
 
-  materialStage.style.setProperty('--mat-r',(43*p).toFixed(2)+'vw');
-  materialStage.style.setProperty('--mat-l',(3.6*p).toFixed(2)+'vw');
-  materialStage.style.setProperty('--mat-t',(5.5*p).toFixed(2)+'vh');
-  materialStage.style.setProperty('--mat-b',(5.5*p).toFixed(2)+'vh');
-  materialStage.style.setProperty('--mat-scale',(1.68-.54*p).toFixed(4));
-  materialStage.style.setProperty('--mat-x',(8+24*p).toFixed(2)+'%');
+  materialStage.style.setProperty('--mat-r',(43*geometry).toFixed(2)+'vw');
+  materialStage.style.setProperty('--mat-l',(3.6*geometry).toFixed(2)+'vw');
+  materialStage.style.setProperty('--mat-t',(5.5*geometry).toFixed(2)+'vh');
+  materialStage.style.setProperty('--mat-b',(5.5*geometry).toFixed(2)+'vh');
+  materialStage.style.setProperty('--mat-scale',(1.68-.54*geometry).toFixed(4));
+  materialStage.style.setProperty('--mat-x',(8+24*geometry).toFixed(2)+'%');
   materialStage.style.setProperty('--mat-copy-o',copy.toFixed(4));
   materialStage.style.setProperty('--mat-copy-y',(28*(1-copy)).toFixed(1)+'px');
   materialStage.style.setProperty('--mat-index-o',index.toFixed(4));
