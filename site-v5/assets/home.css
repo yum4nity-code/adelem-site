@@ -2143,3 +2143,37 @@ body:has(.hero-portal) .site-nav .logo{
 }
 
 .closing .text-link{display:none!important}
+
+
+/* V5 — FINAL SIGNATURE */
+.closing{
+  min-height:88svh;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(72,92,66,.10),transparent 34%),
+    #0b0e0b;
+}
+.closing-inner{
+  width:min(760px,86vw);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.closing-wordmark{
+  width:clamp(230px,31vw,500px);
+  height:auto;
+}
+.closing-facts{
+  margin:38px 0 0;
+  color:rgba(247,243,235,.58);
+  font-size:9px;
+  line-height:1.8;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  text-align:center;
+}
+@media(max-width:560px){
+  .closing{min-height:78svh}
+  .closing-wordmark{width:70vw}
+  .closing-facts{max-width:78vw;font-size:8px;line-height:1.9}
+}
