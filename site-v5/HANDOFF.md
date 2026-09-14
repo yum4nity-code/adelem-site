@@ -157,17 +157,23 @@ Ne pas régénérer ni redessiner le logo.
 Image dense générée et retrouvée dans la Library :
 `Framed Moss Forest in Antique Gold.png`.
 
-Statut : **validée visuellement, intégration binaire GitHub en attente**.
+Statut : **validée visuellement et branchée via Google Drive public**.
 
-Le site affiche encore le placeholder distant actuel tant qu’un chemin de transfert binaire sûr n’est pas disponible.
+Asset web :
+`/Google Drive/Adelem-assets/adelem-hero.webp` — ~113 Ko.
+
+L’URL Drive publique est déclarée dans `assets/generated-images.js`. Le placeholder distant reste uniquement en fallback de sécurité.
 
 ### 1C — Le geste
 Image générée et retrouvée dans la Library :
 `Crafting a Gilded Mosswork мастерpiece.png`.
 
-Statut : **validée visuellement, intégration binaire GitHub en attente**.
+Statut : **validée visuellement et branchée via Google Drive public**.
 
-Le site affiche encore le placeholder distant actuel tant qu’un chemin de transfert binaire sûr n’est pas disponible.
+Asset web :
+`/Google Drive/Adelem-assets/adelem-geste.webp` — ~97 Ko.
+
+L’URL Drive publique est déclarée dans `assets/generated-images.js`. Le placeholder distant reste uniquement en fallback de sécurité.
 
 ### 1D — Intégration
 Le commit `b29f65f` prétendait brancher les images validées, mais le fichier `assets/generated-images.js` contenait en réalité un message d’erreur de transfert de fichier.
@@ -190,7 +196,9 @@ Commits : `4b6e261` puis `b43dfce`.
 ### 1E — Contrôle
 - sortie nettoyée des phrases explicitement rejetées : `f185e74`
 - orthographe textuelle de marque alignée sur **Adelem** : `ab56e93`
-- prochain contrôle : preview réelle desktop/mobile après intégration binaire sûre des deux images
+- deux assets V5 publics sur Drive et branchés avec fallback : `32f7644`
+- permissions vérifiées : `anyone → reader` sur les deux WebP
+- prochain contrôle : preview réelle desktop/mobile
 
 ## Audit anti-générique
 
@@ -244,9 +252,8 @@ Ont été explicitement rejetés :
 
 ## Priorité de reprise
 
-1. **Ne pas régénérer 1B ni 1C** : les deux images existent et ont été retrouvées
-2. Trouver un chemin **binaire sûr** pour les intégrer au repo sans base64 massif
-3. Brancher uniquement 1B et vérifier la preview
-4. Brancher uniquement 1C et vérifier la preview
-5. Faire le contrôle mobile/desktop
-6. Continuer ensuite la homepage écran par écran
+1. **Ne pas régénérer 1B ni 1C** : les deux images sont validées et branchées via Drive
+2. Faire le contrôle réel desktop/mobile
+3. Corriger uniquement ce qui est visible sur ce contrôle
+4. Continuer ensuite la homepage écran par écran
+5. Conserver GitHub pour le code et Drive/CDN pour les assets binaires lourds
