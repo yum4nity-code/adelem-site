@@ -1975,3 +1975,97 @@ body:has(.hero-portal) .site-nav .logo{
   .viewing-room-image img{transform:none}
   .viewing-room-modes{display:none}
 }
+
+
+/* V5 — EXTENSIONS / honest asymmetry */
+.portal{
+  min-height:110svh;
+  grid-template-columns:.42fr .58fr;
+  background:#11130f;
+}
+.portal-block{
+  min-height:110svh;
+}
+#sculptures{
+  background:
+    radial-gradient(circle at 18% 20%,rgba(111,126,95,.18),transparent 28%),
+    radial-gradient(circle at 76% 78%,rgba(151,104,81,.10),transparent 26%),
+    #11130f;
+}
+#sculptures>img{display:none}
+#sculptures::after{
+  background:
+    linear-gradient(135deg,transparent 0 49.7%,rgba(255,255,255,.055) 50%,transparent 50.3%),
+    linear-gradient(to top,rgba(7,8,6,.24),transparent 65%);
+}
+#sculptures .portal-copy{
+  left:5vw;
+  right:4vw;
+  bottom:8vw;
+}
+#sculptures .portal-copy::before{
+  content:"05  —  RECHERCHE EN VOLUME";
+  display:block;
+  margin-bottom:8vh;
+  font-size:8px;
+  letter-spacing:.2em;
+  color:rgba(255,255,255,.45);
+}
+#sculptures .portal-copy h3{
+  max-width:6ch;
+  font-size:clamp(72px,7.2vw,112px);
+  font-weight:300;
+}
+#sculptures .portal-copy p{
+  max-width:330px;
+}
+#sur-mesure{
+  background:#eee8dd;
+  color:#171812;
+}
+#sur-mesure::before{
+  inset:4.8vw;
+  border-color:rgba(18,19,15,.13);
+}
+#sur-mesure .portal-copy{
+  left:7vw;
+  right:7vw;
+  bottom:7.2vw;
+}
+#sur-mesure .portal-copy::before{
+  content:"06  —  POUR UN LIEU";
+  display:block;
+  margin-bottom:6vh;
+  font-size:8px;
+  letter-spacing:.2em;
+  color:#876150;
+}
+#sur-mesure .portal-copy h3{
+  font-size:clamp(76px,7.8vw,122px);
+  font-weight:300;
+  max-width:7ch;
+}
+#sur-mesure .portal-copy p{
+  max-width:470px;
+  color:#62645d;
+}
+#sur-mesure .portal-copy::after{
+  content:"01  Votre espace\A02  Une direction\A03  La composition\A04  La livraison";
+  white-space:pre-line;
+  display:block;
+  margin-top:5.5vh;
+  padding-top:22px;
+  border-top:1px solid rgba(18,19,15,.15);
+  max-width:460px;
+  font-size:9px;
+  line-height:2.25;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:#45473f;
+}
+@media(max-width:900px){
+  .portal{grid-template-columns:1fr}
+  .portal-block{min-height:78svh}
+  #sculptures .portal-copy::before,#sur-mesure .portal-copy::before{margin-bottom:7vh}
+  #sur-mesure::before{inset:7vw}
+}
