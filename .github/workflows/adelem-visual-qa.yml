@@ -93,6 +93,10 @@ jobs:
                       d.save_screenshot(f"qa/desktop-works-{int(pct*100)}.png")
                   if section_progress(d,".bespoke-stage",pct):
                       d.save_screenshot(f"qa/desktop-bespoke-{int(pct*100)}.png")
+              if section_progress(d,".gesture-sequence",.90):
+                  d.save_screenshot("qa/desktop-gesture-90.png")
+              if section_progress(d,".bespoke-stage",.90):
+                  d.save_screenshot("qa/desktop-bespoke-90.png")
           finally:
               d.quit()
 
@@ -119,6 +123,10 @@ jobs:
                       d.save_screenshot(f"qa/mobile-works-{int(pct*100)}.png")
                   if section_progress(d,".bespoke-stage",pct):
                       d.save_screenshot(f"qa/mobile-bespoke-{int(pct*100)}.png")
+              if section_progress(d,".gesture-sequence",.90):
+                  d.save_screenshot("qa/mobile-gesture-90.png")
+              if section_progress(d,".bespoke-stage",.90):
+                  d.save_screenshot("qa/mobile-bespoke-90.png")
           finally:
               d.quit()
           PY
