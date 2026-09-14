@@ -301,3 +301,7 @@ Ont été explicitement rejetés :
 4. Construire **Sur mesure**
 5. Rebrancher ensuite une preview publique stable
 6. Ne rendre accessibles dans la navigation que les pages réellement terminées
+
+## Déploiement V6
+- 14/09/2026 : le repo est désormais relié à Vercel via le projet `adelem-site-prlz`.
+- Cette modification sert aussi de déclencheur Git pour générer une preview de la branche `v5-homepage-art-direction`.
