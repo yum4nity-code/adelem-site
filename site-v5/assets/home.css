@@ -37,11 +37,14 @@ button{font:inherit}
   align-items:center;
   justify-content:space-between;
   z-index:80;
-  mix-blend-mode:difference;
-  color:white;
+  color:var(--ink);
   pointer-events:none;
 }
 .site-nav a,.site-nav button{pointer-events:auto}
+.nav-links,.menu-btn{
+  mix-blend-mode:difference;
+  color:white;
+}
 .logo{
   width:150px;
   height:82px;
