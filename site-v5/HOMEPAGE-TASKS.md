@@ -31,43 +31,43 @@ Critère : on entend AdeleM, pas le rédacteur du site.
 
 ## Étape 2 — Typographie et lisibilité mobile
 
-- [ ] Réserver Bodoni aux titres courts
-- [ ] Réduire les tailles qui cassent la lecture sur mobile
-- [ ] Revoir interlignage / largeur / marges
-- [ ] Vérifier le caractère œ et les accents
-- [ ] Éviter les titres qui occupent un écran entier sans tension utile
+- [x] Réserver Bodoni aux titres courts
+- [x] Réduire les tailles qui cassent la lecture sur mobile
+- [x] Revoir interlignage / largeur / marges
+- [x] Vérifier le caractère œ et les accents
+- [x] Éviter les titres qui occupent un écran entier sans tension utile
 
 Critère : lisible immédiatement sur Android étroit, sans perdre la personnalité.
 
 ## Étape 3 — Imagerie fidèle au produit
 
 Remplacer les images génériques par des visuels qui montrent réellement :
-- [ ] tableau végétal encadré
-- [ ] relief / trois-quarts / épaisseur
-- [ ] macro mousse, végétaux stabilisés et textures
-- [ ] mains en train de composer
-- [ ] cadre ancien + œuvre végétale
-- [ ] sculpture en grès / volume
-- [ ] œuvre végétale dans un intérieur réel
+- [x] tableau végétal encadré
+- [x] relief / trois-quarts / épaisseur
+- [x] macro mousse, végétaux stabilisés et textures
+- [x] mains en train de composer
+- [x] cadre ancien + œuvre végétale
+- [x] sculpture en grès / volume
+- [x] œuvre végétale dans un intérieur réel
 
 Règle : aucune image ne doit être choisie uniquement parce qu’elle est “belle”. Elle doit documenter ce qu’AdeleM fait réellement.
 
 ## Étape 4 — Rythme de homepage
 
-- [ ] supprimer l’effet sections empilées
-- [ ] augmenter les silences
-- [ ] alterner plein cadre / détail / texte / vide
-- [ ] conserver l’asymétrie de la galerie
-- [ ] donner une atmosphère distincte à Sculptures / Sur mesure / Collections privées
+- [x] supprimer l’effet sections empilées
+- [x] augmenter les silences
+- [x] alterner plein cadre / détail / texte / vide
+- [x] conserver l’asymétrie de la galerie
+- [x] donner une atmosphère distincte à Sculptures / Sur mesure / Collections privées
 
 Critère : la page se parcourt comme une exposition, pas comme une landing page.
 
 ## Étape 5 — Logo / signature
 
-- [ ] vérifier sa présence dans chaque contexte
-- [ ] le faire participer à la composition sans watermark gratuit
-- [ ] réduire les répétitions
-- [ ] tester cuivre / sombre selon le fond
+- [x] vérifier sa présence dans chaque contexte
+- [x] le faire participer à la composition sans watermark gratuit
+- [x] réduire les répétitions
+- [x] tester cuivre / sombre selon le fond
 
 Critère : le logo devient une signature, jamais une décoration plaquée.
 
