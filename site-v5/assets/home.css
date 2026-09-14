@@ -1191,3 +1191,58 @@ button{font:inherit}
 @media(prefers-reduced-motion:reduce){
   .hero-v2-copy>*,.hero-artwork img{animation:none}
 }
+
+
+/* V5 — Premium truth pass */
+.gallery-head .eyebrow{
+  display:block;
+  margin-bottom:22px;
+}
+.wall{
+  grid-template-columns:1.42fr .58fr;
+  grid-template-rows:auto;
+  gap:3.8vw;
+  align-items:end;
+}
+.art.a{
+  grid-column:1;
+  grid-row:1;
+}
+.art.b{
+  grid-column:2;
+  grid-row:1;
+  align-self:center;
+}
+.art.a img{aspect-ratio:1.02/1}
+.art.b img{aspect-ratio:.82/1}
+
+.frames-image img{
+  object-position:center center;
+  filter:saturate(.82) contrast(1.02);
+}
+
+.portal-text{
+  background:#e9e3d9;
+  color:var(--ink);
+}
+.portal-text::after{display:none}
+.portal-text::before{
+  content:"";
+  position:absolute;
+  inset:6vw;
+  border:1px solid rgba(18,19,15,.14);
+}
+.portal-text .portal-copy{
+  z-index:2;
+}
+.portal-text .eyebrow{color:#815f50}
+.portal-text p{color:#5c5f57}
+
+.closing-seal{display:none}
+
+@media(max-width:900px){
+  .wall{grid-template-columns:1fr;gap:13vw}
+  .art.a,.art.b{grid-column:1;grid-row:auto}
+  .art.a img,.art.b img{aspect-ratio:1.02/1}
+  .portal-text::before{inset:7vw}
+}
