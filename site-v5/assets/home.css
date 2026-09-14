@@ -556,3 +556,41 @@ button{font:inherit}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.art img,.portal-block img{transition:none}
 }
+
+/* V5 editorial typography pass */
+.hero-title,
+.material-caption h2,
+.gesture-copy h2,
+.gallery-head h2,
+.frames-copy h2,
+.portal-copy h3,
+.private h2,
+.closing h2{
+  font-variant-ligatures:common-ligatures;
+  font-feature-settings:"liga" 1,"kern" 1;
+  text-wrap:balance;
+}
+
+@media(max-width:560px){
+  .hero-title{font-size:14.6vw;line-height:.92;letter-spacing:-.045em}
+  .hero-copy p{font-size:14px;line-height:1.72;margin-left:8vw;max-width:82vw}
+  .material-caption{padding:8vw 7vw 7vw}
+  .material-caption h2{font-size:12.4vw;line-height:.96;margin:16px 0 20px}
+  .material-caption p{font-size:14px;line-height:1.72}
+  .gesture-copy{min-height:66svh;padding:15vw 7vw 10vw}
+  .gesture-copy h2{font-size:12.8vw;line-height:.95;margin:16px 0}
+  .gesture-copy p{font-size:14px;line-height:1.72;max-width:84vw}
+  .gallery{padding-top:15vw}
+  .gallery-head{gap:4vw;margin-bottom:9vw}
+  .gallery-head h2{font-size:13.4vw;line-height:.94}
+  .gallery-head p{font-size:14px;line-height:1.72;max-width:84vw}
+  .frames-copy{min-height:62svh;padding:15vw 7vw 13vw}
+  .frames-copy h2{font-size:12.8vw;line-height:.95;margin:16px 0 22px}
+  .frames-copy p{font-size:14px;line-height:1.72}
+  .portal-copy h3{font-size:12.6vw;line-height:.95;margin:10px 0 16px}
+  .portal-copy p{font-size:14px;line-height:1.68}
+  .private h2{font-size:12.6vw;line-height:.95;margin:16px 0 20px}
+  .private p{font-size:14px;line-height:1.72}
+  .closing h2{font-size:13vw;line-height:.94;margin:16px 0 24px}
+  .closing p{font-size:14px;line-height:1.7}
+}
