@@ -627,3 +627,18 @@ button{font:inherit}
   .frames-image{min-height:60svh}
   .portal-block{min-height:72svh}
 }
+
+/* V5 signature pass */
+.hero-seal{
+  width:clamp(130px,14vw,220px);
+  left:6vw;
+  top:15vh;
+  opacity:.13;
+}
+.closing-seal{opacity:.09}
+@media(max-width:900px){
+  .hero-seal{width:145px;left:6vw;top:14vh;opacity:.11}
+}
+@media(max-width:560px){
+  .hero-seal{width:128px;opacity:.10}
+}
