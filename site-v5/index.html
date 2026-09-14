@@ -14,11 +14,10 @@
 <header class="site-nav">
   <a href="#top" aria-label="Adelem — accueil"><img class="logo" src="assets/logo.svg" alt="Adelem"></a>
   <nav class="nav-links" aria-label="Navigation principale">
-    <a href="/oeuvres/">Œuvres</a>
-    <a href="/sculptures/">Sculptures</a>
-    <a href="/sur-mesure/">Sur mesure</a>
-    <a href="/atelier/">Atelier</a>
-    <a href="/contact/">Contact</a>
+    <a href="#oeuvres">Œuvres</a>
+    <a href="#geste">Atelier</a>
+    <a href="#sur-mesure">Sur mesure</a>
+    <a href="#contact">Contact</a>
   </nav>
   <button class="menu-btn" type="button" aria-label="Ouvrir le menu">Menu</button>
 </header>
@@ -26,27 +25,30 @@
 <div class="menu-panel" aria-hidden="true">
   <button class="menu-close" type="button" aria-label="Fermer le menu">×</button>
   <nav>
-    <a href="/oeuvres/">Œuvres</a>
-    <a href="/sculptures/">Sculptures</a>
-    <a href="/sur-mesure/">Sur mesure</a>
-    <a href="/atelier/">Atelier</a>
-    <a href="/contact/">Contact</a>
+    <a href="#oeuvres">Œuvres</a>
+    <a href="#geste">Atelier</a>
+    <a href="#sur-mesure">Sur mesure</a>
+    <a href="#contact">Contact</a>
   </nav>
 </div>
 
 <main id="top">
   <section class="hero hero-v2">
     <div class="hero-v2-copy">
-      <div class="hero-kicker">Œuvres végétales · pièces uniques</div>
+      <div class="hero-kicker">Œuvres végétales contemporaines</div>
       <h1 class="hero-title hero-title-v2">Le végétal<br><span>autrement</span></h1>
-      <p class="hero-facts">Végétaux naturels stabilisés · cadres anciens · travail à la main</p>
-      <a class="hero-link" href="#oeuvres">Voir les œuvres</a>
+      <p class="hero-facts">Des pièces uniques composées à la main, à partir de végétaux naturels stabilisés et de cadres anciens restaurés.</p>
+      <a class="hero-link" href="#oeuvres">Découvrir les œuvres</a>
     </div>
 
-    <div class="hero-v2-images" aria-label="Aperçu de l’univers Adelem">
+    <div class="hero-v2-images" aria-label="Œuvre Adelem">
       <figure class="hero-artwork">
-        <img src="https://images.pexels.com/photos/11591469/pexels-photo-11591469.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Composition botanique encadrée">
+        <img src="https://images.pexels.com/photos/11591469/pexels-photo-11591469.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Composition végétale encadrée">
       </figure>
+      <div class="hero-cartel" aria-label="Informations sur l’œuvre">
+        <span>Pièce unique</span>
+        <span>Végétaux naturels stabilisés<br>Cadre ancien restauré</span>
+      </div>
     </div>
   </section>
 
@@ -60,7 +62,7 @@
     <div class="material-word">matière</div>
   </section>
 
-  <section class="gesture">
+  <section class="gesture" id="geste">
     <div class="gesture-copy">
       <div>
         <div class="eyebrow reveal">Atelier Adelem</div>
@@ -86,13 +88,19 @@
     </div>
 
     <div class="wall">
-      <a class="art a reveal" href="#oeuvres"><img src="https://images.unsplash.com/photo-1675528031233-7a6d01ce1aa4?auto=format&fit=crop&w=1800&q=88" alt=""><span class="art-label">Pièce signature</span></a>
-      <a class="art b reveal" href="#oeuvres"><img src="https://images.unsplash.com/photo-1675528031233-7a6d01ce1aa4?auto=format&fit=crop&w=1400&q=86" alt=""><span class="art-label">Format moyen</span></a>
-      <a class="art c reveal" href="#oeuvres"><img src="https://images.unsplash.com/photo-1653470177211-185a6744139e?auto=format&fit=crop&w=1400&q=86" alt=""><span class="art-label">Composition</span></a>
-      <a class="art d reveal" href="#oeuvres"><img src="https://images.unsplash.com/photo-1634714434523-58ca7142abc6?auto=format&fit=crop&w=1400&q=86" alt=""><span class="art-label">Cadre ancien</span></a>
+      <figure class="art a reveal">
+        <img src="/assets/generated/adelem-hero.webp" alt="Œuvre végétale Adelem dans son cadre ancien">
+        <figcaption class="art-label">Pièce unique</figcaption>
+      </figure>
+      <figure class="art b reveal">
+        <img src="https://images.unsplash.com/photo-1653470177211-185a6744139e?auto=format&fit=crop&w=1400&q=86" alt="Détail de mousse et de matière végétale">
+        <figcaption class="art-label">Détail matière</figcaption>
+      </figure>
+      <figure class="art c reveal">
+        <img src="https://images.unsplash.com/photo-1634714434523-58ca7142abc6?auto=format&fit=crop&w=1400&q=86" alt="Détail de cadre ancien">
+        <figcaption class="art-label">Cadre ancien</figcaption>
+      </figure>
     </div>
-
-    <a class="gallery-link" href="#oeuvres">Entrer dans la galerie →</a>
   </section>
 
   <section class="frames">
@@ -141,7 +149,7 @@
     </div>
   </section>
 
-  <section class="closing">
+  <section class="closing" id="contact">
     <img class="closing-seal" src="assets/badge.svg" alt="" aria-hidden="true">
     <div class="closing-inner">
       <div class="eyebrow reveal">Adelem</div>
