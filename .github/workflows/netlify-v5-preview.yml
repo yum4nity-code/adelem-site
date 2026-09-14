@@ -1,0 +1,18 @@
+name: Deploy Adelem V5 preview
+on:
+  push:
+    branches:
+      - v5-homepage-art-direction
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy site-v5 to Netlify
+        working-directory: site-v5
+        run: >
+          npx -y @netlify/mcp@latest
+          --site-id b7879588-731e-402d-a773-2c48208e8eaf
+          --proxy-path "https://netlify-mcp.netlify.app/proxy/eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..K1zoOQGG4_c_f6Oq.t4m1vEQe3EWwysVM2F26oJ2KujHkDU0ZRF9UUQArI6LU12ImBFjKwu-1H6N5Dh4QsBIbdGnNmzPS-R1G95SuFT-9cwo0PE9UpjI2ZO-AiR8W0M6UkN-_pFM2q_UI8GKos2AjFChTXoGu38BaCnkuxioFzExbOMrLHDZjnVphLRojD6CyHrm3RLJMyXejkXDaldSe69ZqjXvyvcXtSpdNwhgqepXX0BuXK1Ss1UFLSC_UzEyhs6PJGfCpDJh6h0MzNzR7G3sFWhg6vScLIS6tFnh8anznbLhjGHZy931w6a7qzjrPtSInxlJ5YsAYE6SZRt8eLoI3X__c3QJBI_12AWVoZKYv9NUwSG0mZYd-pOaNT7LCmqOoTOazz0qiwhTQOWTXHNpv.aYyLnCntFY6tEiMS0lBpkw"
