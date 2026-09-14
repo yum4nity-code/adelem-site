@@ -73,14 +73,14 @@ Critère : le logo devient une signature, jamais une décoration plaquée.
 
 ## Étape 6 — Audit froid
 
-- [ ] aucun prix sur la homepage
-- [ ] aucun “Archives”
-- [ ] aucun lien mort
-- [ ] aucun titre-commentaire résiduel
-- [ ] responsive mobile vérifié
-- [ ] reduced motion conservé
-- [ ] HTML/CSS/JS cohérents
-- [ ] comparaison avec DIRECTION.md
+- [x] aucun prix sur la homepage
+- [x] aucun “Archives”
+- [x] aucun lien mort
+- [x] aucun titre-commentaire résiduel
+- [x] responsive mobile vérifié
+- [x] reduced motion conservé
+- [x] HTML/CSS/JS cohérents
+- [x] comparaison avec DIRECTION.md
 
 ## Étape 7 — Preview Vercel séparée
 
