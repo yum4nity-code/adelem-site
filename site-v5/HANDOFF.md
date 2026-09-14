@@ -1,3 +1,40 @@
+## V6 — expérience scroll chorégraphiée
+
+Statut : **implémentée sur la homepage, QA desktop/mobile active**.
+
+Moteur :
+- GSAP + ScrollTrigger dans `assets/motion.js`
+- `home.js` ne garde que les interactions ordinaires
+- animations pilotées par le scroll, sans scroll forcé
+- fallback `prefers-reduced-motion`
+
+Séquences :
+- hero : immersion matière → recul → révélation de l’œuvre → texte + sceau rond
+- matière : macro → resserrement → texte
+- geste : verbes successifs → preuve **8–10 jours**
+- œuvres : Ensemble → Relief → Matière, avec deux visuels cohérents
+- cadres : focus sur le cadre ancien
+- sur mesure : contrainte de cadre + étapes progressives
+- fin : logo rond officiel comme sceau final
+
+Assets supplémentaires validés pour la maquette :
+- `/Google Drive/Adelem-assets/adelem-gallery-angle.webp`
+- `/Google Drive/Adelem-assets/adelem-gallery-room.webp`
+
+Le wordmark et le badge rond officiels viennent des assets GitHub existants. Ne pas les régénérer.
+
+QA :
+- captures 25 / 50 / 75 / 90 % des principales séquences
+- desktop + mobile
+- dernier défaut mobile Sur mesure corrigé par composition horizontale `Sur mesure`
+
+Vercel :
+- `site-v5/vercel.json` est prêt et proxy les WebP Drive
+- le connecteur Vercel renvoie actuellement des déploiements « créés » puis introuvables (404 / aucun projet listé)
+- ne pas revenir à Netlify : crédits épuisés
+- solution de déploiement à privilégier : import GitHub du repo dans Vercel, racine `site-v5`, si le connecteur direct reste incohérent
+
+
 # HANDOFF — Adelem V5
 
 ## À lire AVANT de toucher au site
