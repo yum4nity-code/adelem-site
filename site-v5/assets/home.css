@@ -2548,3 +2548,31 @@ body:has(.hero-portal) .site-nav .logo{
     visibility:visible!important;
   }
 }
+
+
+/* V6 — QA corrections */
+.bespoke-stage{
+  position:relative;
+  overflow:visible!important;
+}
+.bespoke-sticky{
+  height:100svh;
+  min-height:100svh;
+  box-sizing:border-box;
+}
+.frames-story .frames-image img{
+  object-position:92% 50%;
+}
+@media(max-width:900px){
+  .bespoke-heading{
+    align-self:start;
+    padding-top:2vh;
+  }
+  .bespoke-heading h3{
+    font-size:17vw;
+    line-height:.84;
+  }
+  .frames-story .frames-image img{
+    object-position:88% 50%;
+  }
+}
