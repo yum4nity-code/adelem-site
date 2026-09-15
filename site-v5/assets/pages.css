@@ -44,3 +44,18 @@ body{opacity:1;transition:opacity .3s ease}body.page-leaving{opacity:0}
 @media(max-width:800px){.threshold{height:185svh}.threshold-frame{inset:calc(var(--threshold-p) * 5.5vh) calc(var(--threshold-p) * 5vw)}.threshold-frame img{object-position:66% center;transform:scale(calc(1.72 - var(--threshold-p) * .69))}.threshold-reveal{left:8vw;bottom:12vh;width:84vw}.threshold-reveal h1{font-size:13.8vw;line-height:.91}.threshold-reveal p{font-size:11px;line-height:1.55;max-width:82vw}.threshold-cta{margin-top:23px}.threshold-cartel{left:5vw;right:5vw;bottom:2.5vh}.threshold-start{bottom:6vh}.product-panel{padding-top:58px}.product-lead{font-size:15px;line-height:1.62}.product-specs div{grid-template-columns:105px 1fr!important;padding:9px 0!important}.purchase-assurance{margin-top:24px}}
 @media(max-width:390px){.threshold-reveal h1{font-size:13.2vw}.threshold-reveal{bottom:10vh}.threshold-reveal p{display:none}.threshold-cta{margin-top:20px}}
 @media(prefers-reduced-motion:reduce){.threshold-frame{inset:6vh 5vw}.threshold-frame img{transform:none}.threshold-reveal{opacity:1;transform:none}.threshold-start{display:none}.threshold-cartel{opacity:.65}}
+
+/* V5.6 — the gallery portal */
+.threshold-portal{position:relative;margin-top:30px;width:clamp(190px,20vw,260px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;overflow:hidden;isolation:isolate;border:1px solid rgba(225,157,130,.78);background:#09100b url("adelem-round-logo.jpg") center/cover no-repeat;box-shadow:0 18px 55px rgba(0,0,0,.22);transition:transform .55s var(--ease),border-color .4s,box-shadow .55s,filter .55s}
+.threshold-portal:before{content:"";position:absolute;z-index:-1;inset:22% 8%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(8,12,9,.99) 0 58%,rgba(8,12,9,.94) 73%,rgba(8,12,9,0) 100%);transition:background .5s}
+.threshold-portal:after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 50% 48%,rgba(213,138,111,.13),transparent 46%);opacity:0;transition:opacity .55s}
+.threshold-portal-label{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px;text-shadow:0 2px 18px #050805}
+.threshold-portal small{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:rgba(247,243,235,.66)}
+.threshold-portal strong{font:300 clamp(27px,3vw,39px)/.88 "Newsreader",Georgia,serif;letter-spacing:-.025em;color:var(--white)}
+.threshold-portal i{position:absolute;z-index:2;right:18%;bottom:19%;font-style:normal;color:var(--copper);font-size:18px;transition:transform .45s var(--ease)}
+.threshold-portal:hover,.threshold-portal:focus-visible{transform:translateY(-5px) scale(1.025);border-color:#efb198;box-shadow:0 22px 75px rgba(213,138,111,.26),0 0 0 7px rgba(213,138,111,.06);filter:saturate(1.16) brightness(1.08);outline:none}
+.threshold-portal:hover:after,.threshold-portal:focus-visible:after{opacity:1}
+.threshold-portal:hover i,.threshold-portal:focus-visible i{transform:translate(5px,-3px)}
+@media(max-width:800px){.threshold-portal{margin-top:22px;width:176px}.threshold-portal strong{font-size:29px}.threshold-portal:active{transform:scale(.975);filter:saturate(1.15) brightness(1.1)}}
+@media(max-width:390px){.threshold-portal{width:158px;margin-top:18px}.threshold-portal strong{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.threshold-portal,.threshold-portal i{transition:none}}
