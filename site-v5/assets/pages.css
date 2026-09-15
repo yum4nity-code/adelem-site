@@ -59,3 +59,11 @@ body{opacity:1;transition:opacity .3s ease}body.page-leaving{opacity:0}
 @media(max-width:800px){.threshold-portal{margin-top:22px;width:176px}.threshold-portal strong{font-size:29px}.threshold-portal:active{transform:scale(.975);filter:saturate(1.15) brightness(1.1)}}
 @media(max-width:390px){.threshold-portal{width:158px;margin-top:18px}.threshold-portal strong{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.threshold-portal,.threshold-portal i{transition:none}}
+
+/* V5.7 — circular touch state and light-page navigation */
+.threshold-portal{-webkit-tap-highlight-color:transparent;touch-action:manipulation;background-color:transparent;box-shadow:0 16px 44px rgba(0,0,0,.16)}
+.threshold-portal:focus{outline:none}
+.threshold-portal:focus-visible{border-radius:50%;box-shadow:0 20px 64px rgba(213,138,111,.22),0 0 0 5px rgba(213,138,111,.09)}
+.catalogue-page .site-nav{color:var(--ink)}
+.catalogue-page .menu-btn i,.catalogue-page .menu-btn i:after{background:var(--ink)}
+.catalogue-page.menu-open .site-nav{color:var(--white)}
