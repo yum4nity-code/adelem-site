@@ -3,6 +3,9 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // ADELEM_MOBILE_STATIC_FLOW: mobile uses a normal document flow for comfort and clarity.
+  if(window.matchMedia('(max-width: 900px)').matches) return;
+
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduced){
     gsap.set([
