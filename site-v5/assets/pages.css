@@ -67,3 +67,6 @@ body{opacity:1;transition:opacity .3s ease}body.page-leaving{opacity:0}
 .catalogue-page .site-nav{color:var(--ink)}
 .catalogue-page .menu-btn i,.catalogue-page .menu-btn i:after{background:var(--ink)}
 .catalogue-page.menu-open .site-nav{color:var(--white)}
+
+/* V5.8 — use the logo's own ring, never a second outline */
+.threshold-portal,.threshold-portal:hover,.threshold-portal:focus,.threshold-portal:focus-visible{border:0;border-color:transparent}
