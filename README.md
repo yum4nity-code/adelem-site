@@ -29,20 +29,28 @@ Parcours recherché :
 
 ## 📬 Boîte aux idées d'Adèle
 
-Le fichier **`IDEAS_INBOX.md`** est la boîte aux lettres commune du projet.
+La boîte principale est désormais un **Google Doc partagé, séparé du dépôt GitHub**, afin qu'Adèle puisse y déposer une idée depuis son propre ChatGPT sans avoir à manipuler le code :
+
+**AdeleM — Boîte aux idées**  
+https://docs.google.com/document/d/1UTr09YCduog4OAU-dDFu3PGSWuql3Fs2i0i3iOqTCCU/edit
 
 Adèle peut simplement dire à son ChatGPT :
 
 > **« Ajoute à la boîte aux idées AdeleM : … »**
 
-Si son ChatGPT est connecté à GitHub avec un accès en écriture à ce dépôt, l'idée doit être ajoutée à la fin de `IDEAS_INBOX.md` avec la date, l'auteur et le statut `À étudier`.
+Son assistant doit ajouter l'idée à la fin du document avec la date, l'auteur `Adèle` et le statut `À étudier`, sans toucher aux idées précédentes.
 
-Toute IA qui construit ou modifie le site doit **lire cette boîte avant une session significative**. Les idées ne deviennent pas automatiquement des décisions : les décisions validées restent consignées dans `docs/decisions.md`.
+Toute IA qui construit ou modifie le site doit **consulter cette boîte avant une session significative**. Les idées ne deviennent pas automatiquement des décisions : les décisions validées restent consignées dans `docs/decisions.md`.
+
+`IDEAS_INBOX.md` reste présent comme historique / secours local, mais **le Google Doc partagé est la source de vérité pour les nouvelles idées**.
+
+Le prompt d'initialisation à donner une fois au ChatGPT d'Adèle est dans `PROMPT_ADELE_CHATGPT.md`.
 
 ## Structure
 
 - `AGENTS.md` — protocole obligatoire pour toute personne / IA qui intervient sur le projet
-- `IDEAS_INBOX.md` — boîte aux idées d'Adèle et du projet
+- `PROMPT_ADELE_CHATGPT.md` — prompt initial à coller dans le ChatGPT d'Adèle
+- `IDEAS_INBOX.md` — historique / secours local de la boîte aux idées
 - `site/` — version de travail du site
 - `archive/` — versions historiques figées
 - `docs/doctrine-adelem.md` — doctrine de marque et principes de conversion
