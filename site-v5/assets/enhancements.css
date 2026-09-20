@@ -1,0 +1,46 @@
+/* Adelem interaction layer — adapted from selected 21st.dev motion patterns */
+:root{--motion-slow:1.05s;--motion-soft:cubic-bezier(.2,.76,.24,1)}
+.menu-panel{overflow:hidden}
+.menu-panel nav{max-width:1040px;width:100%;margin:auto}
+.menu-panel nav a{opacity:0!important;transform:translateY(28px)!important;transition:color .25s,opacity .62s var(--motion-soft),transform .62s var(--motion-soft)!important}
+.menu-panel.open nav a{opacity:.82!important;transform:none!important}
+.menu-panel.open nav a:hover,.menu-panel.open nav a:focus-visible{opacity:1!important}
+.menu-panel.open nav a:nth-child(1){transition-delay:.08s!important}
+.menu-panel.open nav a:nth-child(2){transition-delay:.12s!important}
+.menu-panel.open nav a:nth-child(3){transition-delay:.16s!important}
+.menu-panel.open nav a:nth-child(4){transition-delay:.20s!important}
+.menu-panel.open nav a:nth-child(5){transition-delay:.24s!important}
+.menu-panel.open nav a:nth-child(6){transition-delay:.28s!important}
+.menu-panel.open nav a:nth-child(7){transition-delay:.32s!important}
+.menu-panel .menu-contact{opacity:0!important;transform:translateY(18px)!important;transition:opacity .55s .34s var(--motion-soft),transform .55s .34s var(--motion-soft),color .25s!important}
+.menu-panel.open .menu-contact{opacity:1!important;transform:none!important}
+.menu-close,.menu-btn{transition:color .3s,opacity .3s}
+.menu-close:hover,.menu-close:focus-visible,.menu-btn:hover,.menu-btn:focus-visible{color:var(--copper);outline:none}
+.image-reveal{clip-path:inset(0 0 100% 0);transition:clip-path var(--motion-slow) var(--motion-soft);will-change:clip-path}
+.image-reveal img{transform:scale(1.075);transition:transform 1.45s var(--motion-soft),filter .8s}
+.image-reveal.is-revealed{clip-path:inset(0)}
+.image-reveal.is-revealed img{transform:scale(1)}
+.product-gallery[data-view-gallery]{position:relative;height:100svh;padding:26px;overflow:hidden}
+.product-view-stage{position:relative;width:100%;height:calc(100svh - 52px);overflow:hidden;background:#d8d3c8}
+.product-view-panel{position:absolute;inset:0;margin:0;opacity:0;transform:scale(1.025);transition:opacity .72s var(--motion-soft),transform 1.05s var(--motion-soft)}
+.product-view-panel.active{opacity:1;transform:scale(1)}
+.product-view-panel img{width:100%;height:100%;object-fit:cover}
+.product-view-tabs{position:absolute;z-index:4;left:52px;right:52px;bottom:48px;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(9,13,9,.84);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.14)}
+.product-view-tabs button{appearance:none;border:0;border-right:1px solid rgba(255,255,255,.13);background:transparent;color:rgba(255,255,255,.58);padding:15px 14px;font:400 9px/1 "DM Sans",sans-serif;letter-spacing:.19em;text-transform:uppercase;cursor:pointer;transition:color .28s,background .28s}
+.product-view-tabs button:last-child{border-right:0}.product-view-tabs button span{color:var(--copper);margin-right:9px}
+.product-view-tabs button[aria-selected="true"]{color:#fff;background:rgba(213,138,111,.12)}
+.product-view-tabs button:focus-visible{outline:1px solid var(--copper);outline-offset:-3px}
+.page-bridge{transform:translateY(45px);opacity:.01;transition:transform 1s var(--motion-soft),opacity .85s ease}
+.page-bridge.bridge-visible{transform:none;opacity:1}
+.reading-progress{position:fixed;z-index:120;left:0;top:0;width:100%;height:2px;pointer-events:none}
+.reading-progress i{display:block;width:100%;height:100%;background:var(--copper);transform:scaleX(var(--reading-progress,0));transform-origin:left center}
+@media(max-width:800px){
+.menu-panel nav{align-content:center}.menu-panel nav a{font-size:8.4vw!important;padding:10px 0!important}
+.product-gallery[data-view-gallery]{height:76svh;padding:0}.product-view-stage{height:76svh}
+.product-view-tabs{left:12px;right:12px;bottom:12px}.product-view-tabs button{padding:14px 6px;font-size:8px;letter-spacing:.13em}
+.page-bridge{transform:translateY(28px)}
+}
+@media(prefers-reduced-motion:reduce){
+.menu-panel nav a,.menu-panel .menu-contact,.image-reveal,.image-reveal img,.product-view-panel,.page-bridge{transition:none!important;transform:none!important}
+.image-reveal{clip-path:none}.product-view-panel{opacity:1}.product-view-panel[hidden]{display:none}.page-bridge{opacity:1}
+}
