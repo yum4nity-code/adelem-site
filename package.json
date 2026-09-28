@@ -1,0 +1,11 @@
+{
+  "name": "adelem-site",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "build": "cd site-astro && npm ci && npm run build",
+    "dev": "cd site-astro && npm run dev"
+  }
+}
