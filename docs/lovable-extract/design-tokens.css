@@ -1,0 +1,22 @@
+/* Jetons de design extraits du site Lovable en ligne (adelem.fr), 28/09/2026 */
+:root {
+  --background: oklch(98.2% .006 82);
+  --foreground: oklch(22% .018 115);
+  --primary: oklch(24% .025 118);
+  --primary-foreground: oklch(98% .006 82);
+  --secondary: oklch(93% .009 82);
+  --secondary-foreground: oklch(24% .025 118);
+  --muted: oklch(94% .01 95);
+  --muted-foreground: oklch(46% .025 115);
+  --border: oklch(84% .012 90);
+  --input: oklch(84% .012 90);
+  --ring: oklch(62% .09 48);
+  --copper: oklch(62% .105 48);
+  --ink: oklch(20% .022 118);
+  --paper: oklch(98.2% .006 82);
+  --shadow: oklch(18% .02 110 / .38);
+  --availability: oklch(91% .035 137);
+  --availability-foreground: oklch(31% .055 137);
+  --font-serif: "Libre Baskerville", "Noto Serif SC", serif;   /* titres */
+  --font-sans: "IBM Plex Sans", "Noto Sans SC", sans-serif;    /* texte, 300–600 */
+}

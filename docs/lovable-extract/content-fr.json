@@ -1,0 +1,379 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "gallery": "Galerie",
+    "frames": "Cadres anciens",
+    "sculptures": "Sculptures",
+    "bespoke": "Sur mesure",
+    "installed": "Œuvres installées",
+    "studio": "Atelier",
+    "contact": "Contact",
+    "available": "Voir les pièces disponibles",
+    "project": "Parler d’un projet",
+    "account": "Mon compte",
+    "signIn": "Se connecter"
+  },
+  "footer": {
+    "tagline": "Œuvres uniques en végétaux naturels stabilisés, matières naturelles et cadres anciens restaurés.",
+    "explore": "Visiter",
+    "exchange": "Échanger",
+    "talk": "Parler d’un projet",
+    "rights": "© 2026 Adelem — Pièces uniques"
+  },
+  "menuOpen": "Ouvrir le menu",
+  "menuClose": "Fermer le menu",
+  "language": "Langue",
+  "categories": {
+    "Tableaux végétaux": "Tableaux végétaux",
+    "Sculptures": "Sculptures"
+  },
+  "filters": {
+    "all": "Toutes",
+    "available": "Disponibles",
+    "label": "Filtrer les œuvres"
+  },
+  "card": {
+    "available": "Disponible",
+    "private": "Collection privée",
+    "installed": "Œuvre installée",
+    "pending": "Disponibilité à confirmer",
+    "discover": "Voir l’œuvre",
+    "view": "Voir l’œuvre",
+    "seeAll": "Entrer dans la Galerie",
+    "temporary": "Visuel temporaire",
+    "antiqueFrame": "Cadre ancien restauré"
+  },
+  "home": {
+    "eyebrow": "Œuvres végétales · Pièces uniques",
+    "title1": "La nature",
+    "title2": "prend place",
+    "cta1": "Entrer dans la Galerie",
+    "cta2": "Parler d’un projet",
+    "matterEyebrow": "Matière",
+    "matterTitle": "Le végétal autrement",
+    "matterText": "Mousses, lichens, feuillages et écorces deviennent une matière dense, travaillée dans le relief et la profondeur.",
+    "gestureEyebrow": "Le geste",
+    "gestureTitle": "Prendre le temps",
+    "gestureText": "Chercher, restaurer, composer, déplacer, retirer, recommencer. La précision du geste donne à chaque pièce sa présence.",
+    "worksEyebrow": "Galerie",
+    "worksTitle": "Pièces uniques",
+    "framesTitle": "Cadres anciens",
+    "framesText": "Chinés puis restaurés, ils donnent un format, une profondeur et un rythme à la composition.",
+    "sculpturesTitle": "Sculptures",
+    "sculpturesText": "Des personnages en grès apparaissent ponctuellement dans le travail d’Adelem. Recherches en cours.",
+    "bespokeTitle": "Sur mesure",
+    "bespokeText": "Le projet part d’un espace, pas d’un catalogue. Le lieu pose ses contraintes ; Adelem garde la liberté de la composition.",
+    "installedTitle": "Œuvres installées",
+    "installedText": "Les photographies d’installations réelles seront réunies ici après validation.",
+    "exit": "Imaginer une œuvre pour votre espace"
+  },
+  "gallery": {
+    "n": "01 — Galerie",
+    "title": "Galerie",
+    "copy": "Pièces disponibles, œuvres installées et collections privées réunies dans un même corpus.",
+    "filterNote": "La galerie reste entière. Les pièces disponibles peuvent être mises en lumière sans écarter les œuvres déjà accueillies.",
+    "availableEmpty": "Aucune pièce disponible dans ce format pour le moment",
+    "monumental": "Monumental",
+    "monumentalCopy": "Des pièces qui structurent un espace et se découvrent à plusieurs distances.",
+    "monumentalEmpty": "En préparation — premières pièces à venir",
+    "signature": "Signature",
+    "signatureCopy": "Une présence affirmée, pensée pour habiter un mur sans dominer toute la pièce.",
+    "intimate": "Intime",
+    "intimateCopy": "Des formats qui invitent à regarder la matière de près.",
+    "intimateEmpty": "Premières pièces à venir",
+    "project": "Imaginer une création pour votre espace"
+  },
+  "atelier": {
+    "n": "06 — Atelier",
+    "title": "Prendre le temps",
+    "copy": "La matière, les cadres et les gestes qui construisent chaque pièce.",
+    "eyebrow": "Le geste",
+    "h2": "Chercher, restaurer, composer",
+    "p1": "Chaque composition se construit par ajustements successifs : déplacer, retirer, reprendre un relief, attendre un séchage, puis recommencer.",
+    "p2": "Un grand format peut demander environ huit à dix jours de travail, restauration du cadre et séchages compris. Les procédés précis restent ceux de l’atelier.",
+    "cta": "Voir les cadres anciens"
+  },
+  "frames": {
+    "n": "02 — Cadres anciens",
+    "title": "Cadres anciens",
+    "copy": "Le cadre n’habille pas l’œuvre : il participe à sa composition.",
+    "age": "Des pièces généralement datées d’environ 1850 à 1970 sont chinées puis restaurées.",
+    "body": "Le cadre donne un format, apporte une profondeur et oriente les vides comme la densité. La restauration conserve les traces du temps qui font sa personnalité.",
+    "own": "Vous possédez un cadre ancien ?",
+    "ownCopy": "Une photographie et ses dimensions suffisent pour commencer une discussion.",
+    "cta": "Parler de votre cadre"
+  },
+  "sculptures": {
+    "n": "03 — Sculptures",
+    "title": "Sculptures",
+    "copy": "Une recherche ponctuelle autour de personnages en grès.",
+    "state": "Recherches en cours",
+    "body": "Les sculptures font partie du langage d’Adelem, mais leur production reste limitée. Les pièces réelles seront présentées ici au fil de leur création.",
+    "cta": "Parler d’une sculpture"
+  },
+  "installed": {
+    "n": "05 — Œuvres installées",
+    "title": "Œuvres installées",
+    "copy": "Les œuvres continuent d’exister dans les lieux qui les accueillent.",
+    "state": "Photographies à venir",
+    "body": "Cette page accueillera uniquement des installations réelles, avec l’accord de leurs propriétaires. Aucun intérieur de démonstration n’est présenté comme une référence.",
+    "available": "Voir les pièces disponibles",
+    "project": "Imaginer une œuvre pour votre espace"
+  },
+  "savoir": {
+    "n": "Le geste",
+    "title": "Matière",
+    "copy": "Ce qui donne à chaque œuvre sa densité, sa profondeur et son caractère.",
+    "cta": "Voir la Galerie",
+    "steps": [
+      [
+        "Végétaux stabilisés",
+        "De vrais végétaux préservés, sans arrosage."
+      ],
+      [
+        "Relief",
+        "Volumes, vides et textures se répondent dans la composition."
+      ],
+      [
+        "Cadres anciens",
+        "Chinés puis restaurés avant de guider la création."
+      ],
+      [
+        "Pièce unique",
+        "Une composition ne peut jamais être reproduite à l’identique."
+      ]
+    ]
+  },
+  "surMesure": {
+    "n": "04 — Sur mesure",
+    "title": "Le projet part d’un espace",
+    "copy": "Le lieu apporte ses contraintes ; Adelem garde la liberté de la composition.",
+    "cta": "Parler de votre espace",
+    "steps": [
+      [
+        "Le lieu",
+        "Une photographie, des dimensions approximatives et la présence recherchée."
+      ],
+      [
+        "La direction",
+        "Adelem définit l’équilibre, les matières et l’intention."
+      ],
+      [
+        "Le cadre",
+        "Le format dépend aussi des cadres anciens disponibles et des trouvailles."
+      ],
+      [
+        "La composition",
+        "L’œuvre est composée à la main, sans copier une pièce existante."
+      ],
+      [
+        "La livraison",
+        "Elle est organisée selon le format, le poids, la fragilité et la destination."
+      ]
+    ]
+  },
+  "pro": {
+    "n": "Professionnels",
+    "title": "Une œuvre pour un lieu",
+    "copy": "Architectes, décorateurs et lieux professionnels peuvent présenter un espace à Adelem.",
+    "cta": "Parler d’un projet",
+    "note": "La faisabilité technique et la livraison sont étudiées pour chaque lieu.",
+    "offers": [
+      [
+        "Pièces disponibles",
+        "Voir les œuvres dont les informations sont confirmées."
+      ],
+      [
+        "Projet singulier",
+        "Construire une direction à partir du lieu."
+      ],
+      [
+        "Installation",
+        "Définir les contraintes réelles avant toute proposition."
+      ]
+    ]
+  },
+  "contact": {
+    "n": "07 — Contact",
+    "title": "Parler d’un projet",
+    "copy": "Quelques éléments suffisent pour commencer.",
+    "studio": "Premier échange",
+    "provisional": "Vos coordonnées restent confidentielles et servent uniquement à répondre à votre demande.",
+    "intro": "Préparez une photographie du mur ou du lieu, ses dimensions même approximatives, et la présence recherchée.",
+    "intentions": [
+      "Une œuvre disponible",
+      "Une création sur mesure",
+      "Un cadre ou un lieu particulier",
+      "Une sculpture"
+    ],
+    "unavailable": "Votre demande",
+    "back": "Voir les pièces disponibles",
+    "frameTitle": "Avez-vous déjà le cadre ?",
+    "frameCopy": "Un cadre ancien peut devenir le point de départ de l’œuvre. Les dimensions intérieures suffisent à étudier sa faisabilité.",
+    "frameYes": "Mon cadre attend son œuvre",
+    "frameLater": "L’œuvre choisira son cadre",
+    "width": "Largeur intérieure",
+    "height": "Hauteur intérieure",
+    "unit": "cm",
+    "optional": "Facultatif",
+    "formTitle": "Continuons l’échange",
+    "formCopy": "Décrivez simplement votre envie et joignez, si vous le souhaitez, quelques vues du cadre ou de l’espace.",
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "subject": "Votre projet",
+    "message": "Votre message",
+    "messagePlaceholder": "L’œuvre qui vous intéresse, votre espace, le format envisagé…",
+    "submit": "Envoyer la demande",
+    "sending": "Envoi en cours…",
+    "successTitle": "Votre demande est bien arrivée",
+    "successText": "Adelem revient vers vous sous {delay}. Ce délai peut être ajusté ici selon le rythme de l’atelier.",
+    "another": "Envoyer une autre demande",
+    "required": "Champs obligatoires",
+    "error": "La demande n’a pas pu être envoyée. Veuillez réessayer.",
+    "accessTitle": "Votre échange avec l’atelier",
+    "accessCopy": "Connectez-vous pour retrouver cette demande dans votre espace privé, ou poursuivez librement en invité.",
+    "google": "Continuer avec Google",
+    "guest": "Continuer en invité",
+    "connected": "Connecté avec Google",
+    "photos": "Photographies du cadre ou de l’espace",
+    "photosCopy": "Jusqu’à 5 images · JPG, PNG, WebP ou HEIC · 10 Mo maximum par image",
+    "addPhotos": "Ajouter des photos",
+    "removePhoto": "Retirer",
+    "photoLimit": "Vous pouvez joindre jusqu’à cinq photographies.",
+    "photoType": "Ce format d’image n’est pas accepté.",
+    "photoSize": "Chaque image doit peser moins de 10 Mo.",
+    "newsletter": "Recevoir les nouvelles de l’atelier",
+    "newsletterCopy": "Nouvelles œuvres et invitations, occasionnellement. Désinscription à tout moment.",
+    "summary": "Récapitulatif de votre demande",
+    "summaryProject": "Projet",
+    "summaryFrame": "Cadre",
+    "summaryMeasures": "Dimensions intérieures",
+    "summaryPhotos": "Photographies",
+    "summaryContact": "Réponse à",
+    "response": "Délai de réponse indicatif",
+    "noMeasures": "À préciser plus tard"
+  },
+  "auth": {
+    "private": "Espace privé",
+    "title": "Une relation directe avec l’atelier",
+    "copy": "Retrouvez vos échanges, vos préférences et, lorsqu’une acquisition sera réalisée, son suivi dans un espace confidentiel.",
+    "benefitsTitle": "Votre espace",
+    "benefits": [
+      "Coordonnées préremplies",
+      "Demandes et acquisitions retrouvées",
+      "Préférences de correspondance maîtrisées"
+    ],
+    "googleTitle": "Accéder à votre espace",
+    "googleCopy": "La connexion Google est rapide et ne donne à Adelem accès qu’aux informations nécessaires à votre compte.",
+    "google": "Continuer avec Google",
+    "connecting": "Connexion…",
+    "or": "ou",
+    "guest": "Continuer en invité",
+    "guestNote": "Aucun compte n’est nécessaire pour découvrir la galerie ou écrire à l’atelier.",
+    "error": "La connexion n’a pas abouti. Veuillez réessayer."
+  },
+  "account": {
+    "private": "Espace privé",
+    "title": "Mon compte",
+    "signOut": "Se déconnecter",
+    "details": "Mes coordonnées",
+    "newsletter": "Correspondance de l’atelier",
+    "newsletterCopy": "Recevoir occasionnellement les nouvelles œuvres et invitations.",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "orders": "Mes commandes",
+    "ordersCopy": "Retrouvez ici uniquement vos acquisitions réelles et leur avancée.",
+    "ordersLink": "Voir mes commandes"
+  },
+  "orders": {
+    "private": "Espace privé",
+    "title": "Mes commandes",
+    "copy": "Chaque acquisition et son transport apparaissent ici lorsqu’ils ont été confirmés.",
+    "loading": "Chargement…",
+    "empty": "Aucune acquisition pour le moment",
+    "emptyCopy": "La galerie reste ouverte à votre rythme. Aucune pièce de démonstration n’est ajoutée à cet historique.",
+    "gallery": "Revenir à la Galerie",
+    "back": "Retour au compte",
+    "status": {
+      "pending": "En attente",
+      "paid": "Confirmée",
+      "preparing": "Préparation",
+      "shipped": "En transport",
+      "delivered": "Livrée",
+      "cancelled": "Annulée",
+      "refunded": "Remboursée"
+    }
+  },
+  "work": {
+    "gallery": "Galerie",
+    "notFound": "Œuvre introuvable",
+    "back": "Retour à la Galerie",
+    "views": "Vues de l’œuvre",
+    "priceNote": "Prix de l’œuvre · transport confirmé avant règlement",
+    "unique": "Pièce unique 1/1 · certificat d’authenticité inclus",
+    "antiqueFrame": "Cadre ancien restauré, choisi comme partie intégrante de l’œuvre",
+    "deliveryReassurance": "Transport protégé, organisé selon la pièce et sa destination",
+    "interest": "Cette œuvre m’intéresse",
+    "acquire": "Acquérir cette œuvre",
+    "unavailable": "Acquisition après validation des informations",
+    "soldTitle": "Cette œuvre a trouvé sa place",
+    "soldText": "Une création proche peut être envisagée, mais ne sera jamais copiée.",
+    "soldCta": "Imaginer une création dans cet esprit",
+    "category": "Nature",
+    "format": "Format",
+    "dimensions": "Dimensions",
+    "year": "Année",
+    "availability": "Disponibilité",
+    "technique": "Technique",
+    "frame": "Cadre",
+    "signature": "Authenticité",
+    "signed": "Certificat inclus",
+    "infoPending": "À renseigner",
+    "intention": "Intention",
+    "composition": "Matières",
+    "care": "Entretien",
+    "hanging": "Accrochage",
+    "delivery": "Livraison",
+    "continue": "Poursuivre la visite",
+    "inGallery": "Dans la Galerie",
+    "allGallery": "Toute la Galerie",
+    "temporary": "Visuel temporaire — photographie réelle à venir",
+    "checkout": {
+      "acquisition": "Acquisition",
+      "close": "Fermer",
+      "testMode": "Parcours de démonstration · aucun règlement réel",
+      "transportStep": "Avant le règlement",
+      "transportTitle": "Une livraison pensée pour l’œuvre",
+      "transportIntro": "Le transport est choisi selon le format, la fragilité et la destination — jamais ajouté sans visibilité au dernier moment.",
+      "intimate": "Format Intime — emballage renforcé et expédition protégée avec suivi.",
+      "signature": "Format Signature — emballage sur mesure et transport spécialisé selon la destination.",
+      "monumental": "Format Monumental — transporteur spécialisé et, si nécessaire, option d’installation sur place.",
+      "quote": "Le montant et les modalités de livraison sont présentés avant la validation du paiement. Lorsqu’un devis personnalisé est nécessaire, aucun règlement n’est demandé avant sa confirmation par Adelem.",
+      "certificate": "L’œuvre voyage protégée et accompagnée de son certificat d’authenticité.",
+      "continue": "Continuer vers le paiement",
+      "back": "Revoir les modalités"
+    }
+  },
+  "viewLabels": {
+    "Face": "Face",
+    "Reliefs": "Reliefs",
+    "Cadre": "Cadre"
+  },
+  "careVegetal": "Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur. Les conseils de dépoussiérage seront précisés avec l’œuvre.",
+  "careSculpture": "Entretien à renseigner",
+  "merci": {
+    "eyebrow": "Demande confirmée",
+    "owned": "est réservée",
+    "thanks": "Merci",
+    "text": "Les modalités seront confirmées directement avec Adelem.",
+    "continue": "Poursuivre la visite",
+    "imagine": "Imaginer une création"
+  },
+  "notFound": {
+    "eyebrow": "Erreur 404",
+    "title": "Page introuvable",
+    "back": "Revenir à l’accueil"
+  }
+}

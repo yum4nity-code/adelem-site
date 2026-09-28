@@ -1,0 +1,177 @@
+{
+  "config": {
+    "brand": "Adelem",
+    "heroImage": "hero-atelier.jpg",
+    "detailImage": "macro-vegetal.jpg",
+    "sculptureImage": "buste-sculpture.jpg",
+    "atelierImage": "atelier.jpg",
+    "contactStatus": "Coordonnées en cours de validation",
+    "responseDelay": "3 jours ouvrés"
+  },
+  "artworks": [
+    {
+      "id": "signature-01",
+      "title": "Canopée",
+      "category": "Tableaux végétaux",
+      "format": "Signature",
+      "price": 1300,
+      "status": "À confirmer",
+      "commercialReady": false,
+      "demoCheckout": true,
+      "image": "oeuvre-canopee.jpg",
+      "alt": "Visuel d’exemple d’une composition végétale horizontale",
+      "temporaryVisual": true,
+      "tagline": "Une respiration végétale à l’échelle du mur",
+      "story": "Fiche de démonstration : le récit définitif sera écrit à partir de l’œuvre réelle.",
+      "composition": [
+        "Composition végétale d’exemple",
+        "Matières à confirmer"
+      ],
+      "technique": "Information à confirmer",
+      "frame": "Cadre d’exemple",
+      "care": "Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur. Les conseils de dépoussiérage seront précisés avec l’œuvre.",
+      "hanging": "Conseils d’accrochage sur demande",
+      "delivery": "Modalités définies selon le format et le lieu de destination",
+      "views": [
+        "Face:oeuvre-canopee.jpg",
+        "Reliefs:macro-vegetal.jpg",
+        "Cadre:atelier.jpg"
+      ]
+    },
+    {
+      "id": "verticale-foret",
+      "title": "Forêt intérieure",
+      "category": "Tableaux végétaux",
+      "format": "Monumental",
+      "price": 2400,
+      "status": "À confirmer",
+      "commercialReady": false,
+      "demoCheckout": true,
+      "image": "oeuvre-foret.jpg",
+      "alt": "Visuel d’exemple d’une œuvre végétale verticale dans un intérieur",
+      "temporaryVisual": true,
+      "tagline": "Une présence verticale, dense et silencieuse",
+      "story": "Fiche de démonstration destinée à montrer la future présentation d’une œuvre monumentale.",
+      "composition": [
+        "Composition végétale d’exemple",
+        "Matières à confirmer"
+      ],
+      "technique": "Information à confirmer",
+      "frame": "Cadre sombre d’exemple",
+      "care": "Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur. Les conseils de dépoussiérage seront précisés avec l’œuvre.",
+      "hanging": "À définir selon le mur",
+      "delivery": "Sur devis selon la destination",
+      "views": [
+        "Face:oeuvre-foret.jpg",
+        "Reliefs:macro-vegetal.jpg",
+        "Cadre:atelier.jpg"
+      ]
+    },
+    {
+      "id": "clairiere",
+      "title": "Clairière",
+      "category": "Tableaux végétaux",
+      "format": "Signature",
+      "price": 1650,
+      "status": "À confirmer",
+      "commercialReady": false,
+      "demoCheckout": true,
+      "image": "hero-atelier.jpg",
+      "alt": "Visuel d’exemple d’une œuvre végétale aux reliefs profonds",
+      "temporaryVisual": true,
+      "tagline": "Des reliefs qui changent avec la lumière",
+      "story": "Titre, prix et récit d’exemple pour donner à voir le rythme de la future galerie.",
+      "composition": [
+        "Composition végétale d’exemple",
+        "Matières à confirmer"
+      ],
+      "technique": "Information à confirmer",
+      "frame": "Information à confirmer",
+      "care": "Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur. Les conseils de dépoussiérage seront précisés avec l’œuvre.",
+      "views": [
+        "Face:hero-atelier.jpg",
+        "Reliefs:macro-vegetal.jpg",
+        "Cadre:oeuvre-foret.jpg"
+      ]
+    },
+    {
+      "id": "silence",
+      "title": "Silence",
+      "category": "Sculptures",
+      "format": "Signature",
+      "price": 980,
+      "status": "À confirmer",
+      "commercialReady": false,
+      "demoCheckout": true,
+      "image": "sculpture-silence.jpg",
+      "alt": "Visuel d’exemple d’un buste en grès sur socle",
+      "temporaryVisual": true,
+      "tagline": "Un visage calme, une matière laissée vivante",
+      "story": "Sculpture fictive présentée pour préfigurer la place des bustes dans la galerie.",
+      "composition": [
+        "Grès — exemple à confirmer"
+      ],
+      "technique": "Information à confirmer",
+      "frame": "Sans cadre",
+      "care": "Entretien à confirmer",
+      "delivery": "Sur devis selon la destination",
+      "views": [
+        "Face:sculpture-silence.jpg",
+        "Reliefs:buste-sculpture.jpg",
+        "Cadre:atelier.jpg"
+      ]
+    },
+    {
+      "id": "sous-bois",
+      "title": "Sous-bois",
+      "category": "Tableaux végétaux",
+      "format": "Intime",
+      "price": 690,
+      "status": "À confirmer",
+      "commercialReady": false,
+      "demoCheckout": true,
+      "image": "macro-vegetal.jpg",
+      "alt": "Visuel d’exemple d’une petite composition de mousses et lichens",
+      "temporaryVisual": true,
+      "tagline": "Un fragment de paysage à regarder de près",
+      "story": "Fiche fictive servant à tester la présentation des formats intimes.",
+      "composition": [
+        "Composition végétale d’exemple",
+        "Matières à confirmer"
+      ],
+      "technique": "Information à confirmer",
+      "frame": "Information à confirmer",
+      "care": "Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur. Les conseils de dépoussiérage seront précisés avec l’œuvre.",
+      "views": [
+        "Face:macro-vegetal.jpg",
+        "Reliefs:hero-atelier.jpg",
+        "Cadre:atelier.jpg"
+      ]
+    },
+    {
+      "id": "empreinte",
+      "title": "Empreinte",
+      "category": "Sculptures",
+      "format": "Intime",
+      "price": 740,
+      "status": "Collection privée",
+      "commercialReady": false,
+      "image": "buste-sculpture.jpg",
+      "alt": "Visuel d’exemple d’un buste sculpté",
+      "temporaryVisual": true,
+      "tagline": "Le geste demeure à la surface",
+      "story": "Exemple d’une œuvre vendue qui reste visible dans le corpus Adelem.",
+      "composition": [
+        "Matière sculptée — exemple à confirmer"
+      ],
+      "technique": "Information à confirmer",
+      "frame": "Sans cadre",
+      "care": "Entretien à confirmer",
+      "views": [
+        "Face:buste-sculpture.jpg",
+        "Reliefs:sculpture-silence.jpg",
+        "Cadre:atelier.jpg"
+      ]
+    }
+  ]
+}
