@@ -78,21 +78,27 @@ export const oeuvre = defineType({
       title: 'Largeur (cm), cadre compris',
       type: 'number',
       group: 'essentiel',
-      validation: (r) => r.required().positive().max(400).error('Indiquez la largeur en centimètres.'),
+      validation: (r) => [
+        r.required().positive().max(400).error('Indiquez la largeur en centimètres.'),
+        r.max(150).warning('Plus de 150 cm : vérifiez que c’est bien en centimètres.'),
+      ],
     }),
     defineField({
       name: 'hauteur_cm',
       title: 'Hauteur (cm), cadre compris',
       type: 'number',
       group: 'essentiel',
-      validation: (r) => r.required().positive().max(400).error('Indiquez la hauteur en centimètres.'),
+      validation: (r) => [
+        r.required().positive().max(400).error('Indiquez la hauteur en centimètres.'),
+        r.max(150).warning('Plus de 150 cm : vérifiez que c’est bien en centimètres.'),
+      ],
     }),
     defineField({
       name: 'profondeur_cm',
       title: 'Profondeur (cm)',
       type: 'number',
       group: 'essentiel',
-      validation: (r) => r.positive().max(200),
+      validation: (r) => [r.positive().max(200), r.max(30).warning('Plus de 30 cm de profondeur : vérifiez la valeur.')],
     }),
     defineField({
       name: 'type',

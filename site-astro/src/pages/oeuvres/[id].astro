@@ -89,7 +89,7 @@ const jsonld = {
   .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
   .oeuvre { display: flex; justify-content: center; padding: 40px 0; }
   .oeuvre img {
-    width: min(100%, calc(var(--l) * 7px)); height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
+    width: min(100%, max(300px, calc(var(--l) * 7px))); height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
     filter: drop-shadow(0 18px 22px rgba(38, 36, 26, .38)) drop-shadow(0 1px 2px rgba(38, 36, 26, .3));
   }
   .infos { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
@@ -99,9 +99,9 @@ const jsonld = {
   .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
   .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; }
-  .vues { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  .vues { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
   .vues figure { margin: 0; }
-  .vues img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .vues img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; }
   .vues figcaption { margin-top: 8px; }
   #chez-vous img { width: 100%; height: auto; }
   .haut { align-items: start; }
