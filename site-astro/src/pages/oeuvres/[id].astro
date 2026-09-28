@@ -41,6 +41,11 @@ const jsonld = {
       <p class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</p>
       {d.statut === 'vendue' ? (
         <a class="lien" href="/sur-mesure">Imaginer une œuvre dans cet esprit</a>
+      ) : disponible && d.lien_paiement ? (
+        <div class="liens">
+          <a class="bouton" href={d.lien_paiement}>Acheter — {prix(d.prix)}</a>
+          <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
+        </div>
       ) : (
         <div class="liens">
           <a class="lien" href="#demande">Demander cette œuvre</a>

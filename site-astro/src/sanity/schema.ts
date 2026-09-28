@@ -180,6 +180,14 @@ export const oeuvre = defineType({
       validation: (r) => r.positive().max(200),
     }),
     defineField({
+      name: 'lien_paiement',
+      title: 'Lien de paiement (facultatif)',
+      description:
+        'Si vous avez un lien de paiement pour cette pièce (Stripe, par exemple), collez-le ici : un bouton « Acheter » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
+      type: 'url',
+      group: 'details',
+    }),
+    defineField({
       name: 'accueil',
       title: 'Mettre en avant sur la page d’accueil',
       type: 'boolean',
@@ -307,6 +315,13 @@ export const herbier = defineType({
       type: 'image',
       options: { hotspot: true },
       validation: (r) => r.required().error('Ajoutez une photo.'),
+    }),
+    defineField({
+      name: 'lien_paiement',
+      title: 'Lien de paiement (facultatif)',
+      description:
+        'Si vous avez un lien de paiement pour ce trio (Stripe, par exemple), collez-le ici : un bouton « Acheter » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
+      type: 'url',
     }),
   ],
   orderings: [{ title: 'Plus récents', name: 'recents', by: [{ field: '_createdAt', direction: 'desc' }] }],

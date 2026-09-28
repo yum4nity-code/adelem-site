@@ -13,12 +13,13 @@ type SanityHerbier = {
   taille_cm?: number | null;
   matieres?: string[] | null;
   description?: string | null;
+  lien_paiement?: string | null;
   photo?: { hotspot?: unknown; crop?: unknown; asset?: { _id: string } | null } | null;
 };
 
 const QUERY = `*[_type == "herbier" && defined(titre) && defined(prix) && defined(photo.asset)]
   | order(_createdAt desc) {
-    _id, titre, prix, statut, taille_cm, matieres, description,
+    _id, titre, prix, statut, taille_cm, matieres, description, lien_paiement,
     photo{ hotspot, crop, asset-> { _id } }
   }`;
 
@@ -54,6 +55,7 @@ export async function herbierSanity() {
       matieres: h.matieres ?? [],
       description: h.description?.trim() || null,
       image: builder.image(img).width(1400).fit('max').auto('format').quality(82).url(),
+      lien_paiement: h.lien_paiement ?? null,
       demo: false,
     };
   });

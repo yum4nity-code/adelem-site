@@ -36,12 +36,15 @@ const jsonld = {
       {d.matieres.length > 0 && <p class="matieres">{d.matieres.join(' · ')}</p>}
       {d.taille_cm && <p class="discret">Chaque cadre : {d.taille_cm} × {d.taille_cm} cm</p>}
       <p class="prix">{disponible ? prixTexte(d.prix) : 'Épuisé pour le moment'}</p>
+      {disponible && d.lien_paiement && (
+        <a class="bouton" href={d.lien_paiement}>Acheter — {prixTexte(d.prix)}</a>
+      )}
     </div>
   </section>
 
   {disponible && (
     <section id="demande" class="wrap bloc pile">
-      <h2 class="titre-section">Demander ce trio</h2>
+      <h2 class="titre-section">{d.lien_paiement ? 'Une question sur ce trio ?' : 'Demander ce trio'}</h2>
       <ContactForm oeuvre={`Trio Herbier « ${d.titre} »`} />
     </section>
   )}
