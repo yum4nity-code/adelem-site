@@ -7,7 +7,7 @@ import { site } from '../data/site';
   <section class="wrap duo haut-page">
     <div class="pile">
       <h1 class="titre-section">Écrire à l’atelier</h1>
-      <p class="texte">Une œuvre qui vous intéresse, un cadre ancien qui attend son œuvre, un mur à habiller : quelques lignes suffisent. Réponse sous {site.delaiReponse}.</p>
+      <p class="texte">Une œuvre qui vous intéresse, un cadre ancien qui attend son œuvre, un mur à habiller : quelques lignes suffisent. Réponse sous {site.delaiReponse}.</p>
       <ul class="coord">
         {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
         {site.contact.telephone && <li><a href={`tel:${site.contact.telephone.replace(/\s/g, '')}`}>{site.contact.telephone}</a></li>}

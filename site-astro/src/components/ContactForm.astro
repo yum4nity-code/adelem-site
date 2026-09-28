@@ -8,7 +8,7 @@ const email = site.contact.email;
 ---
 {endpoint ? (
   <form class="formulaire" method="post" action={endpoint} enctype="multipart/form-data">
-    <input type="hidden" name="_subject" value={oeuvre ? `Demande : ${oeuvre}` : 'Nouvelle demande depuis adelem.fr'} />
+    <input type="hidden" name="_subject" value={oeuvre ? `Demande : ${oeuvre}` : 'Nouvelle demande depuis adelem.fr'} />
     <input type="hidden" name="_next" value={`${site.url}/merci`} />
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
     {oeuvre && <input type="hidden" name="oeuvre" value={oeuvre} />}
@@ -23,7 +23,7 @@ const email = site.contact.email;
     <button class="bouton" type="submit">Envoyer</button>
   </form>
 ) : email ? (
-  <p><a class="lien" href={`mailto:${email}?subject=${encodeURIComponent(oeuvre ? `Demande : ${oeuvre}` : 'Demande depuis adelem.fr')}`}>Écrire à l’atelier</a></p>
+  <p><a class="lien" href={`mailto:${email}?subject=${encodeURIComponent(oeuvre ? `Demande : ${oeuvre}` : 'Demande depuis adelem.fr')}`}>Écrire à l’atelier</a></p>
 ) : (
   <p class="discret attente">Le formulaire sera actif à la mise en ligne.</p>
 )}
