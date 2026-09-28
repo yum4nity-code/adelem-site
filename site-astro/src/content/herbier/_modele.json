@@ -1,0 +1,10 @@
+{
+  "titre": "Nom du trio",
+  "prix": 50,
+  "statut": "disponible",
+  "taille_cm": 10,
+  "matieres": ["Matière 1", "Matière 2", "Matière 3"],
+  "description": "Une ou deux phrases sur l'idée du trio.",
+  "fichier": "illustration.svg",
+  "demo": true
+}

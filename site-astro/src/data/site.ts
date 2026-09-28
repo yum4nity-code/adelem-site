@@ -32,6 +32,7 @@ export const nav = [
   { href: '/sculptures', label: 'Sculptures' },
   { href: '/sur-mesure', label: 'Sur mesure' },
   { href: '/atelier', label: 'Atelier' },
+  { href: '/herbier', label: 'Herbier' },
   { href: '/contact', label: 'Contact' },
 ];
 

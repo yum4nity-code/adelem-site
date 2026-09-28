@@ -1,0 +1,10 @@
+{
+  "titre": "Trio Sous-bois",
+  "prix": 52,
+  "statut": "disponible",
+  "taille_cm": 10,
+  "matieres": ["Fougère stabilisée", "Champignon séché", "Écorce"],
+  "description": "Trois petits cadres qui racontent le sol de la forêt : une fougère, un champignon posé sur sa mousse, une écorce veinée.",
+  "fichier": "illustration.svg",
+  "demo": true
+}

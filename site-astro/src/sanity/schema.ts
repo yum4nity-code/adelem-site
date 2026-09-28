@@ -244,4 +244,79 @@ export const carnet = defineType({
   },
 });
 
-export const schemaTypes = [oeuvre, carnet];
+// Un triptyque « Herbier » : trois petits cadres vendus ensemble, catégorie à part des œuvres uniques.
+export const herbier = defineType({
+  name: 'herbier',
+  title: 'Herbier (petits formats)',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'titre',
+      title: 'Nom du trio',
+      description: 'Ex. « Sous-bois », « Lichen ».',
+      type: 'string',
+      validation: (r) => r.required().error('Le nom est obligatoire.'),
+    }),
+    defineField({
+      name: 'prix',
+      title: 'Prix du triptyque en euros',
+      description: 'Le prix pour les trois cadres ensemble.',
+      type: 'number',
+      validation: (r) => r.required().integer().positive().error('Indiquez un prix.'),
+    }),
+    defineField({
+      name: 'statut',
+      title: 'Disponibilité',
+      type: 'string',
+      initialValue: 'disponible',
+      options: {
+        layout: 'radio',
+        direction: 'horizontal',
+        list: [
+          { title: 'Disponible', value: 'disponible' },
+          { title: 'Épuisé', value: 'epuise' },
+        ],
+      },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'taille_cm',
+      title: 'Taille de chaque petit cadre (cm)',
+      description: 'Ex. 10 pour un carré de 10 × 10 cm. Laissez vide si les trois cadres n’ont pas la même taille.',
+      type: 'number',
+      validation: (r) => r.positive().max(30),
+    }),
+    defineField({
+      name: 'matieres',
+      title: 'Matières',
+      type: 'array',
+      of: [defineArrayMember({ type: 'string' })],
+      options: { layout: 'tags' },
+    }),
+    defineField({
+      name: 'description',
+      title: 'Quelques mots',
+      description: 'Une ou deux phrases : l’idée du trio, à qui il ferait plaisir.',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'photo',
+      title: 'Photo du triptyque',
+      description: 'Les trois cadres ensemble, comme ils seraient présentés côte à côte.',
+      type: 'image',
+      options: { hotspot: true },
+      validation: (r) => r.required().error('Ajoutez une photo.'),
+    }),
+  ],
+  orderings: [{ title: 'Plus récents', name: 'recents', by: [{ field: '_createdAt', direction: 'desc' }] }],
+  preview: {
+    select: { titre: 'titre', prix: 'prix', statut: 'statut', media: 'photo' },
+    prepare({ titre, prix, statut, media }) {
+      const etat = statut === 'epuise' ? 'Épuisé' : 'Disponible';
+      return { title: titre || 'Nouveau triptyque', subtitle: [prix ? `${prix} €` : null, etat].filter(Boolean).join(' · '), media };
+    },
+  },
+});
+
+export const schemaTypes = [oeuvre, carnet, herbier];

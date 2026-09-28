@@ -1,0 +1,10 @@
+{
+  "titre": "Trio Lichen",
+  "prix": 55,
+  "statut": "disponible",
+  "taille_cm": 10,
+  "matieres": ["Lichen ramifié", "Lichen gris", "Mousse coussin"],
+  "description": "Trois lichens et mousses aux textures très différentes, pour qui aime regarder de près.",
+  "fichier": "illustration.svg",
+  "demo": true
+}

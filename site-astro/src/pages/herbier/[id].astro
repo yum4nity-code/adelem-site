@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { prix as prixTexte } from '../../data/site';
+
+export async function getStaticPaths() {
+  const trios = await getCollection('herbier');
+  return trios.map((t) => ({ params: { id: t.id }, props: { trio: t } }));
+}
+const { trio } = Astro.props;
+const d = trio.data;
+const disponible = d.statut === 'disponible';
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `Herbier — ${d.titre}`,
+  description: d.description ?? undefined,
+  image: d.image,
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'EUR',
+    price: d.prix,
+    availability: disponible ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+  },
+};
+---
+<Base title={`Herbier — ${d.titre}`} description={d.description ?? `Triptyque ${d.titre}, collection Herbier Adelem.`} image={d.image} jsonld={jsonld}>
+  <section class="wrap duo haut-page">
+    <img src={d.image} alt={`Triptyque ${d.titre}`} width="1400" height="622" class="photo" />
+    <div class="pile">
+      <p class="eyebrow">Herbier</p>
+      <h1 class="titre-section">{d.titre}</h1>
+      {d.description && <p class="texte">{d.description}</p>}
+      {d.matieres.length > 0 && <p class="matieres">{d.matieres.join(' · ')}</p>}
+      {d.taille_cm && <p class="discret">Chaque cadre : {d.taille_cm} × {d.taille_cm} cm</p>}
+      <p class="prix">{disponible ? prixTexte(d.prix) : 'Épuisé pour le moment'}</p>
+    </div>
+  </section>
+
+  {disponible && (
+    <section id="demande" class="wrap bloc pile">
+      <h2 class="titre-section">Demander ce trio</h2>
+      <ContactForm oeuvre={`Trio Herbier « ${d.titre} »`} />
+    </section>
+  )}
+
+  <section class="wrap bloc centre">
+    <a class="lien" href="/herbier">Les autres trios</a>
+  </section>
+</Base>
+
+<style>
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); align-items: start; }
+  .photo { width: 100%; aspect-ratio: 1400 / 622; object-fit: cover; border-radius: 3px; }
+  .eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
+  .matieres { font-size: .85rem; color: var(--discret); }
+  .prix { font: 300 1.6rem var(--serif); color: var(--encre); margin-top: 6px; }
+  .centre { text-align: center; }
+</style>

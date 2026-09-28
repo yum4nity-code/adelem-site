@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { formatDe, oeuvresSanity } from './sanity/oeuvres';
 import { carnetSanity } from './sanity/carnet';
+import { herbierSanity } from './sanity/herbier';
 
 // Les œuvres viennent de l'espace d'administration (Sanity, /admin).
 // Tant qu'aucune œuvre n'y est publiée, le site montre les œuvres d'exemple de src/content/oeuvres/
@@ -88,4 +89,33 @@ const carnet = defineCollection({
   }),
 });
 
-export const collections = { oeuvres, carnet };
+// Herbier : catégorie à part des œuvres uniques (triptyques, prix plus bas), même logique démo → Sanity.
+const exemplesHerbier = import.meta.glob<{ default: Record<string, any> }>('./content/herbier/[!_]*.json', { eager: true });
+
+function herbierExemple() {
+  return Object.entries(exemplesHerbier).map(([chemin, mod]) => {
+    const id = chemin.split('/').pop()!.replace(/\.json$/, '');
+    const d = mod.default;
+    return { ...d, id, image: `/herbier/${id}/${d.fichier}` };
+  });
+}
+
+const herbier = defineCollection({
+  loader: async () => {
+    if (process.env.ADELEM_DEMO === '1') return herbierExemple();
+    const reelles = await herbierSanity();
+    return reelles.length > 0 ? reelles : herbierExemple();
+  },
+  schema: z.object({
+    titre: z.string(),
+    prix: z.number().int().positive(),
+    statut: z.enum(['disponible', 'epuise']),
+    taille_cm: z.number().positive().nullable().optional(),
+    matieres: z.array(z.string()).default([]),
+    description: z.string().nullable().optional(),
+    image: z.string(),
+    demo: z.boolean().default(false),
+  }),
+});
+
+export const collections = { oeuvres, carnet, herbier };

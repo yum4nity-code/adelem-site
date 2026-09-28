@@ -1,0 +1,50 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trois petits cadres : une fougère, un champignon et une touffe de mousse, une écorce et une feuille">
+  <title>Trio Sous-bois</title>
+  <defs>
+    <filter id="g1" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.03 0"/>
+    </filter>
+  </defs>
+  <rect width="720" height="320" fill="#1B211B"/>
+  <rect width="720" height="320" filter="url(#g1)"/>
+
+  <!-- three small frames -->
+  <g stroke="#2B2620" stroke-width="2.4" fill="#EFE7D3">
+    <rect x="40" y="70" width="180" height="180" rx="2"/>
+    <rect x="270" y="70" width="180" height="180" rx="2"/>
+    <rect x="500" y="70" width="180" height="180" rx="2"/>
+  </g>
+
+  <!-- frame 1 : fern -->
+  <g transform="translate(40,70)" stroke="#2B2620" stroke-width="2.2" fill="none" stroke-linecap="round">
+    <path d="M 90,155 C 88,110 92,70 90,35"/>
+    <path d="M 90,140 L 66,126"/>
+    <path d="M 90,140 L 114,126"/>
+    <path d="M 90,120 L 68,108"/>
+    <path d="M 90,120 L 112,108"/>
+    <path d="M 90,100 L 72,90"/>
+    <path d="M 90,100 L 108,90"/>
+    <path d="M 90,80 L 76,72"/>
+    <path d="M 90,80 L 104,72"/>
+    <path d="M 90,60 L 80,54"/>
+    <path d="M 90,60 L 100,54"/>
+  </g>
+
+  <!-- frame 2 : mushroom + moss tuft -->
+  <g transform="translate(270,70)" stroke="#2B2620" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 55,105 C 53,78 117,78 115,105 Z"/>
+    <path d="M 78,105 L 80,148 L 92,148 L 90,105"/>
+    <path d="M 60,102 C 70,98 100,98 110,102" stroke-width="1.6" opacity="0.6"/>
+    <path d="M 128,140 C 118,122 134,104 152,110 C 168,116 168,136 152,142 C 142,146 132,144 128,140 Z" fill="#AEBB8C" fill-opacity="0.55"/>
+  </g>
+
+  <!-- frame 3 : bark and leaf -->
+  <g transform="translate(500,70)" stroke="#2B2620" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.85">
+    <path d="M 40,30 C 46,64 32,96 40,130 C 46,150 36,158 40,170"/>
+    <path d="M 70,26 C 76,60 62,92 70,126 C 76,150 66,158 70,172"/>
+    <path d="M 100,30 C 106,64 92,96 100,130 C 106,150 96,158 100,170"/>
+    <path d="M 130,120 C 118,110 118,92 132,86 C 146,80 158,92 154,108 C 150,124 138,128 130,120 Z" fill="#8E9A76" fill-opacity="0.5" stroke-width="2"/>
+    <path d="M 132,90 L 150,106" stroke-width="1.4" opacity="0.7"/>
+  </g>
+</svg>

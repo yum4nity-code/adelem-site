@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { prix } from '../data/site';
+
+const trios = (await getCollection('herbier')).sort((a, b) => Number(a.data.statut === 'epuise') - Number(b.data.statut === 'epuise'));
+---
+<Base title="Herbier" description="De petits triptyques à installer n’importe où, ou à offrir : des fragments de mousses, lichens et écorces dans de petits cadres.">
+  <section class="wrap haut-page pile">
+    <h1 class="titre-section">Herbier</h1>
+    <p class="texte">Un herbier rassemble de petits fragments choisis. Celui d’Adelem tient dans trois petits cadres, pensés pour un coin de mur qui n’attendait rien de grand — ou pour être offerts.</p>
+  </section>
+  <section class="wrap bloc">
+    {trios.length ? (
+      <div class="grille">
+        {trios.map((t) => (
+          <a href={`/herbier/${t.id}`} class="carte" aria-label={`${t.data.titre}, ${t.data.statut === 'epuise' ? 'épuisé' : prix(t.data.prix)}`}>
+            <div class="image-cadre">
+              <img src={t.data.image} alt={`Triptyque ${t.data.titre}`} loading="lazy" width="700" height="311" />
+              {t.data.statut === 'epuise' && <span class="badge">Épuisé</span>}
+            </div>
+            <div class="info">
+              <h2>{t.data.titre}</h2>
+              <p class="prix">{t.data.statut === 'epuise' ? 'Épuisé' : prix(t.data.prix)}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="discret">Les premiers trios arrivent bientôt.</p>
+    )}
+  </section>
+</Base>
+
+<style>
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); }
+  .grille { display: grid; gap: clamp(32px, 5vw, 56px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+  .carte { display: block; }
+  .image-cadre { position: relative; }
+  .carte img { width: 100%; aspect-ratio: 700 / 311; object-fit: cover; border-radius: 3px; box-shadow: 0 20px 34px -18px rgba(0, 0, 0, .6); transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
+  .carte:hover img { transform: translateY(-2px); }
+  .badge { position: absolute; top: 10px; right: 10px; background: var(--mur); color: var(--discret); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border: 1px solid var(--trait); }
+  .info { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 14px; }
+  .info h2 { font: italic 300 1.3rem var(--serif); }
+  .prix { font-size: .85rem; color: var(--discret); white-space: nowrap; }
+</style>

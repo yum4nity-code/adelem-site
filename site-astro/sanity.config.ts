@@ -17,6 +17,7 @@ export default defineConfig({
           .title('Adelem')
           .items([
             S.documentTypeListItem('oeuvre').title('Œuvres'),
+            S.documentTypeListItem('herbier').title('Herbier (petits formats)'),
             S.documentTypeListItem('carnet').title('Carnet d’atelier'),
           ]),
     }),
@@ -24,7 +25,7 @@ export default defineConfig({
   ],
   schema: { types: schemaTypes },
   document: {
-    // Pas de « dupliquer / nouveau document » d'autres types : seules la fiche œuvre et le carnet existent.
-    newDocumentOptions: (prev) => prev.filter((t) => t.templateId === 'oeuvre' || t.templateId === 'carnet'),
+    // Pas de « dupliquer / nouveau document » d'autres types que ceux-ci.
+    newDocumentOptions: (prev) => prev.filter((t) => ['oeuvre', 'carnet', 'herbier'].includes(t.templateId)),
   },
 });
