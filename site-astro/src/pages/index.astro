@@ -3,7 +3,8 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Mur from '../components/Mur.astro';
 
-const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+// La page d'accueil et la galerie « Œuvres » ne montrent que les tableaux : les sculptures ont leur propre page.
+const toutes = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau').sort((a, b) => a.data.ordre - b.data.ordre);
 const disponibles = toutes.filter((o) => o.data.statut !== 'vendue').slice(0, 5);
 const vedette =
   toutes.find((o) => o.data.accueil && o.data.statut !== 'vendue') ??

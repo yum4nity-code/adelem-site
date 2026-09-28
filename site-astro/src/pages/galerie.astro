@@ -4,7 +4,8 @@ import Base from '../layouts/Base.astro';
 import Mur from '../components/Mur.astro';
 import { site } from '../data/site';
 
-const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+// Cette page ne montre que les tableaux : les sculptures publiées dans l'admin vont sur /sculptures.
+const toutes = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau').sort((a, b) => a.data.ordre - b.data.ordre);
 const formats = [
   { nom: 'Grand format', ligne: 'Une présence architecturale' },
   { nom: 'Format signature', ligne: 'Le point focal d’une pièce' },
