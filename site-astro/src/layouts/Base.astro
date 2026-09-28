@@ -55,8 +55,8 @@ const orgLd = {
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
   </head>
   <body>
-    <a class="visually-hidden" href="#contenu">Aller au contenu</a>
-    {demo && <p class="bandeau-demo">Version de travail : œuvres, photos et prix d'exemple.</p>}
+    <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+    {demo && <p class="bandeau-demo">Version de travail : œuvres, photos et prix d’exemple.</p>}
     <header class:list={['entete', { salle }]}>
       <div class="wrap barre">
         <a href="/" class="marque" aria-label="Adelem, accueil">
@@ -91,6 +91,13 @@ const orgLd = {
       b?.addEventListener('click', () => {
         const o = n?.classList.toggle('ouvert');
         b.setAttribute('aria-expanded', String(!!o));
+      });
+      n?.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && n.classList.contains('ouvert')) {
+          n.classList.remove('ouvert');
+          b?.setAttribute('aria-expanded', 'false');
+          b?.focus();
+        }
       });
     </script>
   </body>

@@ -28,7 +28,7 @@ const jsonld = {
     : {}),
 };
 ---
-<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d'Adelem.`} image={face.src} jsonld={jsonld}>
+<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d’Adelem.`} image={face.src} jsonld={jsonld}>
   <section class="wrap tete">
     <div class="oeuvre">
       <img src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
@@ -98,4 +98,5 @@ const jsonld = {
   .vues img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; }
   .vues figcaption { margin-top: 8px; }
   .haut { align-items: start; }
+  #demande { scroll-margin-top: 24px; }
 </style>

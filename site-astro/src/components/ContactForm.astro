@@ -14,16 +14,16 @@ const email = site.contact.email;
     {oeuvre && <input type="hidden" name="oeuvre" value={oeuvre} />}
     <div class="deux">
       <label>Nom<input name="nom" autocomplete="name" required /></label>
-      <label>E-mail<input name="email" type="email" autocomplete="email" required /></label>
+      <label>E-mail<input name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required /></label>
     </div>
     <label>Téléphone (facultatif)<input name="telephone" type="tel" autocomplete="tel" /></label>
-    <label>Message<textarea name="message" rows="4" required>{oeuvre ? `Bonjour, ${oeuvre} m'intéresse.` : ''}</textarea></label>
+    <label>Message<textarea name="message" rows="4" required>{oeuvre ? `Bonjour, ${oeuvre} m’intéresse.` : ''}</textarea></label>
     <label>Photo de votre mur (facultatif)<input name="photo" type="file" accept="image/*" /></label>
     <p class="discret">Vos coordonnées servent uniquement à répondre. Réponse sous {site.delaiReponse}.</p>
     <button class="bouton" type="submit">Envoyer</button>
   </form>
 ) : email ? (
-  <p><a class="lien" href={`mailto:${email}?subject=${encodeURIComponent(oeuvre ? `Demande : ${oeuvre}` : 'Demande depuis adelem.fr')}`}>Écrire à l'atelier</a></p>
+  <p><a class="lien" href={`mailto:${email}?subject=${encodeURIComponent(oeuvre ? `Demande : ${oeuvre}` : 'Demande depuis adelem.fr')}`}>Écrire à l’atelier</a></p>
 ) : (
   <p class="discret attente">Le formulaire sera actif à la mise en ligne.</p>
 )}

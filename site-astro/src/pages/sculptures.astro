@@ -4,13 +4,13 @@ import Base from '../layouts/Base.astro';
 import Mur from '../components/Mur.astro';
 const items = (await getCollection('oeuvres')).filter((o) => o.data.type === 'sculpture');
 ---
-<Base title="Sculptures" description="Personnages en grès : la recherche sculptée d'Adelem.">
+<Base title="Sculptures" description="Personnages en grès : la recherche sculptée d’Adelem.">
   <section class="wrap haut-page pile">
     <h1 class="titre-section">Sculptures</h1>
-    <p class="texte">Des personnages en grès apparaissent ponctuellement dans le travail de l'atelier. Leur production reste limitée.</p>
+    <p class="texte">Des personnages en grès apparaissent ponctuellement dans le travail de l’atelier. Leur production reste limitée.</p>
   </section>
   <section class="wrap bloc">
-    {items.length ? <Mur oeuvres={items} /> : <p class="discret">Les pièces seront présentées ici au fil de leur création.</p>}
+    {items.length ? <Mur oeuvres={items} eager /> : <p class="discret">Les pièces seront présentées ici au fil de leur création.</p>}
   </section>
 </Base>
 <style>.haut-page { padding-top: clamp(40px, 6vw, 80px); }</style>

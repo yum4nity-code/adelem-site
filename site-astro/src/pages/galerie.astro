@@ -15,12 +15,14 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
       <h1>Œuvres</h1>
       <p class="discret">Présentées à leur échelle réelle les unes par rapport aux autres.</p>
     </div>
-    {formats.map((f) => {
+    {formats.map((f, i) => {
       const items = toutes.filter((o) => o.data.format === f && o.data.statut !== 'vendue');
+      // Seul le tout premier groupe affiché est au-dessus de la ligne de flottaison.
+      const premierGroupe = i === formats.findIndex((f2) => toutes.some((o) => o.data.format === f2 && o.data.statut !== 'vendue'));
       return items.length > 0 && (
         <section class="wrap groupe">
           <h2>{f}</h2>
-          <Mur oeuvres={items} salle={salle} />
+          <Mur oeuvres={items} salle={salle} eager={premierGroupe} />
         </section>
       );
     })}
