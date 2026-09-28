@@ -12,6 +12,8 @@ export const site = {
   },
   // Point d'envoi du formulaire (service d'e-mail à brancher). Sans valeur : lien e-mail, sinon message d'attente.
   formEndpoint: null as string | null,
+  // Le plan gratuit de Formspree ne gère pas les pièces jointes : ne passer à true qu'après un plan payant (Personal ou plus).
+  formFileUploads: false as boolean,
   legal: {
     editrice: 'Adèle Mette',
     statut: 'Entrepreneur individuel (EI)',
