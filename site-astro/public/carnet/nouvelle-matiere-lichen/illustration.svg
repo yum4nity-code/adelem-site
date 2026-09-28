@@ -1,0 +1,43 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Croquis d'un bocal de collection avec un lichen et une étiquette">
+  <title>Nouvelle matière : lichen gris</title>
+  <defs>
+    <filter id="grain4" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.035 0"/>
+    </filter>
+  </defs>
+  <rect width="480" height="360" fill="#EFE7D3"/>
+  <rect width="480" height="360" filter="url(#grain4)"/>
+
+  <g transform="translate(-20,20)">
+    <!-- jar -->
+    <g stroke="#2B2620" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+      <circle cx="240" cy="96" r="7"/>
+      <path d="M 228,103 L 228,140"/>
+      <path d="M 252,103 L 252,140"/>
+      <ellipse cx="240" cy="103" rx="12" ry="4"/>
+      <path d="M 228,140 C 200,146 172,158 170,180 L 170,266"/>
+      <path d="M 252,140 C 280,146 308,158 310,180 L 310,266"/>
+      <ellipse cx="240" cy="266" rx="70" ry="13"/>
+    </g>
+
+    <!-- lichen sprig inside -->
+    <g stroke="#2B2620" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.75">
+      <path d="M 240,252 C 236,226 246,210 238,184"/>
+      <path d="M 238,184 C 228,172 214,170 206,156"/>
+      <path d="M 238,184 C 248,174 262,174 268,160"/>
+      <path d="M 236,214 C 226,206 214,206 208,196"/>
+      <circle cx="206" cy="153" r="3" fill="#2B2620" stroke="none"/>
+      <circle cx="268" cy="157" r="3" fill="#2B2620" stroke="none"/>
+      <circle cx="207" cy="193" r="3" fill="#2B2620" stroke="none"/>
+      <circle cx="239" cy="181" r="3" fill="#8E9A76" stroke="none" opacity="0.8"/>
+    </g>
+
+    <!-- hanging tag -->
+    <g stroke="#2B2620" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+      <path d="M 252,116 C 274,128 292,132 300,150"/>
+      <path d="M 292,150 L 330,150 L 330,180 L 292,180 Z"/>
+      <circle cx="301" cy="160" r="3"/>
+    </g>
+  </g>
+</svg>

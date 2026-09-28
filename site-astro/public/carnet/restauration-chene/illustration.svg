@@ -1,0 +1,35 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Croquis d'une volute de bois sculpté en restauration, avec une gouge et des copeaux">
+  <title>Restaurer le chêne sculpté</title>
+  <defs>
+    <filter id="grain3" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.035 0"/>
+    </filter>
+  </defs>
+  <rect width="480" height="360" fill="#EFE7D3"/>
+  <rect width="480" height="360" filter="url(#grain3)"/>
+
+  <g stroke="#2B2620" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.88">
+    <!-- carved acanthus scroll -->
+    <path d="M 110,260 C 86,246 84,208 112,190 C 140,172 170,186 168,212 C 166,232 142,240 132,224 C 124,212 134,200 148,204"/>
+    <path d="M 168,212 C 190,214 206,196 200,172 C 194,150 166,144 150,160"/>
+    <path d="M 112,190 C 96,168 104,140 130,132 C 152,126 168,140 164,158"/>
+
+    <!-- wood grain lines beneath -->
+    <g stroke-width="1.8" opacity="0.55">
+      <path d="M 70,282 C 120,272 170,290 220,278"/>
+      <path d="M 78,300 C 128,292 176,306 224,296"/>
+    </g>
+
+    <!-- chisel / gouge tool -->
+    <path d="M 268,300 L 330,238" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 330,238 L 352,216 L 366,230 L 344,252 Z" stroke-width="3"/>
+    <path d="M 358,222 L 400,180" stroke-width="3"/>
+
+    <!-- wood shavings -->
+    <g stroke-width="2" opacity="0.7">
+      <path d="M 372,196 C 386,190 388,176 376,170 C 366,166 360,176 368,182"/>
+      <path d="M 394,168 C 406,160 406,146 394,142 C 386,140 382,148 388,154"/>
+    </g>
+  </g>
+</svg>

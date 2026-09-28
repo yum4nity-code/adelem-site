@@ -15,13 +15,16 @@ export default defineConfig({
       structure: (S) =>
         S.list()
           .title('Adelem')
-          .items([S.documentTypeListItem('oeuvre').title('Œuvres')]),
+          .items([
+            S.documentTypeListItem('oeuvre').title('Œuvres'),
+            S.documentTypeListItem('carnet').title('Carnet d’atelier'),
+          ]),
     }),
     frFRLocale(),
   ],
   schema: { types: schemaTypes },
   document: {
-    // Pas de « dupliquer / nouveau document » d'autres types : seule la fiche œuvre existe.
-    newDocumentOptions: (prev) => prev.filter((t) => t.templateId === 'oeuvre'),
+    // Pas de « dupliquer / nouveau document » d'autres types : seules la fiche œuvre et le carnet existent.
+    newDocumentOptions: (prev) => prev.filter((t) => t.templateId === 'oeuvre' || t.templateId === 'carnet'),
   },
 });

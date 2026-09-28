@@ -198,4 +198,50 @@ export const oeuvre = defineType({
   },
 });
 
-export const schemaTypes = [oeuvre];
+// Une entrée du carnet d'atelier : un instant de travail, en quelques mots et une photo.
+export const carnet = defineType({
+  name: 'carnet',
+  title: 'Carnet d’atelier',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'titre',
+      title: 'Titre',
+      description: 'Ex. « Un cadre trouvé aux puces », « Le séchage des mousses ».',
+      type: 'string',
+      validation: (r) => r.required().error('Le titre est obligatoire.'),
+    }),
+    defineField({
+      name: 'date',
+      title: 'Date',
+      type: 'date',
+      initialValue: () => new Date().toISOString().slice(0, 10),
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'texte',
+      title: 'Quelques phrases',
+      description: 'Ce que vous avez fait, trouvé, essayé. Pas besoin de grandes phrases.',
+      type: 'text',
+      rows: 4,
+      validation: (r) => r.required().error('Ajoutez quelques mots.'),
+    }),
+    defineField({
+      name: 'photo',
+      title: 'Photo',
+      description: 'Une photo prise avec le téléphone suffit.',
+      type: 'image',
+      options: { hotspot: true },
+      validation: (r) => r.required().error('Ajoutez une photo.'),
+    }),
+  ],
+  orderings: [{ title: 'Plus récentes', name: 'recentes', by: [{ field: 'date', direction: 'desc' }] }],
+  preview: {
+    select: { titre: 'titre', date: 'date', media: 'photo' },
+    prepare({ titre, date, media }) {
+      return { title: titre || 'Nouvelle entrée', subtitle: date, media };
+    },
+  },
+});
+
+export const schemaTypes = [oeuvre, carnet];

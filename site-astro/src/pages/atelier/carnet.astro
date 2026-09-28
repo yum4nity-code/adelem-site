@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entrees = (await getCollection('carnet')).sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''));
+
+function dateLisible(iso: string | null | undefined) {
+  if (!iso) return '';
+  return new Date(iso + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+<Base title="Carnet d’atelier" description="Instantanés du travail à l’atelier : ce qui est trouvé, restauré, tenté.">
+  <section class="wrap haut-page pile">
+    <h1 class="titre-section">Carnet d’atelier</h1>
+    <p class="texte">Quelques instants du travail, au fil des semaines : un cadre trouvé, une matière qui sèche, un essai qui rate ou qui tient.</p>
+  </section>
+  <section class="wrap bloc">
+    {entrees.length ? (
+      <div class="carnet">
+        {entrees.map((e) => (
+          <article class="entree">
+            <img src={e.data.image} alt={e.data.titre} loading="lazy" width="480" height="360" />
+            <div class="texte-entree">
+              {e.data.date && <p class="date">{dateLisible(e.data.date)}</p>}
+              <h2>{e.data.titre}</h2>
+              <p class="texte">{e.data.texte}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="discret">Les premières pages du carnet arrivent bientôt.</p>
+    )}
+  </section>
+</Base>
+
+<style>
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); }
+  .carnet { display: grid; gap: clamp(48px, 7vw, 88px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+  .entree { display: flex; flex-direction: column; gap: 20px; }
+  .entree img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px;
+    box-shadow: 0 24px 40px -20px rgba(0, 0, 0, .65);
+  }
+  .texte-entree { display: flex; flex-direction: column; gap: 8px; }
+  .date { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--or); }
+  .entree h2 { font: italic 300 1.5rem var(--serif); }
+</style>

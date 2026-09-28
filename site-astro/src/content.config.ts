@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { formatDe, oeuvresSanity } from './sanity/oeuvres';
+import { carnetSanity } from './sanity/carnet';
 
 // Les œuvres viennent de l'espace d'administration (Sanity, /admin).
 // Tant qu'aucune œuvre n'y est publiée, le site montre les œuvres d'exemple de src/content/oeuvres/
@@ -60,4 +61,31 @@ const oeuvres = defineCollection({
   }),
 });
 
-export const collections = { oeuvres };
+// Le carnet d'atelier suit la même logique que les œuvres : exemples locaux (illustrations, tant
+// qu'aucune vraie entrée n'est publiée) puis bascule automatique vers Sanity dès la première photo publiée.
+const exemplesCarnet = import.meta.glob<{ default: Record<string, any> }>('./content/carnet/[!_]*.json', { eager: true });
+
+function carnetExemple() {
+  return Object.entries(exemplesCarnet).map(([chemin, mod]) => {
+    const id = chemin.split('/').pop()!.replace(/\.json$/, '');
+    const d = mod.default;
+    return { ...d, id, image: `/carnet/${id}/${d.fichier}` };
+  });
+}
+
+const carnet = defineCollection({
+  loader: async () => {
+    if (process.env.ADELEM_DEMO === '1') return carnetExemple();
+    const reelles = await carnetSanity();
+    return reelles.length > 0 ? reelles : carnetExemple();
+  },
+  schema: z.object({
+    titre: z.string(),
+    date: z.string().nullable().optional(),
+    texte: z.string(),
+    image: z.string(),
+    demo: z.boolean().default(false),
+  }),
+});
+
+export const collections = { oeuvres, carnet };

@@ -18,8 +18,14 @@ import Base from '../layouts/Base.astro';
       <li><strong>Laisser sécher</strong><span>Le temps fait partie du travail.</span></li>
     </ol>
   </section>
+  <section class="wrap bloc centre">
+    <p class="texte">Des instantanés du travail, au fil des semaines.</p>
+    <a class="lien" href="/atelier/carnet">Le carnet d’atelier</a>
+  </section>
 </Base>
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
   .photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .centre { text-align: center; }
+  .centre .texte { margin-inline: auto; margin-bottom: 16px; }
 </style>

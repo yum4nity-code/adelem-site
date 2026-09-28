@@ -1,0 +1,50 @@
+<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Croquis de mousses et d'un lichen posés sur une grille de séchage">
+  <title>Le séchage des mousses</title>
+  <defs>
+    <filter id="grain2" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.035 0"/>
+    </filter>
+  </defs>
+  <rect width="480" height="360" fill="#EFE7D3"/>
+  <rect width="480" height="360" filter="url(#grain2)"/>
+
+  <!-- drying rack -->
+  <g stroke="#2B2620" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.8">
+    <path d="M 76,232 L 404,232"/>
+    <path d="M 76,268 L 404,268"/>
+    <path d="M 76,232 L 76,268"/>
+    <path d="M 404,232 L 404,268"/>
+    <path d="M 118,232 L 118,268"/>
+    <path d="M 160,232 L 160,268"/>
+    <path d="M 202,232 L 202,268"/>
+    <path d="M 244,232 L 244,268"/>
+    <path d="M 286,232 L 286,268"/>
+    <path d="M 328,232 L 328,268"/>
+    <path d="M 370,232 L 370,268"/>
+  </g>
+
+  <!-- rising warmth -->
+  <g stroke="#2B2620" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4">
+    <path d="M 150,140 C 158,120 142,108 150,88"/>
+    <path d="M 240,130 C 248,110 232,98 240,78"/>
+    <path d="M 320,140 C 328,120 312,108 320,88"/>
+  </g>
+
+  <!-- moss clumps -->
+  <g stroke="#2B2620" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 118,232 C 108,206 122,182 148,180 C 172,178 188,196 182,216 C 178,230 160,236 144,234 C 132,233 122,232 118,232 Z" fill="#AEBB8C" fill-opacity="0.55"/>
+    <path d="M 210,232 C 200,198 224,172 254,174 C 282,176 296,200 286,222 C 278,238 250,240 230,236 C 220,234 212,233 210,232 Z" fill="#9CAC79" fill-opacity="0.55"/>
+    <path d="M 300,232 C 292,210 306,190 328,190 C 348,190 360,208 352,224 C 346,236 322,238 308,235 C 302,234 300,233 300,232 Z" fill="#B4C093" fill-opacity="0.55"/>
+  </g>
+
+  <!-- lichen sprig -->
+  <g stroke="#2B2620" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M 372,232 C 376,206 362,190 366,164"/>
+    <path d="M 366,164 C 358,152 344,150 336,138"/>
+    <path d="M 366,164 C 374,154 386,152 392,140"/>
+    <circle cx="336" cy="136" r="3.5" fill="#2B2620" stroke="none"/>
+    <circle cx="393" cy="138" r="3.5" fill="#2B2620" stroke="none"/>
+    <circle cx="365" cy="160" r="3.5" fill="#2B2620" stroke="none"/>
+  </g>
+</svg>
