@@ -11,7 +11,7 @@ const { oeuvres, salle = false, eager = false } = Astro.props;
   {oeuvres.map((o, i) => (
     <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${o.data.largeur_cm};--h:${o.data.hauteur_cm}`}>
       <img
-        src={`/oeuvres/${o.id}/${o.data.photos[0].fichier}`}
+        src={o.data.photos[0].src}
         alt={o.data.photos[0].alt}
         width={Math.round(o.data.largeur_cm * 10)}
         height={Math.round(o.data.hauteur_cm * 10)}

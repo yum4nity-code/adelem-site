@@ -6,7 +6,9 @@ import { site } from '../data/site';
 
 const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
 const disponibles = toutes.filter((o) => o.data.statut !== 'vendue').slice(0, 5);
-const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue');
+const vedette =
+  toutes.find((o) => o.data.accueil && o.data.statut !== 'vendue') ??
+  toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue');
 const salle = site.salle === 'sombre';
 ---
 <Base title="Adelem" salle={salle}>
@@ -24,10 +26,10 @@ const salle = site.salle === 'sombre';
 
   {vedette && (
     <section class="wrap bloc duo vedette">
-      <img src={`/oeuvres/${vedette.id}/${vedette.data.photos[1]?.fichier ?? vedette.data.photos[0].fichier}`} alt={vedette.data.photos[1]?.alt ?? vedette.data.photos[0].alt} loading="lazy" width="1000" height="1200" />
+      <img src={(vedette.data.photos[1] ?? vedette.data.photos[0]).src} alt={vedette.data.photos[1]?.alt ?? vedette.data.photos[0].alt} loading="lazy" width="1000" height="1200" />
       <div class="pile">
         <h2 class="titre-section">{vedette.data.titre}</h2>
-        <p class="texte">{vedette.data.histoire}</p>
+        {vedette.data.histoire && <p class="texte">{vedette.data.histoire}</p>}
         <a class="lien" href={`/oeuvres/${vedette.id}`}>Voir l'œuvre</a>
       </div>
     </section>

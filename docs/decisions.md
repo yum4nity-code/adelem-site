@@ -39,3 +39,11 @@
 - Espace d'administration prévu : Sanity (offre gratuite), pour qu'Adèle ajoute œuvres, photos et textes seule
 - adelem.fr ne bascule sur le nouveau site qu'avec : 6 vraies œuvres, formulaire de contact actif, mentions légales complètes
 - Les œuvres actuellement en ligne sur le nouveau site sont des exemples (`"demo": true`) avec des prix alignés sur le questionnaire (grands formats vers 350 à 690 €)
+
+## 2026-09-28 — Espace d'administration Sanity branché
+
+- Projet Sanity `b9pobh76`, jeu de données `production` (lecture publique). Studio embarqué sur `/admin` (noindex), interface en français.
+- Fiche « Œuvre » : photos (la 1re = face, recadrée), titre, disponibilité, prix, dimensions cadre compris ; détails facultatifs (type, année, matières, cadre, provenance, texte, poids, mise en avant accueil).
+- Calculé automatiquement : format (≤ 40 cm petit, ≤ 70 cm moyen, au-delà grand, sur le plus grand côté), adresse de la page (depuis le titre), recadrage de la vue de face aux proportions réelles.
+- Tant qu'aucune œuvre n'est publiée dans Sanity, le site affiche les œuvres d'exemple. Si Sanity est injoignable, la construction échoue et la version en ligne reste en place.
+- Mise à jour du site après publication : webhook Sanity → Deploy Hook Vercel (à créer par Gwen).

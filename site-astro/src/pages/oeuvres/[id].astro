@@ -11,7 +11,6 @@ export async function getStaticPaths() {
 }
 const { oeuvre } = Astro.props;
 const d = oeuvre.data;
-const src = (f: string) => `/oeuvres/${oeuvre.id}/${f}`;
 const [face, ...autres] = d.photos;
 const disponible = d.statut === 'disponible';
 const jsonld = {
@@ -19,7 +18,7 @@ const jsonld = {
   '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
   name: d.titre,
   creator: { '@type': 'Person', name: site.legal.editrice },
-  image: d.photos.map((p) => new URL(src(p.fichier), site.url).href),
+  image: d.photos.map((p) => new URL(p.src, site.url).href),
   ...(d.annee ? { dateCreated: String(d.annee) } : {}),
   width: `${d.largeur_cm} cm`,
   height: `${d.hauteur_cm} cm`,
@@ -29,10 +28,10 @@ const jsonld = {
     : {}),
 };
 ---
-<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d'Adelem.`} image={src(face.fichier)} jsonld={jsonld}>
+<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d'Adelem.`} image={face.src} jsonld={jsonld}>
   <section class="wrap tete">
     <div class="oeuvre">
-      <img src={src(face.fichier)} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+      <img src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
     </div>
     <div class="infos">
       <p class="discret"><a href="/galerie">Œuvres</a> / {d.titre}</p>
@@ -62,7 +61,7 @@ const jsonld = {
     <section class="wrap bloc vues">
       {autres.map((p) => (
         <figure>
-          <img src={src(p.fichier)} alt={p.alt} loading="lazy" width="1200" height="900" />
+          <img src={p.src} alt={p.alt} loading="lazy" width={p.w ?? 1200} height={p.h ?? 900} />
           <figcaption class="discret">{p.legende}</figcaption>
         </figure>
       ))}

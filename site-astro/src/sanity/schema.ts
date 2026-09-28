@@ -1,0 +1,178 @@
+import { defineArrayMember, defineField, defineType } from 'sanity';
+
+// Fiche d'une œuvre, telle qu'Adèle la remplit dans /admin.
+// Le format (petit, moyen, grand) et l'adresse de la page sont calculés tout seuls.
+export const oeuvre = defineType({
+  name: 'oeuvre',
+  title: 'Œuvre',
+  type: 'document',
+  groups: [
+    { name: 'essentiel', title: 'Essentiel', default: true },
+    { name: 'details', title: 'Détails' },
+  ],
+  fields: [
+    defineField({
+      name: 'photos',
+      title: 'Photos',
+      description:
+        "Glissez 3 photos ou plus. La 1re est l'œuvre bien de face : cliquez dessus puis sur l'icône de recadrage pour couper au ras du cadre. Les suivantes : la matière de près, le cadre, l'œuvre au mur. Faites-les glisser pour changer l'ordre.",
+      type: 'array',
+      group: 'essentiel',
+      options: { layout: 'grid' },
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: 'legende',
+              title: 'Légende (facultatif)',
+              description: 'Ex. « La matière », « Le cadre », « Au mur ».',
+              type: 'string',
+            }),
+            defineField({
+              name: 'alt',
+              title: 'Description pour les malvoyants (facultatif)',
+              description: 'Une phrase qui décrit la photo. Sans texte, le titre de l’œuvre est utilisé.',
+              type: 'string',
+            }),
+          ],
+        }),
+      ],
+      validation: (r) => r.required().min(1).error('Ajoutez au moins une photo : l’œuvre de face.'),
+    }),
+    defineField({
+      name: 'titre',
+      title: 'Titre',
+      type: 'string',
+      group: 'essentiel',
+      validation: (r) => r.required().error('Le titre est obligatoire.'),
+    }),
+    defineField({
+      name: 'statut',
+      title: 'Disponibilité',
+      type: 'string',
+      group: 'essentiel',
+      initialValue: 'disponible',
+      options: {
+        layout: 'radio',
+        direction: 'horizontal',
+        list: [
+          { title: 'Disponible', value: 'disponible' },
+          { title: 'Réservée', value: 'reservee' },
+          { title: 'Vendue', value: 'vendue' },
+        ],
+      },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'prix',
+      title: 'Prix en euros',
+      description: 'Laisser vide pour afficher « Prix sur demande ».',
+      type: 'number',
+      group: 'essentiel',
+      validation: (r) => r.integer().positive(),
+    }),
+    defineField({
+      name: 'largeur_cm',
+      title: 'Largeur (cm), cadre compris',
+      type: 'number',
+      group: 'essentiel',
+      validation: (r) => r.required().positive().max(400).error('Indiquez la largeur en centimètres.'),
+    }),
+    defineField({
+      name: 'hauteur_cm',
+      title: 'Hauteur (cm), cadre compris',
+      type: 'number',
+      group: 'essentiel',
+      validation: (r) => r.required().positive().max(400).error('Indiquez la hauteur en centimètres.'),
+    }),
+    defineField({
+      name: 'profondeur_cm',
+      title: 'Profondeur (cm)',
+      type: 'number',
+      group: 'essentiel',
+      validation: (r) => r.positive().max(200),
+    }),
+    defineField({
+      name: 'type',
+      title: 'Type',
+      type: 'string',
+      group: 'details',
+      initialValue: 'tableau',
+      options: {
+        layout: 'radio',
+        direction: 'horizontal',
+        list: [
+          { title: 'Tableau', value: 'tableau' },
+          { title: 'Sculpture', value: 'sculpture' },
+        ],
+      },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'annee',
+      title: 'Année',
+      type: 'number',
+      group: 'details',
+      initialValue: () => new Date().getFullYear(),
+      validation: (r) => r.integer().min(1970).max(2100),
+    }),
+    defineField({
+      name: 'matieres',
+      title: 'Matières',
+      description: 'Tapez une matière puis Entrée. Ex. Mousse coussin, Lichens, Écorce de chêne.',
+      type: 'array',
+      group: 'details',
+      of: [defineArrayMember({ type: 'string' })],
+      options: { layout: 'tags' },
+    }),
+    defineField({
+      name: 'cadre',
+      title: 'Le cadre',
+      description: 'Ex. « Cadre en chêne sculpté, vers 1900 ».',
+      type: 'string',
+      group: 'details',
+    }),
+    defineField({
+      name: 'provenance',
+      title: 'Provenance du cadre',
+      description: 'Ex. « Chiné près d’Uzès, restauré à l’atelier ».',
+      type: 'string',
+      group: 'details',
+    }),
+    defineField({
+      name: 'histoire',
+      title: 'Quelques mots sur l’œuvre',
+      description: 'Deux ou trois phrases simples : ce qu’on y voit, d’où viennent les matières.',
+      type: 'text',
+      rows: 4,
+      group: 'details',
+    }),
+    defineField({
+      name: 'poids_kg',
+      title: 'Poids (kg)',
+      type: 'number',
+      group: 'details',
+      validation: (r) => r.positive().max(200),
+    }),
+    defineField({
+      name: 'accueil',
+      title: 'Mettre en avant sur la page d’accueil',
+      type: 'boolean',
+      group: 'details',
+      initialValue: false,
+    }),
+  ],
+  orderings: [{ title: 'Plus récentes', name: 'recentes', by: [{ field: '_createdAt', direction: 'desc' }] }],
+  preview: {
+    select: { titre: 'titre', l: 'largeur_cm', h: 'hauteur_cm', statut: 'statut', prix: 'prix', media: 'photos.0' },
+    prepare({ titre, l, h, statut, prix, media }) {
+      const etat = { disponible: 'Disponible', reservee: 'Réservée', vendue: 'Vendue' }[statut as string] ?? '';
+      const parts = [l && h ? `${l} × ${h} cm` : null, prix ? `${prix} €` : null, etat].filter(Boolean);
+      return { title: titre || 'Nouvelle œuvre', subtitle: parts.join(' · '), media };
+    },
+  },
+});
+
+export const schemaTypes = [oeuvre];
