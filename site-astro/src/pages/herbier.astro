@@ -43,7 +43,7 @@ const trios = (await getCollection('herbier')).sort((a, b) => Number(a.data.stat
     box-shadow: 0 20px 34px -18px rgba(0, 0, 0, .6);
     transition: transform .5s cubic-bezier(.16, 1, .3, 1);
   }
-  .carte:hover img, .carte:focus-visible img { transform: translateY(-2px) scale(1.03); }
+  .carte:focus-visible img { transform: translateY(-2px) scale(1.03); }
   .badge { position: absolute; top: 10px; right: 10px; background: var(--mur); color: var(--discret); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border: 1px solid var(--trait); }
   .voir {
     position: absolute; inset: auto 0 0 0; padding: 18px 16px 10px;
@@ -51,9 +51,17 @@ const trios = (await getCollection('herbier')).sort((a, b) => Number(a.data.stat
     font: 500 .68rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--encre);
     opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .4s cubic-bezier(.16, 1, .3, 1);
   }
-  .carte:hover .voir, .carte:focus-visible .voir { opacity: 1; transform: none; }
+  .carte:focus-visible .voir { opacity: 1; transform: none; }
   .info { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 14px; }
   .info h2 { font: italic 300 1.3rem var(--serif); transition: color .4s ease; }
-  .carte:hover h2, .carte:focus-visible h2 { color: var(--or); }
+  .carte:focus-visible h2 { color: var(--or); }
   .prix { font-size: .85rem; color: var(--discret); white-space: nowrap; }
+
+  /* Le survol n'existe que sur un vrai pointeur : sur tactile, un :hover classique reste
+     « collé » après un tap. Le clavier garde son focus plus haut. */
+  @media (hover: hover) and (pointer: fine) {
+    .carte:hover img { transform: translateY(-2px) scale(1.03); }
+    .carte:hover .voir { opacity: 1; transform: none; }
+    .carte:hover h2 { color: var(--or); }
+  }
 </style>
