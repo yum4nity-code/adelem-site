@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
 import { site, nav, indexable } from '../data/site';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -52,6 +53,7 @@ const orgLd = {
     <link rel="sitemap" href="/sitemap-index.xml" />
     <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+    <Analytics />
   </head>
   <body>
     <a class="lien-evitement" href="#contenu">Aller au contenu</a>

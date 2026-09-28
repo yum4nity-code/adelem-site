@@ -18,6 +18,7 @@
     "@sanity/client": "^8.7.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/locale-fr-fr": "^1.2.37",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^7.3.5",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
