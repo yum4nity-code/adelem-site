@@ -80,3 +80,10 @@
 - CGV mises à jour (sections 4, 5, 6, 7) avec ces décisions. Restent en `.todo`, faute de réponse à ce jour : régime de TVA (art. 3), pourcentage d'acompte sur-mesure (art. 4-5), délai d'expédition en jours d'une œuvre disponible (art. 6), nom du médiateur de la consommation (art. 9).
 - Réassurance sur la matière : une ligne fixe, identique sur toutes les fiches (œuvres non-sculptures + Herbier), juste après la liste des matières, précise qu'il s'agit de végétal stabilisé sans entretien particulier. Objectif : ne jamais dépendre du fait qu'Adèle pense à le préciser au cas par cas. Proposé en plus, non construit à ce stade : une page « Le végétal stabilisé » jumelle de « Cadres anciens », pour qui veut comprendre la technique plus en détail.
 - Textes d'exemple du champ « histoire » (Canopée, Clairière, Sous-bois) réécrits comme modèles de ton pour Adèle : geste et matière d'abord, jamais grandiloquent, toujours marqués « texte d'exemple, à adapter ».
+
+## 2026-09-28 — Retrait des mentions vide-grenier/brocante, TVA et délai d'expédition tranchés
+
+- Gwen juge les mentions « vide-grenier » et « brocante » trop kitsch pour le positionnement du site ; « chiné » reste acceptable. Retiré de : provenance et histoire de Clairière, histoire et provenance de Sous-bois, pages Atelier et Cadres anciens, titre et illustration du carnet `cadre-brocante` (renommé `cadre-chine`), et de l'exemple dans le schéma Sanity (champ titre du carnet).
+- TVA tranchée : non applicable, art. 293 B du CGI (franchise en base, micro-entreprise). Section 3 des CGV sortie du statut `.todo`.
+- Délai d'expédition tranché : 3 à 5 jours ouvrés, souvent moins, avant même de compter le transport. Ajouté aux CGV (section 6) et à la page `/livraison`. Ce délai ne concerne que la préparation/l'envoi depuis l'atelier ; le délai de transport proprement dit continue de dépendre de la destination et s'affiche au moment du paiement (tarifs Stripe par zone).
+- Reste en `.todo`, faute de réponse à ce jour : pourcentage d'acompte sur-mesure (art. 4-5), nom du médiateur de la consommation (art. 9) — obligatoire avant la mise en ligne définitive d'une vente en ligne.

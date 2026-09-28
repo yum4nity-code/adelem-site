@@ -1,5 +1,5 @@
 <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Croquis d'un coin de cadre ancien examiné à la loupe">
-  <title>Un cadre trouvé aux puces</title>
+  <title>Un cadre chiné un dimanche matin</title>
   <defs>
     <filter id="grain1" x="-5%" y="-5%" width="110%" height="110%">
       <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/>

@@ -215,7 +215,7 @@ export const carnet = defineType({
     defineField({
       name: 'titre',
       title: 'Titre',
-      description: 'Ex. « Un cadre trouvé aux puces », « Le séchage des mousses ».',
+      description: 'Ex. « Un cadre chiné un dimanche matin », « Le séchage des mousses ».',
       type: 'string',
       validation: (r) => r.required().error('Le titre est obligatoire.'),
     }),
