@@ -5,6 +5,6 @@
   "taille_cm": 10,
   "matieres": ["Matière 1", "Matière 2", "Matière 3"],
   "description": "Une ou deux phrases sur l'idée du trio.",
-  "fichier": "illustration.svg",
+  "fichier": "triptyque.jpg",
   "demo": true
 }

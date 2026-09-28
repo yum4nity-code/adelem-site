@@ -16,7 +16,7 @@ const trios = (await getCollection('herbier')).sort((a, b) => Number(a.data.stat
         {trios.map((t) => (
           <a href={`/herbier/${t.id}`} class="carte" aria-label={`${t.data.titre}, ${t.data.statut === 'epuise' ? 'épuisé' : prix(t.data.prix)}`}>
             <div class="image-cadre">
-              <img src={t.data.image} alt={`Triptyque ${t.data.titre}`} loading="lazy" width="700" height="311" />
+              <img src={t.data.image} alt={`Triptyque ${t.data.titre}`} loading="lazy" width="1348" height="460" />
               {t.data.statut === 'epuise' && <span class="badge">Épuisé</span>}
             </div>
             <div class="info">
@@ -37,7 +37,7 @@ const trios = (await getCollection('herbier')).sort((a, b) => Number(a.data.stat
   .grille { display: grid; gap: clamp(32px, 5vw, 56px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
   .carte { display: block; }
   .image-cadre { position: relative; }
-  .carte img { width: 100%; aspect-ratio: 700 / 311; object-fit: cover; border-radius: 3px; box-shadow: 0 20px 34px -18px rgba(0, 0, 0, .6); transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
+  .carte img { width: 100%; aspect-ratio: 1348 / 460; object-fit: cover; border-radius: 3px; box-shadow: 0 20px 34px -18px rgba(0, 0, 0, .6); transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
   .carte:hover img { transform: translateY(-2px); }
   .badge { position: absolute; top: 10px; right: 10px; background: var(--mur); color: var(--discret); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border: 1px solid var(--trait); }
   .info { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 14px; }

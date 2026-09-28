@@ -28,7 +28,7 @@ const jsonld = {
 ---
 <Base title={`Herbier — ${d.titre}`} description={d.description ?? `Triptyque ${d.titre}, collection Herbier Adelem.`} image={d.image} jsonld={jsonld}>
   <section class="wrap duo haut-page">
-    <img src={d.image} alt={`Triptyque ${d.titre}`} width="1400" height="622" class="photo" />
+    <img src={d.image} alt={`Triptyque ${d.titre}`} width="1348" height="460" class="photo" />
     <div class="pile">
       <p class="eyebrow">Herbier</p>
       <h1 class="titre-section">{d.titre}</h1>
@@ -53,7 +53,7 @@ const jsonld = {
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); align-items: start; }
-  .photo { width: 100%; aspect-ratio: 1400 / 622; object-fit: cover; border-radius: 3px; }
+  .photo { width: 100%; aspect-ratio: 1348 / 460; object-fit: cover; border-radius: 3px; }
   .eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
   .matieres { font-size: .85rem; color: var(--discret); }
   .prix { font: 300 1.6rem var(--serif); color: var(--encre); margin-top: 6px; }
