@@ -52,7 +52,7 @@ const jsonld = {
           <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
         </div>
       )}
-      <p class="discret">Pièce unique, signée au dos. Transport sur devis, annoncé avant tout paiement.</p>
+      <p class="discret">Pièce unique, signée au dos. <a href="/livraison">Emballage et livraison</a> dans le monde entier.</p>
       {d.certificat && <p class="discret">{d.certificat}</p>}
     </div>
   </section>
@@ -102,6 +102,8 @@ const jsonld = {
   .infos h1 { font-size: clamp(2.8rem, 5vw, 4rem); line-height: 1; }
   .annee { font: italic 300 1.4rem var(--serif); color: var(--texte); margin-top: -10px; }
   .prix { font: 400 1.9rem var(--serif); color: var(--encre); }
+  .infos .discret a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .infos .discret a:hover { color: var(--encre); }
   .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
   .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; }

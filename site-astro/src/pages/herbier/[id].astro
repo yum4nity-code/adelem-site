@@ -34,11 +34,13 @@ const jsonld = {
       <h1 class="titre-section">{d.titre}</h1>
       {d.description && <p class="texte">{d.description}</p>}
       {d.matieres.length > 0 && <p class="matieres">{d.matieres.join(' · ')}</p>}
+      <p class="discret stabilise">Matières naturelles stabilisées : elles gardent forme et couleur sans arrosage ni entretien courant, à l’abri de la lumière directe.</p>
       {d.taille_cm && <p class="discret">Chaque cadre : {d.taille_cm} × {d.taille_cm} cm</p>}
       <p class="prix">{disponible ? prixTexte(d.prix) : 'Épuisé pour le moment'}</p>
       {disponible && d.lien_paiement && (
         <a class="bouton" href={d.lien_paiement}>Acheter — {prixTexte(d.prix)}</a>
       )}
+      <p class="discret"><a href="/livraison">Emballage et livraison</a> dans le monde entier, expédié comme un seul envoi.</p>
     </div>
   </section>
 
@@ -59,6 +61,9 @@ const jsonld = {
   .photo { width: 100%; aspect-ratio: 1348 / 460; object-fit: cover; border-radius: 3px; }
   .eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
   .matieres { font-size: .85rem; color: var(--discret); }
+  .stabilise { font-style: italic; }
   .prix { font: 300 1.6rem var(--serif); color: var(--encre); margin-top: 6px; }
+  .pile .discret a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .pile .discret a:hover { color: var(--encre); }
   .centre { text-align: center; }
 </style>
