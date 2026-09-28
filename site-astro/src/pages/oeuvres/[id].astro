@@ -44,10 +44,11 @@ const jsonld = {
       ) : (
         <div class="liens">
           <a class="lien" href="#demande">Demander cette œuvre</a>
-          <a class="lien secondaire" href="#chez-vous">La voir sur mon mur</a>
+          <a class="lien secondaire" href="#demande">La voir sur mon mur</a>
         </div>
       )}
       <p class="discret">Pièce unique, signée au dos. Transport sur devis, annoncé avant tout paiement.</p>
+      {d.statut !== 'vendue' && <p class="discret">Un doute sur la taille ? Joignez à votre demande une photo de votre mur : vous recevez un aperçu de l'œuvre chez vous avant de décider.</p>}
     </div>
   </section>
 
@@ -70,13 +71,6 @@ const jsonld = {
 
   {d.statut !== 'vendue' && (
     <>
-      <section id="chez-vous" class="wrap bloc duo">
-        <div class="pile">
-          <h2 class="titre-section">Chez vous</h2>
-          <p class="texte">Envoyez une photo de votre mur avec sa largeur. Vous recevez un montage de {d.titre} à l'échelle exacte avant de décider.</p>
-        </div>
-        <img src="/images/chez-vous.webp" alt="Exemple de montage : une œuvre au-dessus d'un canapé" loading="lazy" width="1500" height="1090" />
-      </section>
       <section id="demande" class="wrap bloc duo haut">
         <h2 class="titre-section">Demander {d.titre}</h2>
         <ContactForm oeuvre={d.titre} />
@@ -103,6 +97,5 @@ const jsonld = {
   .vues figure { margin: 0; }
   .vues img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; }
   .vues figcaption { margin-top: 8px; }
-  #chez-vous img { width: 100%; height: auto; }
   .haut { align-items: start; }
 </style>
