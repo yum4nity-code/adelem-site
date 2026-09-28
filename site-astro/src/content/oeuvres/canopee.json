@@ -11,12 +11,13 @@
   "poids_kg": 6,
   "matieres": ["Mousse coussin", "Lichens"],
   "cadre": "Cadre doré à la feuille, fin XIXe",
-  "provenance": "Trouvé en salle des ventes, dorure reprise à l'atelier",
-  "histoire": "La mousse est posée par coussins serrés, pour que la lumière rasante du matin creuse les reliefs. Texte d'exemple, à écrire avec Adèle.",
+  "provenance": "Trouvé en salle des ventes, dorure reprise à l’atelier",
+  "histoire": "La mousse est posée par coussins serrés, pour que la lumière rasante du matin creuse les reliefs. Texte d’exemple, à écrire avec Adèle.",
+  "entretien": "Texte d’exemple : éviter le soleil direct et les pièces humides, dépoussiérer au pinceau doux une fois par an.",
   "photos": [
     { "fichier": "face.webp", "legende": "Face", "alt": "Canopée, mousse dense dans un cadre doré ornementé" },
     { "fichier": "matiere.webp", "legende": "La matière", "alt": "Coussins de mousse en gros plan" },
-    { "fichier": "situation.webp", "legende": "Au mur", "alt": "Montage d'une œuvre au-dessus d'un canapé" }
+    { "fichier": "situation.webp", "legende": "Au mur", "alt": "Montage d’une œuvre au-dessus d’un canapé" }
   ],
   "ordre": 2,
   "demo": true

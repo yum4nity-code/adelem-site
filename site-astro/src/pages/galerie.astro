@@ -5,7 +5,11 @@ import Mur from '../components/Mur.astro';
 import { site } from '../data/site';
 
 const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
-const formats = ['Grand format', 'Moyen format', 'Petit format'] as const;
+const formats = [
+  { nom: 'Grand format', ligne: 'Une présence architecturale' },
+  { nom: 'Format signature', ligne: 'Le point focal d’une pièce' },
+  { nom: 'Petit format', ligne: 'Une présence discrète' },
+] as const;
 const salle = site.salle === 'sombre';
 const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 ---
@@ -15,13 +19,14 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
       <h1>Œuvres</h1>
       <p class="discret">Présentées à leur échelle réelle les unes par rapport aux autres.</p>
     </div>
-    {formats.map((f, i) => {
-      const items = toutes.filter((o) => o.data.format === f && o.data.statut !== 'vendue');
+    {formats.map(({ nom, ligne }, i) => {
+      const items = toutes.filter((o) => o.data.format === nom && o.data.statut !== 'vendue');
       // Seul le tout premier groupe affiché est au-dessus de la ligne de flottaison.
-      const premierGroupe = i === formats.findIndex((f2) => toutes.some((o) => o.data.format === f2 && o.data.statut !== 'vendue'));
+      const premierGroupe = i === formats.findIndex((f2) => toutes.some((o) => o.data.format === f2.nom && o.data.statut !== 'vendue'));
       return items.length > 0 && (
         <section class="wrap groupe">
-          <h2>{f}</h2>
+          <h2>{nom}</h2>
+          <p class="discret ligne-format">{ligne}</p>
           <Mur oeuvres={items} salle={salle} eager={premierGroupe} />
         </section>
       );
@@ -33,6 +38,10 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
       <Mur oeuvres={vendues} />
     </section>
   )}
+  <section class="wrap bloc centre">
+    <p class="texte">Un mur ou un cadre qui demande une taille précise ?</p>
+    <a class="lien" href="/sur-mesure">Le sur-mesure</a>
+  </section>
 </Base>
 
 <style>
@@ -42,6 +51,9 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
   .entete-page h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); }
   .salle h1, .salle h2 { color: var(--salle-texte); }
   .salle .discret { color: var(--salle-discret); }
-  .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 48px; }
+  .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 6px; }
   .groupe + .groupe { margin-top: 40px; }
+  .ligne-format { text-align: center; margin-bottom: 36px; }
+  .centre { text-align: center; }
+  .centre .texte { margin-inline: auto; margin-bottom: 16px; }
 </style>

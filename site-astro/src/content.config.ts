@@ -36,7 +36,7 @@ const oeuvres = defineCollection({
     titre: z.string(),
     annee: z.number().int().nullable().optional(),
     type: z.enum(['tableau', 'sculpture']),
-    format: z.enum(['Petit format', 'Moyen format', 'Grand format']),
+    format: z.enum(['Petit format', 'Format signature', 'Grand format']),
     statut: z.enum(['disponible', 'reservee', 'vendue']),
     prix: z.number().int().positive().nullable(),
     // Dimensions extérieures, cadre compris : elles servent à l'accrochage à l'échelle.
@@ -48,6 +48,8 @@ const oeuvres = defineCollection({
     cadre: z.string().nullable().optional(),
     provenance: z.string().nullable().optional(),
     histoire: z.string().nullable().optional(),
+    entretien: z.string().nullable().optional(),
+    certificat: z.string().nullable().optional(),
     // La première photo est la vue de face, aux proportions du cadre.
     photos: z
       .array(z.object({ src: z.string(), legende: z.string(), alt: z.string(), w: z.number().optional(), h: z.number().optional() }))

@@ -48,7 +48,8 @@ const jsonld = {
         </div>
       )}
       <p class="discret">Pièce unique, signée au dos. Transport sur devis, annoncé avant tout paiement.</p>
-      {d.statut !== 'vendue' && <p class="discret">Un doute sur la taille ? Joignez une photo de votre mur à votre demande : nous vous conseillons la taille.</p>}
+      {d.certificat && <p class="discret">{d.certificat}</p>}
+      {d.statut !== 'vendue' && <p class="discret">Un doute sur la taille ? Joignez une photo de votre mur à votre demande : nous vous conseillons la taille.</p>}
     </div>
   </section>
 
@@ -66,6 +67,13 @@ const jsonld = {
           <figcaption class="discret">{p.legende}</figcaption>
         </figure>
       ))}
+    </section>
+  )}
+
+  {d.entretien && (
+    <section class="wrap bloc entretien">
+      <h2 class="titre-section">Entretien</h2>
+      <p>{d.entretien}</p>
     </section>
   )}
 
@@ -93,6 +101,8 @@ const jsonld = {
   .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
   .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; }
+  .entretien h2 { margin-bottom: 16px; }
+  .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
   .vues { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
   .vues figure { margin: 0; }
   .vues img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; }

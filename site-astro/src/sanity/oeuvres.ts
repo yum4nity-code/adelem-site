@@ -27,6 +27,8 @@ type SanityOeuvre = {
   cadre?: string | null;
   provenance?: string | null;
   histoire?: string | null;
+  entretien?: string | null;
+  certificat?: string | null;
   accueil?: boolean | null;
   photos?: SanityPhoto[] | null;
 };
@@ -34,7 +36,7 @@ type SanityOeuvre = {
 const QUERY = `*[_type == "oeuvre" && defined(titre) && defined(largeur_cm) && defined(hauteur_cm) && count(photos[defined(asset)]) > 0]
   | order(_createdAt desc) {
     _id, titre, annee, type, statut, prix, largeur_cm, hauteur_cm, profondeur_cm, poids_kg,
-    matieres, cadre, provenance, histoire, accueil,
+    matieres, cadre, provenance, histoire, entretien, certificat, accueil,
     photos[defined(asset)]{ legende, alt, crop, hotspot, asset->{ _id, metadata { dimensions { width, height } } } }
   }`;
 
@@ -53,7 +55,7 @@ export const slugify = (s: string) =>
 // Petit ≤ 40 cm, moyen ≤ 70 cm, grand au-delà (plus grand côté, cadre compris).
 export const formatDe = (l: number, h: number) => {
   const m = Math.max(l, h);
-  return m <= 40 ? 'Petit format' : m <= 70 ? 'Moyen format' : 'Grand format';
+  return m <= 40 ? 'Petit format' : m <= 70 ? 'Format signature' : 'Grand format';
 };
 
 function photo(p: SanityPhoto, i: number, o: SanityOeuvre) {
@@ -115,6 +117,8 @@ export async function oeuvresSanity() {
       cadre: o.cadre ?? null,
       provenance: o.provenance ?? null,
       histoire: o.histoire ?? null,
+      entretien: o.entretien ?? null,
+      certificat: o.certificat ?? null,
       photos: (o.photos ?? []).map((p, j) => photo(p, j, o)),
       ordre: i + 1,
       accueil: !!o.accueil,

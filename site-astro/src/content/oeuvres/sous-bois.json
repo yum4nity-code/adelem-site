@@ -2,7 +2,7 @@
   "titre": "Sous-bois",
   "annee": 2025,
   "type": "tableau",
-  "format": "Moyen format",
+  "format": "Format signature",
   "statut": "disponible",
   "prix": 130,
   "largeur_cm": 34,
@@ -10,7 +10,7 @@
   "profondeur_cm": 4,
   "matieres": ["Lichen pulmonaire", "Mousse"],
   "cadre": "Cadre doré, années 1930",
-  "provenance": "Brocante, restauré à l'atelier",
+  "provenance": "Brocante, restauré à l’atelier",
   "histoire": null,
   "photos": [
     { "fichier": "face.webp", "legende": "Face", "alt": "Sous-bois, lichen dans un fin cadre doré" },

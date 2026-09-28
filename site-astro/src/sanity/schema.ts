@@ -156,6 +156,23 @@ export const oeuvre = defineType({
       group: 'details',
     }),
     defineField({
+      name: 'entretien',
+      title: 'Entretien (facultatif)',
+      description:
+        'Vos conseils pour que l’œuvre dure bien : lumière, poussière, humidité… Avec vos mots. Laissez vide tant que vous ne savez pas quoi écrire, rien ne s’affiche dans ce cas.',
+      type: 'text',
+      rows: 3,
+      group: 'details',
+    }),
+    defineField({
+      name: 'certificat',
+      title: 'Certificat ou signature particulière (facultatif)',
+      description:
+        'Le site indique déjà que chaque pièce est unique et signée au dos. Remplissez ce champ seulement si cette œuvre a quelque chose en plus : un numéro, un certificat, une dédicace… Sinon, laissez vide.',
+      type: 'string',
+      group: 'details',
+    }),
+    defineField({
       name: 'poids_kg',
       title: 'Poids (kg)',
       type: 'number',

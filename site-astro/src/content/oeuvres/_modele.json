@@ -1,5 +1,5 @@
 {
-  "titre": "Titre de l'œuvre",
+  "titre": "Titre de l’œuvre",
   "annee": 2025,
   "type": "tableau",
   "format": "Grand format",
@@ -11,12 +11,14 @@
   "poids_kg": 4,
   "matieres": ["Mousses stabilisées", "Lichens", "Écorces"],
   "cadre": "Cadre en chêne sculpté, vers 1900",
-  "provenance": "Chiné en salle des ventes, restauré à l'atelier",
-  "histoire": "Deux ou trois phrases sur l'œuvre et son cadre.",
+  "provenance": "Chiné en salle des ventes, restauré à l’atelier",
+  "histoire": "Deux ou trois phrases sur l’œuvre et son cadre.",
+  "entretien": "Facultatif : vos conseils pour que l’œuvre dure (lumière, poussière…).",
+  "certificat": "Facultatif, seulement si pertinent : numéro, certificat, dédicace…",
   "photos": [
     { "fichier": "face.webp", "legende": "Face", "alt": "Titre, vue de face" },
     { "fichier": "matiere.webp", "legende": "La matière", "alt": "Détail des mousses" },
-    { "fichier": "situation.webp", "legende": "Au mur", "alt": "L'œuvre accrochée" }
+    { "fichier": "situation.webp", "legende": "Au mur", "alt": "L’œuvre accrochée" }
   ],
   "ordre": 10
 }
