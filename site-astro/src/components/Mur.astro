@@ -4,10 +4,10 @@ import Cartel from './Cartel.astro';
 
 // Accrochage à l'échelle : chaque œuvre a la largeur réelle de son cadre (var(--cm) px par cm),
 // et tous les centres sont alignés sur une même ligne, comme dans un musée.
-interface Props { oeuvres: CollectionEntry<'oeuvres'>[]; salle?: boolean; eager?: boolean }
-const { oeuvres, salle = false, eager = false } = Astro.props;
+interface Props { oeuvres: CollectionEntry<'oeuvres'>[]; eager?: boolean }
+const { oeuvres, eager = false } = Astro.props;
 ---
-<div class:list={['mur', { salle }]} role="list">
+<div class="mur" role="list">
   {oeuvres.map((o, i) => (
     <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${o.data.largeur_cm};--h:${o.data.hauteur_cm}`}>
       <img
@@ -31,10 +31,9 @@ const { oeuvres, salle = false, eager = false } = Astro.props;
   .piece { position: relative; display: block; width: calc(var(--cm) * var(--l)); }
   .piece img {
     width: 100%; height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
-    filter: drop-shadow(0 calc(var(--cm) * 3) calc(var(--cm) * 4) rgba(38, 36, 26, .38)) drop-shadow(0 1px 2px rgba(38, 36, 26, .3));
+    filter: drop-shadow(0 calc(var(--cm) * 3) calc(var(--cm) * 5) rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
     transition: transform .6s cubic-bezier(.16, 1, .3, 1);
   }
   .piece:hover img { transform: translateY(-3px); }
   .sous { position: absolute; top: calc(100% + 22px); left: 0; width: max(100%, 190px); }
-  .salle .piece img { filter: drop-shadow(0 calc(var(--cm) * 3) calc(var(--cm) * 5) rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5)); }
 </style>

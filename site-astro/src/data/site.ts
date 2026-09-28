@@ -5,8 +5,6 @@ export const site = {
   description:
     'Tableaux végétaux uniques : mousses, lichens et écorces composés à la main dans des cadres anciens restaurés.',
   delaiReponse: '3 jours ouvrés',
-  // Salle d'accrochage : 'claire' (mur pierre) ou 'sombre' (mur vert forêt). À choisir avec Adèle.
-  salle: 'claire' as 'claire' | 'sombre',
   contact: {
     email: null as string | null,
     telephone: null as string | null,

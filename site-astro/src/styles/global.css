@@ -1,4 +1,4 @@
-/* Direction C « Accrochage » : mur de galerie clair, serif fine, cartels en petits caractères */
+/* Direction Nocturne : salle sombre en permanence, l'œuvre comme un bijou sous vitrine, serif fine, cartels en petits caractères */
 @import '@fontsource/cormorant-garamond/300.css';
 @import '@fontsource/cormorant-garamond/300-italic.css';
 @import '@fontsource/cormorant-garamond/400.css';
@@ -8,14 +8,12 @@
 @import '@fontsource/ibm-plex-sans/500.css';
 
 :root {
-  --mur: #E6E5E0;          /* couleur du mur, identique au fond des photos d'exemple */
-  --encre: #1F221E;
-  --texte: #3E413B;
-  --discret: #62655D;      /* 5.2:1 sur le mur */
-  --trait: #CFCEC7;
-  --salle: #1F2621;        /* salle sombre */
-  --salle-texte: #ECE9E0;
-  --salle-discret: #A9AEA3;
+  --mur: #1B211B;          /* fond nocturne, partout sur le site */
+  --encre: #ECE9E0;        /* titres, forts contrastes — 13.5:1 sur le fond */
+  --texte: #C9C6B8;        /* texte courant — 9.6:1 sur le fond */
+  --discret: #A9AEA3;      /* texte discret — 7.2:1 sur le fond */
+  --trait: #3A453C;        /* liserés, séparateurs */
+  --or: #C9AF78;           /* accent doré (cadres, citations, rare) — 7.7:1 sur le fond */
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'IBM Plex Sans', system-ui, sans-serif;
   --gutter: clamp(20px, 4vw, 56px);
@@ -61,7 +59,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* Lien d'évitement : cliquable au clavier uniquement, se révèle au focus */
 .lien-evitement {
   position: absolute !important; left: 12px; top: -60px; z-index: 100;
-  background: var(--mur); color: var(--encre); padding: 10px 18px;
+  background: var(--encre); color: var(--mur); padding: 10px 18px;
   font: 400 .8rem/1 var(--sans); letter-spacing: .04em;
   transition: top .15s ease;
 }
@@ -74,7 +72,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .prose dl { display: grid; grid-template-columns: minmax(130px, 200px) 1fr; gap: .4rem 1.5rem; }
 .prose dt { color: var(--discret); }
 .prose dd { margin: 0; }
-.todo { background: #efe3b8; padding: 0 .3em; color: var(--encre); }
+.todo { background: #efe3b8; padding: 0 .3em; color: #3a2f10; }
 
 .etapes { list-style: none; padding: 0; margin: 0; display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
 .etapes strong { display: block; font: 400 1.5rem/1.2 var(--serif); color: var(--encre); margin-bottom: 6px; }

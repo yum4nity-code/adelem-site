@@ -9,9 +9,8 @@ interface Props {
   image?: string;
   noindex?: boolean;
   jsonld?: Record<string, unknown>;
-  salle?: boolean; // en-tête sur fond de salle sombre
 }
-const { title, description = site.description, image, noindex = false, jsonld, salle = false } = Astro.props;
+const { title, description = site.description, image, noindex = false, jsonld } = Astro.props;
 const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
 const fullTitle = title === site.nom ? `${site.nom}, tableaux végétaux et cadres anciens` : `${title}, ${site.nom}`;
 const ogImage = image ? new URL(image, site.url).href : null;
@@ -46,7 +45,7 @@ const orgLd = {
     <meta property="og:locale" content="fr_FR" />
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
-    <meta name="theme-color" content="#E6E5E0" />
+    <meta name="theme-color" content="#1B211B" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -57,7 +56,7 @@ const orgLd = {
   <body>
     <a class="lien-evitement" href="#contenu">Aller au contenu</a>
     {demo && <p class="bandeau-demo">Version de travail : œuvres, photos et prix d’exemple.</p>}
-    <header class:list={['entete', { salle }]}>
+    <header class="entete">
       <div class="wrap barre">
         <a href="/" class="marque" aria-label="Adelem, accueil">
           <img src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="84" height="57" />
@@ -106,17 +105,13 @@ const orgLd = {
 <style>
   .bandeau-demo { background: #efe3b8; color: #1F221E; text-align: center; font-size: .78rem; padding: 6px 12px; letter-spacing: .02em; }
   .entete { position: relative; z-index: 10; }
-  .entete.salle { background: var(--salle); }
-  .entete.salle .marque img { filter: invert(.92); }
-  .entete.salle .menu a, .entete.salle .menu-btn { color: var(--salle-texte); }
   .barre { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
-  .marque img { width: 84px; height: auto; }
+  .marque img { width: 84px; height: auto; filter: invert(.92); }
   .menu-btn { background: none; border: 0; cursor: pointer; font: 500 .72rem var(--sans); letter-spacing: .16em; text-transform: uppercase; min-height: 44px; padding: 0; color: var(--encre); }
   .menu { display: none; position: absolute; right: var(--gutter); left: var(--gutter); top: 64px; background: var(--mur); border: 1px solid var(--trait); padding: 12px 20px; }
   .menu.ouvert { display: block; }
   .menu ul { list-style: none; margin: 0; padding: 0; }
   .menu a { display: block; padding: 10px 0; font: 300 1.4rem var(--serif); color: var(--encre); }
-  .entete.salle .menu.ouvert { background: var(--salle); border-color: #3a453c; }
   @media (min-width: 820px) {
     .menu-btn { display: none; }
     .menu { display: block; position: static; border: 0; padding: 0; background: none !important; }

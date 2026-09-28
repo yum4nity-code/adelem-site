@@ -10,11 +10,10 @@ const formats = [
   { nom: 'Format signature', ligne: 'Le point focal d’une pièce' },
   { nom: 'Petit format', ligne: 'Une présence discrète' },
 ] as const;
-const salle = site.salle === 'sombre';
 const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 ---
-<Base title="Œuvres" description="Tableaux végétaux disponibles, présentés à leur échelle réelle, et œuvres entrées en collection privée." salle={salle}>
-  <div class:list={['salle-page', { salle }]}>
+<Base title="Œuvres" description="Tableaux végétaux disponibles, présentés à leur échelle réelle, et œuvres entrées en collection privée.">
+  <div class="salle-page">
     <div class="wrap entete-page">
       <h1>Œuvres</h1>
       <p class="discret">Présentées à leur échelle réelle les unes par rapport aux autres.</p>
@@ -27,7 +26,7 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
         <section class="wrap groupe">
           <h2>{nom}</h2>
           <p class="discret ligne-format">{ligne}</p>
-          <Mur oeuvres={items} salle={salle} eager={premierGroupe} />
+          <Mur oeuvres={items} eager={premierGroupe} />
         </section>
       );
     })}
@@ -46,11 +45,8 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 
 <style>
   .salle-page { padding-top: clamp(40px, 6vw, 72px); }
-  .salle-page.salle { background: var(--salle); padding-bottom: 40px; }
   .entete-page { text-align: center; margin-bottom: 64px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
   .entete-page h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); }
-  .salle h1, .salle h2 { color: var(--salle-texte); }
-  .salle .discret { color: var(--salle-discret); }
   .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 6px; }
   .groupe + .groupe { margin-top: 40px; }
   .ligne-format { text-align: center; margin-bottom: 36px; }
