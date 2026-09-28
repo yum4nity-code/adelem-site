@@ -17,8 +17,12 @@ const email = site.contact.email;
       <label>E-mail<input name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required /></label>
     </div>
     <label>Téléphone (facultatif)<input name="telephone" type="tel" autocomplete="tel" /></label>
-    <label>Message<textarea name="message" rows="4" required>{oeuvre ? `Bonjour, ${oeuvre} m’intéresse.` : ''}</textarea></label>
+    <label>Message<textarea name="message" rows="4" required>{oeuvre ? `Bonjour, à propos de ${oeuvre} :` : ''}</textarea></label>
     <label>Photo de votre mur (facultatif)<input name="photo" type="file" accept="image/*" /></label>
+    <label class="case">
+      <input type="checkbox" name="newsletter" value="oui" />
+      <span>Je veux bien recevoir, de temps en temps, des nouvelles de l’atelier et des nouvelles pièces</span>
+    </label>
     <p class="discret">Vos coordonnées servent uniquement à répondre. Réponse sous {site.delaiReponse}.</p>
     <button class="bouton" type="submit">Envoyer</button>
   </form>
@@ -35,6 +39,8 @@ const email = site.contact.email;
   input, textarea { font: 400 1rem/1.5 var(--sans); color: var(--encre); background: transparent; border: 0; border-bottom: 1px solid rgba(236, 233, 224, .3); padding: 8px 0; border-radius: 0; width: 100%; text-transform: none; letter-spacing: 0; }
   input:focus, textarea:focus { border-bottom-color: var(--or); }
   input[type='file'] { border: 0; font-size: .85rem; }
+  .case { display: flex; align-items: flex-start; gap: 10px; font: 400 .85rem/1.45 var(--sans); letter-spacing: 0; text-transform: none; color: var(--texte); cursor: pointer; }
+  .case input { width: auto; flex: none; margin-top: 3px; accent-color: var(--or); }
   button { justify-self: start; }
   .attente { padding: 20px 0; border-top: 1px solid var(--trait); }
 </style>
