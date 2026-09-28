@@ -4,45 +4,36 @@ import { site } from '../data/site';
 interface Props { oeuvre?: string }
 const { oeuvre } = Astro.props;
 const endpoint = site.formEndpoint;
-const mailto = site.contact.email;
+const email = site.contact.email;
 ---
 {endpoint ? (
-  <form class="contact" method="post" action={endpoint}>
-    <input type="hidden" name="_subject" value="Nouvelle demande depuis adelem.fr" />
+  <form class="formulaire" method="post" action={endpoint} enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value={oeuvre ? `Demande : ${oeuvre}` : 'Nouvelle demande depuis adelem.fr'} />
     <input type="hidden" name="_next" value={`${site.url}/merci`} />
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
-    <label>Votre projet
-      <select name="projet" required>
-        <option value="oeuvre">Une œuvre disponible</option>
-        <option value="sur-mesure">Une création sur mesure</option>
-        <option value="cadre">Un cadre ou un lieu particulier</option>
-        <option value="sculpture">Une sculpture</option>
-      </select>
-    </label>
     {oeuvre && <input type="hidden" name="oeuvre" value={oeuvre} />}
-    <div class="row">
-      <label>Nom <input name="nom" autocomplete="name" required /></label>
-      <label>E-mail <input name="email" type="email" autocomplete="email" required /></label>
+    <div class="deux">
+      <label>Nom<input name="nom" autocomplete="name" required /></label>
+      <label>E-mail<input name="email" type="email" autocomplete="email" required /></label>
     </div>
-    <label>Téléphone <span class="opt">facultatif</span> <input name="telephone" type="tel" autocomplete="tel" /></label>
-    <label>Votre message
-      <textarea name="message" rows="6" required placeholder="L’œuvre qui vous intéresse, votre espace, le format envisagé…">{oeuvre ? `Bonjour, l’œuvre « ${oeuvre} » m’intéresse.` : ''}</textarea>
-    </label>
-    <p class="note">Vos coordonnées servent uniquement à répondre à votre demande. Réponse sous {site.delaiReponse}.</p>
-    <button class="btn" type="submit">Envoyer la demande</button>
+    <label>Téléphone (facultatif)<input name="telephone" type="tel" autocomplete="tel" /></label>
+    <label>Message<textarea name="message" rows="4" required>{oeuvre ? `Bonjour, ${oeuvre} m'intéresse.` : ''}</textarea></label>
+    <label>Photo de votre mur (facultatif)<input name="photo" type="file" accept="image/*" /></label>
+    <p class="discret">Vos coordonnées servent uniquement à répondre. Réponse sous {site.delaiReponse}.</p>
+    <button class="bouton" type="submit">Envoyer</button>
   </form>
-) : mailto ? (
-  <p><a class="btn" href={`mailto:${mailto}?subject=${encodeURIComponent(oeuvre ? `Œuvre « ${oeuvre} »` : 'Demande depuis adelem.fr')}`}>Écrire à Adelem</a></p>
+) : email ? (
+  <p><a class="lien" href={`mailto:${email}?subject=${encodeURIComponent(oeuvre ? `Demande : ${oeuvre}` : 'Demande depuis adelem.fr')}`}>Écrire à l'atelier</a></p>
 ) : (
-  <p class="empty">Coordonnées de contact à renseigner avant la mise en ligne.</p>
+  <p class="discret attente">Le formulaire sera actif à la mise en ligne.</p>
 )}
 
 <style>
-  .contact { display: grid; gap: 1.2rem; max-width: 640px; }
-  .row { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
-  label { display: grid; gap: .4rem; font-size: .85rem; color: var(--muted); }
-  input, select, textarea { font: 400 1rem/1.5 var(--sans); color: var(--ink); background: #fff; border: 1px solid var(--line); padding: .75rem .9rem; border-radius: 0; width: 100%; }
-  .opt { font-size: .75rem; }
-  .note { font-size: .85rem; color: var(--muted); margin: 0; }
+  .formulaire { display: grid; gap: 26px; max-width: 620px; width: 100%; }
+  .deux { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  label { display: grid; gap: 6px; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--texte); }
+  input, textarea { font: 400 1rem/1.5 var(--sans); color: var(--encre); background: transparent; border: 0; border-bottom: 1px solid #8a8c84; padding: 8px 0; border-radius: 0; width: 100%; text-transform: none; letter-spacing: 0; }
+  input[type='file'] { border: 0; font-size: .85rem; }
   button { justify-self: start; }
+  .attente { padding: 20px 0; border-top: 1px solid var(--trait); }
 </style>

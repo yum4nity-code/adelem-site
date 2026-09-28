@@ -2,9 +2,9 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Page introuvable" noindex>
-  <section class="section"><div class="wrap">
-    <p class="eyebrow">Erreur 404</p>
-    <h1>Page introuvable</h1>
-    <div class="actions"><a class="btn" href="/">Revenir à l’accueil</a></div>
-  </div></section>
+  <section class="wrap haut-page pile">
+    <h1 class="titre-section">Page introuvable</h1>
+    <a class="lien" href="/">Revenir à l'accueil</a>
+  </section>
 </Base>
+<style>.haut-page { padding-top: clamp(60px, 8vw, 120px); }</style>

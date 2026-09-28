@@ -27,3 +27,15 @@
 - Cible prioritaire
 - Poids du sur-mesure
 - Place personnelle d'AdeleM sur le site
+
+## 2026-09-28
+
+### Nouveau site
+- Abandon de Lovable : le site est reconstruit en Astro (dossier `site-astro/`), hébergé sur Vercel, déployé depuis la branche `main`
+- Direction visuelle retenue par Gwen : « Accrochage » (mur de galerie, œuvres à l'échelle réelle, cartels de musée), mur clair
+- Variante « salle sombre » (vert forêt très foncé, pas noir) gardée en option (`site.salle` dans `site-astro/src/data/site.ts`), à faire choisir par Adèle
+- Aucune image générée par IA ; vraies photos uniquement, avec retouches de lumière autorisées
+- Gwen est directeur de la publication
+- Espace d'administration prévu : Sanity (offre gratuite), pour qu'Adèle ajoute œuvres, photos et textes seule
+- adelem.fr ne bascule sur le nouveau site qu'avec : 6 vraies œuvres, formulaire de contact actif, mentions légales complètes
+- Les œuvres actuellement en ligne sur le nouveau site sont des exemples (`"demo": true`) avec des prix alignés sur le questionnaire (grands formats vers 350 à 690 €)

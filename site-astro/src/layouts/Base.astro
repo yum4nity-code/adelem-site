@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import { site, nav } from '../data/site';
+import { getCollection } from 'astro:content';
+import { site, nav, indexable } from '../data/site';
 
 interface Props {
   title: string;
@@ -8,12 +9,14 @@ interface Props {
   image?: string;
   noindex?: boolean;
   jsonld?: Record<string, unknown>;
+  salle?: boolean; // en-tête sur fond de salle sombre
 }
-const { title, description = site.description, image, noindex = false, jsonld } = Astro.props;
+const { title, description = site.description, image, noindex = false, jsonld, salle = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
-const fullTitle = title === site.nom ? `${site.nom} — Œuvres végétales et cadres anciens` : `${title} — ${site.nom}`;
+const fullTitle = title === site.nom ? `${site.nom}, tableaux végétaux et cadres anciens` : `${title}, ${site.nom}`;
 const ogImage = image ? new URL(image, site.url).href : null;
 const current = Astro.url.pathname.replace(/\/$/, '');
+const demo = (await getCollection('oeuvres')).some((o) => o.data.demo);
 
 const orgLd = {
   '@context': 'https://schema.org',
@@ -34,7 +37,7 @@ const orgLd = {
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {(noindex || !indexable) && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.nom} />
     <meta property="og:title" content={fullTitle} />
@@ -43,6 +46,7 @@ const orgLd = {
     <meta property="og:locale" content="fr_FR" />
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="theme-color" content="#E6E5E0" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -52,10 +56,11 @@ const orgLd = {
   </head>
   <body>
     <a class="visually-hidden" href="#contenu">Aller au contenu</a>
-    <header class="site-header">
-      <div class="wrap bar">
-        <a href="/" class="brand" aria-label="Adelem, accueil">
-          <img src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="108" height="73" />
+    {demo && <p class="bandeau-demo">Version de travail : œuvres, photos et prix d'exemple.</p>}
+    <header class:list={['entete', { salle }]}>
+      <div class="wrap barre">
+        <a href="/" class="marque" aria-label="Adelem, accueil">
+          <img src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="84" height="57" />
         </a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">Menu</button>
         <nav id="nav-principale" class="menu" aria-label="Navigation principale">
@@ -70,21 +75,13 @@ const orgLd = {
 
     <main id="contenu"><slot /></main>
 
-    <footer class="site-footer">
-      <div class="wrap foot">
-        <div>
-          <img src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="96" height="65" />
-          <p>{site.description}</p>
-        </div>
-        <nav aria-label="Pied de page">
-          <ul>
-            {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
-          </ul>
-        </nav>
-        <ul class="legal">
+    <footer class="pied">
+      <div class="wrap pied-grille">
+        <p>Adelem, tableaux végétaux d'{site.legal.editrice}</p>
+        <ul>
+          {site.contact.instagram && <li><a href={site.contact.instagram}>Instagram</a></li>}
           <li><a href="/mentions-legales">Mentions légales</a></li>
           <li><a href="/cgv">Conditions de vente</a></li>
-          <li>© {new Date().getFullYear()} Adelem — Pièces uniques</li>
         </ul>
       </div>
     </footer>
@@ -92,7 +89,7 @@ const orgLd = {
       const b = document.querySelector('.menu-btn');
       const n = document.getElementById('nav-principale');
       b?.addEventListener('click', () => {
-        const o = n?.classList.toggle('open');
+        const o = n?.classList.toggle('ouvert');
         b.setAttribute('aria-expanded', String(!!o));
       });
     </script>
@@ -100,24 +97,28 @@ const orgLd = {
 </html>
 
 <style>
-  .site-header { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 10; }
-  .bar { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
-  .brand img { width: 108px; height: auto; }
-  .menu-btn { background: none; border: 0; cursor: pointer; font: 500 .75rem var(--sans); letter-spacing: .16em; text-transform: uppercase; padding: .6rem 0; color: var(--ink); }
-  .menu { display: none; position: absolute; right: var(--gutter); left: var(--gutter); top: 76px; background: var(--paper); border: 1px solid var(--line); padding: 1rem 1.5rem; }
-  .menu.open { display: block; }
+  .bandeau-demo { background: #efe3b8; color: #1F221E; text-align: center; font-size: .78rem; padding: 6px 12px; letter-spacing: .02em; }
+  .entete { position: relative; z-index: 10; }
+  .entete.salle { background: var(--salle); }
+  .entete.salle .marque img { filter: invert(.92); }
+  .entete.salle .menu a, .entete.salle .menu-btn { color: var(--salle-texte); }
+  .barre { display: flex; align-items: center; justify-content: space-between; min-height: 72px; }
+  .marque img { width: 84px; height: auto; }
+  .menu-btn { background: none; border: 0; cursor: pointer; font: 500 .72rem var(--sans); letter-spacing: .16em; text-transform: uppercase; min-height: 44px; padding: 0; color: var(--encre); }
+  .menu { display: none; position: absolute; right: var(--gutter); left: var(--gutter); top: 64px; background: var(--mur); border: 1px solid var(--trait); padding: 12px 20px; }
+  .menu.ouvert { display: block; }
   .menu ul { list-style: none; margin: 0; padding: 0; }
-  .menu li a { display: block; padding: .6rem 0; text-decoration: none; font-family: var(--serif); font-size: 1.15rem; }
-  .menu a[aria-current='page'] { color: var(--copper); }
-  @media (min-width: 900px) {
+  .menu a { display: block; padding: 10px 0; font: 300 1.4rem var(--serif); color: var(--encre); }
+  .entete.salle .menu.ouvert { background: var(--salle); border-color: #3a453c; }
+  @media (min-width: 820px) {
     .menu-btn { display: none; }
-    .menu { display: block; position: static; border: 0; padding: 0; background: none; }
-    .menu ul { display: flex; gap: 2rem; }
-    .menu li a { font: 400 .8rem var(--sans); letter-spacing: .12em; text-transform: uppercase; padding: 0; }
+    .menu { display: block; position: static; border: 0; padding: 0; background: none !important; }
+    .menu ul { display: flex; gap: 36px; }
+    .menu a { font: 400 .72rem var(--sans); letter-spacing: .14em; text-transform: uppercase; padding: 0; }
+    .menu a[aria-current='page'] { text-decoration: underline; text-underline-offset: 6px; }
   }
-  .site-footer { border-top: 1px solid var(--line); padding-block: 56px; margin-top: 40px; font-size: .9rem; color: var(--muted); }
-  .foot { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
-  .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; align-content: start; }
-  .foot a { text-decoration: none; }
-  .foot a:hover { color: var(--copper); }
+  .pied { margin-top: clamp(96px, 12vw, 180px); border-top: 1px solid var(--trait); padding-block: 32px; font-size: .78rem; color: var(--discret); letter-spacing: .03em; }
+  .pied-grille { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
+  .pied ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .pied a:hover { color: var(--encre); }
 </style>

@@ -1,43 +1,43 @@
-// Coordonnées et informations légales. `null` = pas encore fourni : la page concernée l'affiche comme « à compléter ».
+// Réglages du site. `null` = pas encore fourni : la page concernée l'affiche comme « à compléter ».
 export const site = {
   nom: 'Adelem',
   url: 'https://adelem.fr',
   description:
-    'Œuvres uniques en végétaux naturels stabilisés, matières naturelles et cadres anciens restaurés.',
+    'Tableaux végétaux uniques : mousses, lichens et écorces composés à la main dans des cadres anciens restaurés.',
   delaiReponse: '3 jours ouvrés',
+  // Salle d'accrochage : 'claire' (mur pierre) ou 'sombre' (mur vert forêt). À choisir avec Adèle.
+  salle: 'claire' as 'claire' | 'sombre',
   contact: {
-    email: null as string | null, // à fournir par Adèle
-    telephone: null as string | null, // à fournir par Adèle
-    instagram: null as string | null, // compte à créer par Gwen
+    email: null as string | null,
+    telephone: null as string | null,
+    instagram: null as string | null,
   },
-  // Point d'envoi du formulaire (service d'e-mail à choisir). Sans valeur, le formulaire ouvre la messagerie.
+  // Point d'envoi du formulaire (service d'e-mail à brancher). Sans valeur : lien e-mail, sinon message d'attente.
   formEndpoint: null as string | null,
   legal: {
     editrice: 'Adèle Mette',
     statut: 'Entrepreneur individuel (EI)',
     siret: '351 073 457 00027',
-    adresse: null as string | null, // adresse d'inscription ou domiciliation, à fournir
-    tva: null as string | null, // probablement « TVA non applicable, art. 293 B du CGI », à confirmer
+    adresse: null as string | null,
+    tva: null as string | null,
     directeurPublication: 'Gwennaël Salinas',
-    hebergeur: null as string | null, // renseigné au choix de l'hébergement
-    mediateur: null as string | null, // médiateur de la consommation, à désigner
+    hebergeur: null as string | null, // Vercel Inc. : coordonnées exactes à reprendre de vercel.com/legal au passage en ligne
+    mediateur: null as string | null,
   },
 };
 
+// Le site n'est indexé par Google que si PUBLIC_INDEX=true est défini (au passage sur adelem.fr).
+export const indexable = import.meta.env.PUBLIC_INDEX === 'true';
+
 export const nav = [
-  { href: '/galerie', label: 'Galerie' },
-  { href: '/cadres-anciens', label: 'Cadres anciens' },
-  { href: '/sculptures', label: 'Sculptures' },
+  { href: '/galerie', label: 'Œuvres' },
   { href: '/sur-mesure', label: 'Sur mesure' },
   { href: '/atelier', label: 'Atelier' },
   { href: '/contact', label: 'Contact' },
 ];
 
-export const formats = {
-  Monumental: 'Des pièces qui structurent un espace et se découvrent à plusieurs distances.',
-  Signature: 'Une présence affirmée, pensée pour habiter un mur sans dominer toute la pièce.',
-  Intime: 'Des formats qui invitent à regarder la matière de près.',
-} as const;
-
 export const prix = (p: number | null) =>
   p == null ? 'Prix sur demande' : `${p.toLocaleString('fr-FR').replace(/ | /g, ' ')} €`;
+
+export const dims = (l: number, h: number, p?: number | null) =>
+  `${l} × ${h}${p ? ` × ${p}` : ''} cm`;

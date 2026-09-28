@@ -1,31 +1,45 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import OeuvreCard from '../components/OeuvreCard.astro';
-import { formats } from '../data/site';
+import Mur from '../components/Mur.astro';
+import { site } from '../data/site';
 
-const all = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
-const groupes = (Object.keys(formats) as (keyof typeof formats)[]).map((f) => ({ f, items: all.filter((o) => o.data.format === f) }));
+const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+const formats = ['Grand format', 'Moyen format', 'Petit format'] as const;
+const salle = site.salle === 'sombre';
+const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 ---
-<Base title="Galerie" description="Pièces uniques disponibles et collections privées : tableaux végétaux en cadres anciens et sculptures d’Adelem.">
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">Galerie</p>
-      <h1>Galerie</h1>
-      <p class="lead">Pièces disponibles et collections privées, réunies dans un même corpus. Chaque œuvre est unique.</p>
+<Base title="Œuvres" description="Tableaux végétaux disponibles, présentés à leur échelle réelle, et œuvres entrées en collection privée." salle={salle}>
+  <div class:list={['salle-page', { salle }]}>
+    <div class="wrap entete-page">
+      <h1>Œuvres</h1>
+      <p class="discret">Présentées à leur échelle réelle les unes par rapport aux autres.</p>
     </div>
-  </section>
-  {groupes.map(({ f, items }) => (
-    <section class="section">
-      <div class="wrap">
-        <h2>{f}</h2>
-        <p class="lead">{formats[f]}</p>
-        {items.length ? (
-          <div class="grid" style="margin-top:2rem">{items.map((o) => <OeuvreCard oeuvre={o} />)}</div>
-        ) : (
-          <p class="empty">Premières pièces à venir.</p>
-        )}
-      </div>
+    {formats.map((f) => {
+      const items = toutes.filter((o) => o.data.format === f && o.data.statut !== 'vendue');
+      return items.length > 0 && (
+        <section class="wrap groupe">
+          <h2>{f}</h2>
+          <Mur oeuvres={items} salle={salle} />
+        </section>
+      );
+    })}
+  </div>
+  {vendues.length > 0 && (
+    <section class="wrap bloc">
+      <h2 class="titre-section">En collection privée</h2>
+      <Mur oeuvres={vendues} />
     </section>
-  ))}
+  )}
 </Base>
+
+<style>
+  .salle-page { padding-top: clamp(40px, 6vw, 72px); }
+  .salle-page.salle { background: var(--salle); padding-bottom: 40px; }
+  .entete-page { text-align: center; margin-bottom: 64px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .entete-page h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); }
+  .salle h1, .salle h2 { color: var(--salle-texte); }
+  .salle .discret { color: var(--salle-discret); }
+  .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 48px; }
+  .groupe + .groupe { margin-top: 40px; }
+</style>

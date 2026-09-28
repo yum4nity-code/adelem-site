@@ -1,0 +1,24 @@
+{
+  "titre": "Clairière",
+  "annee": 2025,
+  "type": "tableau",
+  "format": "Grand format",
+  "statut": "disponible",
+  "prix": 650,
+  "largeur_cm": 50,
+  "hauteur_cm": 60,
+  "profondeur_cm": 7,
+  "poids_kg": 4,
+  "matieres": ["Lichens", "Mousses", "Écorce de chêne"],
+  "cadre": "Cadre en chêne, vers 1900",
+  "provenance": "Chiné dans un vide-grenier, restauré à l'atelier",
+  "histoire": "Texte d'exemple : quelques phrases d'Adèle sur l'œuvre, son cadre et ce qu'elle a voulu faire.",
+  "photos": [
+    { "fichier": "face.webp", "legende": "Face", "alt": "Clairière, lichens et mousses dans un cadre en chêne" },
+    { "fichier": "matiere.webp", "legende": "La matière", "alt": "Lichens en relief, vue rapprochée" },
+    { "fichier": "cadre.webp", "legende": "Le cadre", "alt": "Moulure d'un cadre ancien" },
+    { "fichier": "situation.webp", "legende": "Au mur", "alt": "Clairière accrochée sur un mur de pierre" }
+  ],
+  "ordre": 1,
+  "demo": true
+}

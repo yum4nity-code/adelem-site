@@ -6,7 +6,7 @@ const v = (x: string | null, label: string) => x ?? `[${label} à compléter]`;
 const incomplet = [L.adresse, L.tva, L.hebergeur, site.contact.email, site.contact.telephone].some((x) => x == null);
 ---
 <Base title="Mentions légales" noindex={incomplet}>
-  <section class="section">
+  <section style="padding-top: clamp(40px, 6vw, 80px)">
     <div class="wrap prose">
       <h1>Mentions légales</h1>
 

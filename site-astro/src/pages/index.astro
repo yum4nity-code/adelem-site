@@ -1,64 +1,67 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import OeuvreCard from '../components/OeuvreCard.astro';
+import Mur from '../components/Mur.astro';
+import { site } from '../data/site';
 
-const oeuvres = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre).slice(0, 3);
+const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+const disponibles = toutes.filter((o) => o.data.statut !== 'vendue').slice(0, 5);
+const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue');
+const salle = site.salle === 'sombre';
 ---
-<Base title="Adelem">
-  <section class="section hero">
+<Base title="Adelem" salle={salle}>
+  <section class:list={['ouverture', { salle }]}>
+    <div class="wrap intro">
+      <h1>Mousses, lichens et écorces, composés à la main dans des cadres anciens restaurés.</h1>
+      <p class="discret">Tableaux végétaux, pièces uniques</p>
+    </div>
     <div class="wrap">
-      <p class="eyebrow">Œuvres végétales · Pièces uniques</p>
-      <h1>La nature<br /><em>prend place</em></h1>
-      <p class="lead">Mousses, lichens, feuillages et écorces deviennent une matière dense, travaillée dans le relief et la profondeur, au cœur de cadres anciens restaurés.</p>
-      <div class="actions">
-        <a class="btn" href="/galerie">Entrer dans la galerie</a>
-        <a class="btn ghost" href="/contact">Parler d’un projet</a>
-      </div>
+      {disponibles.length ? <Mur oeuvres={disponibles} salle={salle} eager /> : <p class="discret vide">Les premières œuvres arrivent.</p>}
+      <p class="discret echelle">Les œuvres sont présentées à leur échelle réelle les unes par rapport aux autres.</p>
+      <p class="centre"><a class="lien" href="/galerie">Toutes les œuvres</a></p>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Matière</p>
-        <h2>Le végétal autrement</h2>
+  {vedette && (
+    <section class="wrap bloc duo vedette">
+      <img src={`/oeuvres/${vedette.id}/${vedette.data.photos[1]?.fichier ?? vedette.data.photos[0].fichier}`} alt={vedette.data.photos[1]?.alt ?? vedette.data.photos[0].alt} loading="lazy" width="1000" height="1200" />
+      <div class="pile">
+        <h2 class="titre-section">{vedette.data.titre}</h2>
+        <p class="texte">{vedette.data.histoire}</p>
+        <a class="lien" href={`/oeuvres/${vedette.id}`}>Voir l'œuvre</a>
       </div>
-      <div>
-        <p>De vrais végétaux stabilisés, sans arrosage. Volumes, vides et textures se répondent dans la composition. Chaque pièce est unique et ne peut jamais être reproduite à l’identique.</p>
-        <p class="eyebrow" style="margin-top:2rem">Le geste</p>
-        <p>Chercher, restaurer, composer, déplacer, retirer, recommencer. Un grand format demande huit à dix jours de travail, restauration du cadre et séchages compris.</p>
-      </div>
+    </section>
+  )}
+
+  <section class="wrap bloc duo">
+    <div class="pile">
+      <h2 class="titre-section">L'atelier</h2>
+      <p class="texte">Chercher un cadre ancien, le restaurer, composer, attendre les séchages, reprendre un relief. Un grand format demande huit à dix jours de travail.</p>
+      <a class="lien" href="/atelier">Découvrir l'atelier</a>
     </div>
+    <img src="/images/atelier.webp" alt="Main posée sur un tapis de mousse" loading="lazy" width="1400" height="933" class="photo-atelier" />
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">Galerie</p>
-      <h2>Pièces uniques</h2>
-      {oeuvres.length ? (
-        <div class="grid" style="margin-top:2.5rem">{oeuvres.map((o) => <OeuvreCard oeuvre={o} />)}</div>
-      ) : (
-        <p class="empty" style="margin-top:2rem">Les premières œuvres photographiées arrivent bientôt.</p>
-      )}
-      <div class="actions"><a class="btn ghost" href="/galerie">Toute la galerie</a></div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap trio">
-      <a href="/cadres-anciens"><h3>Cadres anciens</h3><p>Chinés puis restaurés, ils donnent un format, une profondeur et un rythme à la composition.</p></a>
-      <a href="/sur-mesure"><h3>Sur mesure</h3><p>Le projet part d’un espace, pas d’un catalogue. Le lieu pose ses contraintes ; Adelem garde la liberté de la composition.</p></a>
-      <a href="/sculptures"><h3>Sculptures</h3><p>Des personnages en grès apparaissent ponctuellement dans le travail d’Adelem.</p></a>
-    </div>
+  <section class="wrap bloc centre pile-centre">
+    <h2 class="titre-section">Une œuvre pour un lieu, ou pour un cadre qui attend la sienne</h2>
+    <p class="texte">Une photo du mur et ses dimensions approximatives suffisent pour commencer.</p>
+    <a class="lien" href="/sur-mesure">Le sur-mesure</a>
   </section>
 </Base>
 
 <style>
-  .hero { padding-block: clamp(72px, 14vw, 180px); }
-  .hero h1 em { color: var(--copper); }
-  .trio { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
-  .trio a { text-decoration: none; border-top: 1px solid var(--ink); padding-top: 1.2rem; }
-  .trio a:hover h3 { color: var(--copper); }
-  .trio p { color: var(--muted); margin-top: .6rem; }
+  .ouverture { padding-top: clamp(40px, 6vw, 72px); }
+  .ouverture.salle { background: var(--salle); padding-bottom: 72px; }
+  .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }
+  .intro h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-style: italic; line-height: 1.35; max-width: 26em; }
+  .salle .intro h1 { color: var(--salle-texte); }
+  .salle .discret { color: var(--salle-discret); }
+  .salle .lien { color: var(--salle-texte); }
+  .echelle, .centre { text-align: center; }
+  .echelle { margin-bottom: 20px; }
+  .vide { text-align: center; padding: 80px 0; }
+  .vedette img { width: 100%; height: auto; }
+  .photo-atelier { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .pile-centre { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .pile-centre .titre-section { max-width: 18em; }
 </style>

@@ -1,19 +1,22 @@
 {
   "titre": "Titre de l'œuvre",
-  "type": "tableau",
-  "format": "Signature",
-  "prix": 1300,
-  "statut": "disponible",
-  "dimensions_cm": { "l": 60, "h": 80, "p": 6 },
-  "poids_kg": 4,
   "annee": 2025,
-  "cadre": "Cadre ancien restauré, vers 1900",
+  "type": "tableau",
+  "format": "Grand format",
+  "statut": "disponible",
+  "prix": 650,
+  "largeur_cm": 50,
+  "hauteur_cm": 60,
+  "profondeur_cm": 6,
+  "poids_kg": 4,
   "matieres": ["Mousses stabilisées", "Lichens", "Écorces"],
-  "histoire": "Deux ou trois phrases d'Adèle sur l'œuvre et son cadre.",
+  "cadre": "Cadre en chêne sculpté, vers 1900",
+  "provenance": "Chiné en salle des ventes, restauré à l'atelier",
+  "histoire": "Deux ou trois phrases sur l'œuvre et son cadre.",
   "photos": [
-    { "fichier": "face.jpg", "vue": "Face", "alt": "Titre de l'œuvre, vue de face" },
-    { "fichier": "biais.jpg", "vue": "Relief", "alt": "Titre de l'œuvre, vue de biais montrant le relief" },
-    { "fichier": "matiere.jpg", "vue": "Matière", "alt": "Détail des mousses et lichens" }
+    { "fichier": "face.webp", "legende": "Face", "alt": "Titre, vue de face" },
+    { "fichier": "matiere.webp", "legende": "La matière", "alt": "Détail des mousses" },
+    { "fichier": "situation.webp", "legende": "Au mur", "alt": "L'œuvre accrochée" }
   ],
   "ordre": 10
 }

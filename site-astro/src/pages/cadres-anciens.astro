@@ -1,24 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Cadres anciens" description="Des cadres datés d’environ 1850 à 1970, chinés puis restaurés, qui participent à la composition des œuvres végétales d’Adelem.">
-  <section class="section">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Cadres anciens</p>
-        <h1>Le cadre participe à l’œuvre</h1>
-      </div>
-      <div>
-        <p class="lead">Des pièces généralement datées d’environ 1850 à 1970 sont chinées puis restaurées.</p>
-        <p>Le cadre donne un format, apporte une profondeur et oriente les vides comme la densité. La restauration conserve les traces du temps qui font sa personnalité.</p>
-      </div>
+<Base title="Cadres anciens" description="Des cadres de 1850 à 1970, chinés puis restaurés, qui participent à la composition de chaque tableau végétal.">
+  <section class="wrap duo haut-page">
+    <div class="pile">
+      <h1 class="titre-section">Le cadre participe à l'œuvre</h1>
+      <p class="texte">Les cadres, généralement datés d'environ 1850 à 1970, sont chinés en salle des ventes et en vide-grenier, puis restaurés. Ils donnent un format, une profondeur, et orientent les vides comme la densité.</p>
+      <p class="texte">Vous possédez un cadre ancien ? Une photo et ses dimensions intérieures suffisent pour commencer.</p>
+      <a class="lien" href="/sur-mesure">Le sur-mesure</a>
     </div>
-  </section>
-  <section class="section">
-    <div class="wrap">
-      <h2>Vous possédez un cadre ancien ?</h2>
-      <p class="lead">Une photographie et ses dimensions intérieures suffisent pour étudier sa faisabilité.</p>
-      <div class="actions"><a class="btn" href="/contact">Parler de votre cadre</a></div>
-    </div>
+    <img src="/oeuvres/clairiere/cadre.webp" alt="Moulure d'un cadre ancien restauré" width="1000" height="1500" class="photo" />
   </section>
 </Base>
+<style>
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); }
+  .photo { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+</style>

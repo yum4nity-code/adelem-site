@@ -3,24 +3,21 @@ import Base from '../layouts/Base.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { site } from '../data/site';
 ---
-<Base title="Contact" description="Parler d’une œuvre, d’un cadre ou d’un projet sur mesure avec Adelem.">
-  <section class="section">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Contact</p>
-        <h1>Parler d’un projet</h1>
-        <p class="lead" style="margin-top:1.2rem">Quelques éléments suffisent pour commencer : une photographie du mur ou du lieu, ses dimensions même approximatives, et la présence recherchée.</p>
-        <ul class="coords">
-          {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
-          {site.contact.telephone && <li><a href={`tel:${site.contact.telephone.replace(/\s/g, '')}`}>{site.contact.telephone}</a></li>}
-          {site.contact.instagram && <li><a href={site.contact.instagram}>Instagram</a></li>}
-        </ul>
-      </div>
-      <ContactForm />
+<Base title="Contact" description="Écrire à l'atelier Adelem au sujet d'une œuvre, d'un cadre ou d'un projet sur mesure.">
+  <section class="wrap duo haut-page">
+    <div class="pile">
+      <h1 class="titre-section">Écrire à l'atelier</h1>
+      <p class="texte">Une œuvre qui vous intéresse, un cadre ancien qui attend son œuvre, un mur à habiller : quelques lignes suffisent. Réponse sous {site.delaiReponse}.</p>
+      <ul class="coord">
+        {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
+        {site.contact.telephone && <li><a href={`tel:${site.contact.telephone.replace(/\s/g, '')}`}>{site.contact.telephone}</a></li>}
+        {site.contact.instagram && <li><a href={site.contact.instagram}>Instagram</a></li>}
+      </ul>
     </div>
+    <ContactForm />
   </section>
 </Base>
-
 <style>
-  .coords { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: .5rem; font-family: var(--serif); font-size: 1.1rem; }
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); align-items: start; }
+  .coord { list-style: none; padding: 0; margin: 0; font: 300 1.3rem var(--serif); color: var(--encre); display: grid; gap: 4px; }
 </style>

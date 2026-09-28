@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Cartel from '../../components/Cartel.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import { prix, site } from '../../data/site';
 
@@ -11,8 +12,8 @@ export async function getStaticPaths() {
 const { oeuvre } = Astro.props;
 const d = oeuvre.data;
 const src = (f: string) => `/oeuvres/${oeuvre.id}/${f}`;
-const statut = { disponible: 'Disponible', reservee: 'Réservée', vendue: 'Collection privée' }[d.statut];
-const dims = d.dimensions_cm ? `${d.dimensions_cm.l} × ${d.dimensions_cm.h}${d.dimensions_cm.p ? ` × ${d.dimensions_cm.p}` : ''} cm` : null;
+const [face, ...autres] = d.photos;
+const disponible = d.statut === 'disponible';
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
@@ -20,62 +21,89 @@ const jsonld = {
   creator: { '@type': 'Person', name: site.legal.editrice },
   image: d.photos.map((p) => new URL(src(p.fichier), site.url).href),
   ...(d.annee ? { dateCreated: String(d.annee) } : {}),
-  ...(d.dimensions_cm ? { width: `${d.dimensions_cm.l} cm`, height: `${d.dimensions_cm.h} cm` } : {}),
+  width: `${d.largeur_cm} cm`,
+  height: `${d.hauteur_cm} cm`,
   artMedium: d.matieres.join(', '),
   ...(d.statut !== 'vendue' && d.prix
-    ? { offers: { '@type': 'Offer', price: d.prix, priceCurrency: 'EUR', availability: d.statut === 'disponible' ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut', url: new URL(`/oeuvres/${oeuvre.id}`, site.url).href } }
+    ? { offers: { '@type': 'Offer', price: d.prix, priceCurrency: 'EUR', availability: disponible ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut', url: new URL(`/oeuvres/${oeuvre.id}`, site.url).href } }
     : {}),
 };
 ---
-<Base title={d.titre} description={d.histoire ?? `${d.titre}, œuvre unique d’Adelem.`} image={src(d.photos[0].fichier)} jsonld={jsonld}>
-  <section class="section">
-    <div class="wrap split">
-      <div class="photos">
-        {d.photos.map((p, i) => (
-          <figure>
-            <img src={src(p.fichier)} alt={p.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" width="1200" height="1500" />
-            <figcaption>{p.vue}</figcaption>
-          </figure>
-        ))}
-      </div>
-      <div class="info">
-        <p><a href="/galerie">Galerie</a> / {d.titre}</p>
-        <span class={d.statut === 'disponible' ? 'badge ok' : 'badge'}>{statut}</span>
-        <h1>{d.titre}</h1>
-        {d.statut !== 'vendue' && <p class="price">{prix(d.prix)}</p>}
-        {d.statut !== 'vendue' && <p class="note">Pièce unique. Transport organisé selon le format et la destination, confirmé avant tout règlement.</p>}
-        {d.histoire && <p>{d.histoire}</p>}
-        <dl>
-          <dt>Format</dt><dd>{d.format}</dd>
-          {dims && <><dt>Dimensions</dt><dd>{dims}</dd></>}
-          {d.annee && <><dt>Année</dt><dd>{d.annee}</dd></>}
-          {d.cadre && <><dt>Cadre</dt><dd>{d.cadre}</dd></>}
-          {d.matieres.length > 0 && <><dt>Matières</dt><dd>{d.matieres.join(', ')}</dd></>}
-          {d.type === 'tableau' && <><dt>Entretien</dt><dd>Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur.</dd></>}
-        </dl>
-        {d.statut === 'vendue' ? (
-          <div class="actions"><a class="btn" href="/sur-mesure">Imaginer une création dans cet esprit</a></div>
-        ) : (
-          <div style="margin-top:2.5rem"><h2 class="h3">Cette œuvre vous intéresse</h2><ContactForm oeuvre={d.titre} /></div>
-        )}
-      </div>
+<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d'Adelem.`} image={src(face.fichier)} jsonld={jsonld}>
+  <section class="wrap tete">
+    <div class="oeuvre">
+      <img src={src(face.fichier)} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+    </div>
+    <div class="infos">
+      <p class="discret"><a href="/galerie">Œuvres</a> / {d.titre}</p>
+      <h1>{d.titre}</h1>
+      {d.annee && <p class="annee">{d.annee}</p>}
+      <Cartel oeuvre={oeuvre} long />
+      <p class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</p>
+      {d.statut === 'vendue' ? (
+        <a class="lien" href="/sur-mesure">Imaginer une œuvre dans cet esprit</a>
+      ) : (
+        <div class="liens">
+          <a class="lien" href="#demande">Demander cette œuvre</a>
+          <a class="lien secondaire" href="#chez-vous">La voir sur mon mur</a>
+        </div>
+      )}
+      <p class="discret">Pièce unique, signée au dos. Transport sur devis, annoncé avant tout paiement.</p>
     </div>
   </section>
+
+  {d.histoire && (
+    <section class="wrap bloc histoire">
+      <p>{d.histoire}</p>
+    </section>
+  )}
+
+  {autres.length > 0 && (
+    <section class="wrap bloc vues">
+      {autres.map((p) => (
+        <figure>
+          <img src={src(p.fichier)} alt={p.alt} loading="lazy" width="1200" height="900" />
+          <figcaption class="discret">{p.legende}</figcaption>
+        </figure>
+      ))}
+    </section>
+  )}
+
+  {d.statut !== 'vendue' && (
+    <>
+      <section id="chez-vous" class="wrap bloc duo">
+        <div class="pile">
+          <h2 class="titre-section">Chez vous</h2>
+          <p class="texte">Envoyez une photo de votre mur avec sa largeur. Vous recevez un montage de {d.titre} à l'échelle exacte avant de décider.</p>
+        </div>
+        <img src="/images/chez-vous.webp" alt="Exemple de montage : une œuvre au-dessus d'un canapé" loading="lazy" width="1500" height="1090" />
+      </section>
+      <section id="demande" class="wrap bloc duo haut">
+        <h2 class="titre-section">Demander {d.titre}</h2>
+        <ContactForm oeuvre={d.titre} />
+      </section>
+    </>
+  )}
 </Base>
 
 <style>
-  .photos { display: grid; gap: 1.5rem; }
-  figure { margin: 0; }
-  figure img { width: 100%; background: var(--soft); }
-  figcaption { font-size: .8rem; color: var(--muted); margin-top: .4rem; }
-  .info { position: sticky; top: 100px; }
-  .info > p:first-child { font-size: .85rem; color: var(--muted); }
-  .info h1 { margin: .8rem 0 .4rem; font-size: clamp(2rem, 4vw, 3.2rem); }
-  .price { font: 400 1.5rem var(--serif); color: var(--ink); }
-  .note { font-size: .88rem; color: var(--muted); }
-  dl { display: grid; grid-template-columns: 120px 1fr; gap: .5rem 1rem; border-top: 1px solid var(--line); padding-top: 1.2rem; margin-top: 1.5rem; }
-  dt { color: var(--muted); font-size: .88rem; }
-  dd { margin: 0; }
-  .h3 { font-size: 1.3rem; margin-bottom: 1rem; }
-  @media (max-width: 800px) { .info { position: static; } }
+  .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
+  .oeuvre { display: flex; justify-content: center; padding: 40px 0; }
+  .oeuvre img {
+    width: min(100%, calc(var(--l) * 7px)); height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
+    filter: drop-shadow(0 18px 22px rgba(38, 36, 26, .38)) drop-shadow(0 1px 2px rgba(38, 36, 26, .3));
+  }
+  .infos { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+  .infos h1 { font-size: clamp(2.8rem, 5vw, 4rem); line-height: 1; }
+  .annee { font: italic 300 1.4rem var(--serif); color: var(--texte); margin-top: -10px; }
+  .prix { font: 400 1.9rem var(--serif); color: var(--encre); }
+  .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .secondaire { color: var(--texte); border-color: var(--trait); }
+  .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; }
+  .vues { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  .vues figure { margin: 0; }
+  .vues img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .vues figcaption { margin-top: 8px; }
+  #chez-vous img { width: 100%; height: auto; }
+  .haut { align-items: start; }
 </style>

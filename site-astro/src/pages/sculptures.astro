@@ -1,17 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import OeuvreCard from '../components/OeuvreCard.astro';
+import Mur from '../components/Mur.astro';
 const items = (await getCollection('oeuvres')).filter((o) => o.data.type === 'sculpture');
 ---
-<Base title="Sculptures" description="Personnages en grès : la recherche sculptée d’Adelem.">
-  <section class="section">
-    <div class="wrap">
-      <p class="eyebrow">Sculptures</p>
-      <h1>Sculptures</h1>
-      <p class="lead">Des personnages en grès apparaissent ponctuellement dans le travail d’Adelem. Leur production reste limitée.</p>
-      {items.length ? <div class="grid" style="margin-top:2.5rem">{items.map((o) => <OeuvreCard oeuvre={o} />)}</div> : <p class="empty" style="margin-top:2rem">Les pièces seront présentées ici au fil de leur création.</p>}
-      <div class="actions"><a class="btn ghost" href="/contact">Parler d’une sculpture</a></div>
-    </div>
+<Base title="Sculptures" description="Personnages en grès : la recherche sculptée d'Adelem.">
+  <section class="wrap haut-page pile">
+    <h1 class="titre-section">Sculptures</h1>
+    <p class="texte">Des personnages en grès apparaissent ponctuellement dans le travail de l'atelier. Leur production reste limitée.</p>
+  </section>
+  <section class="wrap bloc">
+    {items.length ? <Mur oeuvres={items} /> : <p class="discret">Les pièces seront présentées ici au fil de leur création.</p>}
   </section>
 </Base>
+<style>.haut-page { padding-top: clamp(40px, 6vw, 80px); }</style>
