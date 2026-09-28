@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import OeuvreCard from '../components/OeuvreCard.astro';
+import { formats } from '../data/site';
+
+const all = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+const groupes = (Object.keys(formats) as (keyof typeof formats)[]).map((f) => ({ f, items: all.filter((o) => o.data.format === f) }));
+---
+<Base title="Galerie" description="Pièces uniques disponibles et collections privées : tableaux végétaux en cadres anciens et sculptures d’Adelem.">
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Galerie</p>
+      <h1>Galerie</h1>
+      <p class="lead">Pièces disponibles et collections privées, réunies dans un même corpus. Chaque œuvre est unique.</p>
+    </div>
+  </section>
+  {groupes.map(({ f, items }) => (
+    <section class="section">
+      <div class="wrap">
+        <h2>{f}</h2>
+        <p class="lead">{formats[f]}</p>
+        {items.length ? (
+          <div class="grid" style="margin-top:2rem">{items.map((o) => <OeuvreCard oeuvre={o} />)}</div>
+        ) : (
+          <p class="empty">Premières pièces à venir.</p>
+        )}
+      </div>
+    </section>
+  ))}
+</Base>

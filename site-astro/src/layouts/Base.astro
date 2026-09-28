@@ -1,0 +1,123 @@
+---
+import '../styles/global.css';
+import { site, nav } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  jsonld?: Record<string, unknown>;
+}
+const { title, description = site.description, image, noindex = false, jsonld } = Astro.props;
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
+const fullTitle = title === site.nom ? `${site.nom} — Œuvres végétales et cadres anciens` : `${title} — ${site.nom}`;
+const ogImage = image ? new URL(image, site.url).href : null;
+const current = Astro.url.pathname.replace(/\/$/, '');
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.nom,
+  url: site.url,
+  logo: new URL('/logo/adelem-badge-transparent.svg', site.url).href,
+  founder: { '@type': 'Person', name: site.legal.editrice },
+  ...(site.contact.email ? { email: site.contact.email } : {}),
+  ...(site.contact.instagram ? { sameAs: [site.contact.instagram] } : {}),
+};
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="fr_FR" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+  </head>
+  <body>
+    <a class="visually-hidden" href="#contenu">Aller au contenu</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a href="/" class="brand" aria-label="Adelem, accueil">
+          <img src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="108" height="73" />
+        </a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">Menu</button>
+        <nav id="nav-principale" class="menu" aria-label="Navigation principale">
+          <ul>
+            {nav.map((l) => (
+              <li><a href={l.href} aria-current={current === l.href ? 'page' : undefined}>{l.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenu"><slot /></main>
+
+    <footer class="site-footer">
+      <div class="wrap foot">
+        <div>
+          <img src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="96" height="65" />
+          <p>{site.description}</p>
+        </div>
+        <nav aria-label="Pied de page">
+          <ul>
+            {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          </ul>
+        </nav>
+        <ul class="legal">
+          <li><a href="/mentions-legales">Mentions légales</a></li>
+          <li><a href="/cgv">Conditions de vente</a></li>
+          <li>© {new Date().getFullYear()} Adelem — Pièces uniques</li>
+        </ul>
+      </div>
+    </footer>
+    <script>
+      const b = document.querySelector('.menu-btn');
+      const n = document.getElementById('nav-principale');
+      b?.addEventListener('click', () => {
+        const o = n?.classList.toggle('open');
+        b.setAttribute('aria-expanded', String(!!o));
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .site-header { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 10; }
+  .bar { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
+  .brand img { width: 108px; height: auto; }
+  .menu-btn { background: none; border: 0; cursor: pointer; font: 500 .75rem var(--sans); letter-spacing: .16em; text-transform: uppercase; padding: .6rem 0; color: var(--ink); }
+  .menu { display: none; position: absolute; right: var(--gutter); left: var(--gutter); top: 76px; background: var(--paper); border: 1px solid var(--line); padding: 1rem 1.5rem; }
+  .menu.open { display: block; }
+  .menu ul { list-style: none; margin: 0; padding: 0; }
+  .menu li a { display: block; padding: .6rem 0; text-decoration: none; font-family: var(--serif); font-size: 1.15rem; }
+  .menu a[aria-current='page'] { color: var(--copper); }
+  @media (min-width: 900px) {
+    .menu-btn { display: none; }
+    .menu { display: block; position: static; border: 0; padding: 0; background: none; }
+    .menu ul { display: flex; gap: 2rem; }
+    .menu li a { font: 400 .8rem var(--sans); letter-spacing: .12em; text-transform: uppercase; padding: 0; }
+  }
+  .site-footer { border-top: 1px solid var(--line); padding-block: 56px; margin-top: 40px; font-size: .9rem; color: var(--muted); }
+  .foot { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; align-content: start; }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--copper); }
+</style>

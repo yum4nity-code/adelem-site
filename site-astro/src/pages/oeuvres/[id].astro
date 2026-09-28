@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { prix, site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const oeuvres = await getCollection('oeuvres');
+  return oeuvres.map((o) => ({ params: { id: o.id }, props: { oeuvre: o } }));
+}
+const { oeuvre } = Astro.props;
+const d = oeuvre.data;
+const src = (f: string) => `/oeuvres/${oeuvre.id}/${f}`;
+const statut = { disponible: 'Disponible', reservee: 'Réservée', vendue: 'Collection privée' }[d.statut];
+const dims = d.dimensions_cm ? `${d.dimensions_cm.l} × ${d.dimensions_cm.h}${d.dimensions_cm.p ? ` × ${d.dimensions_cm.p}` : ''} cm` : null;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
+  name: d.titre,
+  creator: { '@type': 'Person', name: site.legal.editrice },
+  image: d.photos.map((p) => new URL(src(p.fichier), site.url).href),
+  ...(d.annee ? { dateCreated: String(d.annee) } : {}),
+  ...(d.dimensions_cm ? { width: `${d.dimensions_cm.l} cm`, height: `${d.dimensions_cm.h} cm` } : {}),
+  artMedium: d.matieres.join(', '),
+  ...(d.statut !== 'vendue' && d.prix
+    ? { offers: { '@type': 'Offer', price: d.prix, priceCurrency: 'EUR', availability: d.statut === 'disponible' ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut', url: new URL(`/oeuvres/${oeuvre.id}`, site.url).href } }
+    : {}),
+};
+---
+<Base title={d.titre} description={d.histoire ?? `${d.titre}, œuvre unique d’Adelem.`} image={src(d.photos[0].fichier)} jsonld={jsonld}>
+  <section class="section">
+    <div class="wrap split">
+      <div class="photos">
+        {d.photos.map((p, i) => (
+          <figure>
+            <img src={src(p.fichier)} alt={p.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" width="1200" height="1500" />
+            <figcaption>{p.vue}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="info">
+        <p><a href="/galerie">Galerie</a> / {d.titre}</p>
+        <span class={d.statut === 'disponible' ? 'badge ok' : 'badge'}>{statut}</span>
+        <h1>{d.titre}</h1>
+        {d.statut !== 'vendue' && <p class="price">{prix(d.prix)}</p>}
+        {d.statut !== 'vendue' && <p class="note">Pièce unique. Transport organisé selon le format et la destination, confirmé avant tout règlement.</p>}
+        {d.histoire && <p>{d.histoire}</p>}
+        <dl>
+          <dt>Format</dt><dd>{d.format}</dd>
+          {dims && <><dt>Dimensions</dt><dd>{dims}</dd></>}
+          {d.annee && <><dt>Année</dt><dd>{d.annee}</dd></>}
+          {d.cadre && <><dt>Cadre</dt><dd>{d.cadre}</dd></>}
+          {d.matieres.length > 0 && <><dt>Matières</dt><dd>{d.matieres.join(', ')}</dd></>}
+          {d.type === 'tableau' && <><dt>Entretien</dt><dd>Aucun arrosage. Éviter le soleil direct, l’humidité importante et les sources de chaleur.</dd></>}
+        </dl>
+        {d.statut === 'vendue' ? (
+          <div class="actions"><a class="btn" href="/sur-mesure">Imaginer une création dans cet esprit</a></div>
+        ) : (
+          <div style="margin-top:2.5rem"><h2 class="h3">Cette œuvre vous intéresse</h2><ContactForm oeuvre={d.titre} /></div>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .photos { display: grid; gap: 1.5rem; }
+  figure { margin: 0; }
+  figure img { width: 100%; background: var(--soft); }
+  figcaption { font-size: .8rem; color: var(--muted); margin-top: .4rem; }
+  .info { position: sticky; top: 100px; }
+  .info > p:first-child { font-size: .85rem; color: var(--muted); }
+  .info h1 { margin: .8rem 0 .4rem; font-size: clamp(2rem, 4vw, 3.2rem); }
+  .price { font: 400 1.5rem var(--serif); color: var(--ink); }
+  .note { font-size: .88rem; color: var(--muted); }
+  dl { display: grid; grid-template-columns: 120px 1fr; gap: .5rem 1rem; border-top: 1px solid var(--line); padding-top: 1.2rem; margin-top: 1.5rem; }
+  dt { color: var(--muted); font-size: .88rem; }
+  dd { margin: 0; }
+  .h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+  @media (max-width: 800px) { .info { position: static; } }
+</style>

@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import OeuvreCard from '../components/OeuvreCard.astro';
+
+const oeuvres = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre).slice(0, 3);
+---
+<Base title="Adelem">
+  <section class="section hero">
+    <div class="wrap">
+      <p class="eyebrow">Œuvres végétales · Pièces uniques</p>
+      <h1>La nature<br /><em>prend place</em></h1>
+      <p class="lead">Mousses, lichens, feuillages et écorces deviennent une matière dense, travaillée dans le relief et la profondeur, au cœur de cadres anciens restaurés.</p>
+      <div class="actions">
+        <a class="btn" href="/galerie">Entrer dans la galerie</a>
+        <a class="btn ghost" href="/contact">Parler d’un projet</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Matière</p>
+        <h2>Le végétal autrement</h2>
+      </div>
+      <div>
+        <p>De vrais végétaux stabilisés, sans arrosage. Volumes, vides et textures se répondent dans la composition. Chaque pièce est unique et ne peut jamais être reproduite à l’identique.</p>
+        <p class="eyebrow" style="margin-top:2rem">Le geste</p>
+        <p>Chercher, restaurer, composer, déplacer, retirer, recommencer. Un grand format demande huit à dix jours de travail, restauration du cadre et séchages compris.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Galerie</p>
+      <h2>Pièces uniques</h2>
+      {oeuvres.length ? (
+        <div class="grid" style="margin-top:2.5rem">{oeuvres.map((o) => <OeuvreCard oeuvre={o} />)}</div>
+      ) : (
+        <p class="empty" style="margin-top:2rem">Les premières œuvres photographiées arrivent bientôt.</p>
+      )}
+      <div class="actions"><a class="btn ghost" href="/galerie">Toute la galerie</a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap trio">
+      <a href="/cadres-anciens"><h3>Cadres anciens</h3><p>Chinés puis restaurés, ils donnent un format, une profondeur et un rythme à la composition.</p></a>
+      <a href="/sur-mesure"><h3>Sur mesure</h3><p>Le projet part d’un espace, pas d’un catalogue. Le lieu pose ses contraintes ; Adelem garde la liberté de la composition.</p></a>
+      <a href="/sculptures"><h3>Sculptures</h3><p>Des personnages en grès apparaissent ponctuellement dans le travail d’Adelem.</p></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: clamp(72px, 14vw, 180px); }
+  .hero h1 em { color: var(--copper); }
+  .trio { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+  .trio a { text-decoration: none; border-top: 1px solid var(--ink); padding-top: 1.2rem; }
+  .trio a:hover h3 { color: var(--copper); }
+  .trio p { color: var(--muted); margin-top: .6rem; }
+</style>

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+const matiere = [
+  ['Végétaux stabilisés', 'De vrais végétaux préservés, sans arrosage.'],
+  ['Relief', 'Volumes, vides et textures se répondent dans la composition.'],
+  ['Cadres anciens', 'Chinés puis restaurés avant de guider la création.'],
+  ['Pièce unique', 'Une composition ne peut jamais être reproduite à l’identique.'],
+];
+---
+<Base title="Atelier" description="La matière, les cadres et les gestes qui construisent chaque œuvre d’Adelem.">
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Atelier</p>
+        <h1>Prendre le temps</h1>
+      </div>
+      <div>
+        <p class="lead">Chercher, restaurer, composer.</p>
+        <p>Chaque composition se construit par ajustements successifs : déplacer, retirer, reprendre un relief, attendre un séchage, puis recommencer.</p>
+        <p>Un grand format peut demander huit à dix jours de travail, restauration du cadre et séchages compris.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Matière</p>
+      <h2>Ce qui donne à chaque œuvre sa densité</h2>
+      <ol class="steps">{matiere.map(([t, d]) => <li><strong>{t}</strong>{d}</li>)}</ol>
+    </div>
+  </section>
+</Base>

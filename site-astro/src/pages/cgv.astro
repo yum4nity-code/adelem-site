@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+const L = site.legal;
+const T = (s: string) => s; // marqueur des passages à valider
+---
+<Base title="Conditions générales de vente" noindex>
+  <section class="section">
+    <div class="wrap prose">
+      <h1>Conditions générales de vente</h1>
+      <p class="todo">Brouillon : les passages surlignés attendent les réponses d’Adèle (liste de lancement, section « Conditions de vente »). Page non indexée tant qu’elle n’est pas validée.</p>
+
+      <h2>1. Vendeuse</h2>
+      <p>{L.editrice}, {L.statut}, nom commercial Adelem, SIRET {L.siret}. Coordonnées complètes dans les <a href="/mentions-legales">mentions légales</a>.</p>
+
+      <h2>2. Œuvres</h2>
+      <p>Chaque œuvre est une pièce unique, réalisée à la main en végétaux naturels stabilisés et matières naturelles, souvent dans un cadre ancien restauré. Les photographies sont aussi fidèles que possible ; de légères variations de teinte peuvent exister selon l’écran.</p>
+
+      <h2>3. Prix</h2>
+      <p>Les prix sont indiqués en euros, <span class="todo">{T('TVA non applicable, art. 293 B du CGI (à confirmer)')}</span>. Les frais de transport s’ajoutent au prix de l’œuvre ; leur montant est communiqué et accepté avant tout règlement.</p>
+
+      <h2>4. Commande</h2>
+      <p>La commande est confirmée par écrit par Adelem après échange sur la livraison. La vente est conclue à la réception du règlement <span class="todo">{T('ou de l’acompte')}</span>.</p>
+
+      <h2>5. Paiement</h2>
+      <p class="todo">{T('Moyens acceptés : virement, chèque… (à préciser). Sur-mesure : acompte de ..% à la commande, solde à la livraison.')}</p>
+
+      <h2>6. Livraison</h2>
+      <p class="todo">{T('Zones desservies, remise en main propre possible ou non, délai d’expédition d’une œuvre disponible (.. jours), transporteur.')}</p>
+      <p>L’œuvre voyage dans un emballage adapté à sa fragilité. En cas de dommage à la réception, émettre des réserves auprès du transporteur et prévenir Adelem sous 48 heures, photographies à l’appui.</p>
+
+      <h2>7. Droit de rétractation</h2>
+      <p>Pour une œuvre existante achetée à distance, l’acheteur particulier dispose de 14 jours à compter de la réception pour se rétracter, sans avoir à se justifier. L’œuvre est retournée dans son état d’origine et son emballage, <span class="todo">{T('frais de retour à la charge de l’acheteur (à confirmer)')}</span>. Le remboursement intervient sous 14 jours après réception du retour.</p>
+      <p>Conformément à l’article L221-28 du Code de la consommation, le droit de rétractation ne s’applique pas aux créations sur mesure, réalisées selon les spécifications du client.</p>
+
+      <h2>8. Garanties</h2>
+      <p>Les œuvres bénéficient de la garantie légale de conformité et de la garantie des vices cachés prévues par la loi.</p>
+
+      <h2>9. Médiation</h2>
+      <p>En cas de litige, l’acheteur particulier peut recourir gratuitement au médiateur de la consommation : <span class="todo">{L.mediateur ?? T('nom et site du médiateur à désigner')}</span>.</p>
+    </div>
+  </section>
+</Base>

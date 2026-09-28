@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import OeuvreCard from '../components/OeuvreCard.astro';
+const items = (await getCollection('oeuvres')).filter((o) => o.data.type === 'sculpture');
+---
+<Base title="Sculptures" description="Personnages en grès : la recherche sculptée d’Adelem.">
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Sculptures</p>
+      <h1>Sculptures</h1>
+      <p class="lead">Des personnages en grès apparaissent ponctuellement dans le travail d’Adelem. Leur production reste limitée.</p>
+      {items.length ? <div class="grid" style="margin-top:2.5rem">{items.map((o) => <OeuvreCard oeuvre={o} />)}</div> : <p class="empty" style="margin-top:2rem">Les pièces seront présentées ici au fil de leur création.</p>}
+      <div class="actions"><a class="btn ghost" href="/contact">Parler d’une sculpture</a></div>
+    </div>
+  </section>
+</Base>

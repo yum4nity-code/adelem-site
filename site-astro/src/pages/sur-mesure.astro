@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+const etapes = [
+  ['Le lieu', 'Une photographie, des dimensions approximatives et la présence recherchée.'],
+  ['La direction', 'Adelem définit l’équilibre, les matières et l’intention.'],
+  ['Le cadre', 'Le format dépend aussi des cadres anciens disponibles, ou d’un cadre que vous possédez déjà.'],
+  ['La composition', 'L’œuvre est composée à la main, sans copier une pièce existante.'],
+  ['La livraison', 'Elle est organisée selon le format, le poids, la fragilité et la destination.'],
+];
+---
+<Base title="Sur mesure" description="Une œuvre végétale composée pour votre espace : du lieu à la livraison, en cinq étapes.">
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Sur mesure</p>
+        <h1>Le projet part d’un espace</h1>
+        <p class="lead" style="margin-top:1.2rem">Le lieu apporte ses contraintes ; Adelem garde la liberté de la composition.</p>
+        <div class="actions"><a class="btn" href="/contact">Parler de votre espace</a></div>
+      </div>
+      <ol class="steps">{etapes.map(([t, d]) => <li><strong>{t}</strong>{d}</li>)}</ol>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2>Architectes, décorateurs, lieux professionnels</h2>
+      <p class="lead">Un hôtel, un restaurant ou un bureau peuvent accueillir une œuvre pensée pour eux. La faisabilité technique et la livraison sont étudiées pour chaque lieu.</p>
+    </div>
+  </section>
+</Base>

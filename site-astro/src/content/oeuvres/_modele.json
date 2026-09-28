@@ -1,0 +1,19 @@
+{
+  "titre": "Titre de l'œuvre",
+  "type": "tableau",
+  "format": "Signature",
+  "prix": 1300,
+  "statut": "disponible",
+  "dimensions_cm": { "l": 60, "h": 80, "p": 6 },
+  "poids_kg": 4,
+  "annee": 2025,
+  "cadre": "Cadre ancien restauré, vers 1900",
+  "matieres": ["Mousses stabilisées", "Lichens", "Écorces"],
+  "histoire": "Deux ou trois phrases d'Adèle sur l'œuvre et son cadre.",
+  "photos": [
+    { "fichier": "face.jpg", "vue": "Face", "alt": "Titre de l'œuvre, vue de face" },
+    { "fichier": "biais.jpg", "vue": "Relief", "alt": "Titre de l'œuvre, vue de biais montrant le relief" },
+    { "fichier": "matiere.jpg", "vue": "Matière", "alt": "Détail des mousses et lichens" }
+  ],
+  "ordre": 10
+}

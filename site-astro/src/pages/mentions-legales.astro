@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+const L = site.legal;
+const v = (x: string | null, label: string) => x ?? `[${label} à compléter]`;
+const incomplet = [L.adresse, L.tva, L.hebergeur, site.contact.email, site.contact.telephone].some((x) => x == null);
+---
+<Base title="Mentions légales" noindex={incomplet}>
+  <section class="section">
+    <div class="wrap prose">
+      <h1>Mentions légales</h1>
+
+      <h2>Éditrice du site</h2>
+      <dl>
+        <dt>Nom</dt><dd>{L.editrice}, {L.statut}, exerçant sous le nom commercial Adelem</dd>
+        <dt>SIRET</dt><dd>{L.siret}</dd>
+        <dt>Adresse</dt><dd class={L.adresse ? '' : 'todo'}>{v(L.adresse, 'Adresse')}</dd>
+        <dt>E-mail</dt><dd class={site.contact.email ? '' : 'todo'}>{v(site.contact.email, 'E-mail')}</dd>
+        <dt>Téléphone</dt><dd class={site.contact.telephone ? '' : 'todo'}>{v(site.contact.telephone, 'Téléphone')}</dd>
+        <dt>TVA</dt><dd class={L.tva ? '' : 'todo'}>{v(L.tva, 'Régime de TVA')}</dd>
+      </dl>
+
+      <h2>Directeur de la publication</h2>
+      <p>{L.directeurPublication}</p>
+
+      <h2>Hébergement</h2>
+      <p class={L.hebergeur ? '' : 'todo'}>{v(L.hebergeur, 'Hébergeur : raison sociale, adresse, téléphone')}</p>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>Les œuvres, photographies et textes présentés sur ce site sont la propriété d’{L.editrice}. Toute reproduction, même partielle, est interdite sans autorisation écrite.</p>
+
+      <h2>Données personnelles</h2>
+      <p>Les informations transmises par le formulaire de contact servent uniquement à répondre à votre demande. Elles ne sont ni vendues ni transmises à des tiers, et sont supprimées au plus tard trois ans après le dernier échange.</p>
+      <p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à l’adresse ci-dessus. Vous pouvez aussi introduire une réclamation auprès de la CNIL (cnil.fr).</p>
+      <p>Ce site n’utilise pas de cookie de mesure d’audience ni de publicité.</p>
+    </div>
+  </section>
+</Base>
