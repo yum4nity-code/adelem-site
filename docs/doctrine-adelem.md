@@ -143,6 +143,11 @@ Si une offre plus accessible est nécessaire, elle doit venir de vrais petits fo
 - éviter le jargon d'art contemporain
 - conserver le côté humain et artisanal
 
+Deux règles d'écriture héritées de la V2, à appliquer sans les afficher :
+
+- **Le geste avant le discours** : montrer ce que fait la main (trier, rapprocher, reprendre, recommencer) plutôt que parler de « savoir-faire d'exception »
+- **Le luxe vient de l'image, de l'espace, de la matière et de la qualité du travail, jamais d'un discours prétentieux** : le site ne doit jamais avoir l'air de vouloir paraître plus luxueux qu'il ne l'est
+
 ## Titres
 
 **Aucun point final dans les titres**

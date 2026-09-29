@@ -19,15 +19,14 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
       <div class="hero-photo" style={`background-image: url(${photoHero})`}></div>
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="220" height="178" />
-        <p class="baseline">La matière du végétal, composée à la main</p>
       </div>
     </div>
   </section>
 
   <section class="ouverture">
     <div class="wrap intro">
-      <h1>Mousses, lichens et écorces, composés à la main dans des cadres anciens restaurés.</h1>
-      <p class="discret">Tableaux végétaux, pièces uniques</p>
+      <h1>Mousses, lichens et écorces, composés à la main dans des cadres anciens restaurés</h1>
+      <p class="discret">Pièces uniques</p>
     </div>
     <div class="wrap">
       {disponibles.length ? <Mur oeuvres={disponibles} eager /> : <p class="discret vide">Les premières œuvres arrivent.</p>}
@@ -49,7 +48,7 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
 
   <section class="wrap bloc duo" data-reveal>
     <div class="pile">
-      <h2 class="titre-section">L’atelier</h2>
+      <h2 class="titre-section">Un vrai travail de main</h2>
       <p class="texte">Chercher un cadre ancien, le restaurer, composer, attendre les séchages, reprendre un relief. Un grand format demande huit à dix jours de travail.</p>
       <a class="lien" href="/atelier">Découvrir l’atelier</a>
     </div>
@@ -57,7 +56,7 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
   </section>
 
   <section class="wrap bloc centre pile-centre" data-reveal>
-    <h2 class="titre-section">Une œuvre pour un lieu, ou pour un cadre qui attend la sienne</h2>
+    <h2 class="titre-section">Une œuvre pour votre mur</h2>
     <p class="texte">Une photo du mur et ses dimensions approximatives suffisent pour commencer.</p>
     <a class="lien" href="/sur-mesure">Le sur-mesure</a>
   </section>
@@ -97,7 +96,6 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
     text-align: center; padding: 0 24px;
   }
   .signature { width: min(260px, 55vw); height: auto; filter: invert(.92); opacity: .97; }
-  .baseline { font: italic 300 1.15rem var(--serif); color: var(--or); letter-spacing: .02em; }
 
   .ouverture { position: relative; z-index: 1; background: var(--mur); padding-top: clamp(56px, 8vw, 96px); }
   .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }
