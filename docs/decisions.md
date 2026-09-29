@@ -155,3 +155,7 @@
 - Une SARL « ADELEM » existe (SIREN 880 525 407, Rhône, créée en 2020, services administratifs / gestion), sans lien avec Adelem. Une autre, à Paris, est radiée depuis 2024. Aucune **marque** « ADELEM » déposée dans la base INPI (vérifié le 2026-09-29). Recommandation : déposer la marque Adelem à l'INPI dans les classes utiles.
 - Le résultat Google actuel (« Galerie d'œuvres végétales et sculptures… créations sur mesure », sans logo) est l'ancienne version Lovable gardée en mémoire par Google : le nouveau site est volontairement non indexé tant qu'il montre des œuvres d'exemple. Il se mettra à jour après l'activation de l'indexation (`PUBLIC_INDEX=true` sur Vercel) et le passage de Google.
 - Titre de l'accueil pour Google : « Adelem, tableaux végétaux et sculptures » (au lieu de « … et cadres anciens »). Icône 96 × 96 ajoutée : Google demande une icône d'au moins 48 px, multiple de 48.
+
+## 2026-09-29 — Échelle des sculptures
+
+- Constat de Gwen : sur mobile, une sculpture seule paraissait minuscule (échelle réelle calée pour qu'un tableau de 90 cm tienne à l'écran). Les murs de sculptures (page Sculptures, chapitre de l'accueil) ont désormais leur propre échelle : la pièce la plus haute atteint au moins 330 px, la hauteur d'un grand tableau. Les murs de tableaux gardent l'échelle commune, pour que les formats restent comparables entre eux.

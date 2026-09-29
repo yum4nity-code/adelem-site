@@ -10,7 +10,7 @@ const items = (await getCollection('oeuvres')).filter((o) => o.data.type === 'sc
     <p class="texte">Le même regard, une autre matière : des personnages façonnés à la main. Ils naissent plus rarement que les tableaux, un à un.</p>
   </section>
   <section class="wrap bloc">
-    {items.length ? <Mur oeuvres={items} eager /> : <p class="discret">Les pièces seront présentées ici au fil de leur création.</p>}
+    {items.length ? <Mur oeuvres={items} eager echelleLocale /> : <p class="discret">Les pièces seront présentées ici au fil de leur création.</p>}
   </section>
 </Base>
 <style>.haut-page { padding-top: clamp(40px, 6vw, 80px); }</style>

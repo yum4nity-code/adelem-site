@@ -4,10 +4,17 @@ import Cartel from './Cartel.astro';
 
 // Accrochage à l'échelle : chaque œuvre a la largeur réelle de son cadre (var(--cm) px par cm),
 // et tous les centres sont alignés sur une même ligne, comme dans un musée.
-interface Props { oeuvres: CollectionEntry<'oeuvres'>[]; eager?: boolean }
-const { oeuvres, eager = false } = Astro.props;
+// echelleLocale : pour les murs de sculptures uniquement. Les murs de tableaux gardent l'échelle commune (--cm global),
+// pour que les tailles restent comparables d'un format à l'autre.
+interface Props { oeuvres: CollectionEntry<'oeuvres'>[]; eager?: boolean; echelleLocale?: boolean }
+const { oeuvres, eager = false, echelleLocale = false } = Astro.props;
+// Échelle propre à chaque mur, pour qu'un mur d'une seule petite pièce (une sculpture, par exemple) ne paraisse pas
+// minuscule : la plus grande pièce du mur remplit la largeur utile sur mobile, et la plus haute atteint au moins
+// 330 px (la hauteur d'un grand tableau à 5,5 px/cm) sur grand écran. Les proportions entre pièces d'un même mur restent justes.
+const reference = Math.max(30, ...oeuvres.map((o) => Math.max(o.data.largeur_cm * 1.05, o.data.hauteur_cm * 0.75)));
+const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteur_cm))).toFixed(2);
 ---
-<div class="mur" role="list">
+<div class="mur" role="list" style={echelleLocale ? `--cm: min(${plafond}px, calc((100vw - 48px) / ${Math.round(reference)}))` : undefined}>
   {oeuvres.map((o, i) => (
     <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${o.data.largeur_cm};--h:${o.data.hauteur_cm}`}>
       <img
