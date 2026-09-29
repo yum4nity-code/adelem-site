@@ -163,3 +163,7 @@
 ## 2026-09-29 — Année des œuvres
 
 - Demande d'Adèle, validée par Gwen : l'année de création n'est plus affichée pour les pièces disponibles ou réservées (effet « invendu » et, pour du végétal stabilisé, question de l'âge de la matière). Elle reste affichée pour les pièces vendues (archives, continuité du travail), figure sur le certificat et la facture, et reste saisie dans l'administration.
+
+## 2026-09-29 — Nouvelle signature
+
+- Signature manuscrite fournie par Adèle, extraite d'une photo et vectorisée (`public/logo/adelem-signature.svg`), validée par Gwen. Elle remplace l'ancienne dans l'en-tête (150 px de large, la nouvelle étant plus allongée) et sur l'ouverture de l'accueil. L'ancien fichier `adelem-wordmark-charcoal.svg` est conservé dans le dépôt mais n'est plus utilisé.

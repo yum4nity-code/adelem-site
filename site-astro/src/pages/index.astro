@@ -23,7 +23,7 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
     <div class="hero-fixe">
       <div class="hero-photo" style={`background-image: url(${photoHero})`}></div>
       <div class="marque-hero">
-        <img class="signature" src="/logo/adelem-wordmark-charcoal.svg" alt="Adelem" width="220" height="178" />
+        <img class="signature" src="/logo/adelem-signature.svg" alt="Adelem" width="380" height="158" />
       </div>
     </div>
   </section>
@@ -108,7 +108,7 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
     text-align: center; padding: 0 24px;
   }
-  .signature { width: min(260px, 55vw); height: auto; filter: invert(.92); opacity: .97; }
+  .signature { width: min(380px, 80vw); height: auto; filter: invert(.92); opacity: .97; }
 
   .ouverture { position: relative; z-index: 1; background: var(--mur); padding-top: clamp(56px, 8vw, 96px); }
   .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }
