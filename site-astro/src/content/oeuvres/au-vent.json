@@ -4,6 +4,7 @@
   "type": "sculpture",
   "statut": "disponible",
   "prix": 520,
+  "lien_paiement": "https://buy.stripe.com/test_dRmeVdejYf5M2Op79T0kE03",
   "largeur_cm": 26,
   "hauteur_cm": 39,
   "profondeur_cm": 22,

@@ -5,6 +5,7 @@
   "format": "Grand format",
   "statut": "disponible",
   "prix": 690,
+  "lien_paiement": "https://buy.stripe.com/test_6oU3cv7VAf5M1Klam50kE00",
   "largeur_cm": 79,
   "hauteur_cm": 60,
   "profondeur_cm": 8,

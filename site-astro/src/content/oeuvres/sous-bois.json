@@ -5,6 +5,7 @@
   "format": "Format signature",
   "statut": "disponible",
   "prix": 130,
+  "lien_paiement": "https://buy.stripe.com/test_14A5kDgs63n4gFfcud0kE02",
   "largeur_cm": 34,
   "hauteur_cm": 30,
   "profondeur_cm": 4,

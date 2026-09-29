@@ -180,3 +180,11 @@
 - Voile sombre en dégradé sur les 220 px du haut de la photo d'ouverture (indépendant de la photo choisie).
 - Menu : caractères en poids 500 et 0,8 rem (au lieu de 400 et 0,72 rem), bouton « Menu » mobile aligné.
 - Écartés : bandeau flouté (coupe la photo), recadrage (ne vaut que pour une photo), ombre sous les lettres (gardée en réserve).
+
+## 2026-09-29 — Paiement de test Stripe sur les pièces d'exemple
+
+- Compte Stripe « Adelem sandbox » (mode test) relié via le connecteur Stripe : 4 produits et 4 liens de paiement test créés (Canopée, Clairière, Sous-bois, Au vent), aux prix des fiches.
+- Réglages des liens : 1 paiement maximum, adresse de livraison (FR, BE, LU, CH, MC, DE, IT, ES, NL) et téléphone demandés, pas de codes promo, redirection vers /merci-achat, rappel CGV et 14 jours sous le bouton.
+- Case « J'accepte les CGV » non activée : Stripe exige d'abord l'URL des CGV dans Paramètres › Informations publiques.
+- Pas de tarif de livraison dans les liens de test (montants à fixer).
+- Liens posés dans les JSON de démo (champ lien_paiement) : ils disparaissent avec les pièces d'exemple.
