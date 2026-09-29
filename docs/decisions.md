@@ -149,3 +149,9 @@
 - Pièce vendue ou trio épuisé : plus d'impasse, inscription « Être prévenu des prochaines pièces » (via le formulaire Formspree) et lien vers les pièces disponibles.
 - Page `/merci-achat` (non indexée) : suite après paiement (emballage, certificat, expédition sous 3 à 5 jours ouvrés, réception). À renseigner comme redirection de chaque lien Stripe.
 - Réglages Stripe à faire par Gwen : `docs/stripe-reglages.md` (dont « limiter à 1 paiement » : une pièce unique ne doit pas pouvoir être vendue deux fois).
+
+## 2026-09-29 — Nom Adelem, référencement Google
+
+- Une SARL « ADELEM » existe (SIREN 880 525 407, Rhône, créée en 2020, services administratifs / gestion), sans lien avec Adelem. Une autre, à Paris, est radiée depuis 2024. Aucune **marque** « ADELEM » déposée dans la base INPI (vérifié le 2026-09-29). Recommandation : déposer la marque Adelem à l'INPI dans les classes utiles.
+- Le résultat Google actuel (« Galerie d'œuvres végétales et sculptures… créations sur mesure », sans logo) est l'ancienne version Lovable gardée en mémoire par Google : le nouveau site est volontairement non indexé tant qu'il montre des œuvres d'exemple. Il se mettra à jour après l'activation de l'indexation (`PUBLIC_INDEX=true` sur Vercel) et le passage de Google.
+- Titre de l'accueil pour Google : « Adelem, tableaux végétaux et sculptures » (au lieu de « … et cadres anciens »). Icône 96 × 96 ajoutée : Google demande une icône d'au moins 48 px, multiple de 48.
