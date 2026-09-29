@@ -19,6 +19,9 @@ export default defineConfig({
             S.documentTypeListItem('oeuvre').title('Œuvres'),
             S.documentTypeListItem('herbier').title('Herbier (petits formats)'),
             S.documentTypeListItem('carnet').title('Carnet d’atelier'),
+            S.divider(),
+            // Document unique : les réglages de l'accueil (photo d'ouverture).
+            S.listItem().title('Accueil').id('reglages').child(S.document().schemaType('reglages').documentId('reglages')),
           ]),
     }),
     frFRLocale(),

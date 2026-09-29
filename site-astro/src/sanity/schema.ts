@@ -349,4 +349,28 @@ export const herbier = defineType({
   },
 });
 
-export const schemaTypes = [oeuvre, carnet, herbier];
+
+const reglages = defineType({
+  name: 'reglages',
+  title: 'Accueil',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'photoOuverture',
+      title: 'Photo d’ouverture de l’accueil',
+      description:
+        'La grande photo derrière la signature, en haut de l’accueil. Choisir une photo verticale (portrait), nette et bien éclairée : idéalement une vraie pièce, accrochée chez quelqu’un ou en gros plan avec le cadre. Cliquez sur la photo puis sur le crayon pour placer le point qui doit toujours rester visible. Sans photo, le site en choisit une automatiquement.',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'photoOuvertureAlt',
+      title: 'Description de la photo (pour les malvoyants et Google)',
+      description: 'Une phrase simple, par exemple : « Tableau de mousse accroché au-dessus d’une commode ».',
+      type: 'string',
+    }),
+  ],
+  preview: { prepare: () => ({ title: 'Réglages de l’accueil' }) },
+});
+
+export const schemaTypes = [oeuvre, carnet, herbier, reglages];

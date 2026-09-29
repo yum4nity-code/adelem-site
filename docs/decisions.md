@@ -167,3 +167,9 @@
 ## 2026-09-29 — Nouvelle signature
 
 - Signature manuscrite fournie par Adèle, extraite d'une photo et vectorisée (`public/logo/adelem-signature.svg`), validée par Gwen. Elle remplace l'ancienne dans l'en-tête (150 px de large, la nouvelle étant plus allongée) et sur l'ouverture de l'accueil. L'ancien fichier `adelem-wordmark-charcoal.svg` est conservé dans le dépôt mais n'est plus utilisé.
+
+## 2026-09-29 — Ouverture de l'accueil (mobile d'abord)
+
+- Constat : photo d'ouverture floue et ternie par un voile trop sombre, deux signatures à l'écran (en-tête et ouverture), un écran et demi à faire défiler sur mobile avant la première œuvre.
+- Appliqué : en-tête transparent posé sur la photo d'ouverture, sa signature masquée sur l'accueil (une seule signature à la fois) ; voile allégé au centre, plus sombre en haut (menu) et en bas (fondu) ; ombre douce sous la signature ; invitation « Découvrir » en bas ; ouverture raccourcie sur mobile (108 % de la hauteur d'écran au lieu de 140 %).
+- Nouveau dans l'administration : **Accueil › Photo d'ouverture** (document unique), avec consigne (verticale, nette, bien éclairée, idéalement une vraie pièce) et point d'intérêt réglable. Sans photo choisie, l'accueil garde le choix automatique.
