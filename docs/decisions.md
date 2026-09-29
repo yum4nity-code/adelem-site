@@ -117,3 +117,9 @@
 - Fil d'Ariane des fiches : une sculpture renvoie désormais vers « Sculptures », plus vers « Œuvres ».
 - Correctif : le champ caché anti-robots des formulaires débordait et créait un défilement horizontal sur toutes les pages avec formulaire (fiches, contact). Classe `.visually-hidden` renforcée.
 - Constat de Gwen, à traiter : le discours du site tourne presque entièrement autour du cadre ancien, ce qui laisse les sculptures sans place dans le récit. Le ton est à revoir avant de développer la partie sculpture.
+
+## 2026-09-29 — Le récit passe du cadre à la main
+
+- Constat de Gwen : tout tournait autour du cadre ancien, ce qui laissait les sculptures sans place. Le cadre reste la signature des tableaux, pas la définition d'Adelem ; le fil commun devient la main et la matière.
+- Réécrits : titre de l'accueil (« Tableaux de mousses et de lichens, sculptures, faits à la main »), description du site pour Google, ouverture de l'Atelier (matière d'abord, cadre ensuite pour les tableaux, « Les sculptures naissent du même regard »), étapes Chercher et Préparer (ex-Restaurer), introduction de la page Sculptures (la rareté dite comme une rareté, plus comme une excuse).
+- Gwen : ne pas préciser la matière des sculptures (« pas en grès, juste sculptures »). Toute mention du grès retirée du site, y compris sur la sculpture d'exemple.

@@ -3,7 +3,7 @@ export const site = {
   nom: 'Adelem',
   url: 'https://adelem.fr',
   description:
-    'Tableaux végétaux uniques : mousses, lichens et écorces composés à la main dans des cadres anciens restaurés.',
+    'Pièces uniques faites à la main : tableaux de mousses, lichens et écorces dans des cadres anciens restaurés, et sculptures.',
   delaiReponse: '3 jours ouvrés',
   contact: {
     email: 'contact@adelem.fr' as string | null,

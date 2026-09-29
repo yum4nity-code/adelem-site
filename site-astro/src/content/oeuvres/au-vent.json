@@ -8,11 +8,11 @@
   "hauteur_cm": 39,
   "profondeur_cm": 22,
   "poids_kg": 5,
-  "matieres": ["Grès modelé à la main", "Patine à la cire"],
+  "matieres": ["Modelage à la main", "Patine à la cire"],
   "histoire": "Le visage est venu presque d’un geste. Le foulard, lui, a demandé des jours : chaque pli repris à l’ébauchoir, jusqu’à ce que le tissu semble tenir au vent. La patine, posée en plusieurs couches de cire, laisse voir les traces de l’outil. Texte d’exemple, à adapter sur cette pièce précise.",
   "entretien": "Texte d’exemple : un chiffon doux et sec suffit ; éviter l’humidité prolongée et les chocs.",
   "photos": [
-    { "fichier": "face.webp", "legende": "Face", "alt": "Au vent, buste en grès patiné d’une femme coiffée d’un foulard" }
+    { "fichier": "face.webp", "legende": "Face", "alt": "Au vent, buste patiné d’une femme coiffée d’un foulard" }
   ],
   "ordre": 1,
   "demo": true
