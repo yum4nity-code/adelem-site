@@ -31,13 +31,14 @@ type SanityOeuvre = {
   certificat?: string | null;
   accueil?: boolean | null;
   lien_paiement?: string | null;
+  livraison_france?: number | null;
   photos?: SanityPhoto[] | null;
 };
 
 const QUERY = `*[_type == "oeuvre" && defined(titre) && defined(largeur_cm) && defined(hauteur_cm) && count(photos[defined(asset)]) > 0]
   | order(_createdAt desc) {
     _id, titre, annee, type, statut, prix, largeur_cm, hauteur_cm, profondeur_cm, poids_kg,
-    matieres, cadre, provenance, histoire, entretien, certificat, accueil, lien_paiement,
+    matieres, cadre, provenance, histoire, entretien, certificat, accueil, lien_paiement, livraison_france,
     photos[defined(asset)]{ legende, alt, crop, hotspot, asset->{ _id, metadata { dimensions { width, height } } } }
   }`;
 
@@ -124,6 +125,7 @@ export async function oeuvresSanity() {
       ordre: i + 1,
       accueil: !!o.accueil,
       lien_paiement: o.lien_paiement ?? null,
+      livraison_france: o.livraison_france ?? null,
       demo: false,
     };
   });

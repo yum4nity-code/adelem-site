@@ -183,9 +183,17 @@ export const oeuvre = defineType({
       name: 'lien_paiement',
       title: 'Lien de paiement (facultatif)',
       description:
-        'Si vous avez un lien de paiement pour cette pièce (Stripe, par exemple), collez-le ici : un bouton « Acheter » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
+        'Si vous avez un lien de paiement pour cette pièce (Stripe, par exemple), collez-le ici : un bouton « Acquérir » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
       type: 'url',
       group: 'details',
+    }),
+    defineField({
+      name: 'livraison_france',
+      title: 'Livraison en France (€, facultatif)',
+      description: 'Frais de livraison en France pour cette pièce, affichés sur sa fiche. Ailleurs, le tarif est calculé au moment du paiement.',
+      type: 'number',
+      group: 'details',
+      validation: (r) => r.min(0),
     }),
     defineField({
       name: 'accueil',
@@ -320,8 +328,15 @@ export const herbier = defineType({
       name: 'lien_paiement',
       title: 'Lien de paiement (facultatif)',
       description:
-        'Si vous avez un lien de paiement pour ce trio (Stripe, par exemple), collez-le ici : un bouton « Acheter » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
+        'Si vous avez un lien de paiement pour ce trio (Stripe, par exemple), collez-le ici : un bouton « Acquérir » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
       type: 'url',
+    }),
+    defineField({
+      name: 'livraison_france',
+      title: 'Livraison en France (€, facultatif)',
+      description: 'Frais de livraison en France pour cette pièce, affichés sur sa fiche. Ailleurs, le tarif est calculé au moment du paiement.',
+      type: 'number',
+      validation: (r) => r.min(0),
     }),
   ],
   orderings: [{ title: 'Plus récents', name: 'recents', by: [{ field: '_createdAt', direction: 'desc' }] }],

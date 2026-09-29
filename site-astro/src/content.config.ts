@@ -54,6 +54,8 @@ const oeuvres = defineCollection({
     certificat: z.string().nullable().optional(),
     // Lien de paiement (ex. Stripe). Tant qu'il est vide, seul le formulaire de demande s'affiche.
     lien_paiement: z.string().url().nullable().optional(),
+    // Frais de livraison en France (€), affichés sur la fiche ; ailleurs, calculés au paiement.
+    livraison_france: z.number().nonnegative().nullable().optional(),
     // La première photo est la vue de face, aux proportions du cadre.
     photos: z
       .array(z.object({ src: z.string(), legende: z.string(), alt: z.string(), w: z.number().optional(), h: z.number().optional() }))
@@ -118,6 +120,8 @@ const herbier = defineCollection({
     image: z.string(),
     // Lien de paiement (ex. Stripe). Tant qu'il est vide, seul le formulaire de demande s'affiche.
     lien_paiement: z.string().url().nullable().optional(),
+    // Frais de livraison en France (€), affichés sur la fiche ; ailleurs, calculés au paiement.
+    livraison_france: z.number().nonnegative().nullable().optional(),
     demo: z.boolean().default(false),
   }),
 });

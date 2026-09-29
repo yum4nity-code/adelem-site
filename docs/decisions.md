@@ -139,3 +139,13 @@
 - Adèle propose un certificat d'authenticité avec chaque pièce (document pas encore créé) : mentionné dans cette section des CGV.
 - Témoignages : publiés dans le mois suivant leur réception, conservés dix ans (mentions légales).
 - Gwen crée la fiche Google Business Profile d'Adelem ; son lien ira dans `contact.google`.
+
+## 2026-09-29 — Boutons d'achat
+
+- Mot retenu : « Acquérir — [prix] » (vocabulaire de galerie ; hypothèse prise faute de réponse de Gwen, facile à changer). Paiement en 3 fois : oui, et annoncé sous le bouton.
+- Sous le bouton, une ligne : « Paiement sécurisé, en une fois ou en 3 fois · 14 jours pour changer d'avis ». Affichée seulement quand un lien de paiement existe.
+- Nouveau champ facultatif « Livraison en France (€) » (œuvres et Herbier, Sanity + site), affiché sur la fiche ; ailleurs, tarif calculé au paiement.
+- Mobile : barre d'achat fixée en bas de l'écran (titre, prix, « Acquérir ») quand on a défilé au-delà du bouton.
+- Pièce vendue ou trio épuisé : plus d'impasse, inscription « Être prévenu des prochaines pièces » (via le formulaire Formspree) et lien vers les pièces disponibles.
+- Page `/merci-achat` (non indexée) : suite après paiement (emballage, certificat, expédition sous 3 à 5 jours ouvrés, réception). À renseigner comme redirection de chaque lien Stripe.
+- Réglages Stripe à faire par Gwen : `docs/stripe-reglages.md` (dont « limiter à 1 paiement » : une pièce unique ne doit pas pouvoir être vendue deux fois).

@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+// Page de retour après un paiement Stripe (à renseigner comme « page de confirmation » de chaque lien de paiement).
+---
+<Base title="Merci" noindex>
+  <section class="wrap haut-page pile">
+    <h1 class="titre-section">Merci, la pièce est à vous</h1>
+    <p class="texte">Votre paiement est confirmé et un reçu vous a été envoyé par e-mail. Voici la suite.</p>
+  </section>
+  <section class="wrap bloc">
+    <ol class="etapes">
+      <li><strong>À l’atelier</strong><span>La pièce est emballée à la main, calée sur mesure, avec son certificat d’authenticité et sa facture.</span></li>
+      <li><strong>L’expédition</strong><span>Elle part sous 3 à 5 jours ouvrés, souvent moins. Vous recevez alors le suivi du transporteur.</span></li>
+      <li><strong>À la réception</strong><span>Vérifiez le colis devant le livreur. Un dommage se signale sous 48 heures, photographies à l’appui.</span></li>
+    </ol>
+  </section>
+  <section class="wrap bloc centre">
+    <p class="texte">Une question d’ici là ?</p>
+    <a class="lien" href="/contact">Écrire à l’atelier</a>
+  </section>
+</Base>
+<style>
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); }
+  .centre { text-align: center; }
+  .centre .texte { margin-inline: auto; margin-bottom: 16px; }
+</style>

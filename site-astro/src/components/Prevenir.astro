@@ -1,0 +1,32 @@
+---
+import { site } from '../data/site';
+
+// Inscription « être prévenu des prochaines pièces », proposée quand une pièce est vendue ou épuisée,
+// pour qu'une pièce partie continue d'ouvrir la relation au lieu d'être une impasse.
+interface Props { piece?: string }
+const { piece } = Astro.props;
+const endpoint = site.formEndpoint;
+---
+{endpoint && (
+  <form class="prevenir" method="post" action={endpoint}>
+    <input type="hidden" name="_subject" value={piece ? `Être prévenu des prochaines pièces (depuis ${piece})` : 'Être prévenu des prochaines pièces'} />
+    <input type="hidden" name="_next" value={`${site.url}/merci`} />
+    <input type="hidden" name="newsletter" value="oui" />
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
+    <label for="prevenir-email">Être prévenu des prochaines pièces</label>
+    <div class="ligne">
+      <input id="prevenir-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required placeholder="Votre e-mail" />
+      <button class="bouton" type="submit">Me prévenir</button>
+    </div>
+    <p class="discret">Un e-mail de temps en temps, quand une pièce sort de l’atelier. Désinscription sur simple demande.</p>
+  </form>
+)}
+
+<style>
+  .prevenir { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 460px; }
+  label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--texte); }
+  .ligne { display: flex; gap: 12px; align-items: stretch; flex-wrap: wrap; }
+  input[type='email'] { flex: 1 1 220px; font: 400 1rem/1.5 var(--sans); color: var(--encre); background: transparent; border: 0; border-bottom: 1px solid rgba(236, 233, 224, .3); padding: 8px 0; border-radius: 0; }
+  input[type='email']:focus { border-bottom-color: var(--or); }
+  input::placeholder { color: var(--discret); }
+</style>

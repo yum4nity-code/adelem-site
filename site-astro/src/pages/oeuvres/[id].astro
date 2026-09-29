@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Cartel from '../../components/Cartel.astro';
 import ContactForm from '../../components/ContactForm.astro';
+import BarreAchat from '../../components/BarreAchat.astro';
+import Prevenir from '../../components/Prevenir.astro';
 import { prix, site } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -13,6 +15,7 @@ const { oeuvre } = Astro.props;
 const d = oeuvre.data;
 const [face, ...autres] = d.photos;
 const disponible = d.statut === 'disponible';
+const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
@@ -40,10 +43,14 @@ const jsonld = {
       <Cartel oeuvre={oeuvre} long />
       <p class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</p>
       {d.statut === 'vendue' ? (
-        <a class="lien" href="/galerie">Voir les œuvres disponibles</a>
-      ) : disponible && d.lien_paiement ? (
         <div class="liens">
-          <a class="bouton" href={d.lien_paiement}>Acheter — {prix(d.prix)}</a>
+          <Prevenir piece={d.titre} />
+          <a class="lien secondaire" href={d.type === 'sculpture' ? '/sculptures' : '/galerie'}>Voir les pièces disponibles</a>
+        </div>
+      ) : achat ? (
+        <div class="liens">
+          <a class="bouton" href={achat} data-achat>Acquérir — {prix(d.prix)}</a>
+          <p class="discret rassure">Paiement sécurisé, en une fois ou en 3 fois · 14 jours pour changer d’avis</p>
           <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
         </div>
       ) : (
@@ -52,7 +59,7 @@ const jsonld = {
           <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
         </div>
       )}
-      <p class="discret">Pièce unique, signée au dos. <a href="/livraison">Emballage et livraison</a> dans le monde entier.</p>
+      <p class="discret">Pièce unique, signée au dos. <a href="/livraison">Emballage et livraison</a> dans le monde entier{d.livraison_france != null && d.statut !== 'vendue' && <>, en France : {prix(d.livraison_france)}</>}.</p>
       {d.certificat && <p class="discret">{d.certificat}</p>}
     </div>
   </section>
@@ -89,6 +96,8 @@ const jsonld = {
       </section>
     </>
   )}
+
+  {achat && <BarreAchat titre={d.titre} prix={prix(d.prix)} lien={achat} />}
 </Base>
 
 <style>
@@ -106,6 +115,7 @@ const jsonld = {
   .infos .discret a:hover { color: var(--encre); }
   .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
+  .rassure { margin-top: -6px; }
   .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; }
   .entretien h2 { margin-bottom: 16px; }
   .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
