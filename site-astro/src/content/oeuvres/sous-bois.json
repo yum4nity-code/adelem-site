@@ -11,7 +11,7 @@
   "matieres": ["Lichen pulmonaire", "Mousse"],
   "cadre": "Cadre doré, années 1930",
   "provenance": "Chiné, restauré à l’atelier",
-  "histoire": "Ce petit cadre doré des années 1930 avait perdu sa dorure sur un bord, laissé tel quel pour ne pas trop lisser son âge. Le lichen pulmonaire, en larges lobes, occupe presque tout l’espace : une pièce pensée pour être regardée de près, pas depuis l’autre bout de la pièce. Texte d’exemple, à adapter avec Adèle sur cette pièce précise.",
+  "histoire": "Ce petit cadre doré des années 1930 avait perdu sa dorure sur un bord, laissé tel quel pour ne pas trop lisser son âge. Le lichen pulmonaire, en larges lobes, occupe presque tout l’espace : une pièce pensée pour être regardée de près, pas depuis l’autre bout de la pièce. Texte d’exemple, à adapter sur cette pièce précise.",
   "photos": [
     { "fichier": "face.webp", "legende": "Face", "alt": "Sous-bois, lichen dans un fin cadre doré" },
     { "fichier": "situation.webp", "legende": "Au mur", "alt": "Sous-bois accroché sur un mur de brique" }

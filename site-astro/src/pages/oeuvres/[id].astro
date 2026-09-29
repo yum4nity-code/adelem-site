@@ -17,7 +17,7 @@ const jsonld = {
   '@context': 'https://schema.org',
   '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
   name: d.titre,
-  creator: { '@type': 'Person', name: site.legal.editrice },
+  creator: { '@type': 'Organization', name: site.nom },
   image: d.photos.map((p) => new URL(p.src, site.url).href),
   ...(d.annee ? { dateCreated: String(d.annee) } : {}),
   width: `${d.largeur_cm} cm`,

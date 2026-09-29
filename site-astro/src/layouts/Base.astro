@@ -24,7 +24,6 @@ const orgLd = {
   name: site.nom,
   url: site.url,
   logo: new URL('/logo/adelem-badge-transparent.svg', site.url).href,
-  founder: { '@type': 'Person', name: site.legal.editrice },
   ...(site.contact.email ? { email: site.contact.email } : {}),
   ...(site.contact.instagram ? { sameAs: [site.contact.instagram] } : {}),
 };
@@ -78,7 +77,7 @@ const orgLd = {
 
     <footer class="pied">
       <div class="wrap pied-grille">
-        <p>Adelem, tableaux végétaux d'{site.legal.editrice}</p>
+        <p>Adelem</p>
         <ul>
           {site.contact.instagram && <li><a href={site.contact.instagram}>Instagram</a></li>}
           <li><a href="/livraison">Emballage et livraison</a></li>

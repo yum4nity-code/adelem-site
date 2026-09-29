@@ -94,7 +94,12 @@
 - Retenu et appliqué : titre de la page Atelier « Artiste, oui / Artisane, surtout » (sur-titre « L'atelier d'Adèle Mette ») ; phrase sur la part artistique (« dans l'œil et dans le choix ») ; étape Composer « … jusqu'à ce que l'ensemble tienne » ; bloc atelier de l'accueil titré « Un vrai travail de main ».
 - Adèle ne veut plus de la baseline « La matière du végétal, composée à la main » : retirée de l'ouverture de l'accueil. Point final retiré du titre principal de l'accueil (règle des titres) ; « Tableaux végétaux, pièces uniques » réduit à « Pièces uniques » (montrer avant de catégoriser ; « tableaux végétaux » reste dans les métadonnées).
 - On parle du mur, pas du cadre du client : Adèle ne s'interdit pas de travailler dans un cadre apporté, mais ne veut plus en faire mention. Retiré de l'accueil, du sur-mesure, de la galerie, de Cadres anciens et de la page Contact. Titres « Une œuvre pour votre mur » et « Parlons de votre mur ».
-- Adèle nommée comme la personne qui répond (« Adèle vous répond sous 3 jours ouvrés ») sur les formulaires, Contact et Merci, validé par Gwen. Pas de portrait à ce stade.
+- Le nom d'Adèle avait été ajouté sur l'Atelier et les formulaires : **erreur, annulée le jour même**.
 - Sur-mesure : Adèle n'est pas enthousiaste pour le moment et ne veut pas de clients aux contraintes démesurées. La page reste en ligne telle quelle en attendant une discussion ; l'étape « une direction proposée avant de composer » n'est pas ajoutée tant que ce fonctionnement n'est pas confirmé.
 - Non repris de la V2 : « Le végétal, autrement » (vague) ; « Chaque pièce part des végétaux eux-mêmes » (contredit le site : chaque œuvre part d'un cadre ancien) ; « aucun besoin d'entretien » (trop fort). En réserve, seulement si Adèle s'y reconnaît : « Pas de grand manifeste… », « sans chercher à en faire trop », « simple à vivre, mais jamais banal ». « Le geste avant le discours » et la règle sur le luxe sont inscrits dans la doctrine comme règles d'écriture, pas comme texte visible.
 - Signalé : les photos de l'Herbier sont des photos de stock, à remplacer par les vraies pièces d'Adèle avant toute vente.
+
+## 2026-09-29 — Aucun nom propre hors mentions légales
+
+- Règle actée par Gwen : le nom d'Adèle Mette n'apparaît **nulle part** sur le site en dehors des pages légales (mentions légales, CGV). La marque est Adelem, c'est tout. Cela tranche le point « Place personnelle d'AdeleM sur le site », en attente depuis le 2026-09-13.
+- Retiré : sur-titre de l'Atelier, formulaires, pages Contact et Merci, pied de page (« Adelem, tableaux végétaux d'Adèle Mette » devient « Adelem »), notes « à adapter avec Adèle » des textes d'exemple, données structurées Google (auteur et fondatrice remplacés par l'organisation Adelem).
