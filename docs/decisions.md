@@ -103,3 +103,10 @@
 
 - Règle actée par Gwen : le nom d'Adèle Mette n'apparaît **nulle part** sur le site en dehors des pages légales (mentions légales, CGV). La marque est Adelem, c'est tout. Cela tranche le point « Place personnelle d'AdeleM sur le site », en attente depuis le 2026-09-13.
 - Retiré : sur-titre de l'Atelier, formulaires, pages Contact et Merci, pied de page (« Adelem, tableaux végétaux d'Adèle Mette » devient « Adelem »), notes « à adapter avec Adèle » des textes d'exemple, données structurées Google (auteur et fondatrice remplacés par l'organisation Adelem).
+
+## 2026-09-29 — Sur-mesure retiré du site
+
+- Décision de Gwen : tout le sur-mesure est retiré. Raison : le formulaire gratuit (Formspree) ne permet pas d'envoyer une photo du mur, point de départ indispensable d'une demande sur mesure ; et Adèle ne veut pas, en l'état, de demandes aux contraintes démesurées. La façon de le réintroduire reste à réfléchir.
+- Retiré : page `/sur-mesure` (redirigée temporairement vers `/galerie`), entrée du menu, bloc de l'accueil, renvoi en bas de la galerie, lien « Imaginer une œuvre dans cet esprit » des œuvres vendues (remplacé par « Voir les œuvres disponibles »), clauses sur-mesure des CGV (acompte, confirmation écrite, exclusion du droit de rétractation art. L221-28).
+- Le point « pourcentage d'acompte sur-mesure » des CGV disparaît avec. Reste en `.todo` : le médiateur de la consommation.
+- La doctrine garde sa section « Sur mesure » comme cible, non active.

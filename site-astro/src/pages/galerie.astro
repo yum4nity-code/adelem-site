@@ -38,10 +38,6 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
       <Mur oeuvres={vendues} />
     </section>
   )}
-  <section class="wrap bloc centre">
-    <p class="texte">Un mur qui demande une taille précise ?</p>
-    <a class="lien" href="/sur-mesure">Le sur-mesure</a>
-  </section>
 </Base>
 
 <style>
@@ -51,6 +47,4 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
   .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 6px; }
   .groupe + .groupe { margin-top: 40px; }
   .ligne-format { text-align: center; margin-bottom: 36px; }
-  .centre { text-align: center; }
-  .centre .texte { margin-inline: auto; margin-bottom: 16px; }
 </style>

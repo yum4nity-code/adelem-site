@@ -55,12 +55,6 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
     <img src="/images/atelier.webp" alt="Main posée sur un tapis de mousse" loading="lazy" width="1400" height="933" class="photo-atelier" />
   </section>
 
-  <section class="wrap bloc centre pile-centre" data-reveal>
-    <h2 class="titre-section">Une œuvre pour votre mur</h2>
-    <p class="texte">Une photo du mur et ses dimensions approximatives suffisent pour commencer.</p>
-    <a class="lien" href="/sur-mesure">Le sur-mesure</a>
-  </section>
-
   <script>
     const cibles = document.querySelectorAll('[data-reveal]');
     cibles.forEach((el) => el.classList.add('reveal'));
@@ -105,8 +99,6 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
   .vide { text-align: center; padding: 80px 0; }
   .vedette img { width: 100%; height: auto; }
   .photo-atelier { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-  .pile-centre { display: flex; flex-direction: column; align-items: center; gap: 22px; }
-  .pile-centre .titre-section { max-width: 18em; }
 
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.16, 1, .3, 1); }
   .reveal.visible { opacity: 1; transform: none; }

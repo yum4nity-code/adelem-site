@@ -16,5 +16,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/sur-mesure",
+      "destination": "/galerie",
+      "permanent": false
+    }
   ]
 }
