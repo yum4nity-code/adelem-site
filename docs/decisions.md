@@ -174,3 +174,9 @@
 - Appliqué : en-tête transparent posé sur la photo d'ouverture, sa signature masquée sur l'accueil (une seule signature à la fois) ; voile allégé au centre, plus sombre en haut (menu) et en bas (fondu) ; ombre douce sous la signature ; invitation « Découvrir » en bas ; ouverture raccourcie sur mobile (108 % de la hauteur d'écran au lieu de 140 %).
 - Nouveau dans l'administration : **Accueil › Photo d'ouverture** (document unique), avec consigne (verticale, nette, bien éclairée, idéalement une vraie pièce) et point d'intérêt réglable. Sans photo choisie, l'accueil garde le choix automatique.
 - Photo d'ouverture d'attente choisie par Gwen : celle de la V2 (mur de bois sombre, pièce végétale encadrée éclairée ; Unsplash, licence libre), chargée directement depuis Unsplash. Ce n'est pas une pièce d'Adelem : à remplacer par une vraie photo via Accueil › Photo d'ouverture.
+
+## 2026-09-29 — Lisibilité du menu sur la photo d'ouverture
+
+- Voile sombre en dégradé sur les 220 px du haut de la photo d'ouverture (indépendant de la photo choisie).
+- Menu : caractères en poids 500 et 0,8 rem (au lieu de 400 et 0,72 rem), bouton « Menu » mobile aligné.
+- Écartés : bandeau flouté (coupe la photo), recadrage (ne vaut que pour une photo), ombre sous les lettres (gardée en réserve).

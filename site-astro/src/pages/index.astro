@@ -121,7 +121,9 @@ const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'cent
      et en bas (fondu vers le mur). */
   .hero-photo::after {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(27, 33, 27, .55) 0%, rgba(27, 33, 27, .18) 22%, rgba(27, 33, 27, .3) 55%, rgba(27, 33, 27, .7) 82%, var(--mur) 100%);
+    background:
+      linear-gradient(180deg, rgba(20, 24, 20, .72) 0, rgba(20, 24, 20, .35) 120px, rgba(20, 24, 20, 0) 220px),
+      linear-gradient(180deg, rgba(27, 33, 27, .55) 0%, rgba(27, 33, 27, .18) 22%, rgba(27, 33, 27, .3) 55%, rgba(27, 33, 27, .7) 82%, var(--mur) 100%);
   }
   /* Invitation discrète à faire défiler, en bas de l'ouverture. */
   .indice { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--encre); opacity: .8; }
