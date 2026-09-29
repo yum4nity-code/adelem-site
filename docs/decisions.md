@@ -132,3 +132,10 @@
   - **« Où voir les pièces »** : liste de galeries, dépôts ou expositions, alimentée dans `site.ts` (`lieux`). Invisible tant qu'elle est vide ; n'y mettre que des lieux réels.
   - **Témoignages** : sélection éditoriale sans étoiles ni widget tiers (les widgets reconnus, Trustpilot et autres, imposent badges et étoiles peu compatibles avec le positionnement ; les galeries et artisans haut de gamme n'en affichent pas). Alimentée dans `site.ts` (`temoignages`), invisible tant qu'elle est vide. Mentions exigées par les art. L111-7-2 et D111-17 du Code de la consommation affichées sous la sélection (accord, absence de contrepartie, absence de contrôle, classement chronologique, dates) et dans les mentions légales. Fiche Google Business Profile recommandée comme source complète des avis (`contact.google`), liée sous la sélection. À préciser : délai de publication et durée de conservation.
 - Défiscalisation (art. 238 bis AB CGI, prolongé jusqu'au 31/12/2028 par la loi n° 2026-103) : recherche faite, rien publié. L'éligibilité des tableaux végétaux comme « œuvres originales » n'est pas établie ; à présenter seulement avec réserve, si Gwen le décide.
+
+## 2026-09-29 — Défiscalisation dans les CGV, durée des témoignages, certificat
+
+- Défiscalisation (art. 238 bis AB CGI) : ajoutée uniquement dans les CGV (section 9 « Acheteurs professionnels »), avec réserve sur l'éligibilité et mention « information générale ». Pas d'encart ailleurs.
+- Adèle propose un certificat d'authenticité avec chaque pièce (document pas encore créé) : mentionné dans cette section des CGV.
+- Témoignages : publiés dans le mois suivant leur réception, conservés dix ans (mentions légales).
+- Gwen crée la fiche Google Business Profile d'Adelem ; son lien ira dans `contact.google`.
