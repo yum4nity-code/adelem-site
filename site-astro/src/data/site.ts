@@ -6,7 +6,7 @@ export const site = {
     'Tableaux végétaux uniques : mousses, lichens et écorces composés à la main dans des cadres anciens restaurés.',
   delaiReponse: '3 jours ouvrés',
   contact: {
-    email: null as string | null,
+    email: 'contact@adelem.fr' as string | null,
     telephone: null as string | null,
     instagram: null as string | null,
   },
