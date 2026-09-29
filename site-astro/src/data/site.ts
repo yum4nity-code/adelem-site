@@ -9,11 +9,18 @@ export const site = {
     email: 'contact@adelem.fr' as string | null,
     telephone: null as string | null,
     instagram: null as string | null,
+    // Lien vers la fiche Google Business Profile (où tous les avis restent visibles). Affiché sous les témoignages.
+    google: null as string | null,
   },
   // Point d'envoi du formulaire (service d'e-mail à brancher). Sans valeur : lien e-mail, sinon message d'attente.
   formEndpoint: 'https://formspree.io/f/mgavrzzp' as string | null,
   // Le plan gratuit de Formspree ne gère pas les pièces jointes : ne passer à true qu'après un plan payant (Personal ou plus).
   formFileUploads: false as boolean,
+  // Témoignages de clients, publiés avec leur accord. Liste vide = la section n'apparaît pas.
+  // Dates au format AAAA-MM-JJ. Ne jamais inventer ni retoucher un témoignage (art. L121-4 du Code de la consommation).
+  temoignages: [] as { texte: string; auteur: string; ville?: string; oeuvre?: string; dateAchat: string; datePublication: string }[],
+  // Galeries, dépôts, salons ou expositions où voir les pièces. Liste vide = la section n'apparaît pas.
+  lieux: [] as { nom: string; ville: string; quand?: string; url?: string }[],
   legal: {
     editrice: 'Adèle Mette',
     statut: 'Entrepreneur individuel (EI)',

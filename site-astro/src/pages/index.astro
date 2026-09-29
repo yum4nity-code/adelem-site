@@ -2,9 +2,14 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Mur from '../components/Mur.astro';
+import Temoignages from '../components/Temoignages.astro';
+import Lieux from '../components/Lieux.astro';
 
-// La page d'accueil et la galerie « Œuvres » ne montrent que les tableaux : les sculptures ont leur propre page.
-const toutes = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau').sort((a, b) => a.data.ordre - b.data.ordre);
+// Accueil : un chapitre Tableaux puis un chapitre Sculptures ; la galerie « Œuvres » ne montre que les tableaux.
+const collection = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+const toutes = collection.filter((o) => o.data.type === 'tableau');
+// Deuxième chapitre de l'accueil : les sculptures disponibles, pour que le récit ne se limite pas aux tableaux.
+const sculptures = collection.filter((o) => o.data.type === 'sculpture' && o.data.statut !== 'vendue').slice(0, 3);
 const disponibles = toutes.filter((o) => o.data.statut !== 'vendue').slice(0, 5);
 const vedette =
   toutes.find((o) => o.data.accueil && o.data.statut !== 'vendue') ??
@@ -35,6 +40,17 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
     </div>
   </section>
 
+  {sculptures.length > 0 && (
+    <section class="wrap bloc chapitre" data-reveal>
+      <div class="intro">
+        <h2 class="titre-section">Sculptures</h2>
+        <p class="texte">Le même regard, une autre matière.</p>
+      </div>
+      <Mur oeuvres={sculptures} />
+      <p class="centre"><a class="lien" href="/sculptures">Toutes les sculptures</a></p>
+    </section>
+  )}
+
   {vedette && (
     <section class="wrap bloc duo vedette" data-reveal>
       <img src={(vedette.data.photos[1] ?? vedette.data.photos[0]).src} alt={vedette.data.photos[1]?.alt ?? vedette.data.photos[0].alt} loading="lazy" width="1000" height="1200" />
@@ -54,6 +70,9 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
     </div>
     <img src="/images/atelier.webp" alt="Main posée sur un tapis de mousse" loading="lazy" width="1400" height="933" class="photo-atelier" />
   </section>
+
+  <Temoignages />
+  <Lieux />
 
   <script>
     const cibles = document.querySelectorAll('[data-reveal]');
@@ -97,6 +116,7 @@ const photoHero = heroSource ? (heroSource.data.photos[1] ?? heroSource.data.pho
   .echelle, .centre { text-align: center; }
   .echelle { margin-bottom: 20px; }
   .vide { text-align: center; padding: 80px 0; }
+  .chapitre .centre { margin-top: 40px; }
   .vedette img { width: 100%; height: auto; }
   .photo-atelier { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 

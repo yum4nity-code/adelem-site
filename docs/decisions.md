@@ -123,3 +123,12 @@
 - Constat de Gwen : tout tournait autour du cadre ancien, ce qui laissait les sculptures sans place. Le cadre reste la signature des tableaux, pas la définition d'Adelem ; le fil commun devient la main et la matière.
 - Réécrits : titre de l'accueil (« Tableaux de mousses et de lichens, sculptures, faits à la main »), description du site pour Google, ouverture de l'Atelier (matière d'abord, cadre ensuite pour les tableaux, « Les sculptures naissent du même regard »), étapes Chercher et Préparer (ex-Restaurer), introduction de la page Sculptures (la rareté dite comme une rareté, plus comme une excuse).
 - Gwen : ne pas préciser la matière des sculptures (« pas en grès, juste sculptures »). Toute mention du grès retirée du site, y compris sur la sculpture d'exemple.
+
+## 2026-09-29 — Chapitre Sculptures, cartels, témoignages, lieux
+
+- Inspiré du site d'Anne-Laure Pérès (sculptrice), validé par Gwen :
+  - **Accueil en chapitres** : après le mur des tableaux, un chapitre « Sculptures » (jusqu'à 3 sculptures disponibles, lien vers la page). Apparaît seulement s'il y a des sculptures disponibles.
+  - **Cartels** des murs : le statut passe sur sa propre ligne, en petites capitales (Disponible en doré, Réservée, Collection privée) ; le prix reste à côté des dimensions pour les pièces disponibles.
+  - **« Où voir les pièces »** : liste de galeries, dépôts ou expositions, alimentée dans `site.ts` (`lieux`). Invisible tant qu'elle est vide ; n'y mettre que des lieux réels.
+  - **Témoignages** : sélection éditoriale sans étoiles ni widget tiers (les widgets reconnus, Trustpilot et autres, imposent badges et étoiles peu compatibles avec le positionnement ; les galeries et artisans haut de gamme n'en affichent pas). Alimentée dans `site.ts` (`temoignages`), invisible tant qu'elle est vide. Mentions exigées par les art. L111-7-2 et D111-17 du Code de la consommation affichées sous la sélection (accord, absence de contrepartie, absence de contrôle, classement chronologique, dates) et dans les mentions légales. Fiche Google Business Profile recommandée comme source complète des avis (`contact.google`), liée sous la sélection. À préciser : délai de publication et durée de conservation.
+- Défiscalisation (art. 238 bis AB CGI, prolongé jusqu'au 31/12/2028 par la loi n° 2026-103) : recherche faite, rien publié. L'éligibilité des tableaux végétaux comme « œuvres originales » n'est pas établie ; à présenter seulement avec réserve, si Gwen le décide.

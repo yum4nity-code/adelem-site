@@ -1,0 +1,45 @@
+---
+import { site } from '../data/site';
+
+// Sélection éditoriale de témoignages, sans étoiles ni widget, avec les mentions exigées
+// à proximité des avis (art. L111-7-2 et D111-17 du Code de la consommation).
+const liste = [...site.temoignages].sort((a, b) => b.datePublication.localeCompare(a.datePublication));
+const date = (iso: string) =>
+  new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+{liste.length > 0 && (
+  <section class="wrap bloc temoignages" aria-labelledby="titre-temoignages">
+    <h2 id="titre-temoignages" class="titre-section">Témoignages</h2>
+    <ul class="liste">
+      {liste.map((t) => (
+        <li>
+          <blockquote>
+            <p class="texte-t">« {t.texte} »</p>
+          </blockquote>
+          <p class="auteur">
+            {t.auteur}{t.ville && <>, {t.ville}</>}
+            {t.oeuvre && <span class="oeuvre"> · {t.oeuvre}</span>}
+          </p>
+          <p class="dates">Achat en {new Date(t.dateAchat + 'T12:00:00').toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })} · publié le {date(t.datePublication)}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="mention">
+      Sélection de témoignages transmis par des clients et publiés avec leur accord, sans contrepartie. Ils ne font pas l’objet d’une procédure de contrôle. Classés du plus récent au plus ancien.
+      {site.contact.google && <> <a href={site.contact.google}>Tous les avis sur Google</a>.</>}
+    </p>
+  </section>
+)}
+
+<style>
+  .temoignages { display: flex; flex-direction: column; gap: clamp(32px, 5vw, 56px); }
+  .liste { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(40px, 6vw, 72px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  blockquote { margin: 0; }
+  .texte-t { font: italic 300 1.35rem/1.55 var(--serif); color: var(--encre); }
+  .auteur { margin-top: 18px; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--texte); }
+  .oeuvre { color: var(--or); }
+  .dates { margin-top: 4px; font-size: .75rem; color: var(--discret); }
+  .mention { font-size: .75rem; line-height: 1.6; color: var(--discret); max-width: 52em; border-top: 1px solid var(--trait); padding-top: 18px; }
+  .mention a { color: var(--texte); text-decoration: underline; text-underline-offset: 3px; }
+  .mention a:hover { color: var(--encre); }
+</style>

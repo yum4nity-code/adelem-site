@@ -5,7 +5,7 @@ import { prix, dims } from '../data/site';
 interface Props { oeuvre: CollectionEntry<'oeuvres'>; long?: boolean }
 const { oeuvre, long = false } = Astro.props;
 const d = oeuvre.data;
-const statut = d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix);
+const statut = d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : 'Disponible';
 ---
 <div class:list={['cartel', { long }]}>
   <p class="titre">{d.titre}{d.annee && <span>, {d.annee}</span>}</p>
@@ -15,7 +15,8 @@ const statut = d.statut === 'vendue' ? 'Collection privée' : d.statut === 'rese
   )}
   {d.cadre && <p>{d.cadre}</p>}
   {long && d.provenance && <p>{d.provenance}</p>}
-  <p>{dims(d.largeur_cm, d.hauteur_cm, long ? d.profondeur_cm : null)}{!long && <> · {statut}</>}</p>
+  <p>{dims(d.largeur_cm, d.hauteur_cm, long ? d.profondeur_cm : null)}{!long && d.statut === 'disponible' && <> · {prix(d.prix)}</>}</p>
+  {!long && <p class:list={['statut', { dispo: d.statut === 'disponible' }]}>{statut}</p>}
 </div>
 
 <style>
@@ -24,4 +25,6 @@ const statut = d.statut === 'vendue' ? 'Collection privée' : d.statut === 'rese
   .long { font-size: .92rem; gap: 3px; }
   .long .titre { display: none; }
   .stabilise { font-style: italic; color: var(--discret); margin: 2px 0; }
+  .statut { margin-top: 5px; font-size: .64rem; letter-spacing: .16em; text-transform: uppercase; color: var(--discret); }
+  .statut.dispo { color: var(--or); }
 </style>

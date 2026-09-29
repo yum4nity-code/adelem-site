@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+---
+{site.lieux.length > 0 && (
+  <section class="wrap bloc lieux" aria-labelledby="titre-lieux">
+    <h2 id="titre-lieux" class="titre-section">Où voir les pièces</h2>
+    <ul class="liste">
+      {site.lieux.map((l) => (
+        <li>
+          <p class="nom">{l.url ? <a href={l.url}>{l.nom}</a> : l.nom}</p>
+          <p class="detail">{l.ville}{l.quand && <> · {l.quand}</>}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+<style>
+  .lieux { display: flex; flex-direction: column; gap: 32px; }
+  .liste { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--trait); }
+  li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; padding: 20px 0; border-bottom: 1px solid var(--trait); }
+  .nom { font: 300 1.4rem/1.3 var(--serif); color: var(--encre); }
+  .nom a:hover { color: var(--or); }
+  .detail { font-size: .8rem; letter-spacing: .06em; color: var(--discret); }
+</style>
