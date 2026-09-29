@@ -110,3 +110,10 @@
 - Retiré : page `/sur-mesure` (redirigée temporairement vers `/galerie`), entrée du menu, bloc de l'accueil, renvoi en bas de la galerie, lien « Imaginer une œuvre dans cet esprit » des œuvres vendues (remplacé par « Voir les œuvres disponibles »), clauses sur-mesure des CGV (acompte, confirmation écrite, exclusion du droit de rétractation art. L221-28).
 - Le point « pourcentage d'acompte sur-mesure » des CGV disparaît avec. Reste en `.todo` : le médiateur de la consommation.
 - La doctrine garde sa section « Sur mesure » comme cible, non active.
+
+## 2026-09-29 — Première sculpture d'exemple, correctif de débordement
+
+- Sculpture d'exemple « Au vent » ajoutée à la demande de Gwen (`"demo": true`) : photo fournie par Gwen, titre, prix (520 €), dimensions, matières et textes **inventés** pour la démonstration. La photo n'est pas une pièce d'Adèle et a l'aspect d'une image générée : elle contrevient à la règle « vraies photos uniquement » et doit être remplacée avant la mise en ligne définitive.
+- Fil d'Ariane des fiches : une sculpture renvoie désormais vers « Sculptures », plus vers « Œuvres ».
+- Correctif : le champ caché anti-robots des formulaires débordait et créait un défilement horizontal sur toutes les pages avec formulaire (fiches, contact). Classe `.visually-hidden` renforcée.
+- Constat de Gwen, à traiter : le discours du site tourne presque entièrement autour du cadre ancien, ce qui laisse les sculptures sans place dans le récit. Le ton est à revoir avant de développer la partie sculpture.

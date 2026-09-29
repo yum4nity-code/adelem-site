@@ -34,7 +34,7 @@ const jsonld = {
       <img src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
     </div>
     <div class="infos">
-      <p class="discret"><a href="/galerie">Œuvres</a> / {d.titre}</p>
+      <p class="discret">{d.type === 'sculpture' ? <a href="/sculptures">Sculptures</a> : <a href="/galerie">Œuvres</a>} / {d.titre}</p>
       <h1>{d.titre}</h1>
       {d.annee && <p class="annee">{d.annee}</p>}
       <Cartel oeuvre={oeuvre} long />
