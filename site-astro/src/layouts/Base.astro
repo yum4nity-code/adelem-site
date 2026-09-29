@@ -60,7 +60,7 @@ const orgLd = {
   </head>
   <body>
     <a class="lien-evitement" href="#contenu">Aller au contenu</a>
-    {demo && <p class="bandeau-demo">Version de travail : œuvres, photos et prix d’exemple.</p>}
+    {demo && <p class="bandeau-demo">Version test</p>}
     <header class:list={['entete', { 'sur-ouverture': accueil }]}>
       <div class="wrap barre">
         <a href="/" class="marque" aria-label="Adelem, accueil">
@@ -109,7 +109,8 @@ const orgLd = {
 </html>
 
 <style>
-  .bandeau-demo { background: #efe3b8; color: #1F221E; text-align: center; font-size: .78rem; padding: 6px 12px; letter-spacing: .02em; }
+  /* Mention discrète tant que le site montre des œuvres d'exemple : posée en haut au centre, hors du flux. */
+  .bandeau-demo { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); z-index: 11; margin: 0; font: 500 .58rem/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--discret); pointer-events: none; white-space: nowrap; }
   .entete { position: relative; z-index: 10; }
   .sur-ouverture { margin-bottom: -72px; }
   .sur-ouverture .marque { opacity: 0; transition: opacity .3s ease; }
