@@ -5,6 +5,7 @@ import Mur from '../components/Mur.astro';
 import Temoignages from '../components/Temoignages.astro';
 import Lieux from '../components/Lieux.astro';
 import { photoOuvertureSanity } from '../sanity/reglages';
+import { site } from '../data/site';
 
 // Accueil : un chapitre Tableaux puis un chapitre Sculptures ; la galerie « Œuvres » ne montre que les tableaux.
 const collection = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
@@ -19,8 +20,8 @@ const vedette =
 // sinon, en attendant, la pièce mise en avant ou la première disponible.
 const heroSource = vedette ?? disponibles[0];
 const choisie = await photoOuvertureSanity();
-const photoHero = choisie?.src ?? (heroSource ? (heroSource.data.photos[1] ?? heroSource.data.photos[0]).src : '/images/atelier.webp');
-const positionHero = choisie?.position ?? 'center';
+const photoHero = choisie?.src ?? site.photoOuverture?.src ?? (heroSource ? (heroSource.data.photos[1] ?? heroSource.data.photos[0]).src : '/images/atelier.webp');
+const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'center';
 ---
 <Base title="Adelem" accueil>
   <section class="hero-pin">

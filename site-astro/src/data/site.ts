@@ -16,6 +16,12 @@ export const site = {
   formEndpoint: 'https://formspree.io/f/mgavrzzp' as string | null,
   // Le plan gratuit de Formspree ne gère pas les pièces jointes : ne passer à true qu'après un plan payant (Personal ou plus).
   formFileUploads: false as boolean,
+  // Photo d'ouverture de l'accueil en attendant celle choisie dans l'administration (Accueil › Photo d'ouverture).
+  // Photo d'attente issue de la V2 (Unsplash, licence libre) : ce n'est pas une pièce d'Adelem, à remplacer.
+  photoOuverture: {
+    src: 'https://images.unsplash.com/photo-1762463464555-baf824f1e601?auto=format&fit=crop&w=1600&q=82',
+    position: '65% 30%',
+  } as { src: string; position: string } | null,
   // Témoignages de clients, publiés avec leur accord. Liste vide = la section n'apparaît pas.
   // Dates au format AAAA-MM-JJ. Ne jamais inventer ni retoucher un témoignage (art. L121-4 du Code de la consommation).
   temoignages: [] as { texte: string; auteur: string; ville?: string; oeuvre?: string; dateAchat: string; datePublication: string }[],
