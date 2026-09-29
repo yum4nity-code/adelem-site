@@ -15,6 +15,7 @@ const { oeuvre } = Astro.props;
 const d = oeuvre.data;
 const [face, ...autres] = d.photos;
 const disponible = d.statut === 'disponible';
+const annee = d.statut === 'vendue' ? d.annee : null; // année affichée seulement pour les pièces vendues
 const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
 const jsonld = {
   '@context': 'https://schema.org',
@@ -22,7 +23,7 @@ const jsonld = {
   name: d.titre,
   creator: { '@type': 'Organization', name: site.nom },
   image: d.photos.map((p) => new URL(p.src, site.url).href),
-  ...(d.annee ? { dateCreated: String(d.annee) } : {}),
+  ...(annee ? { dateCreated: String(annee) } : {}),
   width: `${d.largeur_cm} cm`,
   height: `${d.hauteur_cm} cm`,
   artMedium: d.matieres.join(', '),
@@ -39,7 +40,7 @@ const jsonld = {
     <div class="infos">
       <p class="discret">{d.type === 'sculpture' ? <a href="/sculptures">Sculptures</a> : <a href="/galerie">Œuvres</a>} / {d.titre}</p>
       <h1>{d.titre}</h1>
-      {d.annee && <p class="annee">{d.annee}</p>}
+      {annee && <p class="annee">{annee}</p>}
       <Cartel oeuvre={oeuvre} long />
       <p class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</p>
       {d.statut === 'vendue' ? (

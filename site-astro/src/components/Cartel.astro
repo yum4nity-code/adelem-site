@@ -5,10 +5,13 @@ import { prix, dims } from '../data/site';
 interface Props { oeuvre: CollectionEntry<'oeuvres'>; long?: boolean }
 const { oeuvre, long = false } = Astro.props;
 const d = oeuvre.data;
+// L'année n'est montrée que pour les pièces vendues (archives) : sur une pièce à vendre, elle fait « invendu » et,
+// pour du végétal, fait naître la question de l'âge de la matière. Elle reste sur le certificat et la facture.
+const annee = d.statut === 'vendue' ? d.annee : null;
 const statut = d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : 'Disponible';
 ---
 <div class:list={['cartel', { long }]}>
-  <p class="titre">{d.titre}{d.annee && <span>, {d.annee}</span>}</p>
+  <p class="titre">{d.titre}{annee && <span>, {annee}</span>}</p>
   {d.matieres.length > 0 && <p>{d.matieres.join(', ')}</p>}
   {long && d.type !== 'sculpture' && (
     <p class="stabilise">Matières naturelles stabilisées : elles gardent forme et couleur sans arrosage ni entretien courant, à l’abri de la lumière directe.</p>

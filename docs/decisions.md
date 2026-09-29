@@ -159,3 +159,7 @@
 ## 2026-09-29 — Échelle des sculptures
 
 - Constat de Gwen : sur mobile, une sculpture seule paraissait minuscule (échelle réelle calée pour qu'un tableau de 90 cm tienne à l'écran). Les murs de sculptures (page Sculptures, chapitre de l'accueil) ont désormais leur propre échelle : la pièce la plus haute atteint au moins 330 px, la hauteur d'un grand tableau. Les murs de tableaux gardent l'échelle commune, pour que les formats restent comparables entre eux.
+
+## 2026-09-29 — Année des œuvres
+
+- Demande d'Adèle, validée par Gwen : l'année de création n'est plus affichée pour les pièces disponibles ou réservées (effet « invendu » et, pour du végétal stabilisé, question de l'âge de la matière). Elle reste affichée pour les pièces vendues (archives, continuité du travail), figure sur le certificat et la facture, et reste saisie dans l'administration.
