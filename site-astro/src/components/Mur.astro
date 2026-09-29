@@ -34,7 +34,9 @@ const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteu
 <style>
   .mur {
     display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-    column-gap: calc(var(--cm) * 26); row-gap: 150px; padding-bottom: 120px;
+    /* Les cartels sont posés sous chaque pièce, hors du flux : ces marges leur réservent la place
+       (titre, matière, cadre, dimensions et prix, statut), y compris sur deux lignes. */
+    column-gap: calc(var(--cm) * 26); row-gap: 200px; padding-bottom: 190px;
   }
   .piece { position: relative; display: block; width: calc(var(--cm) * var(--l)); }
   .piece img {
