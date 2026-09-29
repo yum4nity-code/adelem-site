@@ -19,9 +19,11 @@ export const site = {
   // Photo d'ouverture de l'accueil en attendant celle choisie dans l'administration (Accueil › Photo d'ouverture).
   // Photo d'attente issue de la V2 (Unsplash, licence libre) : ce n'est pas une pièce d'Adelem, à remplacer.
   photoOuverture: {
-    src: 'https://images.unsplash.com/photo-1762463464555-baf824f1e601?auto=format&fit=crop&w=1600&q=82',
+    src: 'https://images.unsplash.com/photo-1762463464555-baf824f1e601?auto=format&fit=crop&w=2200&q=80',
     position: '65% 30%',
-  } as { src: string; position: string } | null,
+    // Grand écran : cadrage resserré sur la pièce végétale (les deux tirages voisins sortent du champ).
+    bureau: { taille: '170% auto', position: '80% 19%' },
+  } as { src: string; position: string; bureau?: { taille: string; position: string } } | null,
   // Témoignages de clients, publiés avec leur accord. Liste vide = la section n'apparaît pas.
   // Dates au format AAAA-MM-JJ. Ne jamais inventer ni retoucher un témoignage (art. L121-4 du Code de la consommation).
   temoignages: [] as { texte: string; auteur: string; ville?: string; oeuvre?: string; dateAchat: string; datePublication: string }[],

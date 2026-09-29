@@ -22,11 +22,13 @@ const heroSource = vedette ?? disponibles[0];
 const choisie = await photoOuvertureSanity();
 const photoHero = choisie?.src ?? site.photoOuverture?.src ?? (heroSource ? (heroSource.data.photos[1] ?? heroSource.data.photos[0]).src : '/images/atelier.webp');
 const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'center';
+// Cadrage propre au grand écran, seulement pour la photo d'attente (une photo choisie dans l'administration garde son point d'intérêt).
+const bureau = !choisie ? site.photoOuverture?.bureau : undefined;
 ---
 <Base title="Adelem" accueil>
   <section class="hero-pin">
     <div class="hero-fixe">
-      <div class="hero-photo" style={`background-image: url(${photoHero}); background-position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
+      <div class="hero-photo" style={`background-image: url(${photoHero}); --position: ${positionHero};${bureau ? ` --taille-bureau: ${bureau.taille}; --position-bureau: ${bureau.position};` : ''}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-signature.svg" alt="Adelem" width="380" height="158" />
       </div>
@@ -104,7 +106,14 @@ const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'cent
      puis se libère lorsque l'accroche défile par-dessus — inspiré des ouvertures des maisons de luxe. */
   .hero-pin { position: relative; height: 140dvh; }
   .hero-fixe { position: sticky; top: 0; height: 100dvh; overflow: hidden; }
-  .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: var(--position, center); }
+  /* Grand écran : la signature se pose sur la partie calme de la photo, à gauche ; mobile : centrée,
+     avec un léger décalage optique (la grande boucle de gauche déporte le mot vers la droite). */
+  @media (min-width: 820px) {
+    .hero-photo { background-size: var(--taille-bureau, cover); background-position: var(--position-bureau, var(--position, center)); }
+    .marque-hero { align-items: flex-start; padding-left: 7vw; }
+  }
+  @media (max-width: 819px) { .signature { transform: translateX(-6%); } }
   /* Voile léger au centre pour garder les couleurs de la photo, plus sombre en haut (menu lisible)
      et en bas (fondu vers le mur). */
   .hero-photo::after {
