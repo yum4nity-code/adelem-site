@@ -152,11 +152,23 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
       linear-gradient(180deg, rgba(20, 24, 20, .55) 0, rgba(20, 24, 20, 0) 140px),
       linear-gradient(180deg, rgba(27, 33, 27, 0) 84%, var(--mur) 100%);
   }
-  .hero-mur .marque-hero { justify-content: flex-start; padding-top: max(104px, 15dvh); }
+  /* La signature est calée sur le haut réel du cadre, quel que soit le format d'écran.
+     --cadre-haut = position du haut du cadre une fois l'image recadrée en « cover » :
+     milieu de l'écran − (distance centre→haut du cadre dans l'image) × échelle de l'image.
+     Mobile (image 1080 × 2340, haut du cadre à 221 px au-dessus du centre) ;
+     ordinateur (image 2560 × 1440, haut du cadre à 288 px au-dessus du centre).
+     Si les images d'ouverture changent de cadrage, ces deux formules sont à recalculer. */
+  .hero-mur .hero-fixe { --cadre-haut: calc(50dvh - max(20.46vw, 9.44dvh)); }
+  .hero-mur .marque-hero {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: calc(var(--cadre-haut) - 22px);
+    justify-content: flex-end; padding-top: 0;
+  }
   .hero-mur .signature { width: min(300px, 70vw); }
   @media (min-width: 820px) {
-    .hero-mur .marque-hero { padding-top: max(96px, 9dvh); }
-    .hero-mur .signature { width: min(320px, 22vw); }
+    .hero-mur .hero-fixe { --cadre-haut: calc(50dvh - max(11.25vw, 20dvh)); }
+    /* Hauteur pilotée par la place disponible entre le menu et le cadre (largeur déduite). */
+    .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - 120px), 150px); }
   }
   .hero-mur .indice { bottom: 14px; }
 
