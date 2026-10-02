@@ -164,11 +164,15 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
     height: calc(var(--cadre-haut) - 22px);
     justify-content: flex-end; padding-top: 0;
   }
-  .hero-mur .signature { width: min(300px, 70vw); }
+  /* Centrage optique (règle de photocomposition) : l'axe vertical de l'écran passe par le pied du A,
+     milieu de ses deux jambes (x = 657 sur 1563 dans le SVG), et non par le centre de la boîte englobante
+     que la grande boucle de gauche décale (x = 781,5). Décalage = (781,5 − 657) / 1563 = 7,97 % de la largeur.
+     Verticalement, le bas de la boîte est déjà le pied gauche du A : c'est lui qui se pose à 22 px du cadre. */
+  .hero-mur .signature { width: min(300px, 70vw); transform: translateX(7.97%); }
   @media (min-width: 820px) {
     .hero-mur .hero-fixe { --cadre-haut: calc(50dvh - max(11.25vw, 20dvh)); }
     /* Hauteur pilotée par la place disponible entre le menu et le cadre (largeur déduite). */
-    .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - 120px), 150px); }
+    .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - 80px), 240px); }
   }
   .hero-mur .indice { bottom: 14px; }
 
