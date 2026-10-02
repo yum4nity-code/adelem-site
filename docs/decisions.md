@@ -188,3 +188,10 @@
 - Case « J'accepte les CGV » non activée : Stripe exige d'abord l'URL des CGV dans Paramètres › Informations publiques.
 - Pas de tarif de livraison dans les liens de test (montants à fixer).
 - Liens posés dans les JSON de démo (champ lien_paiement) : ils disparaissent avec les pièces d'exemple.
+
+## 2026-10-02 — Ouverture de l'accueil « mur de galerie »
+
+- Décision de Gwen : la photo d'ouverture par défaut devient le tableau sous-bois aux arbres rouges, redressé, détouré au ras du cadre et posé sur un mur vert sombre éclairé en galerie (variante « B3 » choisie parmi plâtre blanc, lin et vert sauge). C'est un **photomontage** : le tableau est réel, le mur, l'ombre et la lumière sont reconstitués.
+- Mise en page : la signature quitte le centre de la photo et se place au-dessus du tableau, comme le nom de l'artiste sur le mur d'une galerie. Une image portrait dédiée au mobile garde le tableau entier à l'écran.
+- Ce mode (`mode: 'mur'` dans `src/data/site.ts`) ne s'applique qu'à la photo par défaut du site. Une photo choisie dans l'administration (Accueil › Photo d'ouverture) garde l'ouverture plein cadre habituelle : la règle « photos rectangulaires ordinaires » pour le circuit d'Adèle reste inchangée.
+- Limite connue : photo source en basse définition (1269 × 952) ; à refaire depuis l'original du téléphone ou une nouvelle prise de vue pour la version définitive. En attente de validation d'Adèle, comme toute l'identité Nocturne.

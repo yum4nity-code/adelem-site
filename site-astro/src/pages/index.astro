@@ -22,11 +22,15 @@ const heroSource = vedette ?? disponibles[0];
 const choisie = await photoOuvertureSanity();
 const photoHero = choisie?.src ?? site.photoOuverture?.src ?? (heroSource ? (heroSource.data.photos[1] ?? heroSource.data.photos[0]).src : '/images/atelier.webp');
 const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'center';
+// Ouverture « mur de galerie » : seulement pour la photo par défaut du site, jamais pour une photo choisie
+// dans l'administration (celles-ci restent des photos rectangulaires ordinaires, plein cadre).
+const modeMur = !choisie && site.photoOuverture?.mode === 'mur';
+const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) : photoHero;
 ---
 <Base title="Adelem" accueil>
-  <section class="hero-pin">
+  <section class={modeMur ? 'hero-pin hero-mur' : 'hero-pin'}>
     <div class="hero-fixe">
-      <div class="hero-photo" style={`background-image: url(${photoHero}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
+      <div class="hero-photo" style={`--photo: url(${photoHero}); --photo-mobile: url(${photoHeroMobile}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-signature.svg" alt="Adelem" width="380" height="158" />
       </div>
@@ -104,7 +108,7 @@ const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'cent
      puis se libère lorsque l'accroche défile par-dessus — inspiré des ouvertures des maisons de luxe. */
   .hero-pin { position: relative; height: 140dvh; }
   .hero-fixe { position: sticky; top: 0; height: 100dvh; overflow: hidden; }
-  .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: var(--position, center); }
+  .hero-photo { position: absolute; inset: 0; background-image: var(--photo); background-size: cover; background-position: var(--position, center); }
   /* Halo sombre et doux derrière la signature : elle se détache de n'importe quelle photo, même chargée,
      sans assombrir toute l'image. Plus large sur grand écran, où la photo montre davantage de détails. */
   .hero-photo::before {
@@ -136,6 +140,25 @@ const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'cent
     text-align: center; padding: 0 24px;
   }
   .signature { width: min(380px, 80vw); height: auto; filter: invert(.92) drop-shadow(0 2px 14px rgba(0, 0, 0, .45)); opacity: .97; }
+
+  /* Ouverture « mur de galerie » : le tableau est posé sur un mur de la couleur du site ; la signature
+     se place au-dessus de lui, comme le nom de l'artiste peint sur le mur d'une galerie. Pas de halo
+     derrière la signature (le mur est déjà sombre) et un fondu bas plus tardif pour ne pas éteindre le cadre. */
+  .hero-mur .hero-photo { background-image: var(--photo-mobile); }
+  @media (min-width: 820px) { .hero-mur .hero-photo { background-image: var(--photo); } }
+  .hero-mur .hero-photo::before { display: none; }
+  .hero-mur .hero-photo::after {
+    background:
+      linear-gradient(180deg, rgba(20, 24, 20, .55) 0, rgba(20, 24, 20, 0) 140px),
+      linear-gradient(180deg, rgba(27, 33, 27, 0) 84%, var(--mur) 100%);
+  }
+  .hero-mur .marque-hero { justify-content: flex-start; padding-top: max(104px, 15dvh); }
+  .hero-mur .signature { width: min(300px, 70vw); }
+  @media (min-width: 820px) {
+    .hero-mur .marque-hero { padding-top: max(96px, 9dvh); }
+    .hero-mur .signature { width: min(320px, 22vw); }
+  }
+  .hero-mur .indice { bottom: 14px; }
 
   .ouverture { position: relative; z-index: 1; background: var(--mur); padding-top: clamp(56px, 8vw, 96px); }
   .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }

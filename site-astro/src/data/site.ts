@@ -17,11 +17,17 @@ export const site = {
   // Le plan gratuit de Formspree ne gère pas les pièces jointes : ne passer à true qu'après un plan payant (Personal ou plus).
   formFileUploads: false as boolean,
   // Photo d'ouverture de l'accueil en attendant celle choisie dans l'administration (Accueil › Photo d'ouverture).
-  // Vraie pièce d'Adelem (tableau sous-bois aux arbres rouges), photo redressée et retouchée en lumière seulement.
+  // Vraie pièce d'Adelem (tableau sous-bois aux arbres rouges), redressée, détourée au ras du cadre et posée
+  // sur un mur vert sombre éclairé en galerie (photomontage : le tableau est réel, le mur est reconstitué).
+  // mode 'mur' : la signature se place au-dessus du tableau, comme un nom d'artiste sur le mur d'une galerie ;
+  // une image propre au mobile (portrait) garde le tableau entier à l'écran.
+  // Pour revenir à l'ancienne ouverture : src '/images/ouverture-sous-bois.webp', position '30% 50%', sans mode.
   photoOuverture: {
-    src: '/images/ouverture-sous-bois.webp',
-    position: '30% 50%',
-  } as { src: string; position: string } | null,
+    src: '/images/ouverture-mur-desktop.webp',
+    srcMobile: '/images/ouverture-mur-mobile.webp',
+    position: 'center',
+    mode: 'mur',
+  } as { src: string; srcMobile?: string; position: string; mode?: 'mur' } | null,
   // Témoignages de clients, publiés avec leur accord. Liste vide = la section n'apparaît pas.
   // Dates au format AAAA-MM-JJ. Ne jamais inventer ni retoucher un témoignage (art. L121-4 du Code de la consommation).
   temoignages: [] as { texte: string; auteur: string; ville?: string; oeuvre?: string; dateAchat: string; datePublication: string }[],
