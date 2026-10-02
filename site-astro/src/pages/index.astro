@@ -32,7 +32,7 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
     <div class="hero-fixe">
       <div class="hero-photo" style={`--photo: url(${photoHero}); --photo-mobile: url(${photoHeroMobile}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
       <div class="marque-hero">
-        <img class="signature" src="/logo/adelem-signature.svg" alt="Adelem" width="380" height="158" />
+        <img class="signature" src="/logo/adelem-signature-droite.svg" alt="Adelem" width="380" height="172" />
       </div>
       <p class="indice" aria-hidden="true"><span>Découvrir</span></p>
     </div>
@@ -164,11 +164,11 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
     height: calc(var(--cadre-haut) - 22px);
     justify-content: flex-end; padding-top: 0;
   }
-  /* Centrage optique (règle de photocomposition) : l'axe vertical de l'écran passe par le pied du A,
-     milieu de ses deux jambes (x = 657 sur 1563 dans le SVG), et non par le centre de la boîte englobante
-     que la grande boucle de gauche décale (x = 781,5). Décalage = (781,5 − 657) / 1563 = 7,97 % de la largeur.
-     Verticalement, le bas de la boîte est déjà le pied gauche du A : c'est lui qui se pose à 22 px du cadre. */
-  .hero-mur .signature { width: min(300px, 70vw); transform: translateX(7.97%); }
+  /* Signature redressée (adelem-signature-droite.svg : rotation de 9,16° pour mettre à plat la ligne de base
+     de « delem »). Le mot est centré sans la grande boucle de gauche : son étendue va du pied gauche du A
+     (x = 450 sur 1533) à la fin du m (x = 1527), milieu à 988,5 au lieu du centre de la boîte (766,5).
+     Décalage = (766,5 − 988,5) / 1533 = −14,48 % de la largeur. */
+  .hero-mur .signature { width: min(300px, 70vw); transform: translateX(-14.48%); }
   @media (min-width: 820px) {
     .hero-mur .hero-fixe { --cadre-haut: calc(50dvh - max(11.25vw, 20dvh)); }
     /* Hauteur pilotée par la place disponible entre le menu et le cadre (largeur déduite). */
