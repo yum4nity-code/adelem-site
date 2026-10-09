@@ -34,6 +34,7 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-signature-droite.svg" alt="Adelem" width="380" height="172" />
       </div>
+      {modeMur && <p class="accroche">La nature entre chez vous</p>}
       <p class="indice" aria-hidden="true"><span>Découvrir</span></p>
     </div>
   </section>
@@ -158,7 +159,11 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
      Mobile (image 1080 × 2340, haut du cadre à 221 px au-dessus du centre) ;
      ordinateur (image 2560 × 1440, haut du cadre à 288 px au-dessus du centre).
      Si les images d'ouverture changent de cadrage, ces deux formules sont à recalculer. */
-  .hero-mur .hero-fixe { --cadre-haut: calc(50dvh - max(20.46vw, 9.44dvh)); }
+  .hero-mur .hero-fixe {
+    --cadre-haut: calc(50dvh - max(20.46vw, 9.44dvh));
+    /* Bas du cadre, même calcul : 426 px sous le centre de l'image mobile (1080 × 2340). */
+    --cadre-bas: calc(50dvh + max(39.44vw, 18.21dvh));
+  }
   .hero-mur .marque-hero {
     position: absolute; top: 0; left: 0; right: 0;
     height: calc(var(--cadre-haut) - 22px);
@@ -170,11 +175,22 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
      Décalage = (766,5 − 988,5) / 1533 = −14,48 % de la largeur. */
   .hero-mur .signature { width: min(300px, 70vw); transform: translateX(-14.48%); }
   @media (min-width: 820px) {
-    .hero-mur .hero-fixe { --cadre-haut: calc(50dvh - max(11.25vw, 20dvh)); }
+    .hero-mur .hero-fixe {
+      --cadre-haut: calc(50dvh - max(11.25vw, 20dvh));
+      /* Bas du cadre : 403 px sous le centre de l'image ordinateur (2560 × 1440). */
+      --cadre-bas: calc(50dvh + max(15.74vw, 27.99dvh));
+    }
     /* Hauteur pilotée par la place disponible entre le menu et le cadre (largeur déduite). */
     .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - 80px), 240px); }
   }
   .hero-mur .indice { bottom: 14px; }
+  /* Accroche posée sous le tableau, comme un cartel de galerie (recalculer --cadre-bas si l'image change). */
+  .accroche {
+    position: absolute; left: 0; right: 0; z-index: 1; margin: 0; padding: 0 24px;
+    top: calc(var(--cadre-bas) + clamp(18px, 3dvh, 30px));
+    text-align: center; color: var(--encre);
+    font: italic 300 clamp(1.2rem, 0.9rem + 1vw, 1.75rem)/1.3 var(--serif); letter-spacing: .02em;
+  }
 
   .ouverture { position: relative; z-index: 1; background: var(--mur); padding-top: clamp(56px, 8vw, 96px); }
   .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }
