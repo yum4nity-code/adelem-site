@@ -7,7 +7,7 @@ import Lieux from '../components/Lieux.astro';
 import { photoOuvertureSanity } from '../sanity/reglages';
 import { site } from '../data/site';
 
-// Accueil : un chapitre Tableaux puis un chapitre Sculptures ; la galerie « Œuvres » ne montre que les tableaux.
+// Accueil : un chapitre Tableaux puis un chapitre Sculptures ; la galerie ne montre que les tableaux.
 const collection = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
 const toutes = collection.filter((o) => o.data.type === 'tableau');
 // Deuxième chapitre de l'accueil : les sculptures disponibles, pour que le récit ne se limite pas aux tableaux.
@@ -46,7 +46,7 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
     <div class="wrap">
       {disponibles.length ? <Mur oeuvres={disponibles} eager /> : <p class="discret vide">Les premières œuvres arrivent.</p>}
       <p class="discret echelle">Les œuvres sont présentées à leur échelle réelle les unes par rapport aux autres.</p>
-      <p class="centre"><a class="lien" href="/galerie">Toutes les œuvres</a></p>
+      <p class="centre"><a class="lien" href="/galerie">Toute la galerie</a></p>
     </div>
   </section>
 
