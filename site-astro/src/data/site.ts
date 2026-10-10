@@ -59,5 +59,8 @@ export const nav = [
 export const prix = (p: number | null) =>
   p == null ? 'Prix sur demande' : `${p.toLocaleString('fr-FR').replace(/ | /g, ' ')} €`;
 
+/** Nombre à la française : 47,5 et non 47.5. */
+export const nombre = (n: number) => n.toLocaleString('fr-FR', { maximumFractionDigits: 1 });
+
 export const dims = (l: number, h: number, p?: number | null) =>
-  `${l} × ${h}${p ? ` × ${p}` : ''} cm`;
+  `${nombre(l)} × ${nombre(h)}${p ? ` × ${nombre(p)}` : ''} cm`;

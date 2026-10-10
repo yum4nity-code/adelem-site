@@ -94,23 +94,39 @@ const jsonld = {
 </Base>
 
 <script>
-  // Description : repliée à 5 lignes si elle est plus longue, avec « Lire la suite » / « Réduire ».
+  // Description : coupée à 5 lignes si elle est plus longue, avec « … » et « Lire la suite » / « Réduire ».
+  // Coupe faite en script, à un mot entier, ponctuation finale retirée : jamais de « textures.… ».
   const bloc = document.querySelector<HTMLElement>('[data-replie]');
   if (bloc) {
     const texte = bloc.querySelector('p')!;
     const bouton = bloc.querySelector<HTMLButtonElement>('.lire-suite')!;
-    bloc.classList.add('replie');
-    const verifier = () => {
-      if (!bloc.classList.contains('replie')) return;
-      bouton.hidden = texte.scrollHeight <= texte.clientHeight + 2;
+    const complet = texte.textContent ?? '';
+    const mots = complet.split(' ');
+    let ouvert = false;
+    const couper = () => {
+      texte.textContent = complet;
+      if (ouvert) return;
+      const max = parseFloat(getComputedStyle(texte).lineHeight) * 5 + 2;
+      if (texte.offsetHeight <= max) { bouton.hidden = true; return; }
+      bouton.hidden = false;
+      let bas = 1, haut = mots.length - 1;
+      const essai = (k: number) => mots.slice(0, k).join(' ').replace(/[\s.,;:!?…·—–-]+$/u, '') + '…';
+      while (bas < haut) {
+        const k = Math.ceil((bas + haut) / 2);
+        texte.textContent = essai(k);
+        if (texte.offsetHeight <= max) bas = k; else haut = k - 1;
+      }
+      texte.textContent = essai(bas);
     };
-    verifier();
-    addEventListener('resize', verifier);
-    document.fonts?.ready.then(verifier);
+    couper();
+    let attente: number;
+    addEventListener('resize', () => { clearTimeout(attente); attente = window.setTimeout(couper, 120); });
+    document.fonts?.ready.then(couper);
     bouton.addEventListener('click', () => {
-      const ouvert = !bloc.classList.toggle('replie');
+      ouvert = !ouvert;
       bouton.setAttribute('aria-expanded', String(ouvert));
       bouton.textContent = ouvert ? 'Réduire' : 'Lire la suite';
+      couper();
       if (!ouvert) bloc.scrollIntoView({ block: 'nearest' });
     });
   }
@@ -134,9 +150,7 @@ const jsonld = {
   .rassure { margin-top: -6px; }
   .histoire { max-width: 34em; }
   .histoire p { font-size: 1.02rem; line-height: 1.75; color: var(--texte); white-space: pre-line; }
-  /* Description longue : repliée à 5 lignes (points de suspension automatiques), dépliable comme sur les réseaux.
-     La classe n'est posée que par le script : sans JavaScript, le texte reste entier. */
-  .histoire.replie p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; line-clamp: 5; overflow: hidden; }
+  /* Description longue : coupée à 5 lignes par le script ; sans JavaScript, le texte reste entier. */
   .lire-suite { display: block; margin: 4px 0 0; min-height: 44px; padding: 0; background: none; border: 0; cursor: pointer; color: var(--or); font: 400 .78rem var(--sans); letter-spacing: .16em; text-transform: uppercase; }
   .lire-suite[hidden] { display: none; }
   .lire-suite:hover, .lire-suite:focus-visible { color: var(--encre); text-decoration: underline; text-underline-offset: 4px; }
