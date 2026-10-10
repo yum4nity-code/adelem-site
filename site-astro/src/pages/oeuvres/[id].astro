@@ -66,8 +66,9 @@ const jsonld = {
   </section>
 
   {d.histoire && (
-    <section class="wrap bloc histoire">
-      <p>{d.histoire}</p>
+    <section class="wrap bloc histoire" data-replie>
+      <p id="description-oeuvre">{d.histoire}</p>
+      <button type="button" class="lire-suite" aria-controls="description-oeuvre" aria-expanded="false" hidden>Lire la suite</button>
     </section>
   )}
 
@@ -101,6 +102,29 @@ const jsonld = {
   {achat && <BarreAchat titre={d.titre} prix={prix(d.prix)} lien={achat} />}
 </Base>
 
+<script>
+  // Description : repliée à 5 lignes si elle est plus longue, avec « Lire la suite » / « Réduire ».
+  const bloc = document.querySelector<HTMLElement>('[data-replie]');
+  if (bloc) {
+    const texte = bloc.querySelector('p')!;
+    const bouton = bloc.querySelector<HTMLButtonElement>('.lire-suite')!;
+    bloc.classList.add('replie');
+    const verifier = () => {
+      if (!bloc.classList.contains('replie')) return;
+      bouton.hidden = texte.scrollHeight <= texte.clientHeight + 2;
+    };
+    verifier();
+    addEventListener('resize', verifier);
+    document.fonts?.ready.then(verifier);
+    bouton.addEventListener('click', () => {
+      const ouvert = !bloc.classList.toggle('replie');
+      bouton.setAttribute('aria-expanded', String(ouvert));
+      bouton.textContent = ouvert ? 'Réduire' : 'Lire la suite';
+      if (!ouvert) bloc.scrollIntoView({ block: 'nearest' });
+    });
+  }
+</script>
+
 <style>
   .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
   .oeuvre { display: flex; justify-content: center; padding: 40px 0; }
@@ -117,7 +141,13 @@ const jsonld = {
   .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
   .rassure { margin-top: -6px; }
-  .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; }
+  .histoire p { font: italic 300 clamp(1.4rem, 2.4vw, 1.9rem)/1.5 var(--serif); color: var(--encre); max-width: 30em; margin-inline: auto; text-align: center; white-space: pre-line; }
+  /* Description longue : repliée à 5 lignes (points de suspension automatiques), dépliable comme sur les réseaux.
+     La classe n'est posée que par le script : sans JavaScript, le texte reste entier. */
+  .histoire.replie p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; line-clamp: 5; overflow: hidden; }
+  .lire-suite { display: block; margin: 10px auto 0; min-height: 44px; padding: 0 12px; background: none; border: 0; cursor: pointer; color: var(--or); font: 400 .78rem var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+  .lire-suite[hidden] { display: none; }
+  .lire-suite:hover, .lire-suite:focus-visible { color: var(--encre); text-decoration: underline; text-underline-offset: 4px; }
   .entretien h2 { margin-bottom: 16px; }
   .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
   .vues { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
