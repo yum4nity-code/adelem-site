@@ -43,6 +43,12 @@ export const oeuvre = defineType({
       validation: (r) => r.required().error('Le titre est obligatoire.'),
     }),
     defineField({
+      name: 'sous_titre',
+      title: 'Sous-titre',
+      description: 'Facultatif. Une courte phrase affichée sous le titre, ex. « Une pulsation rouge au cœur du végétal ».',
+      type: 'string',
+    }),
+    defineField({
       name: 'type',
       title: 'Type',
       description: 'Tableau par défaut : pour une sculpture, cochez Sculpture.',

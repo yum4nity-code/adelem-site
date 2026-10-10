@@ -36,6 +36,7 @@ const oeuvres = defineCollection({
   },
   schema: z.object({
     titre: z.string(),
+    sous_titre: z.string().nullable().optional(),
     annee: z.number().int().nullable().optional(),
     type: z.enum(['tableau', 'sculpture']),
     format: z.enum(['Petit format', 'Format signature', 'Grand format']),
