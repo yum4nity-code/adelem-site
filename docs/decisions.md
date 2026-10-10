@@ -203,3 +203,10 @@
 - Appliqué : plus d'onglets, une seule page dans l'ordre de saisie : Photos, Titre, Type, Description, Disponibilité, Prix, dimensions, Matières, Le cadre (précisions), Provenance du cadre, Année, Poids, Entretien, Certificat, Lien de paiement, Livraison en France, Mise en avant.
 - « Quelques mots sur l'œuvre » devient « Description ». « Le cadre » devient « Le cadre (précisions) », sur deux lignes (bois, style, époque, état, restauration).
 - Pour une sculpture, Matières, Le cadre et Provenance du cadre sont masqués (règle : la matière des sculptures n'est pas indiquée). Aucune donnée existante n'est modifiée : mêmes noms de champs.
+
+## 2026-10-10 — Fiches : photo principale + vignettes
+
+- Demande de Gwen : comme une fiche produit, les photos suivantes apparaissent en petit sous la photo principale ; un clic les affiche en grand à sa place. Pour tous les produits.
+- Œuvres et sculptures : la vue de face reste à l'échelle réelle ; une autre photo s'affiche entière dans le même cadre (la page ne saute pas). L'ancienne section des grandes photos plus bas est supprimée (doublon).
+- Herbier : nouveau champ facultatif « Autres photos » dans l'admin (avec légende). Une photo de détail y prend sa hauteur naturelle (70 % de l'écran au plus), le bandeau du trio étant trop bas.
+- Composant commun `src/components/Vignettes.astro`. Sans JavaScript, chaque vignette ouvre la photo. Vignettes Sanity carrées de 240 px (recadrage et point d'intérêt respectés).

@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import BarreAchat from '../../components/BarreAchat.astro';
 import Prevenir from '../../components/Prevenir.astro';
+import Vignettes from '../../components/Vignettes.astro';
 import { prix as prixTexte } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -14,6 +15,7 @@ const { trio } = Astro.props;
 const d = trio.data;
 const disponible = d.statut === 'disponible';
 const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
+const photos = [{ src: d.image, mini: d.mini, legende: 'Le trio', alt: `Triptyque ${d.titre}` }, ...d.vues];
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -31,7 +33,10 @@ const jsonld = {
 ---
 <Base title={`Herbier — ${d.titre}`} description={d.description ?? `Triptyque ${d.titre}, collection Herbier Adelem.`} image={d.image} jsonld={jsonld}>
   <section class="wrap duo haut-page">
-    <img src={d.image} alt={`Triptyque ${d.titre}`} width="1348" height="460" class="photo" />
+    <div class="galerie">
+      <img id="vue-principale" src={d.image} alt={`Triptyque ${d.titre}`} width="1348" height="460" class="photo" />
+      <Vignettes photos={photos} cible="vue-principale" />
+    </div>
     <div class="pile">
       <p class="eyebrow">Herbier</p>
       <h1 class="titre-section">{d.titre}</h1>
@@ -62,6 +67,9 @@ const jsonld = {
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); align-items: start; }
+  .galerie { display: flex; flex-direction: column; gap: 18px; }
+  /* Photo de détail : hauteur naturelle (le bandeau du trio est trop bas pour une photo carrée ou verticale). */
+  .photo.detail { aspect-ratio: auto; height: auto; max-height: 70vh; }
   .photo { width: 100%; aspect-ratio: 1348 / 460; object-fit: cover; border-radius: 3px; }
   .eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
   .matieres { font-size: .85rem; color: var(--discret); }

@@ -1,0 +1,48 @@
+---
+// Rangée de vignettes sous la photo principale d'une fiche (œuvre, sculpture, trio Herbier), comme une fiche produit.
+// Un clic affiche la photo en grand à la place de la principale ; sans JavaScript, le lien ouvre la photo.
+// La photo principale doit porter l'id `cible`. La 1re vignette est la photo principale d'origine.
+type Photo = { src: string; mini?: string; alt: string; legende: string };
+interface Props { photos: Photo[]; cible: string }
+const { photos, cible } = Astro.props;
+---
+{photos.length > 1 && (
+  <ul class="vignettes" data-cible={cible} aria-label="Photos">
+    {photos.map((p, i) => (
+      <li>
+        <a href={p.src} class="vignette" data-src={p.src} data-alt={p.alt} aria-current={i === 0 ? 'true' : undefined} aria-label={`Photo ${i + 1} sur ${photos.length} : ${p.legende}`}>
+          <img src={p.mini ?? p.src} alt="" loading="lazy" width="120" height="120" />
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+<script>
+  document.querySelectorAll<HTMLElement>('.vignettes[data-cible]').forEach((liste) => {
+    const grande = document.getElementById(liste.dataset.cible!) as HTMLImageElement | null;
+    if (!grande) return;
+    const vignettes = [...liste.querySelectorAll<HTMLAnchorElement>('.vignette')];
+    vignettes.forEach((v, i) => {
+      v.addEventListener('click', (e) => {
+        e.preventDefault();
+        grande.src = v.dataset.src!;
+        grande.alt = v.dataset.alt!;
+        // Autre photo que la principale : montrée entière dans le même cadre (pas de saut de page).
+        grande.classList.toggle('detail', i > 0);
+        vignettes.forEach((autre) => autre.removeAttribute('aria-current'));
+        v.setAttribute('aria-current', 'true');
+      });
+    });
+  });
+</script>
+
+<style>
+  .vignettes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .vignette { display: block; width: 64px; height: 64px; padding: 2px; border: 1px solid var(--trait); opacity: .7; transition: opacity .2s, border-color .2s; }
+  .vignette img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vignette:hover, .vignette:focus-visible { opacity: 1; }
+  .vignette[aria-current='true'] { opacity: 1; border-color: var(--or); }
+  @media (min-width: 820px) { .vignette { width: 76px; height: 76px; } }
+  :global(img.detail) { object-fit: contain !important; }
+</style>

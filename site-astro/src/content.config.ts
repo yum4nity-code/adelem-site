@@ -58,7 +58,7 @@ const oeuvres = defineCollection({
     livraison_france: z.number().nonnegative().nullable().optional(),
     // La première photo est la vue de face, aux proportions du cadre.
     photos: z
-      .array(z.object({ src: z.string(), legende: z.string(), alt: z.string(), w: z.number().optional(), h: z.number().optional() }))
+      .array(z.object({ src: z.string(), mini: z.string().optional(), legende: z.string(), alt: z.string(), w: z.number().optional(), h: z.number().optional() }))
       .min(1),
     ordre: z.number().default(100),
     accueil: z.boolean().default(false),
@@ -118,6 +118,8 @@ const herbier = defineCollection({
     matieres: z.array(z.string()).default([]),
     description: z.string().nullable().optional(),
     image: z.string(),
+    mini: z.string().optional(),
+    vues: z.array(z.object({ src: z.string(), mini: z.string().optional(), legende: z.string(), alt: z.string() })).default([]),
     // Lien de paiement (ex. Stripe). Tant qu'il est vide, seul le formulaire de demande s'affiche.
     lien_paiement: z.string().url().nullable().optional(),
     // Frais de livraison en France (€), affichés sur la fiche ; ailleurs, calculés au paiement.

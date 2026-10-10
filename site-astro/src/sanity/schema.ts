@@ -307,6 +307,20 @@ export const herbier = defineType({
       validation: (r) => r.required().error('Ajoutez une photo.'),
     }),
     defineField({
+      name: 'autres_photos',
+      title: 'Autres photos (facultatif)',
+      description: 'Un cadre de près, la matière, le trio au mur… Elles s’affichent en petites vignettes sous la photo principale. Faites-les glisser pour changer l’ordre.',
+      type: 'array',
+      options: { layout: 'grid' },
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: { hotspot: true },
+          fields: [defineField({ name: 'legende', title: 'Légende (facultatif)', description: 'Ex. « La matière », « Au mur ».', type: 'string' })],
+        }),
+      ],
+    }),
+    defineField({
       name: 'lien_paiement',
       title: 'Lien de paiement (facultatif)',
       description:

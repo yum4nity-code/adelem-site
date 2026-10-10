@@ -5,6 +5,7 @@ import Cartel from '../../components/Cartel.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import BarreAchat from '../../components/BarreAchat.astro';
 import Prevenir from '../../components/Prevenir.astro';
+import Vignettes from '../../components/Vignettes.astro';
 import { prix, site } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 }
 const { oeuvre } = Astro.props;
 const d = oeuvre.data;
-const [face, ...autres] = d.photos;
+const [face] = d.photos;
 const disponible = d.statut === 'disponible';
 const annee = d.statut === 'vendue' ? d.annee : null; // année affichée seulement pour les pièces vendues
 const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
@@ -34,8 +35,9 @@ const jsonld = {
 ---
 <Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d’Adelem.`} image={face.src} jsonld={jsonld}>
   <section class="wrap tete">
-    <div class="oeuvre">
-      <img src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+    <div class="oeuvre" data-galerie>
+      <img id="vue-principale" src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+      <Vignettes photos={d.photos} cible="vue-principale" />
     </div>
     <div class="infos">
       <p class="discret">{d.type === 'sculpture' ? <a href="/sculptures">Sculptures</a> : <a href="/galerie">Galerie</a>} / {d.titre}</p>
@@ -72,16 +74,6 @@ const jsonld = {
     </section>
   )}
 
-  {autres.length > 0 && (
-    <section class="wrap bloc vues">
-      {autres.map((p) => (
-        <figure>
-          <img src={p.src} alt={p.alt} loading="lazy" width={p.w ?? 1200} height={p.h ?? 900} />
-          <figcaption class="discret">{p.legende}</figcaption>
-        </figure>
-      ))}
-    </section>
-  )}
 
   {d.entretien && (
     <section class="wrap bloc entretien">
@@ -127,8 +119,8 @@ const jsonld = {
 
 <style>
   .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
-  .oeuvre { display: flex; justify-content: center; padding: 40px 0; }
-  .oeuvre img {
+  .oeuvre { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0; }
+  .oeuvre > img {
     width: min(100%, max(300px, calc(var(--l) * 7px))); height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
     filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
   }
@@ -150,10 +142,6 @@ const jsonld = {
   .lire-suite:hover, .lire-suite:focus-visible { color: var(--encre); text-decoration: underline; text-underline-offset: 4px; }
   .entretien h2 { margin-bottom: 16px; }
   .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
-  .vues { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: start; }
-  .vues figure { margin: 0; }
-  .vues img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; }
-  .vues figcaption { margin-top: 8px; }
   .haut { align-items: start; }
   #demande { scroll-margin-top: 24px; }
 </style>

@@ -64,11 +64,13 @@ function photo(p: SanityPhoto, i: number, o: SanityOeuvre) {
   const img = { asset: { _ref: p.asset!._id }, crop: p.crop ?? undefined, hotspot: p.hotspot ?? undefined };
   const alt = p.alt?.trim() || (i === 0 ? `${o.titre}, vue de face` : `${o.titre}, ${p.legende?.trim() || 'détail'}`);
   const legende = p.legende?.trim() || (i === 0 ? 'Face' : 'Détail');
+  // Vignette carrée pour la rangée de photos sous l'œuvre (respecte le recadrage et le point d'intérêt).
+  const mini = builder.image(img).width(240).height(240).fit('crop').auto('format').quality(70).url();
   if (i === 0) {
     // Vue de face : recadrée exactement aux proportions réelles du cadre, pour l'accrochage à l'échelle.
     const w = 1600;
     const h = Math.round((w * o.hauteur_cm!) / o.largeur_cm!);
-    return { src: builder.image(img).width(w).height(h).fit('crop').auto('format').quality(82).url(), legende, alt, w, h };
+    return { src: builder.image(img).width(w).height(h).fit('crop').auto('format').quality(82).url(), mini, legende, alt, w, h };
   }
   const d = p.asset!.metadata?.dimensions;
   const c = p.crop ?? { top: 0, bottom: 0, left: 0, right: 0 };
@@ -76,6 +78,7 @@ function photo(p: SanityPhoto, i: number, o: SanityOeuvre) {
   const w = 1800;
   return {
     src: builder.image(img).width(w).fit('max').auto('format').quality(80).url(),
+    mini,
     legende,
     alt,
     w,
