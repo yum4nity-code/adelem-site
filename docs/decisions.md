@@ -196,3 +196,10 @@
 - Ce mode (`mode: 'mur'` dans `src/data/site.ts`) ne s'applique qu'à la photo par défaut du site. Une photo choisie dans l'administration (Accueil › Photo d'ouverture) garde l'ouverture plein cadre habituelle : la règle « photos rectangulaires ordinaires » pour le circuit d'Adèle reste inchangée.
 - Limite connue : photo source en basse définition (1269 × 952) ; à refaire depuis l'original du téléphone ou une nouvelle prise de vue pour la version définitive.
 - 2026-10-03 : photo source remplacée par une nouvelle prise de vue de face envoyée par Adèle (2000 × 1500, redressée à 1791 × 1419). Même ratio de cadre (1,262), même emplacement dans les deux montages : la position de la signature est inchangée. Limite de basse définition levée. En attente de validation d'Adèle, comme toute l'identité Nocturne.
+
+## 2026-10-10 — Fiche Œuvre de l'admin sur une seule page
+
+- Constat de Gwen : impossible de trouver où saisir la description, le cadre et les matières. Les champs existaient, mais dans un second onglet « Détails » que l'admin n'ouvre pas par défaut.
+- Appliqué : plus d'onglets, une seule page dans l'ordre de saisie : Photos, Titre, Type, Description, Disponibilité, Prix, dimensions, Matières, Le cadre (précisions), Provenance du cadre, Année, Poids, Entretien, Certificat, Lien de paiement, Livraison en France, Mise en avant.
+- « Quelques mots sur l'œuvre » devient « Description ». « Le cadre » devient « Le cadre (précisions) », sur deux lignes (bois, style, époque, état, restauration).
+- Pour une sculpture, Matières, Le cadre et Provenance du cadre sont masqués (règle : la matière des sculptures n'est pas indiquée). Aucune donnée existante n'est modifiée : mêmes noms de champs.

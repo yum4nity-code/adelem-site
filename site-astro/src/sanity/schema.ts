@@ -6,10 +6,6 @@ export const oeuvre = defineType({
   name: 'oeuvre',
   title: 'Œuvre',
   type: 'document',
-  groups: [
-    { name: 'essentiel', title: 'Essentiel', default: true },
-    { name: 'details', title: 'Détails' },
-  ],
   fields: [
     defineField({
       name: 'photos',
@@ -17,7 +13,6 @@ export const oeuvre = defineType({
       description:
         "Glissez 3 photos ou plus. La 1re est l'œuvre bien de face : cliquez dessus puis sur l'icône de recadrage pour couper au ras du cadre. Les suivantes : la matière de près, le cadre, l'œuvre au mur. Faites-les glisser pour changer l'ordre.",
       type: 'array',
-      group: 'essentiel',
       options: { layout: 'grid' },
       of: [
         defineArrayMember({
@@ -45,14 +40,35 @@ export const oeuvre = defineType({
       name: 'titre',
       title: 'Titre',
       type: 'string',
-      group: 'essentiel',
       validation: (r) => r.required().error('Le titre est obligatoire.'),
+    }),
+    defineField({
+      name: 'type',
+      title: 'Type',
+      description: 'Tableau par défaut : pour une sculpture, cochez Sculpture.',
+      type: 'string',
+      initialValue: 'tableau',
+      options: {
+        layout: 'radio',
+        direction: 'horizontal',
+        list: [
+          { title: 'Tableau', value: 'tableau' },
+          { title: 'Sculpture', value: 'sculpture' },
+        ],
+      },
+      validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'histoire',
+      title: 'Description',
+      description: 'Deux ou trois phrases simples : ce qu’on y voit, ce qu’elle raconte, d’où viennent les matières. Affichée en grand sur la page de l’œuvre.',
+      type: 'text',
+      rows: 4,
     }),
     defineField({
       name: 'statut',
       title: 'Disponibilité',
       type: 'string',
-      group: 'essentiel',
       initialValue: 'disponible',
       options: {
         layout: 'radio',
@@ -70,14 +86,12 @@ export const oeuvre = defineType({
       title: 'Prix en euros',
       description: 'Laisser vide pour afficher « Prix sur demande ».',
       type: 'number',
-      group: 'essentiel',
       validation: (r) => r.integer().positive(),
     }),
     defineField({
       name: 'largeur_cm',
       title: 'Largeur (cm), cadre compris',
       type: 'number',
-      group: 'essentiel',
       validation: (r) => [
         r.required().positive().max(400).error('Indiquez la largeur en centimètres.'),
         r.max(150).warning('Plus de 150 cm : vérifiez que c’est bien en centimètres.'),
@@ -87,7 +101,6 @@ export const oeuvre = defineType({
       name: 'hauteur_cm',
       title: 'Hauteur (cm), cadre compris',
       type: 'number',
-      group: 'essentiel',
       validation: (r) => [
         r.required().positive().max(400).error('Indiquez la hauteur en centimètres.'),
         r.max(150).warning('Plus de 150 cm : vérifiez que c’est bien en centimètres.'),
@@ -97,63 +110,44 @@ export const oeuvre = defineType({
       name: 'profondeur_cm',
       title: 'Profondeur (cm)',
       type: 'number',
-      group: 'essentiel',
       validation: (r) => [r.positive().max(200), r.max(30).warning('Plus de 30 cm de profondeur : vérifiez la valeur.')],
-    }),
-    defineField({
-      name: 'type',
-      title: 'Type',
-      type: 'string',
-      group: 'details',
-      initialValue: 'tableau',
-      options: {
-        layout: 'radio',
-        direction: 'horizontal',
-        list: [
-          { title: 'Tableau', value: 'tableau' },
-          { title: 'Sculpture', value: 'sculpture' },
-        ],
-      },
-      validation: (r) => r.required(),
-    }),
-    defineField({
-      name: 'annee',
-      title: 'Année',
-      type: 'number',
-      group: 'details',
-      initialValue: () => new Date().getFullYear(),
-      validation: (r) => r.integer().min(1970).max(2100),
     }),
     defineField({
       name: 'matieres',
       title: 'Matières',
-      description: 'Tapez une matière puis Entrée. Ex. Mousse coussin, Lichens, Écorce de chêne.',
+      description: 'Tapez une matière puis Entrée. Ex. Mousse coussin, Lichen, Écorce de chêne, Galets. (Masqué pour les sculptures : leur matière n’est pas indiquée sur le site.)',
+      hidden: ({ document }) => document?.type === 'sculpture',
       type: 'array',
-      group: 'details',
       of: [defineArrayMember({ type: 'string' })],
       options: { layout: 'tags' },
     }),
     defineField({
       name: 'cadre',
-      title: 'Le cadre',
-      description: 'Ex. « Cadre en chêne sculpté, vers 1900 ».',
-      type: 'string',
-      group: 'details',
+      title: 'Le cadre (précisions)',
+      description: 'Bois, style, époque, état, restauration. Ex. « Chêne massif mouluré, vers 1930, patine d’origine conservée ».',
+      type: 'text',
+      rows: 2,
+      hidden: ({ document }) => document?.type === 'sculpture',
     }),
     defineField({
       name: 'provenance',
       title: 'Provenance du cadre',
       description: 'Ex. « Chiné près d’Uzès, restauré à l’atelier ».',
+      hidden: ({ document }) => document?.type === 'sculpture',
       type: 'string',
-      group: 'details',
     }),
     defineField({
-      name: 'histoire',
-      title: 'Quelques mots sur l’œuvre',
-      description: 'Deux ou trois phrases simples : ce qu’on y voit, d’où viennent les matières.',
-      type: 'text',
-      rows: 4,
-      group: 'details',
+      name: 'annee',
+      title: 'Année',
+      type: 'number',
+      initialValue: () => new Date().getFullYear(),
+      validation: (r) => r.integer().min(1970).max(2100),
+    }),
+    defineField({
+      name: 'poids_kg',
+      title: 'Poids (kg)',
+      type: 'number',
+      validation: (r) => r.positive().max(200),
     }),
     defineField({
       name: 'entretien',
@@ -162,7 +156,6 @@ export const oeuvre = defineType({
         'Vos conseils pour que l’œuvre dure bien : lumière, poussière, humidité… Avec vos mots. Laissez vide tant que vous ne savez pas quoi écrire, rien ne s’affiche dans ce cas.',
       type: 'text',
       rows: 3,
-      group: 'details',
     }),
     defineField({
       name: 'certificat',
@@ -170,14 +163,6 @@ export const oeuvre = defineType({
       description:
         'Le site indique déjà que chaque pièce est unique et signée au dos. Remplissez ce champ seulement si cette œuvre a quelque chose en plus : un numéro, un certificat, une dédicace… Sinon, laissez vide.',
       type: 'string',
-      group: 'details',
-    }),
-    defineField({
-      name: 'poids_kg',
-      title: 'Poids (kg)',
-      type: 'number',
-      group: 'details',
-      validation: (r) => r.positive().max(200),
     }),
     defineField({
       name: 'lien_paiement',
@@ -185,21 +170,18 @@ export const oeuvre = defineType({
       description:
         'Si vous avez un lien de paiement pour cette pièce (Stripe, par exemple), collez-le ici : un bouton « Acquérir » apparaît sur le site. Sans lien, seul le formulaire de demande s’affiche.',
       type: 'url',
-      group: 'details',
     }),
     defineField({
       name: 'livraison_france',
       title: 'Livraison en France (€, facultatif)',
       description: 'Frais de livraison en France pour cette pièce, affichés sur sa fiche. Ailleurs, le tarif est calculé au moment du paiement.',
       type: 'number',
-      group: 'details',
       validation: (r) => r.min(0),
     }),
     defineField({
       name: 'accueil',
       title: 'Mettre en avant sur la page d’accueil',
       type: 'boolean',
-      group: 'details',
       initialValue: false,
     }),
   ],
