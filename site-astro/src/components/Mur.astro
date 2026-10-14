@@ -31,7 +31,37 @@ const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteu
   ))}
 </div>
 
+<script>
+  // Les cartels sont hors du flux (pour que les centres des œuvres restent alignés) : la place sous chaque rangée
+  // est donc calculée ici, d'après le cartel le plus haut de la rangée. Sans JavaScript, les marges fixes du CSS servent.
+  const caler = () => {
+    document.querySelectorAll<HTMLElement>('.mur').forEach((mur) => {
+      const pieces = [...mur.querySelectorAll<HTMLElement>(':scope > .piece')];
+      pieces.forEach((p) => (p.style.marginBottom = '0px'));
+      mur.classList.add('cale');
+      // Rangées : une nouvelle commence quand une pièce revient à gauche de la précédente (retour à la ligne du flex).
+      const rangees: HTMLElement[][] = [];
+      let gauche = -Infinity;
+      for (const p of pieces) {
+        if (p.offsetLeft <= gauche || !rangees.length) rangees.push([]);
+        rangees[rangees.length - 1].push(p);
+        gauche = p.offsetLeft;
+      }
+      for (const r of rangees) {
+        const besoin = Math.max(...r.map((p) => p.querySelector<HTMLElement>('.sous')!.offsetHeight)) + 22 + 8;
+        r.forEach((p) => (p.style.marginBottom = besoin + 'px'));
+      }
+    });
+  };
+  caler();
+  let attente: number;
+  addEventListener('resize', () => { clearTimeout(attente); attente = window.setTimeout(caler, 120); });
+  addEventListener('load', caler);
+  document.fonts?.ready.then(caler);
+</script>
+
 <style>
+  .mur.cale { row-gap: 64px; padding-bottom: 0; }
   .mur {
     display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
     /* Les cartels sont posés sous chaque pièce, hors du flux : ces marges leur réservent la place
