@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import Cartel from './Cartel.astro';
 
-// Accrochage à l'échelle : chaque œuvre a la largeur réelle de son cadre (var(--cm) px par cm),
+// Accrochage : chaque œuvre a une largeur liée à celle de son cadre (var(--cm) px par cm, échelle adoucie, voir plus bas),
 // et tous les centres sont alignés sur une même ligne, comme dans un musée.
 // echelleLocale : pour les murs de sculptures uniquement. Les murs de tableaux gardent l'échelle commune (--cm global),
 // pour que les tailles restent comparables d'un format à l'autre.
@@ -13,10 +13,15 @@ const { oeuvres, eager = false, echelleLocale = false } = Astro.props;
 // 330 px (la hauteur d'un grand tableau à 5,5 px/cm) sur grand écran. Les proportions entre pièces d'un même mur restent justes.
 const reference = Math.max(30, ...oeuvres.map((o) => Math.max(o.data.largeur_cm * 1.05, o.data.hauteur_cm * 0.75)));
 const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteur_cm))).toFixed(2);
+// Murs de tableaux : échelle « adoucie » (décision du 2026-10-25, demande d'Adèle). Les petits formats (21 × 29 cm)
+// étaient presque invisibles à l'échelle réelle. La largeur affichée suit largeur^0,55 : l'ordre des tailles est gardé
+// (un grand tableau reste plus grand qu'un petit), mais l'écart est resserré. 95 cm, la référence de --cm, reste inchangé.
+const REF = 95;
+const largeurAffichee = (l: number) => (echelleLocale ? l : REF * Math.pow(Math.min(l, REF) / REF, 0.55) * (l > REF ? l / REF : 1));
 ---
 <div class="mur" role="list" style={echelleLocale ? `--cm: min(${plafond}px, calc((100vw - 48px) / ${Math.round(reference)}))` : undefined}>
   {oeuvres.map((o, i) => (
-    <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${o.data.largeur_cm};--h:${o.data.hauteur_cm}`}>
+    <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${largeurAffichee(o.data.largeur_cm).toFixed(2)};--r:${o.data.largeur_cm} / ${o.data.hauteur_cm}`}>
       <img
         src={o.data.photos[0].src}
         alt={o.data.photos[0].alt}
@@ -70,7 +75,7 @@ const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteu
   }
   .piece { position: relative; display: block; width: calc(var(--cm) * var(--l)); }
   .piece img {
-    width: 100%; height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
+    width: 100%; height: auto; aspect-ratio: var(--r); object-fit: cover;
     filter: drop-shadow(0 calc(var(--cm) * 3) calc(var(--cm) * 5) rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
     transition: transform .6s cubic-bezier(.16, 1, .3, 1), filter .6s cubic-bezier(.16, 1, .3, 1);
   }

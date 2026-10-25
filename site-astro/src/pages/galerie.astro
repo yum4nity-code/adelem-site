@@ -13,11 +13,11 @@ const formats = [
 ] as const;
 const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 ---
-<Base title="Galerie" description="Tableaux végétaux disponibles, présentés à leur échelle réelle, et œuvres entrées en collection privée.">
+<Base title="Galerie" description="Tableaux végétaux disponibles et œuvres entrées en collection privée.">
   <div class="salle-page">
     <div class="wrap entete-page">
       <h1>Galerie</h1>
-      <p class="discret">Présentées à leur échelle réelle les unes par rapport aux autres.</p>
+      <p class="discret">Dimensions exactes indiquées sous chaque œuvre.</p>
     </div>
     {formats.map(({ nom, ligne }, i) => {
       const items = toutes.filter((o) => o.data.format === nom && o.data.statut !== 'vendue');

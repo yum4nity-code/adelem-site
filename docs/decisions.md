@@ -210,3 +210,8 @@
 - Œuvres et sculptures : la vue de face reste à l'échelle réelle ; une autre photo s'affiche entière dans le même cadre (la page ne saute pas). L'ancienne section des grandes photos plus bas est supprimée (doublon).
 - Herbier : nouveau champ facultatif « Autres photos » dans l'admin (avec légende). Une photo de détail y prend sa hauteur naturelle (70 % de l'écran au plus), le bandeau du trio étant trop bas.
 - Composant commun `src/components/Vignettes.astro`. Sans JavaScript, chaque vignette ouvre la photo. Vignettes Sanity carrées de 240 px (recadrage et point d'intérêt respectés).
+
+## 2026-10-25 — Murs de tableaux : échelle adoucie
+- Demande d'Adèle, validée par Gwen : les petits formats (21 × 29 cm) étaient à peine visibles avec l'accrochage à l'échelle réelle.
+- Les murs de tableaux (accueil, galerie) n'affichent plus la largeur réelle mais une largeur « adoucie » : 95 × (largeur / 95)^0,55 en cm d'affichage. L'ordre des tailles est conservé, l'écart est resserré (un 21 cm passe d'environ 1/3 à plus de la moitié d'un 62 cm). Les proportions de chaque tableau ne changent pas.
+- La mention « présentées à leur échelle réelle » est remplacée par « Dimensions exactes indiquées sous chaque œuvre ». Les murs de sculptures gardent leur échelle locale.
