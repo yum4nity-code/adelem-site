@@ -14,10 +14,10 @@ const { oeuvres, eager = false, echelleLocale = false } = Astro.props;
 const reference = Math.max(30, ...oeuvres.map((o) => Math.max(o.data.largeur_cm * 1.05, o.data.hauteur_cm * 0.75)));
 const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteur_cm))).toFixed(2);
 // Murs de tableaux : échelle « adoucie » (décision du 2026-10-25, demande d'Adèle). Les petits formats (21 × 29 cm)
-// étaient presque invisibles à l'échelle réelle. La largeur affichée suit largeur^0,55 : l'ordre des tailles est gardé
+// étaient presque invisibles à l'échelle réelle. La largeur affichée suit largeur^0,3 : l'ordre des tailles est gardé
 // (un grand tableau reste plus grand qu'un petit), mais l'écart est resserré. 95 cm, la référence de --cm, reste inchangé.
 const REF = 95;
-const largeurAffichee = (l: number) => (echelleLocale ? l : REF * Math.pow(Math.min(l, REF) / REF, 0.55) * (l > REF ? l / REF : 1));
+const largeurAffichee = (l: number) => (echelleLocale ? l : REF * Math.pow(Math.min(l, REF) / REF, 0.3) * (l > REF ? l / REF : 1));
 ---
 <div class="mur" role="list" style={echelleLocale ? `--cm: min(${plafond}px, calc((100vw - 48px) / ${Math.round(reference)}))` : undefined}>
   {oeuvres.map((o, i) => (
@@ -93,6 +93,12 @@ const largeurAffichee = (l: number) => (echelleLocale ? l : REF * Math.pow(Math.
   }
   .piece:focus-visible .voir { opacity: 1; transform: none; }
   .sous { position: absolute; top: calc(100% + 22px); left: 0; width: max(100%, 190px); }
+  /* Téléphone : une œuvre par rangée. Chaque tableau occupe au moins 72 % de la largeur, et son cartel est centré dessous. */
+  @media (max-width: 600px) {
+    .piece { width: max(calc(var(--cm) * var(--l)), 72vw); max-width: calc(100vw - 48px); }
+    .sous { left: 50%; transform: translateX(-50%); width: max(100%, 260px); }
+    .sous :global(.cartel) { align-items: center; text-align: center; }
+  }
   .piece:focus-visible :global(.titre) { color: var(--or); }
   :global(.titre) { transition: color .4s ease; }
 
