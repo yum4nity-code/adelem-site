@@ -8,7 +8,7 @@ export const site = {
   contact: {
     email: 'contact@adelem.fr' as string | null,
     telephone: null as string | null,
-    instagram: null as string | null,
+    instagram: 'https://www.instagram.com/adelem_nature/' as string | null,
     // Lien vers la fiche Google Business Profile (où tous les avis restent visibles). Affiché sous les témoignages.
     google: null as string | null,
   },
