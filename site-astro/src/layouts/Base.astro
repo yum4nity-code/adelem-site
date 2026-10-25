@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { getCollection } from 'astro:content';
 import { site, nav, indexable } from '../data/site';
 import Analytics from '@vercel/analytics/astro';
+import IconeInstagram from '../components/IconeInstagram.astro';
 
 interface Props {
   title: string;
@@ -83,7 +84,7 @@ const orgLd = {
       <div class="wrap pied-grille">
         <p>Adelem</p>
         <ul>
-          {site.contact.instagram && <li><a href={site.contact.instagram}>Instagram</a></li>}
+          {site.contact.instagram && <li><a class="insta" href={site.contact.instagram} aria-label="Adelem sur Instagram" title="Instagram"><IconeInstagram /></a></li>}
           <li><a href="/livraison">Emballage et livraison</a></li>
           <li><a href="/mentions-legales">Mentions légales</a></li>
           <li><a href="/cgv">Conditions de vente</a></li>
@@ -133,4 +134,6 @@ const orgLd = {
   .pied-grille { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
   .pied ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
   .pied a:hover { color: var(--encre); }
+  .pied ul { align-items: center; }
+  .pied .insta { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin: -13px -13px; }
 </style>

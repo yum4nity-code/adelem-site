@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { site } from '../data/site';
+import IconeInstagram from '../components/IconeInstagram.astro';
 ---
 <Base title="Contact" description="Écrire à l’atelier Adelem au sujet d’une œuvre.">
   <section class="wrap duo haut-page">
@@ -11,7 +12,7 @@ import { site } from '../data/site';
       <ul class="coord">
         {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
         {site.contact.telephone && <li><a href={`tel:${site.contact.telephone.replace(/\s/g, '')}`}>{site.contact.telephone}</a></li>}
-        {site.contact.instagram && <li><a href={site.contact.instagram}>Instagram</a></li>}
+        {site.contact.instagram && <li><a class="insta" href={site.contact.instagram}><IconeInstagram /><span>@{site.contact.instagram.replace(/\/$/, '').split('/').pop()}</span></a></li>}
       </ul>
     </div>
     <ContactForm />
@@ -19,5 +20,6 @@ import { site } from '../data/site';
 </Base>
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); align-items: start; }
+  .coord .insta { display: inline-flex; align-items: center; gap: 10px; }
   .coord { list-style: none; padding: 0; margin: 0; font: 300 1.3rem var(--serif); color: var(--encre); display: grid; gap: 4px; }
 </style>
