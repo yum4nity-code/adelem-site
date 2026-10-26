@@ -215,3 +215,8 @@
 - Demande d'Adèle, validée par Gwen : les petits formats (21 × 29 cm) étaient à peine visibles avec l'accrochage à l'échelle réelle.
 - Les murs de tableaux (accueil, galerie) n'affichent plus la largeur réelle mais une largeur « adoucie » : 95 × (largeur / 95)^0,3 en cm d'affichage (d'abord 0,55, jugé encore trop petit par Gwen le même soir). L'ordre des tailles est conservé, l'écart est fortement resserré (un 21 cm fait environ les trois quarts d'un 62 cm). Sur téléphone (une œuvre par rangée), chaque tableau occupe au moins 72 % de la largeur de l'écran et son cartel est centré dessous. Les proportions de chaque tableau ne changent pas.
 - La mention « présentées à leur échelle réelle » est remplacée par « Dimensions exactes indiquées sous chaque œuvre ». Les murs de sculptures gardent leur échelle locale.
+
+## 2026-10-26 — Photos : recadrage automatique du fond vide
+- Incident : Balade d'automne a paru rapetisser sur les murs après une modification dans l'admin. Cause réelle : sa photo de face avait été remplacée par un PNG détouré carré (2500 × 2500, fond transparent), le cadre n'occupant qu'environ 57 % de la largeur. Le titre n'y était pour rien.
+- Décision : à chaque construction, chaque photo est analysée (`site-astro/src/sanity/cadrage.ts`). Un fond transparent ou uni (quatre coins de même couleur) est retiré, puis la vue de face est mise aux proportions du cadre en élargissant la zone (sans rogner l'œuvre quand c'est possible). Un recadrage fait dans l'admin reste respecté. Photo non analysable : gardée telle quelle (avertissement dans le journal de construction).
+- `sharp` passe en dépendance directe.
