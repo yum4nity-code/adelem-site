@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+// À propos (décision du 2026-10-26, demande d'Adèle) : remplace Herbier dans le menu. Les informations générales
+// sur les matières, l'entretien et les pièces. N'écrire ici que ce qu'Adèle a confirmé : provenance des végétaux,
+// matière et inspiration des sculptures sont en attente de ses textes.
+---
+<Base title="À propos" description="Végétaux stabilisés, entretien, cadres anciens, sculptures : ce qu’il faut savoir sur les œuvres Adelem.">
+  <section class="wrap haut-page pile">
+    <h1 class="titre-section">À propos</h1>
+    <p class="texte">Ce qu’il faut savoir sur les matières et les pièces Adelem, avant de choisir et une fois chez vous.</p>
+  </section>
+
+  <section class="wrap rubriques">
+    <article>
+      <h2>Le végétal stabilisé</h2>
+      <p>Un végétal stabilisé est une plante naturelle (mousse, lichen, fougère…) dont la sève a été remplacée par une solution à base de glycérine. Il garde sa souplesse, sa forme et sa couleur, sans eau ni lumière. Ce n’est ni du plastique ni du séché : c’est du vrai végétal, qui ne pousse plus.</p>
+    </article>
+    <article>
+      <h2>L’entretien</h2>
+      <p>Pas d’arrosage, pas de lumière nécessaire. Placez l’œuvre à l’abri du soleil direct et des pièces humides. Pour la poussière, un pinceau doux suffit, de temps en temps.</p>
+    </article>
+    <article>
+      <h2>Fait main, en France</h2>
+      <p>Chaque pièce est composée à la main à l’atelier, en France. Les matières sont choisies et préparées une à une, et chaque matière demande sa propre technique. Toutes les pièces présentées sont uniques et déjà réalisées : celle que vous voyez est celle que vous recevez.</p>
+      <a class="lien" href="/atelier">L’atelier</a>
+    </article>
+    <article>
+      <h2>Les cadres anciens</h2>
+      <p>Pour la collection Signature, un cadre ancien, généralement daté d’environ 1850 à 1970, est chiné puis restauré dans le respect de son vécu, avant d’accueillir la composition. Il en donne le format, la profondeur et le rythme.</p>
+      <a class="lien" href="/cadres-anciens">Le cadre participe à l’œuvre</a>
+    </article>
+    <article>
+      <h2>Les sculptures</h2>
+      <p>Les sculptures naissent du même regard que les tableaux.</p>
+      <a class="lien" href="/sculptures">Voir les sculptures</a>
+    </article>
+    <article>
+      <h2>Livraison</h2>
+      <p>Chaque œuvre est emballée sur mesure, calée autour de son cadre, et voyage seule.</p>
+      <a class="lien" href="/livraison">Emballage et livraison</a>
+    </article>
+  </section>
+
+  <section class="wrap bloc centre">
+    <p class="texte">Une autre question ?</p>
+    <a class="lien" href="/contact">Écrire à l’atelier</a>
+  </section>
+</Base>
+
+<style>
+  .haut-page { padding-top: clamp(40px, 6vw, 80px); }
+  .rubriques { margin-top: clamp(56px, 8vw, 96px); display: grid; gap: clamp(40px, 6vw, 72px) clamp(32px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+  .rubriques article { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .rubriques h2 { font: 400 1.6rem/1.2 var(--serif); }
+  .rubriques p { line-height: 1.8; max-width: 36em; margin: 0; }
+  .centre { text-align: center; }
+  .centre .texte { margin-inline: auto; margin-bottom: 16px; }
+</style>

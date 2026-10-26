@@ -65,6 +65,22 @@ export const oeuvre = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: 'collection',
+      title: 'Collection',
+      description: 'Rubrique de la galerie. Signature : toute œuvre dans un cadre ancien, petite ou grande.',
+      type: 'string',
+      initialValue: 'signature',
+      hidden: ({ document }) => document?.type === 'sculpture',
+      options: {
+        layout: 'radio',
+        list: [
+          { title: 'Signature (cadre ancien)', value: 'signature' },
+          { title: 'Cadres contemporains', value: 'contemporain' },
+          { title: 'Déco et cadeaux', value: 'deco' },
+        ],
+      },
+    }),
+    defineField({
       name: 'histoire',
       title: 'Description',
       description: 'Deux ou trois phrases simples : ce qu’on y voit, ce qu’elle raconte, d’où viennent les matières. Affichée en grand sur la page de l’œuvre.',

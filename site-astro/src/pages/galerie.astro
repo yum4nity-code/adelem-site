@@ -6,10 +6,16 @@ import { site } from '../data/site';
 
 // Cette page ne montre que les tableaux : les sculptures publiées dans l'admin vont sur /sculptures.
 const toutes = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau').sort((a, b) => a.data.ordre - b.data.ordre);
-const formats = [
-  { nom: 'Grand format', ligne: 'Une présence architecturale' },
-  { nom: 'Format signature', ligne: 'Le point focal d’une pièce' },
-  { nom: 'Petit format', ligne: 'Une présence discrète' },
+// Rubriques par collection (décision du 2026-10-26, demande d'Adèle) et non plus par taille : toute œuvre dans un cadre
+// ancien, petite ou grande, est une « Signature ». Une rubrique sans œuvre disponible n'est pas affichée.
+const rubriques = [
+  {
+    cle: 'signature',
+    nom: 'Signature',
+    texte: 'La collection « Signature », ce sont mes œuvres sublimées par un cadre ancien, patiemment chiné et rénové en respectant son vécu. Un écrin de luxe pour mes créations nature. Les « Signature » conviennent dans tous les environnements, toutes les ambiances, de l’ancien au design.',
+  },
+  { cle: 'contemporain', nom: 'Cadres contemporains', texte: null },
+  { cle: 'deco', nom: 'Déco et cadeaux', texte: null },
 ] as const;
 const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 ---
@@ -19,14 +25,14 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
       <h1>Galerie</h1>
       <p class="discret">Dimensions exactes indiquées sous chaque œuvre.</p>
     </div>
-    {formats.map(({ nom, ligne }, i) => {
-      const items = toutes.filter((o) => o.data.format === nom && o.data.statut !== 'vendue');
+    {rubriques.map(({ cle, nom, texte }, i) => {
+      const items = toutes.filter((o) => o.data.collection === cle && o.data.statut !== 'vendue');
       // Seul le tout premier groupe affiché est au-dessus de la ligne de flottaison.
-      const premierGroupe = i === formats.findIndex((f2) => toutes.some((o) => o.data.format === f2.nom && o.data.statut !== 'vendue'));
+      const premierGroupe = i === rubriques.findIndex((r) => toutes.some((o) => o.data.collection === r.cle && o.data.statut !== 'vendue'));
       return items.length > 0 && (
         <section class="wrap groupe">
           <h2>{nom}</h2>
-          <p class="discret ligne-format">{ligne}</p>
+          {texte ? <p class="texte-rubrique">{texte}</p> : <div class="sans-texte"></div>}
           <Mur oeuvres={items} eager={premierGroupe} />
         </section>
       );
@@ -46,5 +52,6 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
   .entete-page h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); }
   .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 6px; }
   .groupe + .groupe { margin-top: 40px; }
-  .ligne-format { text-align: center; margin-bottom: 36px; }
+  .texte-rubrique { max-width: 62ch; margin: 14px auto 48px; text-align: center; color: var(--texte); line-height: 1.7; }
+  .sans-texte { height: 30px; }
 </style>

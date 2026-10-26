@@ -17,6 +17,7 @@ type SanityOeuvre = {
   _id: string;
   titre: string;
   sous_titre?: string | null;
+  collection?: 'signature' | 'contemporain' | 'deco' | null;
   annee?: number | null;
   type?: 'tableau' | 'sculpture' | null;
   statut?: 'disponible' | 'reservee' | 'vendue' | null;
@@ -39,7 +40,7 @@ type SanityOeuvre = {
 
 const QUERY = `*[_type == "oeuvre" && defined(titre) && defined(largeur_cm) && defined(hauteur_cm) && count(photos[defined(asset)]) > 0]
   | order(_createdAt desc) {
-    _id, titre, sous_titre, annee, type, statut, prix, largeur_cm, hauteur_cm, profondeur_cm, poids_kg,
+    _id, titre, sous_titre, collection, annee, type, statut, prix, largeur_cm, hauteur_cm, profondeur_cm, poids_kg,
     matieres, cadre, provenance, histoire, entretien, certificat, accueil, lien_paiement, livraison_france,
     photos[defined(asset)]{ legende, alt, crop, hotspot, asset->{ _id, metadata { dimensions { width, height } } } }
   }`;
@@ -158,6 +159,7 @@ export async function oeuvresSanity() {
       id: n > 1 ? `${base}-${n}` : base,
       titre: o.titre.trim(),
       sous_titre: o.sous_titre?.trim() || null,
+      collection: o.collection ?? 'signature',
       annee: o.annee ?? null,
       type: o.type ?? 'tableau',
       format: formatDe(o.largeur_cm!, o.hauteur_cm!),

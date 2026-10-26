@@ -22,6 +22,16 @@
       "source": "/sur-mesure",
       "destination": "/galerie",
       "permanent": false
+    },
+    {
+      "source": "/herbier",
+      "destination": "/a-propos",
+      "permanent": false
+    },
+    {
+      "source": "/herbier/:chemin*",
+      "destination": "/a-propos",
+      "permanent": false
     }
   ]
 }

@@ -225,3 +225,9 @@
 - Constat (Gwen, sur téléphone) : avec le minimum de 72 % de l'écran, le 21 × 29 (en hauteur) paraissait plus grand que Balade d'automne (62 × 49, en largeur).
 - Décision : la taille affichée suit le plus grand côté du cadre, à la puissance 0,35 (référence 95 cm), sur ordinateur comme sur téléphone. Un petit tableau reste bien visible mais plus petit qu'un grand dans les deux sens. Le minimum de 72 % est retiré pour les tableaux et gardé pour les murs de sculptures.
 - Repères à 390 px : 62 × 49 ≈ 295 × 233 px, 47,5 × 38 ≈ 268 × 215 px, 21 × 29 ≈ 163 × 226 px. Sur ordinateur : 450 × 356, 410 × 328, 250 × 345.
+
+## 2026-10-26 — Liste de modifications d'Adèle (« ADELEM modifs site »)
+- Galerie classée par collection et non plus par taille : Signature (tout cadre ancien, petit ou grand, avec le texte d'Adèle), Cadres contemporains, Déco et cadeaux. Nouveau champ « Collection » dans /admin (Signature par défaut, masqué pour les sculptures). Une rubrique vide n'apparaît pas.
+- Menu : mots écrits normalement (« Galerie », « À propos »), même police sur téléphone et ordinateur ; plus de petites capitales espacées.
+- Herbier retiré du menu, remplacé par une page À propos (infos générales : végétal stabilisé, entretien, fait main en France, cadres anciens, sculptures, livraison). /herbier redirige vers /a-propos (redirection temporaire) ; le type Herbier reste dans l'admin, rien n'est supprimé.
+- En attente d'Adèle : provenance des végétaux, matière (grès ?) et inspiration des sculptures. Le grès avait été retiré du site à la demande de Gwen ; la liste d'Adèle le mentionne : à trancher avant de l'écrire.

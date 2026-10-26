@@ -52,7 +52,7 @@ export const nav = [
   { href: '/galerie', label: 'Galerie' },
   { href: '/sculptures', label: 'Sculptures' },
   { href: '/atelier', label: 'Atelier' },
-  { href: '/herbier', label: 'Herbier' },
+  { href: '/a-propos', label: 'À propos' },
   { href: '/contact', label: 'Contact' },
 ];
 
