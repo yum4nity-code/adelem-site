@@ -13,15 +13,21 @@ const { oeuvres, eager = false, echelleLocale = false } = Astro.props;
 // 330 px (la hauteur d'un grand tableau à 5,5 px/cm) sur grand écran. Les proportions entre pièces d'un même mur restent justes.
 const reference = Math.max(30, ...oeuvres.map((o) => Math.max(o.data.largeur_cm * 1.05, o.data.hauteur_cm * 0.75)));
 const plafond = Math.max(5.5, 330 / Math.max(...oeuvres.map((o) => o.data.hauteur_cm))).toFixed(2);
-// Murs de tableaux : échelle « adoucie » (décision du 2026-10-25, demande d'Adèle). Les petits formats (21 × 29 cm)
-// étaient presque invisibles à l'échelle réelle. La largeur affichée suit largeur^0,3 : l'ordre des tailles est gardé
-// (un grand tableau reste plus grand qu'un petit), mais l'écart est resserré. 95 cm, la référence de --cm, reste inchangé.
+// Murs de tableaux : échelle « adoucie » (décisions des 2026-10-25 et 2026-10-26, demandes d'Adèle). Les petits formats
+// (21 × 29 cm) étaient presque invisibles à l'échelle réelle. La taille suit le PLUS GRAND CÔTÉ du cadre, à la puissance 0,35 :
+// un petit tableau reste bien visible, mais plus petit qu'un grand dans les deux sens, même s'il est en hauteur et l'autre
+// en largeur (avant, avec un minimum commun de 72 % de l'écran sur téléphone, un 21 × 29 paraissait plus grand qu'un 62 × 49).
+// La même règle sert sur ordinateur et sur téléphone (--cm suit la largeur de l'écran). Un cadre de 95 cm ou plus garde l'échelle réelle.
 const REF = 95;
-const largeurAffichee = (l: number) => (echelleLocale ? l : REF * Math.pow(Math.min(l, REF) / REF, 0.3) * (l > REF ? l / REF : 1));
+const largeurAffichee = (l: number, h: number) => {
+  if (echelleLocale) return l;
+  const m = Math.max(l, h);
+  return m >= REF ? l : REF * Math.pow(m / REF, 0.35) * (l / m);
+};
 ---
-<div class="mur" role="list" style={echelleLocale ? `--cm: min(${plafond}px, calc((100vw - 48px) / ${Math.round(reference)}))` : undefined}>
+<div class:list={['mur', { locale: echelleLocale }]} role="list" style={echelleLocale ? `--cm: min(${plafond}px, calc((100vw - 48px) / ${Math.round(reference)}))` : undefined}>
   {oeuvres.map((o, i) => (
-    <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${largeurAffichee(o.data.largeur_cm).toFixed(2)};--r:${o.data.largeur_cm} / ${o.data.hauteur_cm}`}>
+    <a role="listitem" href={`/oeuvres/${o.id}`} class="piece" style={`--l:${largeurAffichee(o.data.largeur_cm, o.data.hauteur_cm).toFixed(2)};--r:${o.data.largeur_cm} / ${o.data.hauteur_cm}`}>
       <img
         src={o.data.photos[0].src}
         alt={o.data.photos[0].alt}
@@ -93,9 +99,11 @@ const largeurAffichee = (l: number) => (echelleLocale ? l : REF * Math.pow(Math.
   }
   .piece:focus-visible .voir { opacity: 1; transform: none; }
   .sous { position: absolute; top: calc(100% + 22px); left: 0; width: max(100%, 190px); }
-  /* Téléphone : une œuvre par rangée. Chaque tableau occupe au moins 72 % de la largeur, et son cartel est centré dessous. */
+  /* Téléphone : une œuvre par rangée, cartel centré dessous. Les murs de sculptures (échelle locale) gardent un minimum
+     de 72 % de la largeur ; les tableaux suivent la règle du plus grand côté (voir largeurAffichee). */
   @media (max-width: 600px) {
-    .piece { width: max(calc(var(--cm) * var(--l)), 72vw); max-width: calc(100vw - 48px); }
+    .piece { max-width: calc(100vw - 48px); }
+    .mur.locale .piece { width: max(calc(var(--cm) * var(--l)), 72vw); }
     .sous { left: 50%; transform: translateX(-50%); width: max(100%, 260px); }
     .sous :global(.cartel) { align-items: center; text-align: center; }
   }

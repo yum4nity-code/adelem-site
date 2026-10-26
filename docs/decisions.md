@@ -220,3 +220,8 @@
 - Incident : Balade d'automne a paru rapetisser sur les murs après une modification dans l'admin. Cause réelle : sa photo de face avait été remplacée par un PNG détouré carré (2500 × 2500, fond transparent), le cadre n'occupant qu'environ 57 % de la largeur. Le titre n'y était pour rien.
 - Décision : à chaque construction, chaque photo est analysée (`site-astro/src/sanity/cadrage.ts`). Un fond transparent ou uni (quatre coins de même couleur) est retiré, puis la vue de face est mise aux proportions du cadre en élargissant la zone (sans rogner l'œuvre quand c'est possible). Un recadrage fait dans l'admin reste respecté. Photo non analysable : gardée telle quelle (avertissement dans le journal de construction).
 - `sharp` passe en dépendance directe.
+
+## 2026-10-26 — Murs de tableaux : taille d'après le plus grand côté
+- Constat (Gwen, sur téléphone) : avec le minimum de 72 % de l'écran, le 21 × 29 (en hauteur) paraissait plus grand que Balade d'automne (62 × 49, en largeur).
+- Décision : la taille affichée suit le plus grand côté du cadre, à la puissance 0,35 (référence 95 cm), sur ordinateur comme sur téléphone. Un petit tableau reste bien visible mais plus petit qu'un grand dans les deux sens. Le minimum de 72 % est retiré pour les tableaux et gardé pour les murs de sculptures.
+- Repères à 390 px : 62 × 49 ≈ 295 × 233 px, 47,5 × 38 ≈ 268 × 215 px, 21 × 29 ≈ 163 × 226 px. Sur ordinateur : 450 × 356, 410 × 328, 250 × 345.
