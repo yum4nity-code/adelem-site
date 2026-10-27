@@ -29,7 +29,7 @@ const orgLd = {
   '@type': 'Organization',
   name: site.nom,
   url: site.url,
-  logo: new URL('/logo/adelem-badge-transparent.svg', site.url).href,
+  logo: new URL('/icon-512.png', site.url).href,
   ...(site.contact.email ? { email: site.contact.email } : {}),
   ...(site.contact.instagram ? { sameAs: [site.contact.instagram] } : {}),
 };
@@ -58,6 +58,7 @@ const orgLd = {
     <link rel="icon" href="/favicon-32.png" type="image/png" />
     <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
     {accueil && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: site.nom, url: site.url + '/' })} />}
