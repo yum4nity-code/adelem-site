@@ -64,5 +64,13 @@ const { titre, fil = [], liens, description, texte = null } = Astro.props;
     .tuile:hover::after { background: radial-gradient(ellipse at center, rgba(10, 13, 10, .22), rgba(10, 13, 10, .5)); }
     .tuile:hover span { text-decoration-color: var(--or); }
   }
+  /* Ordinateur (décision du 2026-10-27) : les tuiles côte à côte, en format vertical, comme des portes de salles.
+     Toutes visibles sans défiler. Le téléphone garde les bandeaux empilés. */
+  @media (min-width: 900px) {
+    .choix { width: min(100%, 1180px); flex-direction: row; gap: clamp(18px, 2vw, 32px); }
+    .choix li { flex: 1 1 0; min-width: 0; }
+    .tuile { height: auto; aspect-ratio: 3 / 4; max-height: 62vh; width: 100%; }
+    .tuile span { font-size: clamp(1.6rem, 2.2vw, 2.2rem); text-align: center; }
+  }
   @media (prefers-reduced-motion: reduce) { .tuile img, .tuile::after { transition: none; } }
 </style>
