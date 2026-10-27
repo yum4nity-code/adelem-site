@@ -19,7 +19,7 @@ type SanityOeuvre = {
   sous_titre?: string | null;
   collection?: 'signature' | 'contemporain' | 'deco' | null;
   annee?: number | null;
-  type?: 'tableau' | 'sculpture' | null;
+  type?: 'tableau' | 'sculpture' | 'fleurs' | null;
   statut?: 'disponible' | 'reservee' | 'vendue' | null;
   prix?: number | null;
   largeur_cm?: number | null;

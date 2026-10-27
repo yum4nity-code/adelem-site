@@ -2,41 +2,61 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Mur from '../components/Mur.astro';
-import { site } from '../data/site';
 
-// Cette page ne montre que les tableaux : les sculptures publiées dans l'admin vont sur /sculptures.
-const toutes = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau').sort((a, b) => a.data.ordre - b.data.ordre);
-// Rubriques par collection (décision du 2026-10-26, demande d'Adèle) et non plus par taille : toute œuvre dans un cadre
-// ancien, petite ou grande, est une « Signature ». Une rubrique sans œuvre disponible n'est pas affichée.
-const rubriques = [
+// Galerie en trois thèmes (décision du 2026-10-27, demande d'Adèle) : Végétaux stabilisés (avec ses trois collections),
+// Sculptures, Fleurs en porcelaine froide. Le thème vient du champ « Type » de l'admin, la collection du champ « Collection ».
+// Les sculptures n'ont plus de page à part : /sculptures renvoie ici.
+const toutes = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
+const dispo = toutes.filter((o) => o.data.statut !== 'vendue');
+const vegetaux = dispo.filter((o) => o.data.type === 'tableau');
+const collections = [
   {
     cle: 'signature',
     nom: 'Signature',
     texte: 'La collection « Signature », ce sont mes œuvres sublimées par un cadre ancien, patiemment chiné et rénové en respectant son vécu. Un écrin de luxe pour mes créations nature. Les « Signature » conviennent dans tous les environnements, toutes les ambiances, de l’ancien au design.',
   },
   { cle: 'contemporain', nom: 'Cadres contemporains', texte: null },
-  { cle: 'deco', nom: 'Déco et cadeaux', texte: null },
+  { cle: 'deco', nom: 'Déco & cadeaux', texte: null },
 ] as const;
+const themes = [
+  { id: 'vegetaux', nom: 'Végétaux stabilisés', items: vegetaux },
+  { id: 'sculptures', nom: 'Sculptures', items: dispo.filter((o) => o.data.type === 'sculpture') },
+  { id: 'fleurs', nom: 'Fleurs en porcelaine froide', items: dispo.filter((o) => o.data.type === 'fleurs') },
+];
+// Seul le tout premier mur affiché est au-dessus de la ligne de flottaison (images chargées tout de suite).
+const premiereCollection = collections.find((c) => vegetaux.some((o) => o.data.collection === c.cle))?.cle;
 const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 ---
-<Base title="Galerie" description="Tableaux végétaux disponibles et œuvres entrées en collection privée.">
+<Base title="Galerie" description="Végétaux stabilisés, sculptures et fleurs en porcelaine froide : les pièces uniques d’Adelem.">
   <div class="salle-page">
     <div class="wrap entete-page">
-      <h1>Galerie</h1>
-      <p class="discret">Dimensions exactes indiquées sous chaque œuvre.</p>
+      <h1 class="titre-page">Galerie</h1>
+      <nav class="themes" aria-label="Thèmes de la galerie">
+        {themes.map((t) => <a href={`#${t.id}`}>{t.nom}</a>)}
+      </nav>
     </div>
-    {rubriques.map(({ cle, nom, texte }, i) => {
-      const items = toutes.filter((o) => o.data.collection === cle && o.data.statut !== 'vendue');
-      // Seul le tout premier groupe affiché est au-dessus de la ligne de flottaison.
-      const premierGroupe = i === rubriques.findIndex((r) => toutes.some((o) => o.data.collection === r.cle && o.data.statut !== 'vendue'));
-      return items.length > 0 && (
-        <section class="wrap groupe">
-          <h2>{nom}</h2>
-          {texte ? <p class="texte-rubrique">{texte}</p> : <div class="sans-texte"></div>}
-          <Mur oeuvres={items} eager={premierGroupe} />
-        </section>
-      );
-    })}
+
+    {themes.map((t) => (
+      <section class="theme" id={t.id} aria-labelledby={`titre-${t.id}`}>
+        <h2 class="wrap titre-theme" id={`titre-${t.id}`}>{t.nom}</h2>
+        {t.id === 'vegetaux' ? (
+          t.items.length ? collections.map(({ cle, nom, texte }) => {
+            const items = t.items.filter((o) => o.data.collection === cle);
+            return items.length > 0 && (
+              <section class="wrap groupe">
+                <h3>{nom}</h3>
+                {texte ? <p class="texte-rubrique">{texte}</p> : <div class="sans-texte"></div>}
+                <Mur oeuvres={items} eager={cle === premiereCollection} />
+              </section>
+            );
+          }) : <p class="wrap discret a-venir">Les pièces arrivent bientôt.</p>
+        ) : (
+          <div class="wrap groupe">
+            {t.items.length ? <Mur oeuvres={t.items} echelleLocale /> : <p class="discret a-venir">Les pièces arrivent bientôt.</p>}
+          </div>
+        )}
+      </section>
+    ))}
   </div>
   {vendues.length > 0 && (
     <section class="wrap bloc">
@@ -48,10 +68,16 @@ const vendues = toutes.filter((o) => o.data.statut === 'vendue');
 
 <style>
   .salle-page { padding-top: clamp(40px, 6vw, 72px); }
-  .entete-page { text-align: center; margin-bottom: 64px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
-  .entete-page h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); }
-  .groupe h2 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 6px; }
+  .entete-page { text-align: center; margin-bottom: 72px; display: flex; flex-direction: column; gap: 22px; align-items: center; }
+  .themes { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 28px; font: 400 1.05rem var(--serif); }
+  .themes a { color: var(--texte); text-decoration: underline; text-decoration-color: var(--trait); text-underline-offset: 6px; min-height: 44px; display: inline-flex; align-items: center; }
+  .themes a:hover { color: var(--encre); text-decoration-color: currentColor; }
+  .theme { scroll-margin-top: 24px; }
+  .theme + .theme { margin-top: clamp(96px, 12vw, 160px); }
+  .titre-theme { font: 300 clamp(2rem, 3.6vw, 2.8rem)/1.1 var(--serif); text-align: center; margin-bottom: 40px; }
+  .groupe h3 { font: italic 300 1.6rem var(--serif); text-align: center; margin-bottom: 6px; }
   .groupe + .groupe { margin-top: 40px; }
   .texte-rubrique { max-width: 62ch; margin: 14px auto 48px; text-align: center; color: var(--texte); line-height: 1.7; }
   .sans-texte { height: 30px; }
+  .a-venir { text-align: center; }
 </style>

@@ -40,6 +40,8 @@ p { margin: 0; }
 .lien:hover { color: var(--discret); }
 .discret { font-size: .78rem; color: var(--discret); letter-spacing: .03em; }
 .titre-section { font-size: clamp(2.2rem, 4vw, 3.2rem); }
+/* Titre principal des pages du menu (Galerie, Atelier, À propos) : même taille partout. */
+.titre-page { font-size: clamp(2.6rem, 5vw, 3.6rem); }
 .texte { font-size: 1.02rem; line-height: 1.8; max-width: 34em; }
 
 .duo { display: grid; gap: clamp(32px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); align-items: center; }

@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 const { oeuvre } = Astro.props;
 const d = oeuvre.data;
 const [face] = d.photos;
+const theme = d.type === 'sculpture' ? 'sculptures' : d.type === 'fleurs' ? 'fleurs' : 'vegetaux'; // ancre du thème dans la galerie
 const disponible = d.statut === 'disponible';
 const annee = d.statut === 'vendue' ? d.annee : null; // année affichée seulement pour les pièces vendues
 const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
@@ -40,7 +41,7 @@ const jsonld = {
       <Vignettes photos={d.photos} cible="vue-principale" />
     </div>
     <div class="infos">
-      <p class="discret">{d.type === 'sculpture' ? <a href="/sculptures">Sculptures</a> : <a href="/galerie">Galerie</a>} / {d.titre}</p>
+      <p class="discret"><a href={`/galerie#${theme}`}>Galerie</a> / {d.titre}</p>
       <h1>{d.titre}</h1>
       {d.sous_titre && <p class="sous-titre">{d.sous_titre}</p>}
       {annee && <p class="annee">{annee}</p>}
@@ -55,7 +56,7 @@ const jsonld = {
       {d.statut === 'vendue' ? (
         <div class="liens">
           <Prevenir piece={d.titre} />
-          <a class="lien secondaire" href={d.type === 'sculpture' ? '/sculptures' : '/galerie'}>Voir les pièces disponibles</a>
+          <a class="lien secondaire" href={`/galerie#${theme}`}>Voir les pièces disponibles</a>
         </div>
       ) : achat ? (
         <div class="liens">

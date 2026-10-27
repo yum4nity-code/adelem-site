@@ -232,3 +232,10 @@
 - Herbier retiré du menu, remplacé par une page À propos (infos générales : végétal stabilisé, entretien, fait main en France, cadres anciens, sculptures, livraison). /herbier renvoie vers /a-propos (redirection Astro dans astro.config.mjs : les redirections de vercel.json ne sont pas appliquées sur ce projet, /sur-mesure y est passée aussi) ; pages Herbier gardées en src/pages/_herbier* (ignorées par Astro) ; le type Herbier reste dans l'admin, rien n'est supprimé.
 - Sculptures : le grès est désormais mentionné (page À propos), à la demande d'Adèle. Règle de Gwen (2026-10-26) : on suit les demandes d'Adèle tant qu'elles ne nuisent pas au site.
 - En attente d'Adèle : provenance des végétaux, inspiration des sculptures.
+
+## 2026-10-27 — Galerie en trois thèmes, menu sans Sculptures
+- Galerie : trois thèmes, avec des liens en haut de page — Végétaux stabilisés (collections Signature, Cadres contemporains, Déco & cadeaux), Sculptures, Fleurs en porcelaine froide. Le thème vient du champ « Type » de l'admin (Végétaux stabilisés / Sculpture / Fleurs en porcelaine froide), la collection du champ « Collection » (visible pour les végétaux seulement). Un thème sans pièce affiche « Les pièces arrivent bientôt. ». La mention « Dimensions exactes… » sous le titre Galerie est retirée (elle reste sous le mur de l'accueil).
+- Menu : Galerie, Atelier, À propos, Contact. /sculptures renvoie vers /galerie#sculptures ; page source gardée en _sculptures.astro.
+- Titres Galerie, Atelier, À propos à la même taille (classe .titre-page). Atelier : « Artiste, oui / Artisane, surtout » devient une accroche plus petite sous le titre.
+- Accueil : l'invitation à défiler (« Découvrir » + trait) n'est plus affichée sur ordinateur (souris), gardée sur téléphone.
+- La phrase « matières stabilisées » des fiches ne s'affiche que pour les végétaux (pas pour la porcelaine froide).

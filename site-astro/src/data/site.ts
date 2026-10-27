@@ -50,7 +50,6 @@ export const indexable = import.meta.env.PUBLIC_INDEX === 'true';
 
 export const nav = [
   { href: '/galerie', label: 'Galerie' },
-  { href: '/sculptures', label: 'Sculptures' },
   { href: '/atelier', label: 'Atelier' },
   { href: '/a-propos', label: 'À propos' },
   { href: '/contact', label: 'Contact' },

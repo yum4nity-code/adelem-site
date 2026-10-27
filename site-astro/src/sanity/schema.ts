@@ -51,15 +51,16 @@ export const oeuvre = defineType({
     defineField({
       name: 'type',
       title: 'Type',
-      description: 'Tableau par défaut : pour une sculpture, cochez Sculpture.',
+      description: 'Le thème de la galerie où l’œuvre apparaît.',
       type: 'string',
       initialValue: 'tableau',
       options: {
         layout: 'radio',
         direction: 'horizontal',
         list: [
-          { title: 'Tableau', value: 'tableau' },
+          { title: 'Végétaux stabilisés', value: 'tableau' },
           { title: 'Sculpture', value: 'sculpture' },
+          { title: 'Fleurs en porcelaine froide', value: 'fleurs' },
         ],
       },
       validation: (r) => r.required(),
@@ -67,16 +68,16 @@ export const oeuvre = defineType({
     defineField({
       name: 'collection',
       title: 'Collection',
-      description: 'Rubrique de la galerie. Signature : toute œuvre dans un cadre ancien, petite ou grande.',
+      description: 'Pour les végétaux stabilisés : la rubrique de la galerie. Signature = toute œuvre dans un cadre ancien, petite ou grande.',
       type: 'string',
       initialValue: 'signature',
-      hidden: ({ document }) => document?.type === 'sculpture',
+      hidden: ({ document }) => (document?.type ?? 'tableau') !== 'tableau',
       options: {
         layout: 'radio',
         list: [
           { title: 'Signature (cadre ancien)', value: 'signature' },
           { title: 'Cadres contemporains', value: 'contemporain' },
-          { title: 'Déco et cadeaux', value: 'deco' },
+          { title: 'Déco & cadeaux', value: 'deco' },
         ],
       },
     }),
@@ -149,13 +150,13 @@ export const oeuvre = defineType({
       description: 'Bois, style, époque, état, restauration. Ex. « Chêne massif mouluré, vers 1930, patine d’origine conservée ».',
       type: 'text',
       rows: 2,
-      hidden: ({ document }) => document?.type === 'sculpture',
+      hidden: ({ document }) => (document?.type ?? 'tableau') !== 'tableau',
     }),
     defineField({
       name: 'provenance',
       title: 'Provenance du cadre',
       description: 'Ex. « Chiné près d’Uzès, restauré à l’atelier ».',
-      hidden: ({ document }) => document?.type === 'sculpture',
+      hidden: ({ document }) => (document?.type ?? 'tableau') !== 'tableau',
       type: 'string',
     }),
     defineField({

@@ -58,7 +58,7 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
         <p class="texte">Le même regard, une autre matière.</p>
       </div>
       <Mur oeuvres={sculptures} echelleLocale />
-      <p class="centre"><a class="lien" href="/sculptures">Toutes les sculptures</a></p>
+      <p class="centre"><a class="lien" href="/galerie#sculptures">Toutes les sculptures</a></p>
     </section>
   )}
 
@@ -133,6 +133,8 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
   /* Invitation discrète à faire défiler, en bas de l'ouverture. */
   .indice { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--encre); opacity: .8; }
   .indice::after { content: ''; width: 1px; height: 36px; background: linear-gradient(var(--encre), transparent); }
+  /* Invitation à défiler : utile sur téléphone, retirée sur ordinateur (souris), demande du 2026-10-27. */
+  @media (hover: hover) and (pointer: fine) { .indice { display: none; } }
   /* Sur mobile, l'ouverture est plus courte : la première œuvre arrive plus vite. */
   @media (max-width: 819px) { .hero-pin { height: 108dvh; } }
   .marque-hero {

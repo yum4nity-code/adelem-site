@@ -4,8 +4,8 @@ import Base from '../layouts/Base.astro';
 <Base title="Atelier" description="Le travail de l’atelier Adelem : chercher la matière, la préparer, composer, laisser le temps faire.">
   <section class="wrap duo haut-page">
     <div class="pile">
-      <p class="eyebrow">L’atelier</p>
-      <h1 class="titre-section">Artiste, oui<br />Artisane, surtout</h1>
+      <h1 class="titre-page">Atelier</h1>
+      <p class="accroche">Artiste, oui<br />Artisane, surtout</p>
       <p class="texte">Tout part de la main et de la matière : mousses, lichens, écorces, parfois des champignons rares, recherchés et préparés un à un. Chaque matière demande sa propre technique. Les sculptures naissent du même regard.</p>
       <p class="texte">Pour les tableaux, un cadre ancien chiné, souvent daté de 1850 à 1970, est restauré avant tout le reste : il donne le format, la profondeur et le rythme de la composition. Un grand format représente huit à dix jours de travail, restauration et séchages compris. La part artistique est là, dans l’œil et dans le choix ; le cœur du travail reste artisanal.</p>
     </div>
@@ -27,7 +27,7 @@ import Base from '../layouts/Base.astro';
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
   .photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-  .eyebrow { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
+  .accroche { font: italic 300 clamp(1.5rem, 2.4vw, 1.9rem)/1.25 var(--serif); color: var(--encre); margin: 0; }
   .centre { text-align: center; }
   .centre .texte { margin-inline: auto; margin-bottom: 16px; }
 </style>
