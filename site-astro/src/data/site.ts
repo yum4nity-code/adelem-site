@@ -39,8 +39,8 @@ export const site = {
     editrice: 'Adèle Mette',
     statut: 'Entrepreneur individuel (EI)',
     siret: '351 073 457 00027',
-    adresse: null as string | null,
-    tva: null as string | null,
+    adresse: '116 rue du Vicariat, 82110 Cazes-Mondenard' as string | null,
+    tva: 'TVA non applicable, art. 293 B du CGI' as string | null,
     directeurPublication: 'Gwennaël Salinas',
     // Coordonnées reprises de vercel.com/legal/privacy-notice (rubrique Contact Us), vérifiées le 2026-10-27.
     hebergeur: 'Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis — vercel.com' as string | null,

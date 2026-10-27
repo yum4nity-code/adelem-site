@@ -262,6 +262,6 @@
 
 ## 2026-10-27 — Ouverture à Google et mentions légales
 - Indexation ouverte (décision de Gwen) : plus de « noindex » par défaut ; PUBLIC_INDEX=false dans Vercel pour la couper. Adresse canonique : https://www.adelem.fr (adelem.fr y redirige), plan du site et robots.txt alignés.
-- Mentions légales : téléphone +33 6 80 37 54 01 (celui de la carte de visite), hébergeur Vercel Inc. (adresse reprise de vercel.com/legal/privacy-notice). Restent à fournir : adresse postale complète et régime de TVA. La page des mentions reste exclue de Google tant qu'elle est incomplète.
+- Mentions légales complètes : adresse 116 rue du Vicariat, 82110 Cazes-Mondenard (fournie par Gwen, message d’Adèle du 28/09), téléphone +33 6 80 37 54 01, « TVA non applicable, art. 293 B du CGI » (confirmé par Gwen), hébergeur Vercel Inc. (vercel.com/legal/privacy-notice).
 - Mentions du « triptyque Herbier » retirées des pages Livraison et CGV.
 - À faire (Gwen en parle à Adèle) : le titre de l'accueil et le titre Google ne citent pas les fleurs en porcelaine froide.
