@@ -240,3 +240,8 @@
 - Accueil : l'invitation à défiler (« Découvrir » + trait) n'est plus affichée sur ordinateur (souris), gardée sur téléphone.
 - La phrase « matières stabilisées » des fiches ne s'affiche que pour les végétaux (pas pour la porcelaine froide).
 - Mise à jour du même jour (Gwen) : pas tout à la suite, une page par menu. /galerie = trois titres (Végétaux stabilisés, Sculptures, Fleurs en porcelaine froide) ; /galerie/vegetaux-stabilises = trois titres (Signature, Cadres contemporains, Déco & cadeaux) ; chaque collection et chaque autre thème a sa page (/galerie/vegetaux-stabilises/signature, …/cadres-contemporains, …/deco-et-cadeaux, /galerie/sculptures, /galerie/fleurs-en-porcelaine-froide), avec ses pièces vendues en bas. Arborescence dans src/data/galerie.ts. Fiche d'œuvre : fil d'Ariane et retour vers sa page de galerie.
+
+## 2026-10-27 — Page Atelier : texte d'Adèle
+- Titre « L'atelier » (taille des titres de page) ; « Artiste, oui / Artisane, surtout » à la taille des titres du menu de la galerie (« Végétaux stabilisés »).
+- Nouveau texte d'Adèle (document « Atelier »), typographie seule ajustée. Provenance : « végétaux du monde entier, traités en France », reprise dans À propos.
+- Les dates des cadres (1850–1970) disparaissent du texte Atelier à sa demande ; elles restent sur À propos et Cadres anciens tant qu'Adèle n'a pas tranché.
