@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 import sanity from '@sanity/astro';
 
 export default defineConfig({
-  site: 'https://adelem.fr',
+  site: 'https://www.adelem.fr',
   trailingSlash: 'never',
   build: { format: 'directory' },
   // Redirections (pages statiques de renvoi). Herbier retiré du menu le 2026-10-26 : sa page source est gardée en _herbier.

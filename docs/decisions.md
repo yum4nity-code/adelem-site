@@ -259,3 +259,9 @@
 ## 2026-10-27 — Bas de page refait
 - Bande de confiance (Pièce unique · Fait main en France · Emballage sur mesure), signature, colonnes Explorer / Acheter / Contact (e-mail, Instagram, formulaire), « © Adelem · Mentions légales ». Espace vide au-dessus réduit.
 - « Recevoir les nouvelles pièces » : champ e-mail envoyé par Formspree (même formulaire que le contact). Adèle reçoit un e-mail par inscription ; Formspree conserve les adresses (point de départ de la future newsletter, à monter avec Gwen). Plan gratuit Formspree : 50 envois par mois, tous formulaires confondus.
+
+## 2026-10-27 — Ouverture à Google et mentions légales
+- Indexation ouverte (décision de Gwen) : plus de « noindex » par défaut ; PUBLIC_INDEX=false dans Vercel pour la couper. Adresse canonique : https://www.adelem.fr (adelem.fr y redirige), plan du site et robots.txt alignés.
+- Mentions légales : téléphone +33 6 80 37 54 01 (celui de la carte de visite), hébergeur Vercel Inc. (adresse reprise de vercel.com/legal/privacy-notice). Restent à fournir : adresse postale complète et régime de TVA. La page des mentions reste exclue de Google tant qu'elle est incomplète.
+- Mentions du « triptyque Herbier » retirées des pages Livraison et CGV.
+- À faire (Gwen en parle à Adèle) : le titre de l'accueil et le titre Google ne citent pas les fleurs en porcelaine froide.

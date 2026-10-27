@@ -1,13 +1,13 @@
 // Réglages du site. `null` = pas encore fourni : la page concernée l'affiche comme « à compléter ».
 export const site = {
   nom: 'Adelem',
-  url: 'https://adelem.fr',
+  url: 'https://www.adelem.fr', // adresse réelle du site (adelem.fr redirige ici) : sert aux liens canoniques et au plan du site
   description:
     'Pièces uniques faites à la main : tableaux de mousses, lichens et écorces dans des cadres anciens restaurés, et sculptures.',
   delaiReponse: '3 jours ouvrés',
   contact: {
     email: 'contact@adelem.fr' as string | null,
-    telephone: null as string | null,
+    telephone: '+33 6 80 37 54 01' as string | null,
     instagram: 'https://www.instagram.com/adelem_nature/' as string | null,
     // Lien vers la fiche Google Business Profile (où tous les avis restent visibles). Affiché sous les témoignages.
     google: null as string | null,
@@ -42,13 +42,14 @@ export const site = {
     adresse: null as string | null,
     tva: null as string | null,
     directeurPublication: 'Gwennaël Salinas',
-    hebergeur: null as string | null, // Vercel Inc. : coordonnées exactes à reprendre de vercel.com/legal au passage en ligne
+    // Coordonnées reprises de vercel.com/legal/privacy-notice (rubrique Contact Us), vérifiées le 2026-10-27.
+    hebergeur: 'Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis — vercel.com' as string | null,
     mediateur: null as string | null,
   },
 };
 
-// Le site n'est indexé par Google que si PUBLIC_INDEX=true est défini (au passage sur adelem.fr).
-export const indexable = import.meta.env.PUBLIC_INDEX === 'true';
+// Indexation Google ouverte le 2026-10-27 (décision de Gwen). Pour la couper : PUBLIC_INDEX=false dans Vercel.
+export const indexable = import.meta.env.PUBLIC_INDEX !== 'false';
 
 export const nav = [
   { href: '/galerie', label: 'Galerie' },

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /merci
 
-Sitemap: https://adelem.fr/sitemap-index.xml
+Sitemap: https://www.adelem.fr/sitemap-index.xml
