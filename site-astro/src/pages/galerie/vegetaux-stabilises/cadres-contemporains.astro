@@ -1,0 +1,8 @@
+---
+import { getCollection } from 'astro:content';
+import SalleGalerie from '../../../components/SalleGalerie.astro';
+import { collectionsVegetaux } from '../../../data/galerie';
+const c = collectionsVegetaux[1];
+const oeuvres = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau' && o.data.collection === c.cle);
+---
+<SalleGalerie titre={c.nom} texte={c.texte} oeuvres={oeuvres} fil={[{ nom: 'Galerie', href: '/galerie' }, { nom: 'Végétaux stabilisés', href: '/galerie/vegetaux-stabilises' }]} />

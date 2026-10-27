@@ -8,7 +8,7 @@ export default defineConfig({
   trailingSlash: 'never',
   build: { format: 'directory' },
   // Redirections (pages statiques de renvoi). Herbier retiré du menu le 2026-10-26 : sa page source est gardée en _herbier.
-  redirects: { '/herbier': '/a-propos', '/sur-mesure': '/galerie', '/sculptures': '/galerie#sculptures' },
+  redirects: { '/herbier': '/a-propos', '/sur-mesure': '/galerie', '/sculptures': '/galerie/sculptures' },
   integrations: [
     // Espace d'administration d'Adèle sur /admin (Sanity Studio, chargé seulement sur cette page).
     sanity({

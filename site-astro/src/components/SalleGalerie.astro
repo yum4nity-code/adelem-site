@@ -1,0 +1,45 @@
+---
+// Une page de la galerie qui montre des œuvres : fil d'Ariane, titre, texte éventuel, pièces disponibles,
+// puis pièces vendues de la même rubrique.
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Mur from './Mur.astro';
+
+interface Props {
+  titre: string;
+  fil: { nom: string; href: string }[];
+  oeuvres: CollectionEntry<'oeuvres'>[];
+  texte?: string | null;
+  echelleLocale?: boolean;
+}
+const { titre, fil, oeuvres, texte = null, echelleLocale = false } = Astro.props;
+const tri = [...oeuvres].sort((a, b) => a.data.ordre - b.data.ordre);
+const dispo = tri.filter((o) => o.data.statut !== 'vendue');
+const vendues = tri.filter((o) => o.data.statut === 'vendue');
+---
+<Base title={titre} description={texte ?? `${titre} : pièces uniques Adelem.`}>
+  <div class="salle-page">
+    <div class="wrap entete-page">
+      <nav class="discret fil" aria-label="Fil d’Ariane">{fil.map((f, i) => <>{i > 0 && ' / '}<a href={f.href}>{f.nom}</a></>)}</nav>
+      <h1 class="titre-page">{titre}</h1>
+      {texte && <p class="texte-rubrique">{texte}</p>}
+    </div>
+    <div class="wrap">
+      {dispo.length ? <Mur oeuvres={dispo} eager echelleLocale={echelleLocale} /> : <p class="discret a-venir">Les pièces arrivent bientôt.</p>}
+    </div>
+  </div>
+  {vendues.length > 0 && (
+    <section class="wrap bloc">
+      <h2 class="titre-section">En collection privée</h2>
+      <Mur oeuvres={vendues} echelleLocale={echelleLocale} />
+    </section>
+  )}
+</Base>
+
+<style>
+  .salle-page { padding-top: clamp(40px, 6vw, 72px); }
+  .entete-page { text-align: center; margin-bottom: 64px; display: flex; flex-direction: column; gap: 16px; align-items: center; }
+  .fil a:hover { color: var(--encre); }
+  .texte-rubrique { max-width: 62ch; margin: 8px auto 0; color: var(--texte); line-height: 1.7; }
+  .a-venir { text-align: center; }
+</style>

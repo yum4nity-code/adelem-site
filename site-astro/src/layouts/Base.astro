@@ -71,7 +71,7 @@ const orgLd = {
         <nav id="nav-principale" class="menu" aria-label="Navigation principale">
           <ul>
             {nav.map((l) => (
-              <li><a href={l.href} aria-current={current === l.href ? 'page' : undefined}>{l.label}</a></li>
+              <li><a href={l.href} aria-current={current === l.href || current.startsWith(l.href + '/') ? 'page' : undefined}>{l.label}</a></li>
             ))}
           </ul>
         </nav>

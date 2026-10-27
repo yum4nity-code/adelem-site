@@ -1,0 +1,8 @@
+---
+import { getCollection } from 'astro:content';
+import SalleGalerie from '../../components/SalleGalerie.astro';
+import { themes } from '../../data/galerie';
+const t = themes[1];
+const oeuvres = (await getCollection('oeuvres')).filter((o) => o.data.type === 'sculpture');
+---
+<SalleGalerie titre={t.nom} oeuvres={oeuvres} echelleLocale fil={[{ nom: 'Galerie', href: '/galerie' }]} />

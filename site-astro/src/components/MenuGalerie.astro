@@ -1,0 +1,29 @@
+---
+// Une page de la galerie qui ne montre que des titres (les thèmes, ou les collections des végétaux stabilisés).
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  titre: string;
+  fil?: { nom: string; href: string }[];
+  liens: readonly { nom: string; href: string }[];
+  description: string;
+}
+const { titre, fil = [], liens, description } = Astro.props;
+---
+<Base title={titre} description={description}>
+  <div class="wrap salle-page">
+    {fil.length > 0 && <nav class="discret fil" aria-label="Fil d’Ariane">{fil.map((f, i) => <>{i > 0 && ' / '}<a href={f.href}>{f.nom}</a></>)}</nav>}
+    <h1 class="titre-page">{titre}</h1>
+    <ul class="choix">
+      {liens.map((l) => <li><a href={l.href}>{l.nom}</a></li>)}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .salle-page { padding-top: clamp(40px, 6vw, 72px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .fil a:hover { color: var(--encre); }
+  .choix { list-style: none; margin: clamp(48px, 8vw, 96px) 0 0; padding: 0; display: flex; flex-direction: column; gap: clamp(28px, 4vw, 44px); }
+  .choix a { font: 300 clamp(1.9rem, 4vw, 2.8rem)/1.15 var(--serif); color: var(--encre); text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 10px; text-decoration-thickness: 1px; transition: text-decoration-color .3s ease, color .3s ease; display: inline-block; padding: 6px 0; }
+  .choix a:hover, .choix a:focus-visible { text-decoration-color: var(--or); color: var(--encre); }
+</style>
