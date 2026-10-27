@@ -33,6 +33,7 @@ type SanityOeuvre = {
   entretien?: string | null;
   certificat?: string | null;
   accueil?: boolean | null;
+  photo_rubrique?: boolean | null;
   lien_paiement?: string | null;
   livraison_france?: number | null;
   photos?: SanityPhoto[] | null;
@@ -41,7 +42,7 @@ type SanityOeuvre = {
 const QUERY = `*[_type == "oeuvre" && defined(titre) && defined(largeur_cm) && defined(hauteur_cm) && count(photos[defined(asset)]) > 0]
   | order(_createdAt desc) {
     _id, titre, sous_titre, collection, annee, type, statut, prix, largeur_cm, hauteur_cm, profondeur_cm, poids_kg,
-    matieres, cadre, provenance, histoire, entretien, certificat, accueil, lien_paiement, livraison_france,
+    matieres, cadre, provenance, histoire, entretien, certificat, accueil, photo_rubrique, lien_paiement, livraison_france,
     photos[defined(asset)]{ legende, alt, crop, hotspot, asset->{ _id, metadata { dimensions { width, height } } } }
   }`;
 
@@ -178,6 +179,7 @@ export async function oeuvresSanity() {
       photos: (o.photos ?? []).map((p, j) => photo(p, j, o, zones.get(p.asset!._id) ?? null)),
       ordre: i + 1,
       accueil: !!o.accueil,
+      photo_rubrique: !!o.photo_rubrique,
       lien_paiement: o.lien_paiement ?? null,
       livraison_france: o.livraison_france ?? null,
       demo: false,

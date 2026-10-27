@@ -65,6 +65,8 @@ const oeuvres = defineCollection({
       .min(1),
     ordre: z.number().default(100),
     accueil: z.boolean().default(false),
+    // Photo affichée derrière le titre de sa rubrique dans la galerie (sinon l'œuvre la plus récente).
+    photo_rubrique: z.boolean().default(false),
     demo: z.boolean().default(false), // œuvre d'exemple
   }),
 });

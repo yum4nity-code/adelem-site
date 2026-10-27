@@ -245,3 +245,8 @@
 - Titre « L'atelier » (taille des titres de page) ; « Artiste, oui / Artisane, surtout » à la taille des titres du menu de la galerie (« Végétaux stabilisés »).
 - Nouveau texte d'Adèle (document « Atelier »), typographie seule ajustée. Provenance : « végétaux du monde entier, traités en France », reprise dans À propos.
 - Les dates des cadres (1850–1970) disparaissent du texte Atelier à sa demande ; elles restent sur À propos et Cadres anciens tant qu'Adèle n'a pas tranché.
+
+## 2026-10-27 — Menus de la galerie : une photo derrière chaque titre
+- Chaque titre (Galerie et Végétaux stabilisés) est une tuile posée sur une photo assombrie. Téléphone : la tuile au milieu de l'écran s'éclaire ; ordinateur : au survol.
+- Photo choisie : l'œuvre cochée « Photo de la rubrique » dans l'admin (nouveau champ), sinon la plus récente de la rubrique (disponibles d'abord ; sa 2e photo si elle existe, sinon la vue de face).
+- Rubrique sans œuvre : image d'ambiance Unsplash (mousse, lichen, mains dans la terre, pétales), servie depuis images.unsplash.com, jamais un objet fini. Remplacée automatiquement dès la première pièce publiée.

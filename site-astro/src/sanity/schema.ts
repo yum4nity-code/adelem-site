@@ -207,6 +207,13 @@ export const oeuvre = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'photo_rubrique',
+      title: 'Photo de la rubrique',
+      description: 'Cochée : la photo de cette œuvre s’affiche derrière le titre de sa rubrique dans la galerie (Signature, Sculptures…). Sans case cochée, c’est l’œuvre la plus récente qui s’affiche.',
+      type: 'boolean',
+      initialValue: false,
+    }),
   ],
   orderings: [{ title: 'Plus récentes', name: 'recentes', by: [{ field: '_createdAt', direction: 'desc' }] }],
   preview: {

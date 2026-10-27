@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 import MenuGalerie from '../../components/MenuGalerie.astro';
-import { collectionsVegetaux } from '../../data/galerie';
+import { collectionsVegetaux, filtreCollection, photoRubrique } from '../../data/galerie';
+const oeuvres = await getCollection('oeuvres');
+const liens = collectionsVegetaux.map((c) => ({ ...c, photo: photoRubrique(oeuvres, filtreCollection(c.cle), c.ambiance) }));
 ---
-<MenuGalerie titre="Végétaux stabilisés" fil={[{ nom: 'Galerie', href: '/galerie' }]} liens={collectionsVegetaux} description="Tableaux en végétaux stabilisés : Signature, Cadres contemporains, Déco & cadeaux." />
+<MenuGalerie titre="Végétaux stabilisés" fil={[{ nom: 'Galerie', href: '/galerie' }]} liens={liens} description="Tableaux en végétaux stabilisés : Signature, Cadres contemporains, Déco & cadeaux." />

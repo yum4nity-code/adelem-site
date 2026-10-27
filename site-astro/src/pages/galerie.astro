@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 import MenuGalerie from '../components/MenuGalerie.astro';
-import { themes } from '../data/galerie';
+import { themes, filtreTheme, photoRubrique } from '../data/galerie';
+const oeuvres = await getCollection('oeuvres');
+const liens = themes.map((t) => ({ ...t, photo: photoRubrique(oeuvres, filtreTheme(t.cle), t.ambiance) }));
 ---
-<MenuGalerie titre="Galerie" liens={themes} description="Végétaux stabilisés, sculptures et fleurs en porcelaine froide : les pièces uniques d’Adelem." />
+<MenuGalerie titre="Galerie" liens={liens} description="Végétaux stabilisés, sculptures et fleurs en porcelaine froide : les pièces uniques d’Adelem." />
