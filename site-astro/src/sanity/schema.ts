@@ -168,7 +168,8 @@ export const oeuvre = defineType({
     }),
     defineField({
       name: 'poids_kg',
-      title: 'Poids (kg)',
+      title: 'Poids emballé (kg)',
+      description: 'Poids du colis prêt à partir (œuvre + emballage). Sert à calculer la livraison ; pas affiché sur le site.',
       type: 'number',
       validation: (r) => r.positive().max(200),
     }),
