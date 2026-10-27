@@ -25,13 +25,16 @@ const vendues = tri.filter((o) => o.data.statut === 'vendue');
       {texte && <p class="texte-rubrique">{texte}</p>}
     </div>
     <div class="wrap">
-      {dispo.length ? <Mur oeuvres={dispo} eager echelleLocale={echelleLocale} /> : <p class="discret a-venir">Les pièces arrivent bientôt.</p>}
+      {dispo.length > 0 && <Mur oeuvres={dispo} eager echelleLocale={echelleLocale} />}
+      {/* « Bientôt » seulement si la rubrique n'a aucune pièce du tout (une pièce vendue compte : elle s'affiche plus bas). */}
+      {dispo.length === 0 && vendues.length === 0 && <p class="discret a-venir">Les pièces arrivent bientôt.</p>}
     </div>
   </div>
   {vendues.length > 0 && (
-    <section class="wrap bloc">
+    <section class:list={['wrap', 'privee', { bloc: dispo.length > 0 }]}>
       <h2 class="titre-section">En collection privée</h2>
-      <Mur oeuvres={vendues} echelleLocale={echelleLocale} />
+      {dispo.length === 0 && <p class="discret a-venir">Ces pièces ont trouvé leur place. Les prochaines arrivent bientôt.</p>}
+      <Mur oeuvres={vendues} eager={dispo.length === 0} echelleLocale={echelleLocale} />
     </section>
   )}
 </Base>
@@ -42,4 +45,7 @@ const vendues = tri.filter((o) => o.data.statut === 'vendue');
   .fil a:hover { color: var(--encre); }
   .texte-rubrique { max-width: 62ch; margin: 8px auto 0; color: var(--texte); line-height: 1.7; white-space: pre-line; }
   .a-venir { text-align: center; }
+  .privee .titre-section { text-align: center; font-size: clamp(1.8rem, 3vw, 2.4rem); margin-bottom: 12px; }
+  .privee .a-venir { margin-bottom: 48px; }
+  .privee > :global(.mur) { margin-top: 48px; }
 </style>
