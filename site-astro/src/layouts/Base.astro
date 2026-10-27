@@ -127,6 +127,14 @@ const orgLd = {
         const o = n?.classList.toggle('ouvert');
         b.setAttribute('aria-expanded', String(!!o));
       });
+      // Fermer le menu : au choix d'un lien, au toucher hors du menu, et au retour arrière (le navigateur
+      // restaure la page telle qu'on l'a quittée, menu ouvert compris).
+      const fermer = () => { n?.classList.remove('ouvert'); b?.setAttribute('aria-expanded', 'false'); };
+      n?.querySelectorAll('a').forEach((a) => a.addEventListener('click', fermer));
+      document.addEventListener('click', (e) => {
+        if (n?.classList.contains('ouvert') && !n.contains(e.target as Node) && !b?.contains(e.target as Node)) fermer();
+      });
+      addEventListener('pageshow', fermer);
       n?.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && n.classList.contains('ouvert')) {
           n.classList.remove('ouvert');
