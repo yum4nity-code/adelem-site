@@ -255,3 +255,7 @@
 - Photo d'accueil cliquable : elle mène à la fiche de l'œuvre montrée (légende discrète « Titre → »). Photo choisie dans l'admin : nouveau champ « Œuvre montrée sur la photo » (Réglages de l'accueil) ; vide = photo non cliquable. Photo par défaut (photomontage) : Balade d'automne, par son identifiant Sanity (stable même si le titre change).
 - Destination tranchée : la fiche de l'œuvre (ni la galerie, ni le paiement direct).
 - Fiche : retour visible « ← Rubrique » en haut ; en bas, « Dans la même collection » (3 pièces, complétées par d'autres rubriques si besoin) + liens « Toute la collection … » et « La galerie ».
+
+## 2026-10-27 — Bas de page refait
+- Bande de confiance (Pièce unique · Fait main en France · Emballage sur mesure), signature, colonnes Explorer / Acheter / Contact (e-mail, Instagram, formulaire), « © Adelem · Mentions légales ». Espace vide au-dessus réduit.
+- « Recevoir les nouvelles pièces » : champ e-mail envoyé par Formspree (même formulaire que le contact). Adèle reçoit un e-mail par inscription ; Formspree conserve les adresses (point de départ de la future newsletter, à monter avec Gwen). Plan gratuit Formspree : 50 envois par mois, tous formulaires confondus.

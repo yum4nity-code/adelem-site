@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { site, nav, indexable } from '../data/site';
 import Analytics from '@vercel/analytics/astro';
 import IconeInstagram from '../components/IconeInstagram.astro';
+import Nouvelles from '../components/Nouvelles.astro';
 
 interface Props {
   title: string;
@@ -81,15 +82,43 @@ const orgLd = {
     <main id="contenu"><slot /></main>
 
     <footer class="pied">
+      <!-- Bas de page (décision du 2026-10-27) : repères de confiance, navigation complète, inscription aux nouvelles pièces. -->
+      <ul class="wrap confiance" aria-label="Nos engagements">
+        <li>Pièce unique</li>
+        <li>Fait main en France</li>
+        <li>Emballage sur mesure</li>
+      </ul>
       <div class="wrap pied-grille">
-        <p>Adelem</p>
-        <ul>
-          {site.contact.instagram && <li><a class="insta" href={site.contact.instagram} aria-label="Adelem sur Instagram" title="Instagram"><IconeInstagram /></a></li>}
-          <li><a href="/livraison">Emballage et livraison</a></li>
-          <li><a href="/mentions-legales">Mentions légales</a></li>
-          <li><a href="/cgv">Conditions de vente</a></li>
-        </ul>
+        <div class="pied-marque">
+          <a href="/" aria-label="Adelem, accueil"><img src="/logo/adelem-signature.svg" alt="Adelem" width="130" height="54" loading="lazy" /></a>
+          <p>Végétaux stabilisés, sculptures et fleurs en porcelaine froide.</p>
+        </div>
+        <nav class="pied-col" aria-label="Explorer">
+          <p class="pied-titre">Explorer</p>
+          <ul>
+            <li><a href="/galerie">Galerie</a></li>
+            <li><a href="/atelier">Atelier</a></li>
+            <li><a href="/a-propos">À propos</a></li>
+          </ul>
+        </nav>
+        <nav class="pied-col" aria-label="Acheter">
+          <p class="pied-titre">Acheter</p>
+          <ul>
+            <li><a href="/livraison">Emballage et livraison</a></li>
+            <li><a href="/cgv">Conditions de vente</a></li>
+          </ul>
+        </nav>
+        <div class="pied-col pied-contact">
+          <p class="pied-titre">Contact</p>
+          <ul>
+            {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
+            {site.contact.instagram && <li><a class="insta" href={site.contact.instagram}><IconeInstagram /> @adelem_nature</a></li>}
+            <li><a href="/contact">Écrire à l’atelier</a></li>
+          </ul>
+        </div>
+        <div class="pied-nouvelles"><Nouvelles /></div>
       </div>
+      <p class="wrap pied-bas">© {new Date().getFullYear()} Adelem · <a href="/mentions-legales">Mentions légales</a></p>
     </footer>
     <script>
       const b = document.querySelector('.menu-btn');
@@ -132,10 +161,23 @@ const orgLd = {
     .menu a { font: 400 1.15rem var(--serif); letter-spacing: .01em; padding: 0; }
     .menu a[aria-current='page'] { text-decoration: underline; text-underline-offset: 6px; }
   }
-  .pied { margin-top: clamp(96px, 12vw, 180px); border-top: 1px solid var(--trait); padding-block: 32px; font-size: .78rem; color: var(--discret); letter-spacing: .03em; }
-  .pied-grille { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; }
-  .pied ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .pied { margin-top: clamp(64px, 8vw, 120px); border-top: 1px solid var(--trait); padding-block: 0 28px; font-size: .86rem; color: var(--discret); }
+  .confiance { list-style: none; margin: 0 auto; padding: 22px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; border-bottom: 1px solid var(--trait); font: italic 300 1.05rem var(--serif); color: var(--texte); }
+  .confiance li { padding: 0 18px; }
+  .confiance li + li { border-left: 1px solid var(--trait); }
+  .pied-grille { display: grid; gap: 36px 40px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); padding-top: 48px; align-items: start; }
+  .pied-marque { display: flex; flex-direction: column; gap: 10px; }
+  .pied-marque img { width: 130px; height: auto; filter: invert(.92); opacity: .9; }
+  .pied-titre { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--discret); margin: 0 0 12px; }
+  .pied-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .pied-col a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; color: var(--texte); }
   .pied a:hover { color: var(--encre); }
-  .pied ul { align-items: center; }
-  .pied .insta { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin: -13px -13px; }
+  .pied-nouvelles { grid-column: 1 / -1; padding-top: 8px; }
+  @media (min-width: 1100px) { .pied-grille { grid-template-columns: 1.2fr .8fr .9fr 1.1fr 1.6fr; } .pied-nouvelles { grid-column: auto; padding-top: 0; } }
+  .pied-bas { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--trait); font-size: .74rem; }
+  @media (max-width: 600px) {
+    .confiance { font-size: .95rem; } .confiance li { padding: 0 10px; }
+    .pied-grille { grid-template-columns: 1fr 1fr; }
+    .pied-marque, .pied-contact, .pied-nouvelles { grid-column: 1 / -1; }
+  }
 </style>
