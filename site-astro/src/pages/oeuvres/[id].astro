@@ -36,7 +36,7 @@ const jsonld = {
     : {}),
 };
 ---
-<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d’Adelem.`} image={face.src} jsonld={jsonld}>
+<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d’Adelem.`} image={face.og ?? face.src} jsonld={jsonld}>
   <section class="wrap tete">
     <div class="oeuvre" data-galerie>
       <img id="vue-principale" src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />

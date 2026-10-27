@@ -265,3 +265,9 @@
 - Mentions légales complètes : adresse 116 rue du Vicariat, 82110 Cazes-Mondenard (fournie par Gwen, message d’Adèle du 28/09), téléphone +33 6 80 37 54 01, « TVA non applicable, art. 293 B du CGI » (confirmé par Gwen), hébergeur Vercel Inc. (vercel.com/legal/privacy-notice).
 - Mentions du « triptyque Herbier » retirées des pages Livraison et CGV.
 - À faire (Gwen en parle à Adèle) : le titre de l'accueil et le titre Google ne citent pas les fleurs en porcelaine froide.
+
+## 2026-10-27 — Aperçus de partage et données pour Google
+- Image de partage par défaut (public/partage.jpg, 1200 × 630) : le photomontage de l'accueil sous la signature, pour toutes les pages sans image propre (accueil, galerie, atelier…).
+- Fiches d'œuvres : aperçu 1200 × 630 dédié, l'œuvre entière sur le fond vert du site (les PNG détourés ne sortent plus noirs ou blancs).
+- Accueil : données « WebSite » (nom Adelem) pour que Google affiche le nom du site.
+- Favicon : proposition d'icône « A » de la signature en attente de validation (l'actuel badge cuivre, hérité de Lovable, est illisible en petit).
