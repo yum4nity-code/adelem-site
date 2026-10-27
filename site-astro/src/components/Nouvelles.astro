@@ -49,4 +49,12 @@ const endpoint = site.formEndpoint;
   input[type='email']:focus { outline: none; border-bottom-color: var(--or); }
   input::placeholder { color: var(--discret); }
   .note:focus { outline: none; }
+  @media (max-width: 600px) {
+    .nouvelles { gap: 6px; max-width: none; }
+    label { font-size: 1.05rem; }
+    .ligne { flex-wrap: nowrap; gap: 10px; }
+    input[type='email'] { flex: 1 1 auto; min-width: 0; }
+    .bouton { padding-inline: 16px; white-space: nowrap; }
+    .note { font-size: .72rem; }
+  }
 </style>

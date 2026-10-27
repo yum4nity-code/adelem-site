@@ -175,9 +175,19 @@ const orgLd = {
   .pied-nouvelles { grid-column: 1 / -1; padding-top: 8px; }
   @media (min-width: 1100px) { .pied-grille { grid-template-columns: 1.2fr .8fr .9fr 1.1fr 1.6fr; } .pied-nouvelles { grid-column: auto; padding-top: 0; } }
   .pied-bas { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--trait); font-size: .74rem; }
+  /* Téléphone : bas de page compact (retour de Gwen, 2026-10-27) — liens en lignes, sans titres de colonnes,
+     inscription en premier, sur une seule ligne. */
   @media (max-width: 600px) {
-    .confiance { font-size: .95rem; } .confiance li { padding: 0 10px; }
-    .pied-grille { grid-template-columns: 1fr 1fr; }
-    .pied-marque, .pied-contact, .pied-nouvelles { grid-column: 1 / -1; }
+    .confiance { font-size: .9rem; padding: 14px 0; } .confiance li { padding: 0 9px; }
+    .pied-grille { display: flex; flex-direction: column; gap: 4px; padding-top: 26px; }
+    .pied-marque { margin: 16px 0 8px; }
+    .pied-nouvelles { order: -1; padding-top: 0; }
+    .pied-marque { flex-direction: row; align-items: center; gap: 14px; }
+    .pied-marque img { width: 92px; }
+    .pied-marque p { display: none; }
+    .pied-titre { display: none; }
+    .pied-col ul { flex-direction: row; flex-wrap: wrap; gap: 0 18px; }
+    .pied-col a { min-height: 34px; font-size: .84rem; }
+    .pied-bas { margin-top: 18px; padding-top: 14px; }
   }
 </style>
