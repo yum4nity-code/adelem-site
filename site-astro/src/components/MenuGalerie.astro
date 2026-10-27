@@ -52,9 +52,13 @@ const { titre, fil = [], liens, description } = Astro.props;
   .tuile.vue img, .tuile:focus-visible img { opacity: .95; transform: scale(1); filter: saturate(1); }
   .tuile.vue::after, .tuile:focus-visible::after { background: radial-gradient(ellipse at center, rgba(10, 13, 10, .35), rgba(10, 13, 10, .62)); }
   .tuile:focus-visible span { text-decoration-color: var(--or); }
+  /* Ordinateur (retour de Gwen, 2026-10-27) : les photos sont claires d'emblée, comme sur téléphone quand la tuile est
+     au milieu de l'écran ; le survol ajoute un léger zoom, un peu plus de lumière et le soulignement doré. */
   @media (hover: hover) and (pointer: fine) {
-    .tuile:hover img { opacity: .95; transform: scale(1); filter: saturate(1); }
-    .tuile:hover::after { background: radial-gradient(ellipse at center, rgba(10, 13, 10, .35), rgba(10, 13, 10, .62)); }
+    .tuile img { opacity: .95; transform: scale(1); filter: saturate(1); }
+    .tuile::after { background: radial-gradient(ellipse at center, rgba(10, 13, 10, .35), rgba(10, 13, 10, .62)); }
+    .tuile:hover img { opacity: 1; transform: scale(1.04); filter: saturate(1.08) brightness(1.06); }
+    .tuile:hover::after { background: radial-gradient(ellipse at center, rgba(10, 13, 10, .22), rgba(10, 13, 10, .5)); }
     .tuile:hover span { text-decoration-color: var(--or); }
   }
   @media (prefers-reduced-motion: reduce) { .tuile img, .tuile::after { transition: none; } }
