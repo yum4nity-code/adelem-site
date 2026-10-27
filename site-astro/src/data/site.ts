@@ -24,7 +24,7 @@ export const site = {
   // Pour revenir à l'ancienne ouverture : src '/images/ouverture-sous-bois.webp', position '30% 50%', sans mode.
   photoOuverture: {
     src: '/images/ouverture-mur-desktop.webp',
-    srcMobile: '/images/ouverture-mur-mobile.webp',
+    srcMobile: '/images/ouverture-mur-mobile.jpg',
     position: 'center',
     mode: 'mur',
     // Œuvre montrée sur ce photomontage (identifiant Sanity) : un clic sur la photo mène à sa fiche.
