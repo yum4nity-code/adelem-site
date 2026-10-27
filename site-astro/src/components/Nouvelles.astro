@@ -13,7 +13,7 @@ const endpoint = site.formEndpoint;
     <label for="nouvelles-email">Recevoir les nouvelles pièces</label>
     <div class="ligne">
       <input id="nouvelles-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required placeholder="Votre e-mail" />
-      <button class="bouton" type="submit">S’inscrire</button>
+      <button class="envoyer" type="submit">Me prévenir <span aria-hidden="true">→</span></button>
     </div>
     <p class="discret note" role="status" tabindex="-1">Un e-mail quand une pièce sort de l’atelier, rien d’autre. Désinscription sur simple demande.</p>
   </form>
@@ -44,17 +44,21 @@ const endpoint = site.formEndpoint;
 <style>
   .nouvelles { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 440px; }
   label { font: 400 1.15rem var(--serif); color: var(--encre); letter-spacing: normal; text-transform: none; }
-  .ligne { display: flex; gap: 12px; align-items: stretch; flex-wrap: wrap; }
+  .ligne { display: flex; gap: 0; align-items: stretch; flex-wrap: nowrap; }
   input[type='email'] { flex: 1 1 200px; font: 400 1rem/1.5 var(--sans); color: var(--encre); background: transparent; border: 0; border-bottom: 1px solid rgba(236, 233, 224, .3); padding: 8px 0; border-radius: 0; }
   input[type='email']:focus { outline: none; border-bottom-color: var(--or); }
   input::placeholder { color: var(--discret); }
   .note:focus { outline: none; }
+  /* Bouton discret (retour de Gwen, 2026-10-27) : un lien souligné dans la continuité du champ, pas un bloc plein. */
+  .envoyer { background: none; border: 0; border-bottom: 1px solid rgba(236, 233, 224, .3); padding: 8px 0 8px 14px; cursor: pointer; font: italic 400 1.05rem/1.5 var(--serif); color: var(--encre); white-space: nowrap; transition: color .3s ease, border-color .3s ease; }
+  .envoyer span { display: inline-block; transition: transform .3s ease; }
+  .envoyer:hover, .envoyer:focus-visible { color: var(--or); border-bottom-color: var(--or); }
+  .envoyer:hover span { transform: translateX(3px); }
+  .envoyer:disabled { opacity: .5; }
   @media (max-width: 600px) {
     .nouvelles { gap: 6px; max-width: none; }
     label { font-size: 1.05rem; }
-    .ligne { flex-wrap: nowrap; gap: 10px; }
     input[type='email'] { flex: 1 1 auto; min-width: 0; }
-    .bouton { padding-inline: 16px; white-space: nowrap; }
     .note { font-size: .72rem; }
   }
 </style>
