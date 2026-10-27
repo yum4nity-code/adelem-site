@@ -69,7 +69,7 @@ const { titre, fil = [], liens, description, texte = null } = Astro.props;
   @media (min-width: 900px) {
     .choix { width: min(100%, 1180px); flex-direction: row; gap: clamp(18px, 2vw, 32px); }
     .choix li { flex: 1 1 0; min-width: 0; }
-    .tuile { height: auto; aspect-ratio: 3 / 4; max-height: 62vh; width: 100%; }
+    .tuile { height: auto; aspect-ratio: 3 / 4; max-height: max(320px, calc(100vh - 360px)); width: 100%; }
     .tuile span { font-size: clamp(1.6rem, 2.2vw, 2.2rem); text-align: center; }
   }
   @media (prefers-reduced-motion: reduce) { .tuile img, .tuile::after { transition: none; } }
