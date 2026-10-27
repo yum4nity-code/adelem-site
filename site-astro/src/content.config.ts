@@ -62,7 +62,7 @@ const oeuvres = defineCollection({
     livraison_france: z.number().nonnegative().nullable().optional(),
     // La première photo est la vue de face, aux proportions du cadre.
     photos: z
-      .array(z.object({ src: z.string(), mini: z.string().optional(), og: z.string().optional(), legende: z.string(), alt: z.string(), w: z.number().optional(), h: z.number().optional() }))
+      .array(z.object({ src: z.string(), mini: z.string().optional(), og: z.string().optional(), detoure: z.string().optional(), legende: z.string(), alt: z.string(), w: z.number().optional(), h: z.number().optional() }))
       .min(1),
     ordre: z.number().default(100),
     accueil: z.boolean().default(false),

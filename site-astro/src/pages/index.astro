@@ -31,11 +31,20 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
 // sinon la pièce dont la photo a été prise automatiquement.
 const idHero = choisie ? choisie.oeuvreId : (site.photoOuverture?.oeuvreId ?? null);
 const oeuvreHero = idHero ? collection.find((o) => o.data.sanity_id === idHero) : (!choisie && !site.photoOuverture ? heroSource : undefined);
+// Ordinateur, ouverture « mur » : le tableau n'est plus incrusté dans la photo du mur (trop peu de pixels en grand écran),
+// il est posé par-dessus, en pleine définition depuis la photo détourée de l'admin. Sans photo détourée : photomontage d'origine.
+const tableauNet = modeMur ? oeuvreHero?.data.photos[0].detoure : undefined;
 ---
 <Base title="Adelem" accueil>
   <section class={modeMur ? 'hero-pin hero-mur' : 'hero-pin'}>
     <div class="hero-fixe">
-      <div class="hero-photo" style={`--photo: url(${photoHero}); --photo-mobile: url(${photoHeroMobile}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
+      <div class:list={['hero-photo', { 'avec-tableau': tableauNet }]} style={`--photo: url(${tableauNet ? '/images/ouverture-mur-fond-desktop.webp' : photoHero}); --photo-mobile: url(${photoHeroMobile}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
+      {tableauNet && (
+        <picture>
+          <source media="(min-width: 820px)" srcset={tableauNet} />
+          <img class="tableau-mur" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" aria-hidden="true" decoding="async" fetchpriority="high" />
+        </picture>
+      )}
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-signature-droite.svg" alt="Adelem" width="380" height="172" />
       </div>
@@ -207,6 +216,21 @@ const oeuvreHero = idHero ? collection.find((o) => o.data.sanity_id === idHero) 
     .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - 80px), 240px); }
   }
   .hero-mur .indice { bottom: 14px; }
+  /* Tableau posé sur le mur (ordinateur) : même place et même taille que dans le photomontage d'origine.
+     Dans l'image 2560 × 1440 recadrée en « cover », le cadre fait 940 × 691 px, centré à l'horizontale, son centre à 57,5 px
+     sous le centre de l'image. --s = échelle de l'image à l'écran (px d'écran par px d'image). */
+  .tableau-mur { display: none; }
+  @media (min-width: 820px) {
+    .hero-mur .hero-fixe { --s: max(calc(100vw / 2560), calc(100dvh / 1440)); }
+    .tableau-mur {
+      display: block; position: absolute; z-index: 0; pointer-events: none;
+      width: calc(940 * var(--s)); height: calc(691 * var(--s)); object-fit: contain;
+      left: calc(50% - 470 * var(--s)); top: calc(50dvh + 57.5 * var(--s) - 345.5 * var(--s));
+      filter: drop-shadow(0 calc(18 * var(--s)) calc(28 * var(--s)) rgba(0, 0, 0, .55)) drop-shadow(0 2px 4px rgba(0, 0, 0, .4));
+      transition: filter .35s ease;
+    }
+    .hero-fixe:has(.hero-lien:active) .tableau-mur { filter: brightness(1.12) drop-shadow(0 calc(18 * var(--s)) calc(28 * var(--s)) rgba(0, 0, 0, .55)); }
+  }
   /* Accroche posée sous le tableau, comme un cartel de galerie (recalculer --cadre-bas si l'image change). */
   .accroche {
     position: absolute; left: 0; right: 0; z-index: 1; margin: 0; padding: 0 24px;

@@ -98,7 +98,9 @@ function photo(p: SanityPhoto, i: number, o: SanityOeuvre, occupee: Zone | null)
     const h = Math.round((w * o.hauteur_cm!) / o.largeur_cm!);
     // Aperçu de partage 1200 × 630 : l'œuvre entière sur le fond du site (un PNG détouré ne doit pas sortir noir ou blanc).
     const og = vue(o.largeur_cm! / o.hauteur_cm!).width(1200).height(630).fit('fill').bg('1B211B').format('jpg').quality(85).url();
-    return { src: vue(o.largeur_cm! / o.hauteur_cm!).width(w).height(h).fit('crop').auto('format').quality(82).url(), mini, og, legende, alt, w, h };
+    // Œuvre détourée (fond vide retiré, transparence gardée) : sert à l'ouverture de l'accueil, posée nette sur le mur.
+    const detoure = travail ? vue(null).width(2000).fit('max').auto('format').quality(90).url() : undefined;
+    return { src: vue(o.largeur_cm! / o.hauteur_cm!).width(w).height(h).fit('crop').auto('format').quality(82).url(), mini, og, detoure, legende, alt, w, h };
   }
   const d = p.asset!.metadata?.dimensions;
   const c = p.crop ?? { top: 0, bottom: 0, left: 0, right: 0 };
