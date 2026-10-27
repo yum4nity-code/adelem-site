@@ -38,7 +38,7 @@ const tableauNet = modeMur ? oeuvreHero?.data.photos[0].detoure : undefined;
 <Base title="Adelem" accueil>
   <section class={modeMur ? 'hero-pin hero-mur' : 'hero-pin'}>
     <div class="hero-fixe">
-      <div class:list={['hero-photo', { 'avec-tableau': tableauNet }]} style={`--photo: url(${tableauNet ? '/images/ouverture-mur-fond-desktop.webp' : photoHero}); --photo-mobile: url(${photoHeroMobile}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
+      <div class:list={['hero-photo', { 'avec-tableau': tableauNet }]} style={`--photo: url(${tableauNet ? '/images/ouverture-mur-fond-desktop.jpg' : photoHero}); --photo-mobile: url(${photoHeroMobile}); --position: ${positionHero}`} role={choisie?.alt ? 'img' : undefined} aria-label={choisie?.alt || undefined}></div>
       {tableauNet && (
         <picture>
           <source media="(min-width: 820px)" srcset={tableauNet} />

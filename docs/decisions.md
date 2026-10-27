@@ -284,3 +284,8 @@
 - Mesuré en ligne (définition de l'image ÷ taille affichée) sur accueil, galerie, rubriques, fiche, atelier.
 - Seul défaut corrigible : les vignettes « D'autres pièces » de la fiche (240 px servis pour ≈ 275 px affichés) → vignettes en 640 px.
 - Limites qui viennent des photos elles-mêmes (non corrigeables côté site) : certaines photos de détail envoyées dans l'admin sont petites (ex. PNG 1200 px où l'œuvre occupe ≈ 640 px) ; photo de l'atelier en 900 px. Pour plus de netteté : envoyer des photos plus grandes (≥ 2000 px côté œuvre).
+
+## 2026-10-27 — Fond d'ouverture sans marches de couleur (ordinateur)
+- Constat : le dégradé du mur avançait par paliers visibles (« banding ») : ≈ 40 teintes de vert seulement, et la compression WebP (42 Ko en 4K) aplatissait les nuances en plaques.
+- Correction : dégradé recalculé en précision continue (lissage large, la lumière du mur est inchangée : écart moyen < 0,3 niveau), grain fin + tramage ajoutés, enregistré en JPEG qualité 90 sans sous-échantillonnage des couleurs (≈ 400 Ko), format qui conserve le grain (le WebP l'effaçait, même en qualité 92).
+- Fichier : public/images/ouverture-mur-fond-desktop.jpg (l'ancien .webp reste dans l'historique Git). Téléphone inchangé (ne charge pas cette image).
