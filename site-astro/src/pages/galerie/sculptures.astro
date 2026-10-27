@@ -2,7 +2,9 @@
 import { getCollection } from 'astro:content';
 import SalleGalerie from '../../components/SalleGalerie.astro';
 import { themes } from '../../data/galerie';
+import { textesGalerieSanity } from '../../sanity/reglages';
 const t = themes[1];
+const textes = await textesGalerieSanity();
 const oeuvres = (await getCollection('oeuvres')).filter((o) => o.data.type === 'sculpture');
 ---
-<SalleGalerie titre={t.nom} oeuvres={oeuvres} echelleLocale fil={[{ nom: 'Galerie', href: '/galerie' }]} />
+<SalleGalerie titre={t.nom} texte={textes.sculptures ?? null} oeuvres={oeuvres} echelleLocale fil={[{ nom: 'Galerie', href: '/galerie' }]} />

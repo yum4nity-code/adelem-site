@@ -271,3 +271,7 @@
 - Fiches d'œuvres : aperçu 1200 × 630 dédié, l'œuvre entière sur le fond vert du site (les PNG détourés ne sortent plus noirs ou blancs).
 - Accueil : données « WebSite » (nom Adelem) pour que Google affiche le nom du site.
 - Icône du site (choix de Gwen, 2026-10-27) : image fournie par Gwen — badge « Adelem » en cuivre sur vert, cercle garni de mousse, lichen, écorce et feuillage (public/logo/adelem-badge-vegetal-photo.png), déclinée en 16 à 512 px. Essais écartés : « A » de la signature seul, icônes Canva, badge vectoriel avec mousse dessinée.
+
+## 2026-10-27 — Textes des rubriques modifiables dans l'admin
+- Nouveau document unique « Textes de la galerie » dans /admin : un texte par rubrique (Végétaux stabilisés, Signature, Cadres contemporains, Déco & cadeaux, Sculptures, Fleurs en porcelaine froide), affiché sous le titre de la page. Vide = rien n'est affiché ; Signature garde son texte actuel tant que la case est vide. Les retours à la ligne sont respectés.
+- À faire par Gwen : élargir le filtre du webhook Sanity à `_type in ["oeuvre", "reglages", "textesGalerie"]`, sinon modifier ces textes (ou la photo d'ouverture) ne relance pas la mise à jour du site.

@@ -22,6 +22,8 @@ export default defineConfig({
             S.divider(),
             // Document unique : les réglages de l'accueil (photo d'ouverture).
             S.listItem().title('Accueil').id('reglages').child(S.document().schemaType('reglages').documentId('reglages')),
+            // Document unique : les textes sous le titre de chaque rubrique de la galerie.
+            S.listItem().title('Textes de la galerie').id('textesGalerie').child(S.document().schemaType('textesGalerie').documentId('textesGalerie')),
           ]),
     }),
     frFRLocale(),

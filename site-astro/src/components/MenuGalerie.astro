@@ -9,13 +9,15 @@ interface Props {
   fil?: { nom: string; href: string }[];
   liens: { nom: string; href: string; photo: { src: string; oeuvre: boolean } }[];
   description: string;
+  texte?: string | null;
 }
-const { titre, fil = [], liens, description } = Astro.props;
+const { titre, fil = [], liens, description, texte = null } = Astro.props;
 ---
 <Base title={titre} description={description}>
   <div class="wrap salle-page">
     {fil.length > 0 && <nav class="discret fil" aria-label="Fil d’Ariane">{fil.map((f, i) => <>{i > 0 && ' / '}<a href={f.href}>{f.nom}</a></>)}</nav>}
     <h1 class="titre-page">{titre}</h1>
+    {texte && <p class="texte-rubrique">{texte}</p>}
     <ul class="choix">
       {liens.map((l, i) => (
         <li>
@@ -43,6 +45,7 @@ const { titre, fil = [], liens, description } = Astro.props;
 <style>
   .salle-page { padding-top: clamp(40px, 6vw, 72px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
   .fil a:hover { color: var(--encre); }
+  .texte-rubrique { max-width: 62ch; margin: 8px auto 0; color: var(--texte); line-height: 1.7; white-space: pre-line; }
   .choix { list-style: none; margin: clamp(40px, 6vw, 72px) 0 0; padding: 0; width: min(100%, 980px); display: flex; flex-direction: column; gap: clamp(16px, 2.4vw, 28px); }
   .tuile { position: relative; display: grid; place-items: center; overflow: hidden; height: clamp(170px, 30vw, 280px); border-radius: 2px; isolation: isolate; background: #121612; }
   .tuile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; opacity: .55; transform: scale(1.06); filter: saturate(.85); transition: opacity .9s ease, transform 1.4s cubic-bezier(.16, 1, .3, 1), filter .9s ease; }

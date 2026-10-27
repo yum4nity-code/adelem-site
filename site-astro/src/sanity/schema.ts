@@ -406,4 +406,22 @@ const reglages = defineType({
   preview: { prepare: () => ({ title: 'Réglages de l’accueil' }) },
 });
 
-export const schemaTypes = [oeuvre, carnet, herbier, reglages];
+// Textes affichés sous le titre de chaque rubrique de la galerie (document unique, demande d'Adèle du 2026-10-27).
+const champTexte = (name: string, title: string) =>
+  defineField({ name, title, type: 'text', rows: 4, description: 'Quelques phrases affichées sous le titre de la page. Laissez vide pour ne rien afficher.' });
+const textesGalerie = defineType({
+  name: 'textesGalerie',
+  title: 'Textes de la galerie',
+  type: 'document',
+  fields: [
+    champTexte('vegetaux', 'Végétaux stabilisés'),
+    champTexte('signature', 'Signature'),
+    champTexte('contemporain', 'Cadres contemporains'),
+    champTexte('deco', 'Déco & cadeaux'),
+    champTexte('sculptures', 'Sculptures'),
+    champTexte('fleurs', 'Fleurs en porcelaine froide'),
+  ],
+  preview: { prepare: () => ({ title: 'Textes de la galerie' }) },
+});
+
+export const schemaTypes = [oeuvre, carnet, herbier, reglages, textesGalerie];
