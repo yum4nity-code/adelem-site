@@ -279,3 +279,8 @@
 ## 2026-10-27 — Ouverture de l'accueil en pleine définition (ordinateur)
 - Le tableau n'est plus incrusté dans la photo du mur (2560 px de large, tableau à 940 px : flou sur grand écran). Sur ordinateur, le mur seul (public/images/ouverture-mur-fond-desktop.webp, 3840 × 2160, tableau retiré) sert de fond, et le tableau est posé par-dessus depuis sa photo détourée dans l'admin (≈ 1 400 px de cadre, servie par Sanity), avec une ombre portée en CSS. Même place, même taille que l'ancien montage (calcul dans index.astro).
 - Téléphone : photomontage d'origine inchangé. Sans photo détourée (photo choisie dans l'admin, ou autre œuvre), retour automatique à l'ancien comportement.
+
+## 2026-10-27 — Netteté des images sur ordinateur (audit des pages)
+- Mesuré en ligne (définition de l'image ÷ taille affichée) sur accueil, galerie, rubriques, fiche, atelier.
+- Seul défaut corrigible : les vignettes « D'autres pièces » de la fiche (240 px servis pour ≈ 275 px affichés) → vignettes en 640 px.
+- Limites qui viennent des photos elles-mêmes (non corrigeables côté site) : certaines photos de détail envoyées dans l'admin sont petites (ex. PNG 1200 px où l'œuvre occupe ≈ 640 px) ; photo de l'atelier en 900 px. Pour plus de netteté : envoyer des photos plus grandes (≥ 2000 px côté œuvre).

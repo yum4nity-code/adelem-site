@@ -91,7 +91,7 @@ function photo(p: SanityPhoto, i: number, o: SanityOeuvre, occupee: Zone | null)
   const alt = p.alt?.trim() || (i === 0 ? `${o.titre}, vue de face` : `${o.titre}, ${p.legende?.trim() || 'détail'}`);
   const legende = p.legende?.trim() || (i === 0 ? 'Face' : 'Détail');
   // Vignette carrée pour la rangée de photos sous l'œuvre (respecte le recadrage et le point d'intérêt).
-  const mini = vue(1).width(240).height(240).fit('crop').auto('format').quality(70).url();
+  const mini = vue(1).width(640).height(640).fit('crop').auto('format').quality(75).url(); // 640 : nette aussi dans « D’autres pièces » (≈ 275 px affichés, écrans haute densité)
   if (i === 0) {
     // Vue de face : recadrée exactement aux proportions réelles du cadre, pour l'accrochage à l'échelle.
     const w = 1600;
