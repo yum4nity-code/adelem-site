@@ -52,7 +52,10 @@ p { margin: 0; }
   display: inline-block; background: var(--encre); color: var(--mur); border: 0; cursor: pointer;
   padding: 16px 32px; font: 500 .75rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase;
 }
-.bouton:hover { background: #3a3e37; }
+/* Survol seulement avec une souris : sur téléphone, :hover reste collé après le toucher et le bouton paraissait
+   grisé au retour (bouton « Précédent »). Le fond reste clair pour garder le texte lisible. */
+@media (hover: hover) { .bouton:hover { background: #d9d3c6; } }
+.bouton:active { opacity: .85; }
 
 /* Pas de rectangle bleu au toucher sur Android (surbrillance par défaut du navigateur) : chaque lien a son propre retour visuel. */
 html { -webkit-tap-highlight-color: transparent; }

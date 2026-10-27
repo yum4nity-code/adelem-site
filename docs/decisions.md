@@ -305,3 +305,8 @@
 - Réglages : 1 paiement maximum, téléphone demandé, facture avec « TVA non applicable, art. 293 B du CGI », redirection /merci-achat, message si la pièce est déjà vendue.
 - Liens de test collés dans l'admin pour les 4 pièces disponibles ; invisibles des visiteurs (voir « Mode test des paiements »).
 - Reste : case CGV obligatoire (URL des CGV à renseigner dans Stripe › Paramètres › Informations publiques), puis refaire produits/tarifs/liens sur le compte réel au moment de l'activation (nouveau SIRET).
+
+## 2026-10-27 — Bouton d'achat : « Acquérir » seul, plus de bouton grisé au retour
+- Libellé « Acquérir » sans le prix (le prix est affiché juste au-dessus) — demande de Gwen.
+- Bouton grisé après « Précédent » sur téléphone : le survol (:hover) restait collé après le toucher, avec un fond sombre qui rendait le texte illisible. Survol réservé aux souris (`@media (hover: hover)`) et éclairci (#d9d3c6) pour rester lisible ; vérifié sur téléphone simulé (clic, retour) et ordinateur.
+- PayPal : non disponible sur le compte Stripe tant qu'il n'est pas activé dans le tableau de bord (Paramètres › Moyens de paiement › PayPal, conditions à accepter par le titulaire du compte) ; impossible par l'API.
