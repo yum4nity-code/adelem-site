@@ -6,6 +6,7 @@ import ContactForm from '../../components/ContactForm.astro';
 import BarreAchat from '../../components/BarreAchat.astro';
 import Prevenir from '../../components/Prevenir.astro';
 import Vignettes from '../../components/Vignettes.astro';
+import Suggestions from '../../components/Suggestions.astro';
 import { prix, site } from '../../data/site';
 import { pageDe } from '../../data/galerie';
 
@@ -42,7 +43,7 @@ const jsonld = {
       <Vignettes photos={d.photos} cible="vue-principale" />
     </div>
     <div class="infos">
-      <p class="discret"><a href="/galerie">Galerie</a> / <a href={rubrique.href}>{rubrique.nom}</a> / {d.titre}</p>
+      <a class="retour" href={rubrique.href}><span aria-hidden="true">←</span> {rubrique.nom}</a>
       <h1>{d.titre}</h1>
       {d.sous_titre && <p class="sous-titre">{d.sous_titre}</p>}
       {annee && <p class="annee">{annee}</p>}
@@ -93,6 +94,8 @@ const jsonld = {
     </>
   )}
 
+  <Suggestions oeuvre={oeuvre} />
+
   {achat && <BarreAchat titre={d.titre} prix={prix(d.prix)} lien={achat} />}
 </Base>
 
@@ -136,6 +139,9 @@ const jsonld = {
 </script>
 
 <style>
+  /* Retour vers la rubrique de l'œuvre : visible, assez grand pour le doigt. */
+  .retour { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 400 1.05rem var(--serif); color: var(--texte); align-self: flex-start; }
+  .retour:hover { color: var(--encre); }
   .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
   .oeuvre { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0; }
   .oeuvre > img {

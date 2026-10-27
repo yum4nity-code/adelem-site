@@ -159,6 +159,7 @@ export async function oeuvresSanity() {
     return {
       id: n > 1 ? `${base}-${n}` : base,
       titre: o.titre.trim(),
+      sanity_id: o._id,
       sous_titre: o.sous_titre?.trim() || null,
       collection: o.collection ?? 'signature',
       annee: o.annee ?? null,

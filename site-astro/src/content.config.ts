@@ -36,6 +36,7 @@ const oeuvres = defineCollection({
   },
   schema: z.object({
     titre: z.string(),
+    sanity_id: z.string().optional(), // identifiant Sanity (stable même si le titre change)
     sous_titre: z.string().nullable().optional(),
     // Rubrique de la galerie (décision du 2026-10-26) : Signature par défaut (cadre ancien).
     collection: z.enum(['signature', 'contemporain', 'deco']).default('signature'),

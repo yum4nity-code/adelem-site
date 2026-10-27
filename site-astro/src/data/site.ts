@@ -27,7 +27,9 @@ export const site = {
     srcMobile: '/images/ouverture-mur-mobile.webp',
     position: 'center',
     mode: 'mur',
-  } as { src: string; srcMobile?: string; position: string; mode?: 'mur' } | null,
+    // Œuvre montrée sur ce photomontage (identifiant Sanity) : un clic sur la photo mène à sa fiche.
+    oeuvreId: 'b2b4c0c1-2715-4419-ad5c-183b30562dbd', // Balade d'automne
+  } as { src: string; srcMobile?: string; position: string; mode?: 'mur'; oeuvreId?: string } | null,
   // Témoignages de clients, publiés avec leur accord. Liste vide = la section n'apparaît pas.
   // Dates au format AAAA-MM-JJ. Ne jamais inventer ni retoucher un témoignage (art. L121-4 du Code de la consommation).
   temoignages: [] as { texte: string; auteur: string; ville?: string; oeuvre?: string; dateAchat: string; datePublication: string }[],

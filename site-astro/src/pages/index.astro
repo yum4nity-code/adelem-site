@@ -26,6 +26,11 @@ const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'cent
 // dans l'administration (celles-ci restent des photos rectangulaires ordinaires, plein cadre).
 const modeMur = !choisie && site.photoOuverture?.mode === 'mur';
 const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) : photoHero;
+// Photo cliquable (décision du 2026-10-27) : elle mène à la fiche de l'œuvre qu'elle montre. Photo choisie dans l'admin :
+// l'œuvre indiquée dans « Œuvre montrée sur la photo » (aucune = pas cliquable). Photo par défaut : l'œuvre du photomontage,
+// sinon la pièce dont la photo a été prise automatiquement.
+const idHero = choisie ? choisie.oeuvreId : (site.photoOuverture?.oeuvreId ?? null);
+const oeuvreHero = idHero ? collection.find((o) => o.data.sanity_id === idHero) : (!choisie && !site.photoOuverture ? heroSource : undefined);
 ---
 <Base title="Adelem" accueil>
   <section class={modeMur ? 'hero-pin hero-mur' : 'hero-pin'}>
@@ -34,6 +39,11 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-signature-droite.svg" alt="Adelem" width="380" height="172" />
       </div>
+      {oeuvreHero && (
+        <a class="hero-lien" href={`/oeuvres/${oeuvreHero.id}`} aria-label={`Voir l’œuvre ${oeuvreHero.data.titre}`}>
+          <span class="legende">{oeuvreHero.data.titre} <span aria-hidden="true">→</span></span>
+        </a>
+      )}
       {modeMur && <p class="accroche">La nature entre chez vous</p>}
       <p class="indice" aria-hidden="true"><span>Découvrir</span></p>
     </div>
@@ -131,6 +141,11 @@ const photoHeroMobile = modeMur ? (site.photoOuverture?.srcMobile ?? photoHero) 
       linear-gradient(180deg, rgba(27, 33, 27, .55) 0%, rgba(27, 33, 27, .18) 22%, rgba(27, 33, 27, .3) 55%, rgba(27, 33, 27, .7) 82%, var(--mur) 100%);
   }
   /* Invitation discrète à faire défiler, en bas de l'ouverture. */
+  /* Lien de la photo d'ouverture : toute la photo est cliquable, une légende discrète le signale. */
+  .hero-lien { position: absolute; inset: 0; z-index: 1; display: block; }
+  .legende { position: absolute; right: var(--gutter); bottom: 30px; font: italic 300 1.05rem/1.2 var(--serif); color: var(--encre); opacity: .82; text-shadow: 0 1px 12px rgba(0, 0, 0, .7); padding: 10px 0; transition: opacity .3s ease; }
+  .hero-lien:hover .legende, .hero-lien:focus-visible .legende { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+  @media (max-width: 819px) { .legende { right: 0; left: 0; text-align: center; bottom: 92px; } .hero-mur .legende { bottom: 80px; } }
   .indice { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--encre); opacity: .8; }
   .indice::after { content: ''; width: 1px; height: 36px; background: linear-gradient(var(--encre), transparent); }
   /* Invitation à défiler : utile sur téléphone, retirée sur ordinateur (souris), demande du 2026-10-27. */

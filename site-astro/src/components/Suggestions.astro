@@ -1,0 +1,49 @@
+---
+// Bas de fiche (décision du 2026-10-27) : trois autres pièces pour rebondir, jamais de cul-de-sac.
+// D'abord la même rubrique (pièces disponibles d'abord), complétée au besoin par les autres rubriques.
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { pageDe } from '../data/galerie';
+import { prix } from '../data/site';
+
+interface Props { oeuvre: CollectionEntry<'oeuvres'> }
+const { oeuvre } = Astro.props;
+const rubrique = pageDe(oeuvre);
+const autres = (await getCollection('oeuvres')).filter((o) => o.id !== oeuvre.id);
+const rang = (o: CollectionEntry<'oeuvres'>) => (o.data.statut === 'vendue' ? 1 : 0);
+const tri = (a: CollectionEntry<'oeuvres'>, b: CollectionEntry<'oeuvres'>) => rang(a) - rang(b) || a.data.ordre - b.data.ordre;
+const memes = autres.filter((o) => pageDe(o).href === rubrique.href).sort(tri);
+const ailleurs = autres.filter((o) => pageDe(o).href !== rubrique.href && o.data.statut !== 'vendue').sort(tri);
+const choix = [...memes, ...ailleurs].slice(0, 3);
+const titre = memes.length >= choix.length ? 'Dans la même collection' : memes.length ? 'À découvrir aussi' : 'D’autres pièces';
+---
+{choix.length > 0 && (
+  <section class="wrap bloc suggestions" aria-labelledby="titre-suggestions">
+    <h2 class="titre-section" id="titre-suggestions">{titre}</h2>
+    <ul>
+      {choix.map((o) => (
+        <li>
+          <a href={`/oeuvres/${o.id}`}>
+            <span class="cadre"><img src={o.data.photos[0].mini ?? o.data.photos[0].src} alt={o.data.photos[0].alt} loading="lazy" decoding="async" /></span>
+            <span class="nom">{o.data.titre}</span>
+            <span class="discret">{o.data.statut === 'vendue' ? 'Collection privée' : o.data.statut === 'reservee' ? 'Réservée' : prix(o.data.prix)}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="suite">
+      <a class="lien" href={rubrique.href}>Toute la collection {rubrique.nom}</a>
+      <a class="lien secondaire" href="/galerie">La galerie</a>
+    </p>
+  </section>
+)}
+
+<style>
+  .suggestions ul { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: clamp(12px, 3vw, 40px); grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 900px; }
+  .suggestions li a { display: flex; flex-direction: column; gap: 6px; }
+  .cadre { display: block; aspect-ratio: 1; overflow: hidden; background: #121612; border-radius: 2px; }
+  .cadre img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
+  .nom { font: italic 300 clamp(1rem, 2.6vw, 1.25rem)/1.25 var(--serif); color: var(--encre); margin-top: 4px; }
+  .suggestions li .discret { font-size: .72rem; }
+  .suite { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; }
+  @media (hover: hover) and (pointer: fine) { .suggestions li a:hover img { transform: scale(1.04); } .suggestions li a:hover .nom { color: var(--or); } }
+</style>

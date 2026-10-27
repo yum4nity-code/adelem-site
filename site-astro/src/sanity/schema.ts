@@ -390,6 +390,13 @@ const reglages = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'oeuvreOuverture',
+      title: 'Œuvre montrée sur la photo',
+      description: 'Choisissez l’œuvre qu’on voit sur la photo : un clic sur la photo mènera à sa page. Laissez vide pour une photo d’atelier ou d’ambiance (la photo ne sera alors pas cliquable).',
+      type: 'reference',
+      to: [{ type: 'oeuvre' }],
+    }),
+    defineField({
       name: 'photoOuvertureAlt',
       title: 'Description de la photo (pour les malvoyants et Google)',
       description: 'Une phrase simple, par exemple : « Tableau de mousse accroché au-dessus d’une commode ».',

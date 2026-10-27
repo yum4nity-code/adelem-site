@@ -8,7 +8,7 @@ type Photo = { hotspot?: { x: number; y: number } | null; asset?: { _id: string 
 
 const builder = createImageUrlBuilder({ projectId: SANITY_PROJECT_ID, dataset: SANITY_DATASET });
 
-export async function photoOuvertureSanity(): Promise<{ src: string; position: string; alt: string } | null> {
+export async function photoOuvertureSanity(): Promise<{ src: string; position: string; alt: string; oeuvreId: string | null } | null> {
   if (process.env.ADELEM_DEMO === '1') return null;
   try {
     const client = createClient({
@@ -18,8 +18,8 @@ export async function photoOuvertureSanity(): Promise<{ src: string; position: s
       useCdn: false,
       perspective: 'published',
     });
-    const r = await client.fetch<{ photo: Photo; alt?: string | null } | null>(
-      `*[_id == "reglages"][0]{ "photo": photoOuverture{ hotspot, asset-> { _id } }, "alt": photoOuvertureAlt }`,
+    const r = await client.fetch<{ photo: Photo; alt?: string | null; oeuvreId?: string | null } | null>(
+      `*[_id == "reglages"][0]{ "photo": photoOuverture{ hotspot, asset-> { _id } }, "alt": photoOuvertureAlt, "oeuvreId": oeuvreOuverture._ref }`,
     );
     if (!r?.photo?.asset) return null;
     const h = r.photo.hotspot;
@@ -28,6 +28,7 @@ export async function photoOuvertureSanity(): Promise<{ src: string; position: s
       // Le point d'intérêt choisi dans l'administration reste visible quel que soit le recadrage de l'écran.
       position: h ? `${Math.round(h.x * 100)}% ${Math.round(h.y * 100)}%` : 'center',
       alt: r.alt ?? '',
+      oeuvreId: r.oeuvreId ?? null,
     };
   } catch {
     return null;

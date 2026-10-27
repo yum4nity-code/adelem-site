@@ -250,3 +250,8 @@
 - Chaque titre (Galerie et Végétaux stabilisés) est une tuile posée sur une photo assombrie. Téléphone : la tuile au milieu de l'écran s'éclaire ; ordinateur : au survol.
 - Photo choisie : l'œuvre cochée « Photo de la rubrique » dans l'admin (nouveau champ), sinon la plus récente de la rubrique (disponibles d'abord ; sa 2e photo si elle existe, sinon la vue de face).
 - Rubrique sans œuvre : image d'ambiance Unsplash (mousse, lichen, mains dans la terre, pétales), servie depuis images.unsplash.com, jamais un objet fini. Remplacée automatiquement dès la première pièce publiée.
+
+## 2026-10-27 — Parcours client : accueil → fiche → rebond
+- Photo d'accueil cliquable : elle mène à la fiche de l'œuvre montrée (légende discrète « Titre → »). Photo choisie dans l'admin : nouveau champ « Œuvre montrée sur la photo » (Réglages de l'accueil) ; vide = photo non cliquable. Photo par défaut (photomontage) : Balade d'automne, par son identifiant Sanity (stable même si le titre change).
+- Destination tranchée : la fiche de l'œuvre (ni la galerie, ni le paiement direct).
+- Fiche : retour visible « ← Rubrique » en haut ; en bas, « Dans la même collection » (3 pièces, complétées par d'autres rubriques si besoin) + liens « Toute la collection … » et « La galerie ».
