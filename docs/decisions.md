@@ -270,4 +270,4 @@
 - Image de partage par défaut (public/partage.jpg, 1200 × 630) : le photomontage de l'accueil sous la signature, pour toutes les pages sans image propre (accueil, galerie, atelier…).
 - Fiches d'œuvres : aperçu 1200 × 630 dédié, l'œuvre entière sur le fond vert du site (les PNG détourés ne sortent plus noirs ou blancs).
 - Accueil : données « WebSite » (nom Adelem) pour que Google affiche le nom du site.
-- Icône du site remplacée (validée par Gwen) : le « A » de la signature, crème sur le vert du site, traits épaissis selon la taille (16, 32, 48, 96, 180, 192, 512 px), manifeste site.webmanifest ; le logo déclaré à Google devient icon-512.png. Ancien badge cuivre (Lovable) retiré, récupérable dans l’historique Git.
+- Icône du site (choix de Gwen, 2026-10-27) : le badge rond Adelem d’origine, en cuivre sur le vert du site, traits épaissis, galets remplacés par de la mousse, une fougère et du lichen (public/logo/adelem-badge-vegetal.svg). Essais écartés : le « A » de la signature seul, et des icônes générées dans Canva (jugées « plus Adelem »).
