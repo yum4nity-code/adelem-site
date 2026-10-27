@@ -290,3 +290,6 @@
 - Correction : dégradé recalculé en précision continue (lissage large, la lumière du mur est inchangée : écart moyen < 0,3 niveau), grain fin + tramage ajoutés, enregistré en JPEG qualité 90 sans sous-échantillonnage des couleurs (≈ 400 Ko), format qui conserve le grain (le WebP l'effaçait, même en qualité 92).
 - Fichier : public/images/ouverture-mur-fond-desktop.jpg (l'ancien .webp reste dans l'historique Git). Téléphone inchangé (ne charge pas cette image).
 - Même traitement pour l'image du téléphone (public/images/ouverture-mur-mobile.jpg, ≈ 370 Ko) : mur lissé + grain, tableau et ombre de contact gardés pixel pour pixel (zone du cadre x 99–981, y 947–1597 conservée telle quelle).
+
+## 2026-10-27 — Signature d'accueil remontée de 18 px (mobile et ordinateur)
+- L'écart signature → cadre (≈ 22 px) était plus petit que cadre → accroche ; la signature paraissait posée sur le cadre. Écart porté à 40 px (index.astro, .hero-mur .marque-hero), taille de la signature inchangée.
