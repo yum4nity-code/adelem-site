@@ -82,3 +82,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .etapes strong { display: block; font: 400 1.5rem/1.2 var(--serif); color: var(--encre); margin-bottom: 6px; }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Champs remplis automatiquement par le navigateur (e-mail, nom…) : Chrome les peint en blanc ou bleu clair.
+   On garde le fond du site et le texte clair (retour de Gwen, 2026-10-27). */
+:root { color-scheme: dark; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
+textarea:-webkit-autofill, select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--mur) inset;
+  box-shadow: 0 0 0 1000px var(--mur) inset;
+  -webkit-text-fill-color: var(--encre);
+  caret-color: var(--encre);
+  transition: background-color 99999s ease-out 0s;
+}
