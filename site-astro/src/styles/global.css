@@ -53,6 +53,8 @@ p { margin: 0; }
 }
 .bouton:hover { background: #3a3e37; }
 
+/* Pas de rectangle bleu au toucher sur Android (surbrillance par défaut du navigateur) : chaque lien a son propre retour visuel. */
+html { -webkit-tap-highlight-color: transparent; }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: 2px solid var(--encre); outline-offset: 3px;
 }

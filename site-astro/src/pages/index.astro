@@ -145,6 +145,12 @@ const oeuvreHero = idHero ? collection.find((o) => o.data.sanity_id === idHero) 
   .hero-lien { position: absolute; inset: 0; z-index: 1; display: block; }
   .legende { position: absolute; right: var(--gutter); bottom: 30px; font: italic 300 1.05rem/1.2 var(--serif); color: var(--encre); opacity: .82; text-shadow: 0 1px 12px rgba(0, 0, 0, .7); padding: 10px 0; transition: opacity .3s ease; }
   .hero-lien:hover .legende, .hero-lien:focus-visible .legende { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+  .hero-lien:focus { outline: none; }
+  .hero-lien:focus-visible { outline: 1px solid var(--or); outline-offset: -8px; }
+  /* Au toucher : la photo s'éclaircit doucement et la légende se souligne, au lieu d'un rectangle de couleur. */
+  .hero-photo { transition: filter .35s ease; }
+  .hero-fixe:has(.hero-lien:active) .hero-photo { filter: brightness(1.12); }
+  .hero-lien:active .legende { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
   @media (max-width: 819px) { .legende { right: 0; left: 0; text-align: center; bottom: 92px; } .hero-mur .legende { bottom: 80px; } }
   .indice { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--encre); opacity: .8; }
   .indice::after { content: ''; width: 1px; height: 36px; background: linear-gradient(var(--encre), transparent); }
