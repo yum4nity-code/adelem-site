@@ -274,4 +274,4 @@
 
 ## 2026-10-27 — Textes des rubriques modifiables dans l'admin
 - Nouveau document unique « Textes de la galerie » dans /admin : un texte par rubrique (Végétaux stabilisés, Signature, Cadres contemporains, Déco & cadeaux, Sculptures, Fleurs en porcelaine froide), affiché sous le titre de la page. Vide = rien n'est affiché ; Signature garde son texte actuel tant que la case est vide. Les retours à la ligne sont respectés.
-- À faire par Gwen : élargir le filtre du webhook Sanity à `_type in ["oeuvre", "reglages", "textesGalerie"]`, sinon modifier ces textes (ou la photo d'ouverture) ne relance pas la mise à jour du site.
+- Webhook Sanity → Vercel vérifié le 2026-10-27 : aucun filtre (création, modification, suppression de tout document du jeu production) ; les textes de la galerie et la photo d’ouverture relancent donc bien la mise à jour du site. Rien à changer.
