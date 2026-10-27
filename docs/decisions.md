@@ -293,3 +293,8 @@
 
 ## 2026-10-27 — Signature d'accueil remontée de 18 px (mobile et ordinateur)
 - L'écart signature → cadre (≈ 22 px) était plus petit que cadre → accroche ; la signature paraissait posée sur le cadre. Écart porté à 40 px (index.astro, .hero-mur .marque-hero), taille de la signature inchangée.
+
+## 2026-10-27 — Mode test des paiements Stripe
+- Un lien de paiement Stripe de test (buy.stripe.com/test_…) collé dans l'admin n'affiche PAS le bouton « Acquérir » aux visiteurs : ils voient toujours « Demander cette œuvre ».
+- Pour tester : ouvrir une fiche avec `?test-paiement` (mémorisé sur l'appareil, mention « Mode test · aucun vrai paiement ») ; `?test-paiement=non` pour revenir à la vue visiteur.
+- Un vrai lien (sans « test_ ») s'affiche pour tout le monde, sans rien changer au code : c'est le passage en production.

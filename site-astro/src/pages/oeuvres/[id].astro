@@ -21,6 +21,9 @@ const rubrique = pageDe(oeuvre); // page de la galerie où se trouve l'œuvre
 const disponible = d.statut === 'disponible';
 const annee = d.statut === 'vendue' ? d.annee : null; // année affichée seulement pour les pièces vendues
 const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
+// Lien Stripe de test (buy.stripe.com/test_…) : bouton caché aux visiteurs, visible seulement en « mode test »
+// (ouvrir une page avec ?test-paiement, désactiver avec ?test-paiement=non). Un vrai lien s'affiche pour tout le monde.
+const achatTest = !!achat && /\/test_/.test(achat);
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
@@ -61,11 +64,20 @@ const jsonld = {
           <a class="lien secondaire" href={rubrique.href}>Voir les pièces disponibles</a>
         </div>
       ) : achat ? (
-        <div class="liens">
+        <>
+        <div class="liens" data-paiement-test={achatTest ? '' : undefined} hidden={achatTest}>
+          {achatTest && <p class="mode-test">Mode test · aucun vrai paiement</p>}
           <a class="bouton" href={achat} data-achat>Acquérir — {prix(d.prix)}</a>
           <p class="discret rassure">Paiement sécurisé, en une fois ou en 3 fois · 14 jours pour changer d’avis</p>
           <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
         </div>
+        {achatTest && (
+          <div class="liens" data-sans-paiement-test>
+            <a class="lien" href="#demande">Demander cette œuvre</a>
+            <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
+          </div>
+        )}
+        </>
       ) : (
         <div class="liens">
           <a class="lien" href="#demande">Demander cette œuvre</a>
@@ -99,6 +111,21 @@ const jsonld = {
   {achat && <BarreAchat titre={d.titre} prix={prix(d.prix)} lien={achat} />}
 </Base>
 
+<script>
+  // Mode test des paiements : mémorisé sur cet appareil, jamais visible des visiteurs ordinaires.
+  {
+    let actif = false;
+    try {
+      const q = new URLSearchParams(location.search).get('test-paiement');
+      if (q !== null) localStorage.setItem('adelem-test-paiement', q === 'non' ? '' : '1');
+      actif = localStorage.getItem('adelem-test-paiement') === '1';
+    } catch {}
+    if (actif) {
+      document.querySelector('[data-paiement-test]')?.removeAttribute('hidden');
+      document.querySelector('[data-sans-paiement-test]')?.setAttribute('hidden', '');
+    }
+  }
+</script>
 <script>
   // Description : coupée à 5 lignes si elle est plus longue, avec « … » et « Lire la suite » / « Réduire ».
   // Coupe faite en script, à un mot entier, ponctuation finale retirée : jamais de « textures.… ».
@@ -139,6 +166,7 @@ const jsonld = {
 </script>
 
 <style>
+  .mode-test { margin: 0 0 4px; font: 500 .7rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #e0a96d; }
   /* Retour vers la rubrique de l'œuvre : visible, assez grand pour le doigt. */
   .retour { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 400 1.05rem var(--serif); color: var(--texte); align-self: flex-start; }
   .retour:hover { color: var(--encre); }
@@ -156,6 +184,7 @@ const jsonld = {
   .infos .discret a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   .infos .discret a:hover { color: var(--encre); }
   .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .liens[hidden] { display: none; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
   .rassure { margin-top: -6px; }
   .histoire { max-width: 34em; }
