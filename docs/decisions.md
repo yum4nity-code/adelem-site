@@ -298,3 +298,10 @@
 - Un lien de paiement Stripe de test (buy.stripe.com/test_…) collé dans l'admin n'affiche PAS le bouton « Acquérir » aux visiteurs : ils voient toujours « Demander cette œuvre ».
 - Pour tester : ouvrir une fiche avec `?test-paiement` (mémorisé sur l'appareil, mention « Mode test · aucun vrai paiement ») ; `?test-paiement=non` pour revenir à la vue visiteur.
 - Un vrai lien (sans « test_ ») s'affiche pour tout le monde, sans rien changer au code : c'est le passage en production.
+
+## 2026-10-27 — Paiements Stripe en mode test (compte « Adelem sandbox »)
+- Tarifs de livraison : France 0 € (livraison offerte) ; Europe ≤ 2 kg 25 € ; 2 à 5 kg 30 € ; > 5 kg 50 € (poids emballé de l'admin).
+- Un seul lien de paiement par pièce (une pièce unique ne doit pas pouvoir être vendue deux fois) : pays FR, MC, BE, LU, CH, DE, IT, ES, NL ; deux options proposées : « Livraison offerte en France » et le forfait Europe de la pièce. Stripe ne sait pas lier un tarif à un pays sur un lien de paiement : un client européen pourrait choisir l'option France ; message affiché au paiement pour l'éviter, à contrôler à l'expédition.
+- Réglages : 1 paiement maximum, téléphone demandé, facture avec « TVA non applicable, art. 293 B du CGI », redirection /merci-achat, message si la pièce est déjà vendue.
+- Liens de test collés dans l'admin pour les 4 pièces disponibles ; invisibles des visiteurs (voir « Mode test des paiements »).
+- Reste : case CGV obligatoire (URL des CGV à renseigner dans Stripe › Paramètres › Informations publiques), puis refaire produits/tarifs/liens sur le compte réel au moment de l'activation (nouveau SIRET).
