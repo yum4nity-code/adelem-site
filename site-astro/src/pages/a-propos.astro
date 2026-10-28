@@ -10,6 +10,13 @@ import Base from '../layouts/Base.astro';
     <p class="texte">Ce qu’il faut savoir sur les matières et les pièces Adelem, avant de choisir et une fois chez vous.</p>
   </section>
 
+  <section class="wrap adelem">
+    <h2>Adelem</h2>
+    <p>Fascinée depuis toujours par la nature, son cycle, ses merveilles… Tellement triste de voir ces bouquets coupés durer si peu et se faner alors qu’ils embellissaient notre quotidien, j’ai commencé par modeler les fleurs le plus près possible de leur réalité, pour qu’elles paraissent presque vivantes et surtout éternelles. Pas de plastique, ni même de soie… Ce sont mes fleurs en porcelaine froide.</p>
+    <p>Puis, toujours curieuse, je me suis intéressée de longue date aux végétaux stabilisés, du vrai végétal figé à un moment donné, d’une durée de vie d’au moins 10 ans selon les fournisseurs. Le procédé de conservation à base de produits naturels et écologiques, ainsi que la transformation en France avec des normes légales, ont fini de me convaincre.</p>
+    <p>J’ai mis à profit une formation en encadrement pour sublimer mes créations et redonner vie à des cadres anciens. Le travail de la terre, plus particulièrement du grès, découle directement de ma passion pour la nature, les mains « dans la terre ». Je travaille seule. Mes créations sont mes « bébés ».</p>
+  </section>
+
   <section class="wrap rubriques">
     <article>
       <h2>Le végétal stabilisé</h2>
@@ -26,7 +33,7 @@ import Base from '../layouts/Base.astro';
     </article>
     <article>
       <h2>Les cadres anciens</h2>
-      <p>Pour la collection Signature, un cadre ancien, généralement daté d’environ 1850 à 1970, est chiné puis restauré dans le respect de son vécu, avant d’accueillir la composition. Il en donne le format, la profondeur et le rythme.</p>
+      <p>Pour la collection Signature, un cadre ancien est chiné puis restauré dans le respect de son vécu, avant d’accueillir la composition. Il en donne le format, la profondeur et le rythme.</p>
       <a class="lien" href="/cadres-anciens">Le cadre participe à l’œuvre</a>
     </article>
     <article>
@@ -49,6 +56,9 @@ import Base from '../layouts/Base.astro';
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
+  .adelem { margin-top: clamp(48px, 7vw, 88px); max-width: 40em; display: flex; flex-direction: column; gap: 16px; }
+  .adelem h2 { font: 400 1.9rem/1.2 var(--serif); }
+  .adelem p { margin: 0; font-size: 1.05rem; line-height: 1.85; color: var(--texte); }
   .rubriques { margin-top: clamp(56px, 8vw, 96px); display: grid; gap: clamp(40px, 6vw, 72px) clamp(32px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
   .rubriques article { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
   .rubriques h2 { font: 400 1.6rem/1.2 var(--serif); }

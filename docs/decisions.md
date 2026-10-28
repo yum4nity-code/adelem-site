@@ -326,3 +326,8 @@
 - Gardé le style du site (serif, angles droits, pas de carte arrondie) et la vue du tableau à l'échelle avec ses vignettes.
 - Retiré la ligne « Paiement sécurisé… » (Gwen : déjà visible sur la page de paiement).
 - Livraison offerte en France validée par Adèle : page Livraison, CGV (art. 3 et 6) et fiche mises à jour. Le champ « Livraison en France (€) » n'est plus affiché.
+
+## 2026-10-28 — Texte « Adelem » d'Adèle sur À propos ; plus aucune date de cadre
+- Texte d'Adèle placé en tête de À propos (titre « Adelem », 3 paragraphes). Corrections validées par Gwen : « garantie 10 ans par les fournisseurs » → « au moins 10 ans selon les fournisseurs » (ne pas laisser croire à une garantie Adelem), « terre cuite » → « la terre » (le grès n'est pas de la terre cuite), « vintages » → « anciens ».
+- « Ancien » plutôt que « vintage » (plus haut de gamme, cohérent avec la collection Signature) ; Atelier corrigé aussi.
+- Adèle craint de devoir prouver l'âge des cadres : une date ou un siècle associé à un objet engage le vendeur (décret n° 81-255) ; « ancien » seul n'en donne pas. Fourchette « 1850 à 1970 » retirée de À propos et Cadres anciens. Règle : aucune date ni siècle sur une fiche sans preuve (étiquette, facture, expertise) ; décrire le cadre plutôt que son âge.
