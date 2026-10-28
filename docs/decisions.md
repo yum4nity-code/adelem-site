@@ -335,3 +335,8 @@
 ## 2026-10-28 — Pièce réservée
 - Plus de gros bouton « Demander cette œuvre » sur une pièce réservée (faux espoir, demandes à refuser). À la place : « Réservée » + prix en petit, inscription « Être prévenu si elle se libère » (sujet du mail : « Être prévenu si « titre » se libère »), lien « Voir les pièces disponibles ». Ni « Livraison offerte », ni question, ni formulaire en bas pour une pièce réservée.
 - Dimensions de la ligne prix au format français (47,5 et non 47.5).
+
+## 2026-10-28 — Vente Stripe → pièce « Vendue » automatiquement
+- Fonction Vercel `api/stripe-webhook.mjs` (https://www.adelem.fr/api/stripe-webhook) : Stripe l'appelle après un paiement ; signature vérifiée (HMAC, 5 min de tolérance) ; pièce retrouvée par la métadonnée « oeuvre » du lien, sinon (clé restreinte facultative) par l'adresse du lien collée dans l'admin ; statut passé à « vendue » (version publiée + brouillon s'il existe). Le webhook Sanity existant reconstruit le site.
+- Secrets uniquement dans Vercel (STRIPE_WEBHOOK_SECRET, SANITY_WRITE_TOKEN, STRIPE_API_KEY facultative), créés par Gwen.
+- Testé hors ligne : vente → 2 mises à jour ; signature fausse ou trop vieille → refus ; autres événements et paiements non aboutis ignorés.
