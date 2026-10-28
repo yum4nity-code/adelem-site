@@ -321,3 +321,8 @@
 
 - Adèle : la phrase automatique des fiches était fausse (« à l’abri de la lumière directe ») ; c'est le **soleil direct** qu'il faut éviter, pas la lumière. Elle demande aussi de retirer « courant » après « entretien », et de garder la phrase.
 - Nouvelle phrase (fiches œuvres non-sculptures + Herbier) : « Matières naturelles stabilisées : elles gardent forme et couleur sans arrosage ni entretien, à l’abri du soleil direct. »
+## 2026-10-28 — Fiche œuvre réorganisée (proposition de Gwen, ajustée) + livraison offerte en France
+- Ordre : étiquette-retour « ← Signature · Pièce unique » ; titre ; accroche (sous-titre) ; prix et dimensions sur une ligne ; bouton pleine largeur « Acquérir cette pièce » ; « Livraison offerte en France · Sans arrosage ni entretien » ; « Une question sur cette pièce ? » ; histoire (3 lignes + Lire la suite) ; volets « Matières et dimensions », « Entretien », « Livraison et retours ».
+- Gardé le style du site (serif, angles droits, pas de carte arrondie) et la vue du tableau à l'échelle avec ses vignettes.
+- Retiré la ligne « Paiement sécurisé… » (Gwen : déjà visible sur la page de paiement).
+- Livraison offerte en France validée par Adèle : page Livraison, CGV (art. 3 et 6) et fiche mises à jour. Le champ « Livraison en France (€) » n'est plus affiché.

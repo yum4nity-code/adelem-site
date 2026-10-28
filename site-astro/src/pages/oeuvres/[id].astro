@@ -46,18 +46,14 @@ const jsonld = {
       <Vignettes photos={d.photos} cible="vue-principale" />
     </div>
     <div class="infos">
-      <a class="retour" href={rubrique.href}><span aria-hidden="true">←</span> {rubrique.nom}</a>
+      <a class="etiquette" href={rubrique.href}><span aria-hidden="true">←</span> {rubrique.nom} · Pièce unique</a>
       <h1>{d.titre}</h1>
       {d.sous_titre && <p class="sous-titre">{d.sous_titre}</p>}
       {annee && <p class="annee">{annee}</p>}
-      {d.histoire && (
-        <div class="histoire" data-replie>
-          <p id="description-oeuvre">{d.histoire}</p>
-          <button type="button" class="lire-suite" aria-controls="description-oeuvre" aria-expanded="false" hidden>Lire la suite</button>
-        </div>
-      )}
-      <Cartel oeuvre={oeuvre} long />
-      <p class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</p>
+      <p class="ligne-prix">
+        <span class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</span>
+        <span class="taille">{d.largeur_cm} × {d.hauteur_cm} cm</span>
+      </p>
       {d.statut === 'vendue' ? (
         <div class="liens">
           <Prevenir piece={d.titre} />
@@ -67,35 +63,57 @@ const jsonld = {
         <>
         <div class="liens" data-paiement-test={achatTest ? '' : undefined} hidden={achatTest}>
           {achatTest && <p class="mode-test">Mode test · aucun vrai paiement</p>}
-          <a class="bouton" href={achat} data-achat>Acquérir</a>
-          <p class="discret rassure">Paiement sécurisé, en une fois ou en 3 fois · 14 jours pour changer d’avis</p>
-          <a class="lien secondaire" href={`/contact?piece=${encodeURIComponent(d.titre)}`}>Une question sur cette pièce ?</a>
+          <a class="bouton achat" href={achat} data-achat>Acquérir cette pièce</a>
         </div>
         {achatTest && (
           <div class="liens" data-sans-paiement-test>
-            <a class="lien" href="#demande">Demander cette œuvre</a>
-            <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
+            <a class="bouton achat" href="#demande">Demander cette œuvre</a>
           </div>
         )}
         </>
       ) : (
         <div class="liens">
-          <a class="lien" href="#demande">Demander cette œuvre</a>
-          <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
+          <a class="bouton achat" href="#demande">Demander cette œuvre</a>
         </div>
       )}
-      <p class="discret">Pièce unique, signée au dos. <a href="/livraison">Emballage et livraison</a> dans le monde entier{d.livraison_france != null && d.statut !== 'vendue' && <>, en France : {prix(d.livraison_france)}</>}.</p>
-      {d.certificat && <p class="discret">{d.certificat}</p>}
+      {d.statut !== 'vendue' && (
+        <p class="atouts">Livraison offerte en France{d.type === 'tableau' && <> · Sans arrosage ni entretien</>}</p>
+      )}
+      {d.statut !== 'vendue' && <a class="lien secondaire question" href={achat ? `/contact?piece=${encodeURIComponent(d.titre)}` : '#demande'}>Une question sur cette pièce ?</a>}
+      {d.histoire && (
+        <div class="histoire" data-replie>
+          <p id="description-oeuvre">{d.histoire}</p>
+          <button type="button" class="lire-suite" aria-controls="description-oeuvre" aria-expanded="false" hidden>Lire la suite</button>
+        </div>
+      )}
+      <div class="volets">
+        <details>
+          <summary>Matières et dimensions</summary>
+          <div class="volet">
+            <Cartel oeuvre={oeuvre} long />
+            <p>Pièce unique, signée au dos.</p>
+            {d.certificat && <p>{d.certificat}</p>}
+          </div>
+        </details>
+        {d.entretien && (
+          <details>
+            <summary>Entretien</summary>
+            <div class="volet"><p>{d.entretien}</p></div>
+          </details>
+        )}
+        <details>
+          <summary>Livraison et retours</summary>
+          <div class="volet">
+            <p>Livraison offerte en France et à Monaco, en Colissimo avec signature. Ailleurs en Europe, forfait selon le poids du colis, affiché au paiement ; reste du monde sur devis.</p>
+            <p>Expédition sous 3 à 5 jours ouvrés, dans un emballage sur mesure. 14 jours après réception pour changer d’avis.</p>
+            <p><a href="/livraison">Emballage et livraison en détail</a></p>
+          </div>
+        </details>
+      </div>
     </div>
   </section>
 
 
-  {d.entretien && (
-    <section class="wrap bloc entretien">
-      <h2 class="titre-section">Entretien</h2>
-      <p>{d.entretien}</p>
-    </section>
-  )}
 
   {/* Formulaire « Demander » seulement quand la pièce ne s'achète pas en ligne.
       Achat en ligne : un simple lien « Une question sur cette pièce ? » vers /contact (pièce pré-remplie). */}
@@ -127,7 +145,7 @@ const jsonld = {
   }
 </script>
 <script>
-  // Description : coupée à 5 lignes si elle est plus longue, avec « … » et « Lire la suite » / « Réduire ».
+  // Description : coupée à 3 lignes si elle est plus longue, avec « … » et « Lire la suite » / « Réduire ».
   // Coupe faite en script, à un mot entier, ponctuation finale retirée : jamais de « textures.… ».
   const bloc = document.querySelector<HTMLElement>('[data-replie]');
   if (bloc) {
@@ -139,7 +157,7 @@ const jsonld = {
     const couper = () => {
       texte.textContent = complet;
       if (ouvert) return;
-      const max = parseFloat(getComputedStyle(texte).lineHeight) * 5 + 2;
+      const max = parseFloat(getComputedStyle(texte).lineHeight) * 3 + 2;
       if (texte.offsetHeight <= max) { bouton.hidden = true; return; }
       bouton.hidden = false;
       let bas = 1, haut = mots.length - 1;
@@ -168,8 +186,23 @@ const jsonld = {
 <style>
   .mode-test { margin: 0 0 4px; font: 500 .7rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #e0a96d; }
   /* Retour vers la rubrique de l'œuvre : visible, assez grand pour le doigt. */
-  .retour { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 400 1.05rem var(--serif); color: var(--texte); align-self: flex-start; }
-  .retour:hover { color: var(--encre); }
+  /* Étiquette = retour vers la rubrique : « ← Signature · Pièce unique ». */
+  .etiquette { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 500 .72rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
+  .etiquette:hover { color: var(--encre); }
+  .ligne-prix { align-self: stretch; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 4px 0 0; }
+  .taille { font-size: .92rem; color: var(--texte); }
+  .bouton.achat { align-self: stretch; text-align: center; padding: 20px 32px; font-size: .82rem; }
+  .atouts { align-self: stretch; text-align: center; margin: -4px 0 0; font-size: .88rem; color: var(--texte); }
+  .question { align-self: center; }
+  .volets { align-self: stretch; border-top: 1px solid var(--trait); margin-top: 6px; }
+  .volets details { border-bottom: 1px solid var(--trait); }
+  .volets summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 64px; font: 400 1.3rem var(--serif); color: var(--encre); }
+  .volets summary::-webkit-details-marker { display: none; }
+  .volets summary::after { content: '+'; font: 300 1.5rem var(--sans); color: var(--or); }
+  .volets details[open] summary::after { content: '–'; }
+  .volet { padding: 0 0 22px; display: flex; flex-direction: column; gap: 10px; font-size: .95rem; line-height: 1.75; color: var(--texte); }
+  .volet p { margin: 0; }
+  .volet a { color: var(--encre); text-decoration: underline; text-underline-offset: 2px; }
   .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
   .oeuvre { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0; }
   .oeuvre > img {
@@ -183,13 +216,13 @@ const jsonld = {
   .prix { font: 400 1.9rem var(--serif); color: var(--encre); }
   .infos .discret a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   .infos .discret a:hover { color: var(--encre); }
-  .liens { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+  .liens { align-self: stretch; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
   .liens[hidden] { display: none; }
   .secondaire { color: var(--texte); border-color: var(--trait); }
   .rassure { margin-top: -6px; }
   .histoire { max-width: 34em; }
   .histoire p { font-size: 1.02rem; line-height: 1.75; color: var(--texte); white-space: pre-line; }
-  /* Description longue : coupée à 5 lignes par le script ; sans JavaScript, le texte reste entier. */
+  /* Description longue : coupée à 3 lignes par le script ; sans JavaScript, le texte reste entier. */
   .lire-suite { display: block; margin: 4px 0 0; min-height: 44px; padding: 0; background: none; border: 0; cursor: pointer; color: var(--or); font: 400 .78rem var(--sans); letter-spacing: .16em; text-transform: uppercase; }
   .lire-suite[hidden] { display: none; }
   .lire-suite:hover, .lire-suite:focus-visible { color: var(--encre); text-decoration: underline; text-underline-offset: 4px; }
