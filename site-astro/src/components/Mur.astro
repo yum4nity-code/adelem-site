@@ -100,10 +100,12 @@ const largeurAffichee = (l: number, h: number) => {
   .piece:focus-visible .voir { opacity: 1; transform: none; }
   .sous { position: absolute; top: calc(100% + 22px); left: 0; width: max(100%, 190px); }
   /* Téléphone : une œuvre par rangée, cartel centré dessous. Les murs de sculptures (échelle locale) gardent un minimum
-     de 72 % de la largeur ; les tableaux suivent la règle du plus grand côté (voir largeurAffichee). */
+     de 72 % de la largeur (plafonné en hauteur) ; les tableaux suivent la règle du plus grand côté (voir largeurAffichee). */
   @media (max-width: 600px) {
     .piece { max-width: calc(100vw - 48px); }
-    .mur.locale .piece { width: max(calc(var(--cm) * var(--l)), 72vw); }
+    /* … sans dépasser 62 % de la hauteur de l'écran : une sculpture haute et étroite (largeur minimum de 72 %) devenait
+       démesurée (2026-10-28). La largeur est ramenée à 62svh × (largeur / hauteur). */
+    .mur.locale .piece { width: min(max(calc(var(--cm) * var(--l)), 72vw), calc(62svh * (var(--r)))); }
     .sous { left: 50%; transform: translateX(-50%); width: max(100%, 260px); }
     .sous :global(.cartel) { align-items: center; text-align: center; }
   }

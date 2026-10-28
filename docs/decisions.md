@@ -340,3 +340,6 @@
 - Fonction Vercel `api/stripe-webhook.mjs` (https://www.adelem.fr/api/stripe-webhook) : Stripe l'appelle après un paiement ; signature vérifiée (HMAC, 5 min de tolérance) ; pièce retrouvée par la métadonnée « oeuvre » du lien, sinon (clé restreinte facultative) par l'adresse du lien collée dans l'admin ; statut passé à « vendue » (version publiée + brouillon s'il existe). Le webhook Sanity existant reconstruit le site.
 - Secrets uniquement dans Vercel (STRIPE_WEBHOOK_SECRET, SANITY_WRITE_TOKEN, STRIPE_API_KEY facultative), créés par Gwen.
 - Testé hors ligne : vente → 2 mises à jour ; signature fausse ou trop vieille → refus ; autres événements et paiements non aboutis ignorés.
+
+## 2026-10-28 — Sculpture démesurée sur téléphone
+- Le minimum de 72 % de largeur des murs de sculptures rendait une pièce haute et étroite énorme (plus haute que l'écran). Hauteur plafonnée à 62 % de l'écran (largeur = 62svh × largeur/hauteur) ; testé : 26 × 39 inchangé, 15 × 40 passe de ≈ 790 px à 520 px de haut.
