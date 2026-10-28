@@ -3,22 +3,22 @@ import { site } from '../data/site';
 
 // Inscription « être prévenu des prochaines pièces », proposée quand une pièce est vendue ou épuisée,
 // pour qu'une pièce partie continue d'ouvrir la relation au lieu d'être une impasse.
-interface Props { piece?: string }
-const { piece } = Astro.props;
+interface Props { piece?: string; reservee?: boolean }
+const { piece, reservee = false } = Astro.props;
 const endpoint = site.formEndpoint;
 ---
 {endpoint && (
   <form class="prevenir" method="post" action={endpoint}>
-    <input type="hidden" name="_subject" value={piece ? `Être prévenu des prochaines pièces (depuis ${piece})` : 'Être prévenu des prochaines pièces'} />
+    <input type="hidden" name="_subject" value={reservee && piece ? `Être prévenu si « ${piece} » se libère` : piece ? `Être prévenu des prochaines pièces (depuis ${piece})` : 'Être prévenu des prochaines pièces'} />
     <input type="hidden" name="_next" value={`${site.url}/merci`} />
     <input type="hidden" name="newsletter" value="oui" />
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
-    <label for="prevenir-email">Être prévenu des prochaines pièces</label>
+    <label for="prevenir-email">{reservee ? 'Être prévenu si elle se libère' : 'Être prévenu des prochaines pièces'}</label>
     <div class="ligne">
       <input id="prevenir-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required placeholder="Votre e-mail" />
       <button class="bouton" type="submit">Me prévenir</button>
     </div>
-    <p class="discret">Un e-mail de temps en temps, quand une pièce sort de l’atelier. Désinscription sur simple demande.</p>
+    <p class="discret">{reservee ? 'Un e-mail si elle se libère, puis de temps en temps quand une pièce sort de l’atelier.' : 'Un e-mail de temps en temps, quand une pièce sort de l’atelier.'} Désinscription sur simple demande.</p>
   </form>
 )}
 

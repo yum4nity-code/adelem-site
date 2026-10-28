@@ -7,7 +7,7 @@ import BarreAchat from '../../components/BarreAchat.astro';
 import Prevenir from '../../components/Prevenir.astro';
 import Vignettes from '../../components/Vignettes.astro';
 import Suggestions from '../../components/Suggestions.astro';
-import { prix, site } from '../../data/site';
+import { prix, site, dims } from '../../data/site';
 import { pageDe } from '../../data/galerie';
 
 export async function getStaticPaths() {
@@ -51,12 +51,17 @@ const jsonld = {
       {d.sous_titre && <p class="sous-titre">{d.sous_titre}</p>}
       {annee && <p class="annee">{annee}</p>}
       <p class="ligne-prix">
-        <span class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? 'Réservée' : prix(d.prix)}</span>
-        <span class="taille">{d.largeur_cm} × {d.hauteur_cm} cm</span>
+        <span class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? <>Réservée{d.prix ? <small class="prix-reserve">{prix(d.prix)}</small> : null}</> : prix(d.prix)}</span>
+        <span class="taille">{dims(d.largeur_cm, d.hauteur_cm)}</span>
       </p>
       {d.statut === 'vendue' ? (
         <div class="liens">
           <Prevenir piece={d.titre} />
+          <a class="lien secondaire" href={rubrique.href}>Voir les pièces disponibles</a>
+        </div>
+      ) : d.statut === 'reservee' ? (
+        <div class="liens">
+          <Prevenir piece={d.titre} reservee />
           <a class="lien secondaire" href={rubrique.href}>Voir les pièces disponibles</a>
         </div>
       ) : achat ? (
@@ -76,10 +81,10 @@ const jsonld = {
           <a class="bouton achat" href="#demande">Demander cette œuvre</a>
         </div>
       )}
-      {d.statut !== 'vendue' && (
+      {d.statut === 'disponible' && (
         <p class="atouts">Livraison offerte en France{d.type === 'tableau' && <> · Sans arrosage ni entretien</>}</p>
       )}
-      {d.statut !== 'vendue' && <a class="lien secondaire question" href={achat ? `/contact?piece=${encodeURIComponent(d.titre)}` : '#demande'}>Une question sur cette pièce ?</a>}
+      {d.statut === 'disponible' && <a class="lien secondaire question" href={achat ? `/contact?piece=${encodeURIComponent(d.titre)}` : '#demande'}>Une question sur cette pièce ?</a>}
       {d.histoire && (
         <div class="histoire" data-replie>
           <p id="description-oeuvre">{d.histoire}</p>
@@ -117,7 +122,7 @@ const jsonld = {
 
   {/* Formulaire « Demander » seulement quand la pièce ne s'achète pas en ligne.
       Achat en ligne : un simple lien « Une question sur cette pièce ? » vers /contact (pièce pré-remplie). */}
-  {d.statut !== 'vendue' && (!achat || achatTest) && (
+  {d.statut === 'disponible' && (!achat || achatTest) && (
     <section id="demande" class="wrap bloc duo haut" data-sans-paiement-test={achatTest ? '' : undefined}>
       <h2 class="titre-section">Demander {d.titre}</h2>
       <ContactForm oeuvre={d.titre} />
@@ -190,6 +195,7 @@ const jsonld = {
   .etiquette { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 500 .72rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
   .etiquette:hover { color: var(--encre); }
   .ligne-prix { align-self: stretch; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 4px 0 0; }
+  .prix-reserve { margin-left: 14px; font: 400 1rem var(--sans); color: var(--discret); vertical-align: middle; }
   .taille { font-size: .92rem; color: var(--texte); }
   .bouton.achat { align-self: stretch; text-align: center; padding: 20px 32px; font-size: .82rem; }
   .atouts { align-self: stretch; text-align: center; margin: -4px 0 0; font-size: .88rem; color: var(--texte); }

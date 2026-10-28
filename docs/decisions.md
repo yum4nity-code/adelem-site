@@ -331,3 +331,7 @@
 - Texte d'Adèle placé en tête de À propos (titre « Adelem », 3 paragraphes). Corrections validées par Gwen : « garantie 10 ans par les fournisseurs » → « au moins 10 ans selon les fournisseurs » (ne pas laisser croire à une garantie Adelem), « terre cuite » → « la terre » (le grès n'est pas de la terre cuite), « vintages » → « anciens ».
 - « Ancien » plutôt que « vintage » (plus haut de gamme, cohérent avec la collection Signature) ; Atelier corrigé aussi.
 - Adèle craint de devoir prouver l'âge des cadres : une date ou un siècle associé à un objet engage le vendeur (décret n° 81-255) ; « ancien » seul n'en donne pas. Fourchette « 1850 à 1970 » retirée de À propos et Cadres anciens. Règle : aucune date ni siècle sur une fiche sans preuve (étiquette, facture, expertise) ; décrire le cadre plutôt que son âge.
+
+## 2026-10-28 — Pièce réservée
+- Plus de gros bouton « Demander cette œuvre » sur une pièce réservée (faux espoir, demandes à refuser). À la place : « Réservée » + prix en petit, inscription « Être prévenu si elle se libère » (sujet du mail : « Être prévenu si « titre » se libère »), lien « Voir les pièces disponibles ». Ni « Livraison offerte », ni question, ni formulaire en bas pour une pièce réservée.
+- Dimensions de la ligne prix au format français (47,5 et non 47.5).
