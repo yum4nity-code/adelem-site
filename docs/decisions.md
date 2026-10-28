@@ -310,3 +310,9 @@
 - Libellé « Acquérir » sans le prix (le prix est affiché juste au-dessus) — demande de Gwen.
 - Bouton grisé après « Précédent » sur téléphone : le survol (:hover) restait collé après le toucher, avec un fond sombre qui rendait le texte illisible. Survol réservé aux souris (`@media (hover: hover)`) et éclairci (#d9d3c6) pour rester lisible ; vérifié sur téléphone simulé (clic, retour) et ordinateur.
 - PayPal : non disponible sur le compte Stripe tant qu'il n'est pas activé dans le tableau de bord (Paramètres › Moyens de paiement › PayPal, conditions à accepter par le titulaire du compte) ; impossible par l'API.
+
+## 2026-10-28 — Fiche avec achat en ligne : formulaire de question, barre d'achat
+
+- Constat de Gwen (mobile, mode test) : sous le bouton « Acquérir », le formulaire restait titré « Demander [œuvre] », et la barre d'achat fixée en bas recouvrait le bouton « Envoyer ».
+- Quand une pièce a un lien de paiement, le formulaire est conservé (questions : livraison hors zone, détails) mais titré « Une question sur [œuvre] ? ». Sans lien de paiement, rien ne change (« Demander [œuvre] »). En mode test, le titre suit le mode test.
+- La barre d'achat mobile s'efface tant que le formulaire est à l'écran ; elle revient plus bas (suggestions).

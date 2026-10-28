@@ -14,11 +14,18 @@ const { titre, prix, lien } = Astro.props;
   const cible = document.querySelector('[data-achat]');
   if (barre && cible) {
     barre.hidden = false;
+    // Elle s'efface aussi quand le formulaire de question (#demande) est à l'écran,
+    // pour ne jamais recouvrir son bouton « Envoyer » ni un champ en cours de saisie.
+    const formulaire = document.getElementById('demande');
     let attente = false;
     const maj = () => {
       attente = false;
-      barre.classList.toggle('visible', cible.getBoundingClientRect().bottom < 0);
+      const passe = cible.getBoundingClientRect().bottom < 0;
+      const f = formulaire?.getBoundingClientRect();
+      const surFormulaire = !!f && f.top < innerHeight && f.bottom > 0;
+      barre.classList.toggle('visible', passe && !surFormulaire);
     };
+    addEventListener('resize', () => { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
     addEventListener('scroll', () => { if (!attente) { attente = true; requestAnimationFrame(maj); } }, { passive: true });
     maj();
   }

@@ -100,7 +100,14 @@ const jsonld = {
   {d.statut !== 'vendue' && (
     <>
       <section id="demande" class="wrap bloc duo haut">
-        <h2 class="titre-section">Demander {d.titre}</h2>
+        {/* Achat en ligne possible : le formulaire sert aux questions, pas à « demander » la pièce. */}
+        {achat && !achatTest ? (
+          <h2 class="titre-section">Une question sur {d.titre} ?</h2>
+        ) : achatTest ? (
+          <h2 class="titre-section"><span data-titre-sans-achat>Demander {d.titre}</span><span data-titre-achat hidden>Une question sur {d.titre} ?</span></h2>
+        ) : (
+          <h2 class="titre-section">Demander {d.titre}</h2>
+        )}
         <ContactForm oeuvre={d.titre} />
       </section>
     </>
@@ -123,6 +130,8 @@ const jsonld = {
     if (actif) {
       document.querySelector('[data-paiement-test]')?.removeAttribute('hidden');
       document.querySelector('[data-sans-paiement-test]')?.setAttribute('hidden', '');
+      document.querySelector('[data-titre-sans-achat]')?.setAttribute('hidden', '');
+      document.querySelector('[data-titre-achat]')?.removeAttribute('hidden');
     }
   }
 </script>
