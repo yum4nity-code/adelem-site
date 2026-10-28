@@ -14,7 +14,7 @@ const statut = d.statut === 'vendue' ? 'Collection privée' : d.statut === 'rese
   <p class="titre">{d.titre}{annee && <span>, {annee}</span>}</p>
   {d.matieres.length > 0 && <p>{d.matieres.join(', ')}</p>}
   {long && d.type === 'tableau' && (
-    <p class="stabilise">Matières naturelles stabilisées : elles gardent forme et couleur sans arrosage ni entretien courant, à l’abri de la lumière directe.</p>
+    <p class="stabilise">Matières naturelles stabilisées : elles gardent forme et couleur sans arrosage ni entretien, à l’abri du soleil direct.</p>
   )}
   {d.cadre && <p>{d.cadre}</p>}
   {long && d.provenance && <p>{d.provenance}</p>}

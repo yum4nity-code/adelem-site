@@ -316,3 +316,8 @@
 - Constat de Gwen (mobile, mode test) : sous le bouton « Acquérir », le formulaire restait titré « Demander [œuvre] », et la barre d'achat fixée en bas recouvrait le bouton « Envoyer ».
 - Décision de Gwen (même jour, après un premier essai qui gardait le formulaire retitré « Une question sur… ? ») : formulaire jugé trop lourd sous le bouton d'achat, d'autant que l'inscription aux nouvelles pièces suit en bas de page. Quand une pièce a un lien de paiement, **plus de formulaire sur la fiche** : seul le lien « Une question sur cette pièce ? » reste, vers `/contact?piece=[titre]`, qui reprend la pièce dans l'objet (« Question : … »), un champ caché et le début du message. Sans lien de paiement, rien ne change (formulaire « Demander [œuvre] »). En mode test, l'affichage suit le mode test.
 - La barre d'achat mobile s'efface tant que le formulaire est à l'écran ; elle revient plus bas (suggestions).
+
+## 2026-10-28 — Phrase fixe sur le végétal stabilisé corrigée (demande d'Adèle)
+
+- Adèle : la phrase automatique des fiches était fausse (« à l’abri de la lumière directe ») ; c'est le **soleil direct** qu'il faut éviter, pas la lumière. Elle demande aussi de retirer « courant » après « entretien », et de garder la phrase.
+- Nouvelle phrase (fiches œuvres non-sculptures + Herbier) : « Matières naturelles stabilisées : elles gardent forme et couleur sans arrosage ni entretien, à l’abri du soleil direct. »
