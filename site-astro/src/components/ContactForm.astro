@@ -12,7 +12,7 @@ const fichiersActifs = site.formFileUploads;
     <input type="hidden" name="_subject" value={oeuvre ? `Demande : ${oeuvre}` : 'Nouvelle demande depuis adelem.fr'} />
     <input type="hidden" name="_next" value={`${site.url}/merci`} />
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
-    {oeuvre && <input type="hidden" name="oeuvre" value={oeuvre} />}
+    {oeuvre ? <input type="hidden" name="oeuvre" value={oeuvre} /> : <input type="hidden" name="oeuvre" value="" disabled data-piece-url />}
     <div class="deux">
       <label>Nom<input name="nom" autocomplete="name" required /></label>
       <label>E-mail<input name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required /></label>
@@ -57,6 +57,21 @@ const fichiersActifs = site.formFileUploads;
 </style>
 
 <script>
+  // Page Contact ouverte depuis une fiche (« Une question sur cette pièce ? » → /contact?piece=Titre) :
+  // la pièce est reprise dans l'objet, un champ caché et le début du message.
+  {
+    const piece = (new URLSearchParams(location.search).get('piece') ?? '').trim().slice(0, 120);
+    const champ = document.querySelector<HTMLInputElement>('form.formulaire [data-piece-url]');
+    const form = champ?.form;
+    if (piece && champ && form) {
+      champ.value = piece;
+      champ.disabled = false;
+      const sujet = form.querySelector<HTMLInputElement>('input[name="_subject"]');
+      if (sujet) sujet.value = `Question : ${piece}`;
+      const message = form.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+      if (message && !message.value) message.value = `Bonjour, à propos de ${piece} :`;
+    }
+  }
   // Amélioration progressive : sans JS, le formulaire fonctionne déjà nativement
   // (POST classique vers Formspree + redirection _next vers /merci).
   // Avec JS, on intercepte pour éviter les doubles envois et afficher une

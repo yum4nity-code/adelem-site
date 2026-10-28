@@ -69,7 +69,7 @@ const jsonld = {
           {achatTest && <p class="mode-test">Mode test · aucun vrai paiement</p>}
           <a class="bouton" href={achat} data-achat>Acquérir</a>
           <p class="discret rassure">Paiement sécurisé, en une fois ou en 3 fois · 14 jours pour changer d’avis</p>
-          <a class="lien secondaire" href="#demande">Une question sur cette pièce ?</a>
+          <a class="lien secondaire" href={`/contact?piece=${encodeURIComponent(d.titre)}`}>Une question sur cette pièce ?</a>
         </div>
         {achatTest && (
           <div class="liens" data-sans-paiement-test>
@@ -97,20 +97,13 @@ const jsonld = {
     </section>
   )}
 
-  {d.statut !== 'vendue' && (
-    <>
-      <section id="demande" class="wrap bloc duo haut">
-        {/* Achat en ligne possible : le formulaire sert aux questions, pas à « demander » la pièce. */}
-        {achat && !achatTest ? (
-          <h2 class="titre-section">Une question sur {d.titre} ?</h2>
-        ) : achatTest ? (
-          <h2 class="titre-section"><span data-titre-sans-achat>Demander {d.titre}</span><span data-titre-achat hidden>Une question sur {d.titre} ?</span></h2>
-        ) : (
-          <h2 class="titre-section">Demander {d.titre}</h2>
-        )}
-        <ContactForm oeuvre={d.titre} />
-      </section>
-    </>
+  {/* Formulaire « Demander » seulement quand la pièce ne s'achète pas en ligne.
+      Achat en ligne : un simple lien « Une question sur cette pièce ? » vers /contact (pièce pré-remplie). */}
+  {d.statut !== 'vendue' && (!achat || achatTest) && (
+    <section id="demande" class="wrap bloc duo haut" data-sans-paiement-test={achatTest ? '' : undefined}>
+      <h2 class="titre-section">Demander {d.titre}</h2>
+      <ContactForm oeuvre={d.titre} />
+    </section>
   )}
 
   <Suggestions oeuvre={oeuvre} />
@@ -129,9 +122,7 @@ const jsonld = {
     } catch {}
     if (actif) {
       document.querySelector('[data-paiement-test]')?.removeAttribute('hidden');
-      document.querySelector('[data-sans-paiement-test]')?.setAttribute('hidden', '');
-      document.querySelector('[data-titre-sans-achat]')?.setAttribute('hidden', '');
-      document.querySelector('[data-titre-achat]')?.removeAttribute('hidden');
+      document.querySelectorAll('[data-sans-paiement-test]').forEach((e) => e.setAttribute('hidden', ''));
     }
   }
 </script>
@@ -206,4 +197,5 @@ const jsonld = {
   .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
   .haut { align-items: start; }
   #demande { scroll-margin-top: 24px; }
+  #demande[hidden] { display: none; }
 </style>

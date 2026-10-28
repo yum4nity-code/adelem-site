@@ -314,5 +314,5 @@
 ## 2026-10-28 — Fiche avec achat en ligne : formulaire de question, barre d'achat
 
 - Constat de Gwen (mobile, mode test) : sous le bouton « Acquérir », le formulaire restait titré « Demander [œuvre] », et la barre d'achat fixée en bas recouvrait le bouton « Envoyer ».
-- Quand une pièce a un lien de paiement, le formulaire est conservé (questions : livraison hors zone, détails) mais titré « Une question sur [œuvre] ? ». Sans lien de paiement, rien ne change (« Demander [œuvre] »). En mode test, le titre suit le mode test.
+- Décision de Gwen (même jour, après un premier essai qui gardait le formulaire retitré « Une question sur… ? ») : formulaire jugé trop lourd sous le bouton d'achat, d'autant que l'inscription aux nouvelles pièces suit en bas de page. Quand une pièce a un lien de paiement, **plus de formulaire sur la fiche** : seul le lien « Une question sur cette pièce ? » reste, vers `/contact?piece=[titre]`, qui reprend la pièce dans l'objet (« Question : … »), un champ caché et le début du message. Sans lien de paiement, rien ne change (formulaire « Demander [œuvre] »). En mode test, l'affichage suit le mode test.
 - La barre d'achat mobile s'efface tant que le formulaire est à l'écran ; elle revient plus bas (suggestions).
