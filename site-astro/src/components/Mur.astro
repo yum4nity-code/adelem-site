@@ -36,6 +36,7 @@ const largeurAffichee = (l: number, h: number) => {
         loading={eager && i < 3 ? 'eager' : 'lazy'}
         decoding="async"
       />
+      {o.data.statut === 'vendue' && <span class="pastille-vendue" aria-hidden="true">Collection privée</span>}
       <span class="voir" aria-hidden="true">Voir l’œuvre</span>
       <div class="sous"><Cartel oeuvre={o} /></div>
     </a>
@@ -65,6 +66,27 @@ const largeurAffichee = (l: number, h: number) => {
     });
   };
   caler();
+  // Les pièces « respirent » (2026-10-30, Gwen) : chacune apparaît en fondu quand on arrive dessus en faisant défiler,
+  // et son ombre se pose derrière elle, comme si on l'accrochait au mur. Rien de caché sans JavaScript
+  // ni avec « réduire les animations ».
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const vues = new IntersectionObserver((entrees) => {
+      let rang = 0;
+      for (const e of entrees) {
+        if (!e.isIntersecting) continue;
+        const p = e.target as HTMLElement;
+        vues.unobserve(p);
+        const delai = rang++ * 110;
+        p.style.setProperty('--delai', delai + 'ms');
+        p.classList.add('vue');
+        setTimeout(() => p.classList.add('posee'), delai + 1300);
+      }
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll<HTMLElement>('.mur').forEach((mur) => {
+      mur.classList.add('anim');
+      mur.querySelectorAll<HTMLElement>(':scope > .piece').forEach((p) => vues.observe(p));
+    });
+  }
   let attente: number;
   addEventListener('resize', () => { clearTimeout(attente); attente = window.setTimeout(caler, 120); });
   addEventListener('load', caler);
@@ -85,6 +107,13 @@ const largeurAffichee = (l: number, h: number) => {
     filter: drop-shadow(0 calc(var(--cm) * 3) calc(var(--cm) * 5) rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
     transition: transform .6s cubic-bezier(.16, 1, .3, 1), filter .6s cubic-bezier(.16, 1, .3, 1);
   }
+  /* Apparition au défilement (voir le script) : avant, l'œuvre est un peu plus bas, transparente et sans ombre. */
+  .mur.anim .piece:not(.posee) img { transition: opacity .9s ease var(--delai, 0ms), transform 1.1s cubic-bezier(.16, 1, .3, 1) var(--delai, 0ms), filter 1.3s ease calc(var(--delai, 0ms) + .15s); }
+  .mur.anim .piece:not(.vue) img { opacity: 0; transform: translateY(18px); filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)) drop-shadow(0 0 0 rgba(0, 0, 0, 0)); }
+  .mur.anim .piece:not(.vue) .sous { opacity: 0; }
+  .mur.anim .piece .sous { transition: opacity .9s ease calc(var(--delai, 0ms) + .25s); }
+  /* Pièce vendue : petite étiquette posée en biais sur le coin, comme le macaron d'une galerie. */
+  .pastille-vendue { position: absolute; top: -10px; right: -12px; z-index: 1; }
   .piece:focus-visible img {
     transform: translateY(-6px) scale(1.015);
     filter: drop-shadow(0 calc(var(--cm) * 5) calc(var(--cm) * 8) rgba(0, 0, 0, .68)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));

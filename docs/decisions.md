@@ -375,3 +375,11 @@
 
 ## 2026-10-30 — Questions sur une pièce : toujours vers /contact
 - « Demander cette œuvre » et « Une question sur cette pièce ? » mènent toujours à /contact?piece=Titre (miniature + « Revenir à la pièce »), y compris pour les pièces sans lien de paiement. Formulaire sous la fiche supprimé (demande de Gwen). Automatique pour toute nouvelle œuvre.
+
+## 2026-10-30 — Animations discrètes (demande de Gwen, 5 idées validées)
+- Téléphone : menu « rideau » (fond vert sombre qui descend, mots qui montent un par un ; bouton « Fermer »).
+- Fil d’or : trait doré tracé de gauche à droite au survol des liens du menu et du bas de page ; page en cours soulignée en clair.
+- Galerie : les pièces apparaissent en fondu au défilement et leur ombre se pose.
+- Fiche : loupe ×2,5 sur la photo à la souris (ordinateur uniquement), avec une phrase d’indication.
+- Pièce vendue : étiquette « Collection privée » en biais avec pastille rouge (galerie + fiche).
+- Tout est désactivé avec « réduire les animations » ; rien n’est caché sans JavaScript.

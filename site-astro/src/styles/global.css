@@ -98,3 +98,12 @@ textarea:-webkit-autofill, select:-webkit-autofill {
   caret-color: var(--encre);
   transition: background-color 99999s ease-out 0s;
 }
+
+/* Étiquette « Collection privée » des pièces vendues (2026-10-30, Gwen) : carton crème posé en biais, pastille rouge
+   comme dans une galerie. Sert sur les murs de la galerie et sur la fiche de l'œuvre. */
+.pastille-vendue {
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px 6px 9px;
+  background: #ECE6D8; color: #2A2620; font: italic 400 .95rem/1 var(--serif); white-space: nowrap;
+  transform: rotate(4deg); box-shadow: 0 6px 14px rgba(0, 0, 0, .4); pointer-events: none;
+}
+.pastille-vendue::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: #B3261E; flex: none; }

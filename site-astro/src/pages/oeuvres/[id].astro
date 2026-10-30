@@ -42,7 +42,12 @@ const jsonld = {
 <Base title={d.titre} description={resume(d.histoire ?? `${d.titre}, pièce unique d’Adelem.`)} image={face.og ?? face.src} jsonld={jsonld}>
   <section class="wrap tete">
     <div class="oeuvre" data-galerie>
-      <img id="vue-principale" src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+      <div class="photo-principale" style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} data-loupe>
+        <img id="vue-principale" src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} />
+        <span class="loupe" aria-hidden="true"></span>
+        {d.statut === 'vendue' && <span class="pastille-vendue" aria-hidden="true">Collection privée</span>}
+      </div>
+      <p class="indice-loupe discret">Passez la souris sur l’œuvre pour voir la matière de près.</p>
       <Vignettes photos={d.photos} cible="vue-principale" />
     </div>
     <div class="infos">
@@ -128,6 +133,35 @@ const jsonld = {
 </Base>
 
 <script>
+  // Loupe : suit la souris sur la photo principale et montre la même photo grossie 2,5 fois.
+  // Tient compte de la photo affichée (les vignettes la changent) et de son cadrage (« cover » ou « contain »).
+  const zone = document.querySelector<HTMLElement>('[data-loupe]');
+  if (zone && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const img = zone.querySelector('img')!;
+    const loupe = zone.querySelector<HTMLElement>('.loupe')!;
+    const Z = 2.5;
+    const bouger = (e: PointerEvent) => {
+      const r = img.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height || !img.naturalWidth) { zone.classList.remove('loupe-active'); return; }
+      // Taille et position de l'image réellement dessinée dans la boîte.
+      const contenir = getComputedStyle(img).objectFit === 'contain';
+      const k = (contenir ? Math.min : Math.max)(r.width / img.naturalWidth, r.height / img.naturalHeight);
+      const w = img.naturalWidth * k, h = img.naturalHeight * k;
+      const ox = (r.width - w) / 2, oy = (r.height - h) / 2;
+      const taille = loupe.offsetWidth / 2;
+      loupe.style.backgroundImage = `url("${img.currentSrc || img.src}")`;
+      loupe.style.backgroundSize = `${w * Z}px ${h * Z}px`;
+      loupe.style.backgroundPosition = `${taille - (x - ox) * Z}px ${taille - (y - oy) * Z}px`;
+      loupe.style.left = x + 'px';
+      loupe.style.top = y + 'px';
+      zone.classList.add('loupe-active');
+    };
+    zone.addEventListener('pointermove', bouger);
+    zone.addEventListener('pointerleave', () => zone.classList.remove('loupe-active'));
+  }
+</script>
+<script>
   // Mode test des paiements : mémorisé sur cet appareil, jamais visible des visiteurs ordinaires.
   {
     let actif = false;
@@ -204,9 +238,26 @@ const jsonld = {
   .volet a { color: var(--encre); text-decoration: underline; text-underline-offset: 2px; }
   .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; /* image en haut, alignée sur le début des infos (2026-10-30) */ padding-top: clamp(32px, 5vw, 64px); }
   .oeuvre { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0; }
-  .oeuvre > img {
-    width: min(100%, max(300px, calc(var(--l) * 7px))); height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
+  .photo-principale { position: relative; width: min(100%, max(300px, calc(var(--l) * 7px))); }
+  .photo-principale > img {
+    width: 100%; height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;
     filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
+  }
+  .photo-principale .pastille-vendue { position: absolute; top: -12px; right: -14px; font-size: 1.05rem; }
+  /* Loupe sur la matière (2026-10-30, Gwen) : au survol à la souris, un rond grossit la mousse, le lichen, le bois.
+     Seulement avec une souris ; sur téléphone, rien ne change. */
+  .loupe { display: none; }
+  .indice-loupe { display: none; margin-top: -8px; }
+  @media (hover: hover) and (pointer: fine) {
+    .photo-principale { cursor: zoom-in; }
+    .indice-loupe { display: block; }
+    .loupe {
+      display: block; position: absolute; left: 0; top: 0; width: 190px; height: 190px; margin: -95px 0 0 -95px; border-radius: 50%;
+      border: 1px solid rgba(236, 233, 224, .55); box-shadow: 0 14px 34px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(0, 0, 0, .25);
+      background-color: var(--mur); background-repeat: no-repeat; pointer-events: none;
+      opacity: 0; transform: scale(.6); transition: opacity .25s ease, transform .3s cubic-bezier(.16, 1, .3, 1);
+    }
+    .photo-principale.loupe-active .loupe { opacity: 1; transform: none; }
   }
   .infos { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
   .infos h1 { font-size: clamp(2.8rem, 5vw, 4rem); line-height: 1; }
