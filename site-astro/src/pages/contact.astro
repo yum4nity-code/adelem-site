@@ -22,7 +22,6 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
         {site.contact.instagram && <li><a class="insta" href={site.contact.instagram}><IconeInstagram /><span>@{site.contact.instagram.replace(/\/$/, '').split('/').pop()}</span></a></li>}
       </ul>
       {whatsapp && <a class="lien secondaire" href={whatsapp} target="_blank" rel="noopener">Écrire sur WhatsApp</a>}
-      <p class="visite">L’atelier se visite sur rendez-vous, à Cazes-Mondenard (Tarn-et-Garonne).</p>
       {/* Carte de correspondance : le mot d'Adèle, signé, avec le badge végétal d'Adelem. */}
       <figure class="carte">
         <img class="badge" src="/logo/adelem-badge-vegetal-photo.png" alt="" width="120" height="120" loading="lazy" />
@@ -59,7 +58,6 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
   .coord { list-style: none; padding: 0; margin: 0; font: 300 1.3rem var(--serif); color: var(--encre); display: grid; gap: 4px; }
   /* Chiffres alignés (la police affiche par défaut des chiffres « à l'ancienne », qui montent et descendent). */
   .chiffres { font-variant-numeric: lining-nums tabular-nums; font-feature-settings: 'lnum' 1, 'tnum' 1; }
-  .visite { margin: 0; font-size: .92rem; color: var(--texte); }
   .carte { margin: clamp(16px, 3vw, 40px) 0 0; display: flex; align-items: center; gap: 22px; max-width: 420px; padding: 26px 28px; background: #ECE6D8; color: #2A2620; box-shadow: 0 18px 40px rgba(0, 0, 0, .35); transform: rotate(-1.2deg); }
   .carte .badge { width: 84px; height: 84px; flex: none; border-radius: 50%; object-fit: cover; }
   .carte figcaption { display: grid; gap: 8px; }

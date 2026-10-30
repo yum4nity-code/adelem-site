@@ -355,3 +355,4 @@
 - Téléphone en chiffres alignés (la serif affichait des chiffres « à l'ancienne » qui montaient et descendaient).
 - Colonne gauche : lien « Écrire sur WhatsApp » (wa.me, même numéro), « L'atelier se visite sur rendez-vous, à Cazes-Mondenard (Tarn-et-Garonne) » (validé par Gwen ; à confirmer avec Adèle), carte de correspondance couleur papier : badge végétal Adelem + « Je lis et je réponds moi-même à chaque message. » + signature à l'encre.
 - Colonne formulaire : rappel de la pièce quand on vient d'une fiche (?piece=Titre : photo, titre, prix, « ← Revenir à la pièce ») ; sujet en un clic (Une pièce / Un cadeau / Autre chose, champ « objet », « Une pièce » pré-coché depuis une fiche).
+- (2026-10-30) Retiré : « L'atelier se visite sur rendez-vous » — pas de visite de l'atelier (Gwen). Ne jamais proposer de visite.
