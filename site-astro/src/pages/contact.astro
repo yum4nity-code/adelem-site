@@ -72,5 +72,12 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
   .rappel small { font-size: .85rem; }
   .rappel .retour-piece { color: var(--or); letter-spacing: .04em; }
   .rappel:hover { border-color: var(--or); }
+  /* Ordinateur (2026-10-30, Gwen) : la carte manuscrite descend en bas de la colonne gauche, pour que son bas
+     tombe au niveau du bas du formulaire (bouton Envoyer). */
+  @media (min-width: 900px) {
+    .haut-page { align-items: stretch; }
+    .haut-page > .pile { height: 100%; }
+    .carte { margin-top: auto; margin-bottom: 6px; }
+  }
   @media (max-width: 600px) { .carte { transform: rotate(-2deg); padding: 22px; gap: 16px; } .carte .badge { width: 96px; height: 96px; } }
 </style>
