@@ -350,3 +350,8 @@
 - Image d'ambiance provisoire : gros plan Unsplash d'un coin de cadre en bois (photo-1634970064884-88918a3be8c8), passé en noir et blanc sombre par filtre CSS. Remplacée automatiquement par la photo de la première pièce de la collection. Aucune photo libre de droits de cadre noir ancien trouvée et vérifiable.
 - (2026-10-30) Ordre des collections : Signature, Cadres contemporains, Collection noire, Déco & cadeaux (site et admin). Pages des collections : collection retrouvée par sa clé, plus par sa position.
 - (2026-10-30) Fiche œuvre sur ordinateur : la photo s'aligne en haut, au niveau des infos (avant : centrée verticalement, donc trop basse quand le texte est long).
+
+## 2026-10-30 — Page Contact embellie
+- Téléphone en chiffres alignés (la serif affichait des chiffres « à l'ancienne » qui montaient et descendaient).
+- Colonne gauche : lien « Écrire sur WhatsApp » (wa.me, même numéro), « L'atelier se visite sur rendez-vous, à Cazes-Mondenard (Tarn-et-Garonne) » (validé par Gwen ; à confirmer avec Adèle), carte de correspondance couleur papier : badge végétal Adelem + « Je lis et je réponds moi-même à chaque message. » + signature à l'encre.
+- Colonne formulaire : rappel de la pièce quand on vient d'une fiche (?piece=Titre : photo, titre, prix, « ← Revenir à la pièce ») ; sujet en un clic (Une pièce / Un cadeau / Autre chose, champ « objet », « Une pièce » pré-coché depuis une fiche).
