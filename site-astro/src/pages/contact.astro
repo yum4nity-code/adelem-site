@@ -22,6 +22,10 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
         {site.contact.instagram && <li><a class="insta" href={site.contact.instagram}><IconeInstagram /><span>@{site.contact.instagram.replace(/\/$/, '').split('/').pop()}</span></a></li>}
       </ul>
       {whatsapp && <a class="lien secondaire" href={whatsapp} target="_blank" rel="noopener">Écrire sur WhatsApp</a>}
+      <a class="rappel" href="#" hidden data-rappel>
+        <img src="" alt="" width="72" height="72" />
+        <span><em data-rappel-titre></em><small data-rappel-prix></small><small class="retour-piece">← Revenir à la pièce</small></span>
+      </a>
       {/* Carte de correspondance : le mot d'Adèle, signé, avec le badge végétal d'Adelem. */}
       <figure class="carte">
         <img class="badge" src="/logo/adelem-badge-vegetal-photo.png" alt="" width="132" height="132" loading="lazy" />
@@ -32,10 +36,6 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
       </figure>
     </div>
     <div class="colonne-form">
-      <a class="rappel" href="#" hidden data-rappel>
-        <img src="" alt="" width="72" height="72" />
-        <span><em data-rappel-titre></em><small data-rappel-prix></small><small class="retour-piece">← Revenir à la pièce</small></span>
-      </a>
       <ContactForm sujets />
     </div>
   </section>
@@ -72,12 +72,22 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
   .rappel small { font-size: .85rem; }
   .rappel .retour-piece { color: var(--or); letter-spacing: .04em; }
   .rappel:hover { border-color: var(--or); }
-  /* Ordinateur (2026-10-30, Gwen) : la carte manuscrite descend en bas de la colonne gauche, pour que son bas
-     tombe au niveau du bas du formulaire (bouton Envoyer). */
+  /* Ordinateur : formulaire plus serré (2026-10-30, Gwen) pour que son bas tombe à peu près au niveau du bas de la carte. */
   @media (min-width: 900px) {
+    .colonne-form { gap: 18px; }
+    .colonne-form :global(.formulaire) { gap: 16px; }
+    .colonne-form :global(.deux) { gap: 16px 26px; }
+    .colonne-form :global(label) { gap: 2px; }
+    .colonne-form :global(textarea) { min-height: 0; height: 74px; }
+    .colonne-form :global(.sujets legend) { margin-bottom: 6px; }
+    .colonne-form :global(.puce span) { padding: 7px 16px; }
+    .colonne-form :global(.pied) { gap: 8px; }
+    /* Si la colonne de gauche est plus haute, le champ Message s'allonge pour que le bas du formulaire rejoigne le bas de la carte. */
     .haut-page { align-items: stretch; }
-    .haut-page > .pile { height: 100%; }
-    .carte { margin-top: auto; margin-bottom: 6px; }
+    .colonne-form { display: flex; flex-direction: column; }
+    .colonne-form :global(.formulaire) { display: flex; flex-direction: column; flex: 1; }
+    .colonne-form :global(label:has(textarea)) { flex: 1; display: flex; flex-direction: column; }
+    .colonne-form :global(label:has(textarea) textarea) { flex: 1; }
   }
   @media (max-width: 600px) { .carte { transform: rotate(-2deg); padding: 22px; gap: 16px; } .carte .badge { width: 96px; height: 96px; } }
 </style>
