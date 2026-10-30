@@ -209,7 +209,7 @@ const jsonld = {
   .volet { padding: 0 0 22px; display: flex; flex-direction: column; gap: 10px; font-size: .95rem; line-height: 1.75; color: var(--texte); }
   .volet p { margin: 0; }
   .volet a { color: var(--encre); text-decoration: underline; text-underline-offset: 2px; }
-  .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: center; padding-top: clamp(32px, 5vw, 64px); }
+  .tete { display: grid; gap: clamp(40px, 6vw, 96px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; /* image en haut, alignée sur le début des infos (2026-10-30) */ padding-top: clamp(32px, 5vw, 64px); }
   .oeuvre { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0; }
   .oeuvre > img {
     width: min(100%, max(300px, calc(var(--l) * 7px))); height: auto; aspect-ratio: var(--l) / var(--h); object-fit: cover;

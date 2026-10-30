@@ -25,9 +25,9 @@ export const collectionsVegetaux = [
     ambiance: AMBIANCE.mousse,
   },
   { cle: 'contemporain', nom: 'Cadres contemporains', href: '/galerie/vegetaux-stabilises/cadres-contemporains', texte: null, ambiance: AMBIANCE.mousse },
-  { cle: 'deco', nom: 'Déco & cadeaux', href: '/galerie/vegetaux-stabilises/deco-et-cadeaux', texte: null, ambiance: AMBIANCE.lichen },
   // Collection noire (2026-10-30, demande de Gwen) : aucune pièce pour l'instant, la page affiche « bientôt ».
   { cle: 'noire', nom: 'Collection noire', href: '/galerie/vegetaux-stabilises/collection-noire', texte: null, ambiance: AMBIANCE.cadreNoir },
+  { cle: 'deco', nom: 'Déco & cadeaux', href: '/galerie/vegetaux-stabilises/deco-et-cadeaux', texte: null, ambiance: AMBIANCE.lichen },
 ] as const;
 
 export const themes = [

@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import SalleGalerie from '../../../components/SalleGalerie.astro';
 import { collectionsVegetaux } from '../../../data/galerie';
 import { textesGalerieSanity } from '../../../sanity/reglages';
-const c = collectionsVegetaux[3];
+const c = collectionsVegetaux.find((x) => x.cle === 'noire')!;
 const textes = await textesGalerieSanity();
 const oeuvres = (await getCollection('oeuvres')).filter((o) => o.data.type === 'tableau' && o.data.collection === c.cle);
 ---
