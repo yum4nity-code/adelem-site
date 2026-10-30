@@ -7,7 +7,7 @@ import BarreAchat from '../../components/BarreAchat.astro';
 import Prevenir from '../../components/Prevenir.astro';
 import Vignettes from '../../components/Vignettes.astro';
 import Suggestions from '../../components/Suggestions.astro';
-import { prix, site, dims } from '../../data/site';
+import { prix, site, dims, resume } from '../../data/site';
 import { pageDe } from '../../data/galerie';
 
 export async function getStaticPaths() {
@@ -39,7 +39,7 @@ const jsonld = {
     : {}),
 };
 ---
-<Base title={d.titre} description={d.histoire ?? `${d.titre}, tableau végétal unique d’Adelem.`} image={face.og ?? face.src} jsonld={jsonld}>
+<Base title={d.titre} description={resume(d.histoire ?? `${d.titre}, pièce unique d’Adelem.`)} image={face.og ?? face.src} jsonld={jsonld}>
   <section class="wrap tete">
     <div class="oeuvre" data-galerie>
       <img id="vue-principale" src={face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />

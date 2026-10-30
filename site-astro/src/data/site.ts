@@ -66,3 +66,10 @@ export const nombre = (n: number) => n.toLocaleString('fr-FR', { maximumFraction
 
 export const dims = (l: number, h: number, p?: number | null) =>
   `${nombre(l)} × ${nombre(h)}${p ? ` × ${nombre(p)}` : ''} cm`;
+
+/** Description pour Google et les partages : 150 à 160 caractères au plus, coupée à un mot entier. */
+export const resume = (texte: string, max = 155) => {
+  const t = texte.replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  return t.slice(0, max).replace(/\s+\S*$/, '').replace(/[\s.,;:!?…·—–-]+$/u, '') + '…';
+};

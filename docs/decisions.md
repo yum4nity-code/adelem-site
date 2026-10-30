@@ -357,3 +357,9 @@
 - Colonne formulaire : rappel de la pièce quand on vient d'une fiche (?piece=Titre : photo, titre, prix, « ← Revenir à la pièce ») ; sujet en un clic (Une pièce / Un cadeau / Autre chose, champ « objet », « Une pièce » pré-coché depuis une fiche).
 - (2026-10-30) Retiré : « L'atelier se visite sur rendez-vous » — pas de visite de l'atelier (Gwen). Ne jamais proposer de visite.
 - (2026-10-30) Bas de page épuré : bande de confiance inchangée ; deux blocs (signature + phrase, « Recevoir les nouvelles pièces ») ; une ligne de liens (e-mail · Instagram · Livraison · Conditions de vente · Mentions légales · ©). Colonnes « Explorer » (doublon du menu) et « Écrire à l'atelier » (doublon de l'e-mail) retirées. Contact page : carte plus inclinée (3,5°) et badge agrandi.
+
+## 2026-10-30 — Audit webmaster (sécurité, visibilité, référencement, organisation)
+- Corrigé : en-têtes de sécurité sur tout le site (X-Content-Type-Options, Referrer-Policy, X-Frame-Options SAMEORIGIN, Permissions-Policy) ; HTTPS strict (HSTS) déjà fourni par Vercel. Pas de CSP pour l'instant (Studio, Stripe, Formspree, Sanity, Unsplash : à faire en « report-only » d'abord).
+- Corrigé : descriptions Google de 150 à 160 caractères (fiches : histoire résumée à un mot entier ; rubriques : texte de la rubrique ou phrase par défaut ; Contact).
+- Vérifié : aucun lien interne cassé, un seul titre principal par page, toutes les images ont un texte alternatif, robots.txt et sitemap en place, données structurées (WebSite, VisualArtwork/Offer).
+- À faire par Gwen/Adèle : DMARC absent (enregistrement _dmarc dans OVH) ; double authentification sur GitHub, Vercel, Sanity, Stripe, OVH ; médiateur de la consommation (obligatoire avant de vendre, CGV art. 9) ; nouveau SIRET ; fiche Google Business ; sauvegarde régulière de l'admin.
