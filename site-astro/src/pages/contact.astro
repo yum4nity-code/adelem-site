@@ -80,7 +80,7 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
     .coord { gap: 0; }
     .rappel { padding: 8px 18px 8px 8px; gap: 14px; }
     .rappel img { width: 58px; height: 58px; }
-    .carte { margin-top: auto; padding: 20px 24px; gap: 18px; } /* collée en bas : son bas rejoint celui du formulaire */
+    .carte { margin-top: auto; padding: 20px 24px; gap: 18px; translate: 0 .7cm; } /* collée en bas, puis descendue de 0,7 cm (Gwen, 2026-10-30) */
     .carte .badge { width: 112px; height: 112px; }
     .colonne-form { gap: 18px; }
     .colonne-form :global(.formulaire) { gap: 16px; }
