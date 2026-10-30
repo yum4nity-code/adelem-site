@@ -74,6 +74,14 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
   .rappel:hover { border-color: var(--or); }
   /* Ordinateur : formulaire plus serré (2026-10-30, Gwen) pour que son bas tombe à peu près au niveau du bas de la carte. */
   @media (min-width: 900px) {
+    /* Tout visible sans défiler, au moins jusqu'à la pointe basse de la carte (2026-10-30, Gwen, écran 1920 × 1080 zoomé à 125 %). */
+    .haut-page { padding-top: 28px; }
+    .pile { gap: 14px; }
+    .coord { gap: 0; }
+    .rappel { padding: 8px 18px 8px 8px; gap: 14px; }
+    .rappel img { width: 58px; height: 58px; }
+    .carte { margin-top: auto; padding: 20px 24px; gap: 18px; } /* collée en bas : son bas rejoint celui du formulaire */
+    .carte .badge { width: 112px; height: 112px; }
     .colonne-form { gap: 18px; }
     .colonne-form :global(.formulaire) { gap: 16px; }
     .colonne-form :global(.deux) { gap: 16px 26px; }

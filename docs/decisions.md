@@ -383,3 +383,6 @@
 - Fiche : loupe ×2,5 sur la photo à la souris (ordinateur uniquement), avec une phrase d’indication.
 - Pièce vendue : étiquette « Collection privée » en biais avec pastille rouge (galerie + fiche).
 - Tout est désactivé avec « réduire les animations » ; rien n’est caché sans JavaScript.
+
+## 2026-10-30 — Contact tient sans défiler (ordinateur)
+- Espaces resserrés, carte un peu plus petite et collée en bas de la colonne : tout est visible jusqu’à la pointe de la carte sur un écran 1920 × 1080 zoomé à 125 %, avec ou sans rappel de pièce.
