@@ -39,13 +39,15 @@ export const themes = [
 export const filtreTheme = (cle: string): Filtre => (o) => o.data.type === cle;
 export const filtreCollection = (cle: string): Filtre => (o) => o.data.type === 'tableau' && o.data.collection === cle;
 
-/** Photo derrière un titre : œuvre cochée, sinon la plus récente (pièces disponibles d'abord), sinon l'ambiance. */
-export function photoRubrique(oeuvres: Oeuvre[], filtre: Filtre, ambiance: string) {
+/** Photo derrière un titre : photo de fond choisie dans l'admin, sinon œuvre cochée, sinon la plus récente
+ * (pièces disponibles d'abord), sinon l'ambiance. Pour une œuvre : la vue de face (nette, recadrée au cadre),
+ * plutôt qu'une photo de détail souvent floue ou prise sous verre (2026-10-30). */
+export function photoRubrique(oeuvres: Oeuvre[], filtre: Filtre, ambiance: string, fond?: string) {
+  if (fond) return { src: fond, oeuvre: true };
   const items = oeuvres.filter(filtre).sort((a, b) => Number(a.data.statut === 'vendue') - Number(b.data.statut === 'vendue') || a.data.ordre - b.data.ordre);
   const choisie = items.find((o) => o.data.photo_rubrique) ?? items[0];
   if (!choisie) return { src: ambiance, oeuvre: false };
-  const p = choisie.data.photos[1] ?? choisie.data.photos[0];
-  return { src: p.src, oeuvre: true };
+  return { src: choisie.data.photos[0].src, oeuvre: true };
 }
 
 /** Page de la galerie où se trouve une œuvre (pour le fil d'Ariane et le retour depuis sa fiche). */

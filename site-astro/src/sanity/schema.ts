@@ -423,7 +423,27 @@ const textesGalerie = defineType({
     champTexte('deco', 'Déco & cadeaux'),
     champTexte('sculptures', 'Sculptures'),
     champTexte('fleurs', 'Fleurs en porcelaine froide'),
+    // Photos de fond des tuiles de la galerie (2026-10-30) : prioritaires sur la photo automatique.
+    ...[
+      ['fond_vegetaux', 'Végétaux stabilisés'],
+      ['fond_signature', 'Signature'],
+      ['fond_contemporain', 'Cadres contemporains'],
+      ['fond_noire', 'Collection noire'],
+      ['fond_deco', 'Déco & cadeaux'],
+      ['fond_sculptures', 'Sculptures'],
+      ['fond_fleurs', 'Fleurs en porcelaine froide'],
+    ].map(([name, titre]) =>
+      defineField({
+        name,
+        title: `Photo de fond de la tuile « ${titre} »`,
+        description: 'Facultatif. Une belle photo large et nette (ambiance, détail de matière, atelier). Le titre s’écrit par-dessus. Vide : le site prend la photo d’une pièce de la rubrique.',
+        type: 'image',
+        options: { hotspot: true },
+        fieldset: 'fonds',
+      }),
+    ),
   ],
+  fieldsets: [{ name: 'fonds', title: 'Photos de fond des tuiles', options: { collapsible: true, collapsed: false } }],
   preview: { prepare: () => ({ title: 'Textes de la galerie' }) },
 });
 

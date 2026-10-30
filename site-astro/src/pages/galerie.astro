@@ -2,7 +2,10 @@
 import { getCollection } from 'astro:content';
 import MenuGalerie from '../components/MenuGalerie.astro';
 import { themes, filtreTheme, photoRubrique } from '../data/galerie';
+import { fondsGalerieSanity } from '../sanity/reglages';
+const fonds = await fondsGalerieSanity();
+const cleFond = { tableau: 'vegetaux', sculpture: 'sculptures', fleurs: 'fleurs' } as const;
 const oeuvres = await getCollection('oeuvres');
-const liens = themes.map((t) => ({ ...t, photo: photoRubrique(oeuvres, filtreTheme(t.cle), t.ambiance) }));
+const liens = themes.map((t) => ({ ...t, photo: photoRubrique(oeuvres, filtreTheme(t.cle), t.ambiance, fonds[cleFond[t.cle]]) }));
 ---
 <MenuGalerie titre="Galerie" liens={liens} description="Végétaux stabilisés, sculptures et fleurs en porcelaine froide : les pièces uniques d’Adelem." />

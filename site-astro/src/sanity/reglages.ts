@@ -51,3 +51,21 @@ export function textesGalerieSanity(): Promise<TextesGalerie> {
   })();
   return cacheTextes;
 }
+
+// Photos de fond des tuiles de la galerie (champs « fond_… » du document « textesGalerie »).
+export type FondsGalerie = Partial<Record<'vegetaux' | 'signature' | 'contemporain' | 'deco' | 'noire' | 'sculptures' | 'fleurs', string>>;
+let cacheFonds: Promise<FondsGalerie> | null = null;
+export function fondsGalerieSanity(): Promise<FondsGalerie> {
+  if (process.env.ADELEM_DEMO === '1') return Promise.resolve({});
+  cacheFonds ??= (async () => {
+    try {
+      const client = createClient({ projectId: SANITY_PROJECT_ID, dataset: SANITY_DATASET, apiVersion: SANITY_API_VERSION, useCdn: false, perspective: 'published' });
+      const cles = ['vegetaux', 'signature', 'contemporain', 'deco', 'noire', 'sculptures', 'fleurs'];
+      const r = await client.fetch<Record<string, string | null> | null>(`*[_id == "textesGalerie"][0]{ ${cles.map((c) => `"${c}": fond_${c}.asset->url`).join(', ')} }`);
+      return Object.fromEntries(Object.entries(r ?? {}).filter(([, v]) => typeof v === 'string' && v).map(([k, v]) => [k, `${v}?w=1600&q=80&auto=format`]));
+    } catch {
+      return {};
+    }
+  })();
+  return cacheFonds;
+}

@@ -367,3 +367,7 @@
 - (2026-10-30) Adaptateur Vercel ANNULÉ après mise en ligne : tout le site répondait 404 pendant environ 5 minutes (Vercel publie le dossier « dist » tel quel, réglage du tableau de bord ; l'adaptateur met les pages dans .vercel/output). Site rétabli et vérifié (accueil, contact, rubriques, fiche, admin en 200). À refaire seulement après avoir lu les réglages « Build and Deployment » du projet Vercel.
 - (2026-10-30) Contact (ordinateur) : la carte manuscrite descend en bas de la colonne gauche, son bas aligné sur le bas du formulaire (bouton Envoyer), avec ou sans rappel de pièce.
 - (2026-10-30) Contact (ordinateur), révisé à la demande de Gwen : carte remise sous les coordonnées ; formulaire resserré (espacements réduits), le champ Message s'allonge pour que le bas du formulaire rejoigne le bas de la carte ; rappel de la pièce déplacé dans la colonne gauche (au-dessus de la carte) pour garder l'alignement.
+
+## 2026-10-30 — Photos de fond des tuiles de la galerie
+- Nouvelle section « Photos de fond des tuiles » dans « Textes de la galerie » (admin) : une photo par tuile (Végétaux stabilisés, Signature, Cadres contemporains, Collection noire, Déco & cadeaux, Sculptures, Fleurs), prioritaire sur tout le reste.
+- Sans photo choisie : la vue de face de la pièce (nette, recadrée au cadre) au lieu d'une photo de détail (souvent floue ou prise sous verre), puis l'ambiance.
