@@ -2,12 +2,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import sanity from '@sanity/astro';
-import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  // Adaptateur Vercel (2026-10-30) : le site reste pré-construit, sauf /api/stripe-webhook (fonction serveur).
-  // Il produit aussi les redirections ci-dessous dans la configuration Vercel.
-  adapter: vercel(),
   site: 'https://www.adelem.fr',
   trailingSlash: 'never',
   build: { format: 'directory' },

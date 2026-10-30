@@ -1,5 +1,4 @@
 // Vente Stripe → pièce « Vendue » dans l'admin (Sanity), automatiquement.
-// Appelé par src/pages/api/stripe-webhook.ts (route Astro rendue sur le serveur par l'adaptateur Vercel).
 // Stripe appelle cette adresse (https://www.adelem.fr/api/stripe-webhook) après chaque paiement réussi.
 // On vérifie la signature Stripe, on retrouve la pièce, on passe son statut à « vendue » ;
 // le webhook Sanity existant relance ensuite la construction du site (fiche « Collection privée »).
