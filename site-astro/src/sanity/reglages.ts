@@ -36,14 +36,14 @@ export async function photoOuvertureSanity(): Promise<{ src: string; position: s
 }
 
 // Textes sous le titre de chaque rubrique de la galerie (document « textesGalerie »). Vide ou erreur : textes par défaut.
-export type TextesGalerie = Partial<Record<'vegetaux' | 'signature' | 'contemporain' | 'deco' | 'sculptures' | 'fleurs', string>>;
+export type TextesGalerie = Partial<Record<'vegetaux' | 'signature' | 'contemporain' | 'deco' | 'noire' | 'sculptures' | 'fleurs', string>>;
 let cacheTextes: Promise<TextesGalerie> | null = null;
 export function textesGalerieSanity(): Promise<TextesGalerie> {
   if (process.env.ADELEM_DEMO === '1') return Promise.resolve({});
   cacheTextes ??= (async () => {
     try {
       const client = createClient({ projectId: SANITY_PROJECT_ID, dataset: SANITY_DATASET, apiVersion: SANITY_API_VERSION, useCdn: false, perspective: 'published' });
-      const r = await client.fetch<TextesGalerie | null>(`*[_id == "textesGalerie"][0]{ vegetaux, signature, contemporain, deco, sculptures, fleurs }`);
+      const r = await client.fetch<TextesGalerie | null>(`*[_id == "textesGalerie"][0]{ vegetaux, signature, contemporain, deco, noire, sculptures, fleurs }`);
       return Object.fromEntries(Object.entries(r ?? {}).filter(([, v]) => typeof v === 'string' && v.trim()).map(([k, v]) => [k, (v as string).trim()]));
     } catch {
       return {};

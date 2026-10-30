@@ -9,6 +9,7 @@ const AMBIANCE = {
   lichen: unsplash('photo-1727388826270-804614a2a27e'), // lichen clair
   argile: unsplash('photo-1422246358533-95dcd3d48961'), // mains dans la terre
   petales: unsplash('photo-1646794377035-fb4caa4ced23'), // pétales pâles
+  cadreNoir: unsplash('photo-1634970064884-88918a3be8c8'), // gros plan d'un coin de cadre en bois, passé en noir par filtre (MenuGalerie)
 };
 import type { CollectionEntry } from 'astro:content';
 
@@ -25,6 +26,8 @@ export const collectionsVegetaux = [
   },
   { cle: 'contemporain', nom: 'Cadres contemporains', href: '/galerie/vegetaux-stabilises/cadres-contemporains', texte: null, ambiance: AMBIANCE.mousse },
   { cle: 'deco', nom: 'Déco & cadeaux', href: '/galerie/vegetaux-stabilises/deco-et-cadeaux', texte: null, ambiance: AMBIANCE.lichen },
+  // Collection noire (2026-10-30, demande de Gwen) : aucune pièce pour l'instant, la page affiche « bientôt ».
+  { cle: 'noire', nom: 'Collection noire', href: '/galerie/vegetaux-stabilises/collection-noire', texte: null, ambiance: AMBIANCE.cadreNoir },
 ] as const;
 
 export const themes = [

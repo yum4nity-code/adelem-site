@@ -343,3 +343,8 @@
 
 ## 2026-10-28 — Sculpture démesurée sur téléphone
 - Le minimum de 72 % de largeur des murs de sculptures rendait une pièce haute et étroite énorme (plus haute que l'écran). Hauteur plafonnée à 62 % de l'écran (largeur = 62svh × largeur/hauteur) ; testé : 26 × 39 inchangé, 15 × 40 passe de ≈ 790 px à 520 px de haut.
+
+## 2026-10-30 — Collection noire ; Herbier retiré de l'admin
+- Admin : « Herbier (petits formats) » retiré du menu et des nouveaux documents (les données restent, rien n'est supprimé). Nouvelle valeur de collection « Collection noire » (œuvres de type tableau) et texte « Collection noire » dans « Textes de la galerie ».
+- Site : 4e tuile sous Végétaux stabilisés → /galerie/vegetaux-stabilises/collection-noire (même fonctionnement que les autres ; « bientôt » tant qu'il n'y a pas de pièce).
+- Image d'ambiance provisoire : gros plan Unsplash d'un coin de cadre en bois (photo-1634970064884-88918a3be8c8), passé en noir et blanc sombre par filtre CSS. Remplacée automatiquement par la photo de la première pièce de la collection. Aucune photo libre de droits de cadre noir ancien trouvée et vérifiable.

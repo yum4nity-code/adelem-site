@@ -17,7 +17,6 @@ export default defineConfig({
           .title('Adelem')
           .items([
             S.documentTypeListItem('oeuvre').title('Œuvres'),
-            S.documentTypeListItem('herbier').title('Herbier (petits formats)'),
             S.documentTypeListItem('carnet').title('Carnet d’atelier'),
             S.divider(),
             // Document unique : les réglages de l'accueil (photo d'ouverture).
@@ -31,6 +30,6 @@ export default defineConfig({
   schema: { types: schemaTypes },
   document: {
     // Pas de « dupliquer / nouveau document » d'autres types que ceux-ci.
-    newDocumentOptions: (prev) => prev.filter((t) => ['oeuvre', 'carnet', 'herbier'].includes(t.templateId)),
+    newDocumentOptions: (prev) => prev.filter((t) => ['oeuvre', 'carnet'].includes(t.templateId)),
   },
 });

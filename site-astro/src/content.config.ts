@@ -39,7 +39,7 @@ const oeuvres = defineCollection({
     sanity_id: z.string().optional(), // identifiant Sanity (stable même si le titre change)
     sous_titre: z.string().nullable().optional(),
     // Rubrique de la galerie (décision du 2026-10-26) : Signature par défaut (cadre ancien).
-    collection: z.enum(['signature', 'contemporain', 'deco']).default('signature'),
+    collection: z.enum(['signature', 'contemporain', 'deco', 'noire']).default('signature'),
     annee: z.number().int().nullable().optional(),
     type: z.enum(['tableau', 'sculpture', 'fleurs']),
     format: z.enum(['Petit format', 'Format signature', 'Grand format']),

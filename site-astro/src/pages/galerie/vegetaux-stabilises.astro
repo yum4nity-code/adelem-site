@@ -7,4 +7,4 @@ const textes = await textesGalerieSanity();
 const oeuvres = await getCollection('oeuvres');
 const liens = collectionsVegetaux.map((c) => ({ ...c, photo: photoRubrique(oeuvres, filtreCollection(c.cle), c.ambiance) }));
 ---
-<MenuGalerie titre="Végétaux stabilisés" texte={textes.vegetaux} fil={[{ nom: 'Galerie', href: '/galerie' }]} liens={liens} description="Tableaux en végétaux stabilisés : Signature, Cadres contemporains, Déco & cadeaux." />
+<MenuGalerie titre="Végétaux stabilisés" texte={textes.vegetaux} fil={[{ nom: 'Galerie', href: '/galerie' }]} liens={liens} description="Tableaux en végétaux stabilisés : Signature, Cadres contemporains, Déco & cadeaux, Collection noire." />

@@ -22,7 +22,7 @@ const { titre, fil = [], liens, description, texte = null } = Astro.props;
       {liens.map((l, i) => (
         <li>
           <a href={l.href} class="tuile">
-            <img src={l.photo.src} alt="" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" class:list={{ ambiance: !l.photo.oeuvre }} />
+            <img src={l.photo.src} alt="" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" class:list={{ ambiance: !l.photo.oeuvre, noir: l.cle === 'noire' && !l.photo.oeuvre }} />
             <span>{l.nom}</span>
           </a>
         </li>
@@ -72,5 +72,7 @@ const { titre, fil = [], liens, description, texte = null } = Astro.props;
     .tuile { height: auto; aspect-ratio: 3 / 4; max-height: max(320px, calc(100vh - 360px)); width: 100%; }
     .tuile span { font-size: clamp(1.6rem, 2.2vw, 2.2rem); text-align: center; }
   }
+  /* Collection noire sans pièce : l'image d'ambiance (cadre en bois) est passée en noir et blanc sombre. */
+  .tuile img.noir { filter: grayscale(1) brightness(.6) contrast(1.2) !important; }
   @media (prefers-reduced-motion: reduce) { .tuile img, .tuile::after { transition: none; } }
 </style>
