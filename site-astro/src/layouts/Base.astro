@@ -93,37 +93,24 @@ const orgLd = {
         <li>Fait main en France</li>
         <li>Emballage sur mesure</li>
       </ul>
+      <!-- Bas de page épuré (2026-10-30, Gwen) : deux blocs (signature, nouvelles pièces) et une seule ligne de liens. -->
       <div class="wrap pied-grille">
         <div class="pied-marque">
           <a href="/" aria-label="Adelem, accueil"><img src="/logo/adelem-signature.svg" alt="Adelem" width="130" height="54" loading="lazy" /></a>
           <p>Végétaux stabilisés, sculptures et fleurs en porcelaine froide.</p>
         </div>
-        <nav class="pied-col" aria-label="Explorer">
-          <p class="pied-titre">Explorer</p>
-          <ul>
-            <li><a href="/galerie">Galerie</a></li>
-            <li><a href="/atelier">Atelier</a></li>
-            <li><a href="/a-propos">À propos</a></li>
-          </ul>
-        </nav>
-        <nav class="pied-col" aria-label="Acheter">
-          <p class="pied-titre">Acheter</p>
-          <ul>
-            <li><a href="/livraison">Emballage et livraison</a></li>
-            <li><a href="/cgv">Conditions de vente</a></li>
-          </ul>
-        </nav>
-        <div class="pied-col pied-contact">
-          <p class="pied-titre">Contact</p>
-          <ul>
-            {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
-            {site.contact.instagram && <li><a class="insta" href={site.contact.instagram}><IconeInstagram /> @adelem_nature</a></li>}
-            <li><a href="/contact">Écrire à l’atelier</a></li>
-          </ul>
-        </div>
         <div class="pied-nouvelles"><Nouvelles /></div>
       </div>
-      <p class="wrap pied-bas">© {new Date().getFullYear()} Adelem · <a href="/mentions-legales">Mentions légales</a></p>
+      <nav class="wrap pied-bas" aria-label="Informations">
+        <ul>
+          {site.contact.email && <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>}
+          {site.contact.instagram && <li><a class="insta" href={site.contact.instagram}><IconeInstagram /> Instagram</a></li>}
+          <li><a href="/livraison">Livraison</a></li>
+          <li><a href="/cgv">Conditions de vente</a></li>
+          <li><a href="/mentions-legales">Mentions légales</a></li>
+          <li>© {new Date().getFullYear()} Adelem</li>
+        </ul>
+      </nav>
     </footer>
     <script>
       const b = document.querySelector('.menu-btn');
@@ -178,29 +165,28 @@ const orgLd = {
   .confiance { list-style: none; margin: 0 auto; padding: 22px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; border-bottom: 1px solid var(--trait); font: italic 300 1.05rem var(--serif); color: var(--texte); }
   .confiance li { padding: 0 18px; }
   .confiance li + li { border-left: 1px solid var(--trait); }
-  .pied-grille { display: grid; gap: 36px 40px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); padding-top: 48px; align-items: start; }
+  .pied-grille { display: grid; gap: 32px 64px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); padding-top: 48px; align-items: start; }
   .pied-marque { display: flex; flex-direction: column; gap: 10px; }
   .pied-marque img { width: 130px; height: auto; filter: invert(.92); opacity: .9; }
-  .pied-titre { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--discret); margin: 0 0 12px; }
-  .pied-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-  .pied-col a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; color: var(--texte); }
+  .pied-marque p { margin: 0; max-width: 30ch; }
+  .pied-nouvelles { justify-self: end; width: min(100%, 420px); }
   .pied a:hover { color: var(--encre); }
-  .pied-nouvelles { grid-column: 1 / -1; padding-top: 8px; }
-  @media (min-width: 1100px) { .pied-grille { grid-template-columns: 1.2fr .8fr .9fr 1.1fr 1.6fr; } .pied-nouvelles { grid-column: auto; padding-top: 0; } }
-  .pied-bas { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--trait); font-size: .74rem; }
-  /* Téléphone : bas de page compact (retour de Gwen, 2026-10-27) — liens en lignes, sans titres de colonnes,
-     inscription en premier, sur une seule ligne. */
+  .pied-bas { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--trait); font-size: .78rem; }
+  .pied-bas ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 0; }
+  .pied-bas li { display: inline-flex; align-items: center; }
+  .pied-bas li + li::before { content: '·'; margin: 0 12px; color: var(--discret); }
+  .pied-bas a { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; color: var(--texte); }
+  .pied-bas .insta :global(svg) { width: 14px; height: 14px; }
+  /* Téléphone : inscription en premier, signature en petit, liens sur quelques lignes. */
   @media (max-width: 600px) {
     .confiance { font-size: .9rem; padding: 14px 0; } .confiance li { padding: 0 9px; }
-    .pied-grille { display: flex; flex-direction: column; gap: 4px; padding-top: 26px; }
-    .pied-marque { margin: 16px 0 8px; }
-    .pied-nouvelles { order: -1; padding-top: 0; }
+    .pied-grille { display: flex; flex-direction: column; gap: 18px; padding-top: 26px; }
+    .pied-nouvelles { order: -1; justify-self: stretch; width: 100%; }
     .pied-marque { flex-direction: row; align-items: center; gap: 14px; }
     .pied-marque img { width: 92px; }
     .pied-marque p { display: none; }
-    .pied-titre { display: none; }
-    .pied-col ul { flex-direction: row; flex-wrap: wrap; gap: 0 18px; }
-    .pied-col a { min-height: 34px; font-size: .84rem; }
     .pied-bas { margin-top: 18px; padding-top: 14px; }
+    .pied-bas ul { gap: 0 20px; }
+    .pied-bas li + li::before { display: none; }
   }
 </style>
