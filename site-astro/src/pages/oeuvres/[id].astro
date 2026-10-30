@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Cartel from '../../components/Cartel.astro';
-import ContactForm from '../../components/ContactForm.astro';
 import BarreAchat from '../../components/BarreAchat.astro';
 import Prevenir from '../../components/Prevenir.astro';
 import Vignettes from '../../components/Vignettes.astro';
@@ -24,6 +23,7 @@ const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
 // Lien Stripe de test (buy.stripe.com/test_…) : bouton caché aux visiteurs, visible seulement en « mode test »
 // (ouvrir une page avec ?test-paiement, désactiver avec ?test-paiement=non). Un vrai lien s'affiche pour tout le monde.
 const achatTest = !!achat && /\/test_/.test(achat);
+const contactPiece = `/contact?piece=${encodeURIComponent(d.titre)}`;
 const jsonld = {
   '@context': 'https://schema.org',
   '@type': d.type === 'sculpture' ? 'Sculpture' : 'VisualArtwork',
@@ -72,19 +72,19 @@ const jsonld = {
         </div>
         {achatTest && (
           <div class="liens" data-sans-paiement-test>
-            <a class="bouton achat" href="#demande">Demander cette œuvre</a>
+            <a class="bouton achat" href={contactPiece}>Demander cette œuvre</a>
           </div>
         )}
         </>
       ) : (
         <div class="liens">
-          <a class="bouton achat" href="#demande">Demander cette œuvre</a>
+          <a class="bouton achat" href={contactPiece}>Demander cette œuvre</a>
         </div>
       )}
       {d.statut === 'disponible' && (
         <p class="atouts">Livraison offerte en France{d.type === 'tableau' && <> · Sans arrosage ni entretien</>}</p>
       )}
-      {d.statut === 'disponible' && <a class="lien secondaire question" href={achat ? `/contact?piece=${encodeURIComponent(d.titre)}` : '#demande'}>Une question sur cette pièce ?</a>}
+      {d.statut === 'disponible' && <a class="lien secondaire question" href={contactPiece}>Une question sur cette pièce ?</a>}
       {d.histoire && (
         <div class="histoire" data-replie>
           <p id="description-oeuvre">{d.histoire}</p>
@@ -120,15 +120,8 @@ const jsonld = {
 
 
 
-  {/* Formulaire « Demander » seulement quand la pièce ne s'achète pas en ligne.
-      Achat en ligne : un simple lien « Une question sur cette pièce ? » vers /contact (pièce pré-remplie). */}
-  {d.statut === 'disponible' && (!achat || achatTest) && (
-    <section id="demande" class="wrap bloc duo haut" data-sans-paiement-test={achatTest ? '' : undefined}>
-      <h2 class="titre-section">Demander {d.titre}</h2>
-      <ContactForm oeuvre={d.titre} />
-    </section>
-  )}
-
+  {/* Plus de formulaire sous la fiche (2026-10-30, Gwen) : « Demander » et « Une question » mènent à /contact,
+      qui affiche la miniature de la pièce et un lien pour y revenir. */}
   <Suggestions oeuvre={oeuvre} />
 
   {achat && <BarreAchat titre={d.titre} prix={prix(d.prix)} lien={achat} />}
@@ -235,6 +228,4 @@ const jsonld = {
   .entretien h2 { margin-bottom: 16px; }
   .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
   .haut { align-items: start; }
-  #demande { scroll-margin-top: 24px; }
-  #demande[hidden] { display: none; }
 </style>

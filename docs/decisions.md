@@ -372,3 +372,6 @@
 - Nouvelle section « Photos de fond des tuiles » dans « Textes de la galerie » (admin) : une photo par tuile (Végétaux stabilisés, Signature, Cadres contemporains, Collection noire, Déco & cadeaux, Sculptures, Fleurs), prioritaire sur tout le reste.
 - Sans photo choisie : la vue de face de la pièce (nette, recadrée au cadre) au lieu d'une photo de détail (souvent floue ou prise sous verre), puis l'ambiance.
 - (2026-10-30) Pièces des tuiles choisies par Gwen (data/galerie.ts, par titre) : Végétaux stabilisés = Balade d'automne ; Sculptures = Rêveuse du soleil levant, haut de la statue en plan large (photo d'origine petite) ; Signature = Cœur de forêt ; Cadres contemporains = Le secret du vieux tronc ; Fleurs : inchangé. Une photo de fond mise dans l'admin reste prioritaire.
+
+## 2026-10-30 — Questions sur une pièce : toujours vers /contact
+- « Demander cette œuvre » et « Une question sur cette pièce ? » mènent toujours à /contact?piece=Titre (miniature + « Revenir à la pièce »), y compris pour les pièces sans lien de paiement. Formulaire sous la fiche supprimé (demande de Gwen). Automatique pour toute nouvelle œuvre.
