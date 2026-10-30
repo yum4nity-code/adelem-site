@@ -7,7 +7,7 @@ import Base from '../layouts/Base.astro';
 interface Props {
   titre: string;
   fil?: { nom: string; href: string }[];
-  liens: { nom: string; href: string; photo: { src: string; oeuvre: boolean } }[];
+  liens: { nom: string; href: string; photo: { src: string; oeuvre: boolean; entier?: boolean } }[];
   description: string;
   texte?: string | null;
 }
@@ -22,7 +22,7 @@ const { titre, fil = [], liens, description, texte = null } = Astro.props;
       {liens.map((l, i) => (
         <li>
           <a href={l.href} class="tuile">
-            <img src={l.photo.src} alt="" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" class:list={{ ambiance: !l.photo.oeuvre, noir: l.cle === 'noire' && !l.photo.oeuvre }} />
+            <img src={l.photo.src} alt="" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" class:list={{ ambiance: !l.photo.oeuvre, noir: l.cle === 'noire' && !l.photo.oeuvre, entier: l.photo.entier }} />
             <span>{l.nom}</span>
           </a>
         </li>
@@ -73,6 +73,8 @@ const { titre, fil = [], liens, description, texte = null } = Astro.props;
     .tuile span { font-size: clamp(1.6rem, 2.2vw, 2.2rem); text-align: center; }
   }
   /* Collection noire sans pièce : l'image d'ambiance (cadre en bois) est passée en noir et blanc sombre. */
+  /* Photo montrée en entier (haut d'une sculpture) : centrée sur le fond sombre de la tuile, sans zoom. */
+  .tuile img.entier { object-fit: contain; padding: 12px 0; }
   .tuile img.noir { filter: grayscale(1) brightness(.6) contrast(1.2) !important; }
   @media (prefers-reduced-motion: reduce) { .tuile img, .tuile::after { transition: none; } }
 </style>

@@ -6,6 +6,6 @@ import { textesGalerieSanity, fondsGalerieSanity } from '../../sanity/reglages';
 const fonds = await fondsGalerieSanity();
 const textes = await textesGalerieSanity();
 const oeuvres = await getCollection('oeuvres');
-const liens = collectionsVegetaux.map((c) => ({ ...c, photo: photoRubrique(oeuvres, filtreCollection(c.cle), c.ambiance, fonds[c.cle]) }));
+const liens = collectionsVegetaux.map((c) => ({ ...c, photo: photoRubrique(oeuvres, filtreCollection(c.cle), c.ambiance, fonds[c.cle], 'piece' in c ? c.piece : undefined) }));
 ---
 <MenuGalerie titre="Végétaux stabilisés" texte={textes.vegetaux} fil={[{ nom: 'Galerie', href: '/galerie' }]} liens={liens} description="Tableaux en végétaux stabilisés : Signature, Cadres contemporains, Collection noire, Déco & cadeaux." />

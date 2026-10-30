@@ -6,6 +6,6 @@ import { fondsGalerieSanity } from '../sanity/reglages';
 const fonds = await fondsGalerieSanity();
 const cleFond = { tableau: 'vegetaux', sculpture: 'sculptures', fleurs: 'fleurs' } as const;
 const oeuvres = await getCollection('oeuvres');
-const liens = themes.map((t) => ({ ...t, photo: photoRubrique(oeuvres, filtreTheme(t.cle), t.ambiance, fonds[cleFond[t.cle]]) }));
+const liens = themes.map((t) => ({ ...t, photo: photoRubrique(oeuvres, filtreTheme(t.cle), t.ambiance, fonds[cleFond[t.cle]], 'piece' in t ? t.piece : undefined, 'cadrage' in t ? t.cadrage : undefined) }));
 ---
 <MenuGalerie titre="Galerie" liens={liens} description="Végétaux stabilisés, sculptures et fleurs en porcelaine froide : les pièces uniques d’Adelem." />
