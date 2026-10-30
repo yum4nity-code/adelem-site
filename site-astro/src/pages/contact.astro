@@ -24,7 +24,7 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
       {whatsapp && <a class="lien secondaire" href={whatsapp} target="_blank" rel="noopener">Écrire sur WhatsApp</a>}
       {/* Carte de correspondance : le mot d'Adèle, signé, avec le badge végétal d'Adelem. */}
       <figure class="carte">
-        <img class="badge" src="/logo/adelem-badge-vegetal-photo.png" alt="" width="120" height="120" loading="lazy" />
+        <img class="badge" src="/logo/adelem-badge-vegetal-photo.png" alt="" width="132" height="132" loading="lazy" />
         <figcaption>
           <p>Je lis et je réponds moi-même à chaque message.</p>
           <img class="signature-carte" src="/logo/adelem-signature.svg" alt="Adelem" width="180" height="74" loading="lazy" />
@@ -58,8 +58,8 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
   .coord { list-style: none; padding: 0; margin: 0; font: 300 1.3rem var(--serif); color: var(--encre); display: grid; gap: 4px; }
   /* Chiffres alignés (la police affiche par défaut des chiffres « à l'ancienne », qui montent et descendent). */
   .chiffres { font-variant-numeric: lining-nums tabular-nums; font-feature-settings: 'lnum' 1, 'tnum' 1; }
-  .carte { margin: clamp(16px, 3vw, 40px) 0 0; display: flex; align-items: center; gap: 22px; max-width: 420px; padding: 26px 28px; background: #ECE6D8; color: #2A2620; box-shadow: 0 18px 40px rgba(0, 0, 0, .35); transform: rotate(-1.2deg); }
-  .carte .badge { width: 84px; height: 84px; flex: none; border-radius: 50%; object-fit: cover; }
+  .carte { margin: clamp(16px, 3vw, 40px) 0 0; display: flex; align-items: center; gap: 22px; max-width: 420px; padding: 26px 28px; background: #ECE6D8; color: #2A2620; box-shadow: 0 18px 40px rgba(0, 0, 0, .35); transform: rotate(-3.5deg); }
+  .carte .badge { width: 132px; height: 132px; flex: none; border-radius: 50%; object-fit: cover; }
   .carte figcaption { display: grid; gap: 8px; }
   .carte p { margin: 0; font: italic 400 1.2rem/1.35 var(--serif); color: #2A2620; }
   .signature-carte { width: 150px; height: auto; opacity: .85; }
@@ -72,5 +72,5 @@ const whatsapp = tel ? `https://wa.me/${tel.replace(/[^0-9]/g, '')}` : null;
   .rappel small { font-size: .85rem; }
   .rappel .retour-piece { color: var(--or); letter-spacing: .04em; }
   .rappel:hover { border-color: var(--or); }
-  @media (max-width: 600px) { .carte { transform: none; } }
+  @media (max-width: 600px) { .carte { transform: rotate(-2deg); padding: 22px; gap: 16px; } .carte .badge { width: 96px; height: 96px; } }
 </style>
