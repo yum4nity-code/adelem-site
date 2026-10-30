@@ -363,3 +363,4 @@
 - Corrigé : descriptions Google de 150 à 160 caractères (fiches : histoire résumée à un mot entier ; rubriques : texte de la rubrique ou phrase par défaut ; Contact).
 - Vérifié : aucun lien interne cassé, un seul titre principal par page, toutes les images ont un texte alternatif, robots.txt et sitemap en place, données structurées (WebSite, VisualArtwork/Offer).
 - À faire par Gwen/Adèle : DMARC absent (enregistrement _dmarc dans OVH) ; double authentification sur GitHub, Vercel, Sanity, Stripe, OVH ; médiateur de la consommation (obligatoire avant de vendre, CGV art. 9) ; nouveau SIRET ; fiche Google Business ; sauvegarde régulière de l'admin.
+- (2026-10-30) Le projet Vercel lit site-astro/ (pas la racine) : en-têtes déplacés dans site-astro/vercel.json, et la fonction webhook déplacée dans site-astro/api/stripe-webhook.mjs (à la racine elle n'était pas déployée).
