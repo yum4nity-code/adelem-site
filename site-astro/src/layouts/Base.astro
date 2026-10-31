@@ -179,7 +179,9 @@ const orgLd = {
      La page en cours garde un trait clair, déjà tracé. */
   .menu a { position: relative; display: inline-block; color: var(--encre); }
   .menu a::after { content: ''; position: absolute; left: 0; right: 0; bottom: var(--fil-bas, -6px); height: 1px; background: var(--or); transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.65, 0, .35, 1); }
-  .menu a[aria-current='page']::after { transform: scaleX(.6); background: var(--discret); opacity: .6; } /* page en cours : trait plus discret et plus court (2026-10-31) */
+  /* Page en cours (2026-10-31, Gwen) : pas de trait ; le mot est un peu moins clair et légèrement plus petit. */
+  .menu a[aria-current='page'] { color: var(--discret); }
+  .menu a[aria-current='page']::after { display: none; }
   .menu a:focus-visible::after { transform: scaleX(1); }
   @media (hover: hover) { .menu a:hover::after { transform: scaleX(1); background: var(--or); opacity: 1; } }
   /* Téléphone : menu « rideau » (2026-10-30, Gwen). L'écran se couvre de vert sombre de haut en bas, puis les mots
@@ -198,6 +200,7 @@ const orgLd = {
     .menu li { opacity: 0; transform: translateY(18px); transition: opacity .25s ease, transform .25s ease; }
     .menu.ouvert li { opacity: 1; transform: none; transition: opacity .5s ease, transform .7s cubic-bezier(.16, 1, .3, 1); transition-delay: calc(.2s + var(--i) * .08s); }
     .menu a { font: 300 2.4rem/1.2 var(--serif); padding: 8px 0 2px; --fil-bas: 0px; }
+    .menu a[aria-current='page'] { font-size: 2.1rem; }
     .menu ul { position: relative; z-index: 1; gap: 14px; margin-bottom: 28px; }
     .sous-titre-menu { display: block; font: italic 300 1rem/1.3 var(--serif); color: var(--discret); letter-spacing: .01em; padding-top: 6px; }
     /* Bande de matière : gros plan de mousse qui remonte du bas et se fond dans le vert sombre, avec un zoom très lent. */
@@ -218,6 +221,7 @@ const orgLd = {
     .menu-btn { display: none; }
     .menu ul { display: flex; gap: 36px; }
     .menu a { font: 400 1.15rem var(--serif); letter-spacing: .01em; padding: 0; }
+    .menu a[aria-current='page'] { font-size: 1.05rem; }
   }
   .pied { margin-top: clamp(64px, 8vw, 120px); border-top: 1px solid var(--trait); padding-block: 0 28px; font-size: .86rem; color: var(--discret); }
   .confiance { list-style: none; margin: 0 auto; padding: 22px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; border-bottom: 1px solid var(--trait); font: italic 300 1.05rem var(--serif); color: var(--texte); }
