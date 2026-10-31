@@ -95,7 +95,9 @@ export async function GET(request) {
       { shipping_rate_data: { type: 'fixed_amount', display_name: 'Ailleurs en Europe (Colissimo)', fixed_amount: { amount: europe * 100, currency: 'eur' } } },
     ],
     custom_text: { shipping_address: { message: 'Livraison offerte en France et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ».' } },
-    invoice_creation: { enabled: true, invoice_data: { footer: 'TVA non applicable, art. 293 B du CGI' } },
+    // La facture n'est créée par Stripe qu'une fois le paiement réussi : la mention « Payée » est donc toujours vraie.
+    // Elle évite qu'un client lise « à régler » sur le modèle de facture standard de Stripe (retour de Gwen, 2026-10-31).
+    invoice_creation: { enabled: true, invoice_data: { description: 'Facture acquittée : réglée en ligne à la commande.', custom_fields: [{ name: 'Règlement', value: 'Payée en ligne' }], footer: 'TVA non applicable, art. 293 B du CGI' } },
   });
   const s = await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params });
   const session = await s.json().catch(() => ({}));

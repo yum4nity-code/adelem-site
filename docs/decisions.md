@@ -417,3 +417,7 @@
 - Mode : site.paiement = 'test' (bouton visible seulement avec ?test-paiement) ; 'actif' au lancement.
 - Règle de prix dupliquée dans site/api/_prix.mjs ; scripts/verifier-prix.mjs bloque la construction si elle diverge.
 - Variable Vercel à créer par Gwen : STRIPE_API_KEY (clé restreinte Checkout Sessions en écriture).
+
+## 2026-10-31 — Facture Stripe : mention « acquittée »
+- Le modèle standard de facture Stripe affiche « à régler / Montant dû » même payée. Ajout sur chaque facture : description « Facture acquittée : réglée en ligne à la commande » et champ « Règlement : Payée en ligne » (la facture n’est créée qu’après paiement réussi).
+- Au lancement : nom « Prénom Nom EI » (obligatoire aussi pour un auto-entrepreneur), adresse et SIRET sur la facture, les mentions légales et les CGV.
