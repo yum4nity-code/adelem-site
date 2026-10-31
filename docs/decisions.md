@@ -397,3 +397,7 @@
 
 ## 2026-10-31 — Menu rideau : sous-titres et bande de matière
 - Téléphone : une ligne en italique sous chaque mot du menu, et en bas une bande de gros plan de mousse/lichen (photo « détail » ou « matière » d’un tableau, au hasard), fondue vers le haut, zoom lent de 20 s. Ne recouvre jamais les liens.
+
+## 2026-10-31 — Menu : retouches
+- Bande de matière : « Éclats de bouleau » exclu (reflet dans la vitre).
+- Page en cours : trait plus discret (gris, atténué) et plus court (60 % du mot).

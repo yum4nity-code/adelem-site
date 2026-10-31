@@ -26,7 +26,8 @@ const sousTitres: Record<string, string> = {
   '/contact': 'Une question, une pièce, un cadeau',
 };
 const matieres = (await getCollection('oeuvres'))
-  .filter((o) => o.data.type === 'tableau' && o.data.photos.length > 1)
+  // Exclues : photos avec un reflet dans la vitre (2026-10-31, Gwen).
+  .filter((o) => o.data.type === 'tableau' && o.data.photos.length > 1 && !['éclats de bouleau'].includes(o.data.titre.toLowerCase()))
   .map((o) => (o.data.photos.slice(1).find((ph) => /mati|d[ée]tail/i.test(ph.legende)) ?? o.data.photos[1]).src.replace(/([?&])w=\d+/, '$1w=1000'))
   .slice(0, 12);
 const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
@@ -178,9 +179,9 @@ const orgLd = {
      La page en cours garde un trait clair, déjà tracé. */
   .menu a { position: relative; display: inline-block; color: var(--encre); }
   .menu a::after { content: ''; position: absolute; left: 0; right: 0; bottom: var(--fil-bas, -6px); height: 1px; background: var(--or); transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.65, 0, .35, 1); }
-  .menu a[aria-current='page']::after { transform: scaleX(1); background: var(--encre); }
+  .menu a[aria-current='page']::after { transform: scaleX(.6); background: var(--discret); opacity: .6; } /* page en cours : trait plus discret et plus court (2026-10-31) */
   .menu a:focus-visible::after { transform: scaleX(1); }
-  @media (hover: hover) { .menu a:hover::after { transform: scaleX(1); background: var(--or); } }
+  @media (hover: hover) { .menu a:hover::after { transform: scaleX(1); background: var(--or); opacity: 1; } }
   /* Téléphone : menu « rideau » (2026-10-30, Gwen). L'écran se couvre de vert sombre de haut en bas, puis les mots
      montent un par un, comme un rideau qui s'ouvre sur la salle. Avec « réduire les animations », il s'ouvre sans effet. */
   @media (max-width: 819.98px) {
