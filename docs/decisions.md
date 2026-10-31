@@ -401,3 +401,6 @@
 ## 2026-10-31 — Menu : retouches
 - Bande de matière : « Éclats de bouleau » exclu (reflet dans la vitre).
 - Page en cours : trait plus discret (gris, atténué) et plus court (60 % du mot).
+
+## 2026-10-31 — Menu téléphone : toute la ligne cliquable
+- Mot + sous-titre dans le même lien, sur toute la largeur, sans espace mort entre les lignes.
