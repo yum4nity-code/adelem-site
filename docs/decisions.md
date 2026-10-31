@@ -394,3 +394,6 @@
 - Règle (data/prix-envoi.ts) : prix saisi + forfait selon le poids emballé (≤1 kg +13, ≤2 +15, ≤5 +24, ≤10 +35, ≤15 +42, ≤30 +50 ; Colissimo 2026 + emballage), arrondi au 5 € supérieur. Sans poids : estimé par le plus grand côté (≤30 cm 1 kg, ≤50 2 kg, ≤80 5 kg, sinon 10 kg).
 - Rétroactif et automatique : le champ Prix de l’admin devient « Votre prix (hors envoi) », avec le prix affiché calculé en dessous et dans la liste.
 - Liens Stripe de test : montants anciens, à régénérer au lancement (automatisation prévue). Forfaits Europe Stripe inchangés en attendant la décision d’Adèle.
+
+## 2026-10-31 — Menu rideau : sous-titres et bande de matière
+- Téléphone : une ligne en italique sous chaque mot du menu, et en bas une bande de gros plan de mousse/lichen (photo « détail » ou « matière » d’un tableau, au hasard), fondue vers le haut, zoom lent de 20 s. Ne recouvre jamais les liens.
