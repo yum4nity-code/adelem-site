@@ -408,3 +408,4 @@
 ## 2026-10-31 — Cause trouvée : Vercel lit site/vercel.json
 - Réglages Vercel (vus le 2026-10-31) : Root Directory = site, Framework = Other, pas de surcharge. Le seul vercel.json pris en compte est site/vercel.json (il lance la construction de site-astro et copie dist). Les vercel.json de la racine et de site-astro sont ignorés.
 - En-têtes de sécurité ajoutés dans site/vercel.json : nosniff, Referrer-Policy, X-Frame-Options SAMEORIGIN, Permissions-Policy, HSTS 1 an.
+- Webhook Stripe déplacé dans site/api/stripe-webhook.mjs (fonction Vercel servie par le projet Root Directory = site). Reste à régler par Gwen : variables STRIPE_WEBHOOK_SECRET et SANITY_WRITE_TOKEN dans Vercel, et l’adresse du webhook dans Stripe.
