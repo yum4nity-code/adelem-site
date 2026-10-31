@@ -45,6 +45,7 @@ const oeuvres = defineCollection({
     format: z.enum(['Petit format', 'Format signature', 'Grand format']),
     statut: z.enum(['disponible', 'reservee', 'vendue']),
     prix: z.number().int().positive().nullable(),
+    prix_atelier: z.number().nullable().optional(), // prix saisi dans l'admin, avant ajout de l'envoi
     // Dimensions extérieures, cadre compris : elles servent à l'accrochage à l'échelle.
     largeur_cm: z.number().positive(),
     hauteur_cm: z.number().positive(),

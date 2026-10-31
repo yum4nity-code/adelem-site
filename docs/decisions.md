@@ -389,3 +389,8 @@
 
 ## 2026-10-31 — « Emballage sur mesure » retiré partout (demande d’Adèle)
 - Bandeau du bas : remplacé par « Livraison offerte en France ». Fiches, Livraison, CGV, À propos, merci-achat, descriptions Google : plus de « sur mesure » pour l’emballage.
+
+## 2026-10-31 — Prix affiché = prix atelier + envoi France (calcul automatique)
+- Règle (data/prix-envoi.ts) : prix saisi + forfait selon le poids emballé (≤1 kg +13, ≤2 +15, ≤5 +24, ≤10 +35, ≤15 +42, ≤30 +50 ; Colissimo 2026 + emballage), arrondi au 5 € supérieur. Sans poids : estimé par le plus grand côté (≤30 cm 1 kg, ≤50 2 kg, ≤80 5 kg, sinon 10 kg).
+- Rétroactif et automatique : le champ Prix de l’admin devient « Votre prix (hors envoi) », avec le prix affiché calculé en dessous et dans la liste.
+- Liens Stripe de test : montants anciens, à régénérer au lancement (automatisation prévue). Forfaits Europe Stripe inchangés en attendant la décision d’Adèle.

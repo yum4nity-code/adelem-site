@@ -1,3 +1,4 @@
+import { prixAffiche } from '../data/prix-envoi';
 // Récupère les œuvres publiées dans Sanity et les met au format du site.
 import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
@@ -170,7 +171,8 @@ export async function oeuvresSanity() {
       type: o.type ?? 'tableau',
       format: formatDe(o.largeur_cm!, o.hauteur_cm!),
       statut: o.statut ?? 'disponible',
-      prix: o.prix ?? null,
+      prix: prixAffiche(o.prix, o.poids_kg, o.largeur_cm, o.hauteur_cm), // envoi en France inclus (voir data/prix-envoi.ts)
+      prix_atelier: o.prix ?? null,
       largeur_cm: o.largeur_cm!,
       hauteur_cm: o.hauteur_cm!,
       profondeur_cm: o.profondeur_cm ?? null,

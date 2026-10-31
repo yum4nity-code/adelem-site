@@ -1,4 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
+import { PrixInput } from './PrixInput';
+import { prixAffiche } from '../data/prix-envoi';
 
 // Fiche d'une œuvre, telle qu'Adèle la remplit dans /admin.
 // Le format (petit, moyen, grand) et l'adresse de la page sont calculés tout seuls.
@@ -107,10 +109,11 @@ export const oeuvre = defineType({
     }),
     defineField({
       name: 'prix',
-      title: 'Prix en euros',
-      description: 'Laisser vide pour afficher « Prix sur demande ».',
+      title: 'Votre prix en euros (hors envoi)',
+      description: 'Le site ajoute tout seul l’envoi en France, selon le poids emballé. Laisser vide pour afficher « Prix sur demande ».',
       type: 'number',
       validation: (r) => r.integer().positive(),
+      components: { input: PrixInput },
     }),
     defineField({
       name: 'largeur_cm',
@@ -219,10 +222,11 @@ export const oeuvre = defineType({
   ],
   orderings: [{ title: 'Plus récentes', name: 'recentes', by: [{ field: '_createdAt', direction: 'desc' }] }],
   preview: {
-    select: { titre: 'titre', l: 'largeur_cm', h: 'hauteur_cm', statut: 'statut', prix: 'prix', media: 'photos.0' },
-    prepare({ titre, l, h, statut, prix, media }) {
+    select: { titre: 'titre', l: 'largeur_cm', h: 'hauteur_cm', statut: 'statut', prix: 'prix', poids: 'poids_kg', media: 'photos.0' },
+    prepare({ titre, l, h, statut, prix, poids, media }) {
+      const affiche = prixAffiche(prix, poids, l, h);
       const etat = { disponible: 'Disponible', reservee: 'Réservée', vendue: 'Vendue' }[statut as string] ?? '';
-      const parts = [l && h ? `${l} × ${h} cm` : null, prix ? `${prix} €` : null, etat].filter(Boolean);
+      const parts = [l && h ? `${l} × ${h} cm` : null, affiche ? `${affiche} € sur le site` : null, etat].filter(Boolean);
       return { title: titre || 'Nouvelle œuvre', subtitle: parts.join(' · '), media };
     },
   },
