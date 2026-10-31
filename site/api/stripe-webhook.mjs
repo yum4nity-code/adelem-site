@@ -69,7 +69,7 @@ export async function POST(request) {
     const q = encodeURIComponent('*[_id in [$p, $d]]._id');
     const { result: existants } = await sanity(`query/production?query=${q}&$p=${encodeURIComponent(JSON.stringify(id))}&$d=${encodeURIComponent(JSON.stringify(`drafts.${id}`))}`, token);
     if (!existants?.length) return reponse(200, 'Pièce absente de l’admin');
-    await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: existants.map((x) => ({ patch: { id: x, set: { statut: 'vendue' } } })) }) });
+    await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: existants.map((x) => ({ patch: { id: x, set: { statut: 'vendue' }, unset: ['reserve_jusqua'] } })) }) });
     return reponse(200, `Vendue : ${id}`);
   } catch (e) {
     console.error(e);

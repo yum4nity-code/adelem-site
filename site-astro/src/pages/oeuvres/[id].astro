@@ -19,10 +19,15 @@ const [face] = d.photos;
 const rubrique = pageDe(oeuvre); // page de la galerie où se trouve l'œuvre
 const disponible = d.statut === 'disponible';
 const annee = d.statut === 'vendue' ? d.annee : null; // année affichée seulement pour les pièces vendues
-const achat = disponible && d.lien_paiement ? d.lien_paiement : null;
+// Paiement : page Stripe créée au clic par /api/acheter, au prix du site (option B). Les œuvres d'exemple, sans
+// identifiant Sanity, gardent leur ancien lien de paiement.
+const paiementSite = disponible && d.sanity_id && d.prix && site.paiement !== 'off'
+  ? `/api/acheter?piece=${encodeURIComponent(d.sanity_id)}&retour=${encodeURIComponent(`/oeuvres/${oeuvre.id}`)}`
+  : null;
+const achat = paiementSite ?? (disponible && d.lien_paiement ? d.lien_paiement : null);
 // Lien Stripe de test (buy.stripe.com/test_…) : bouton caché aux visiteurs, visible seulement en « mode test »
 // (ouvrir une page avec ?test-paiement, désactiver avec ?test-paiement=non). Un vrai lien s'affiche pour tout le monde.
-const achatTest = !!achat && /\/test_/.test(achat);
+const achatTest = !!achat && (paiementSite ? site.paiement === 'test' : /\/test_/.test(achat));
 const contactPiece = `/contact?piece=${encodeURIComponent(d.titre)}`;
 const jsonld = {
   '@context': 'https://schema.org',

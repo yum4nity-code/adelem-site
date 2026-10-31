@@ -409,3 +409,11 @@
 - Réglages Vercel (vus le 2026-10-31) : Root Directory = site, Framework = Other, pas de surcharge. Le seul vercel.json pris en compte est site/vercel.json (il lance la construction de site-astro et copie dist). Les vercel.json de la racine et de site-astro sont ignorés.
 - En-têtes de sécurité ajoutés dans site/vercel.json : nosniff, Referrer-Policy, X-Frame-Options SAMEORIGIN, Permissions-Policy, HSTS 1 an.
 - Webhook Stripe déplacé dans site/api/stripe-webhook.mjs (fonction Vercel servie par le projet Root Directory = site). Reste à régler par Gwen : variables STRIPE_WEBHOOK_SECRET et SANITY_WRITE_TOKEN dans Vercel, et l’adresse du webhook dans Stripe.
+
+## 2026-10-31 — Option B : paiement créé au clic (go de Gwen)
+- « Acquérir » → /api/acheter (site/api/acheter.mjs) : lit la pièce dans Sanity, vérifie disponible + prix + pas déjà réservée, la réserve 31 min (reserve_jusqua, modification atomique ifRevisionID), crée la session Stripe au prix du site (envoi France compris), redirige vers Stripe. Retour annulé → la fiche.
+- Livraison : France + Monaco offerte ; « Ailleurs en Europe » = forfait Europe (25/30/50 € selon poids) moins l’envoi France déjà inclus (souvent 6 à 15 €). À valider par Adèle.
+- Webhook : passe en vendue et retire la réservation. Plus besoin de créer des liens de paiement par pièce.
+- Mode : site.paiement = 'test' (bouton visible seulement avec ?test-paiement) ; 'actif' au lancement.
+- Règle de prix dupliquée dans site/api/_prix.mjs ; scripts/verifier-prix.mjs bloque la construction si elle diverge.
+- Variable Vercel à créer par Gwen : STRIPE_API_KEY (clé restreinte Checkout Sessions en écriture).

@@ -13,6 +13,9 @@ export const site = {
     google: null as string | null,
   },
   // Point d'envoi du formulaire (service d'e-mail à brancher). Sans valeur : lien e-mail, sinon message d'attente.
+  // Paiement en ligne (option B, 2026-10-31) : 'test' = bouton visible seulement en mode test (?test-paiement) ;
+  // 'actif' = pour tous les visiteurs (au lancement, avec le compte Stripe réel) ; 'off' = aucun bouton.
+  paiement: 'test' as 'test' | 'actif' | 'off',
   formEndpoint: 'https://formspree.io/f/mgavrzzp' as string | null,
   // Le plan gratuit de Formspree ne gère pas les pièces jointes : ne passer à true qu'après un plan payant (Personal ou plus).
   formFileUploads: false as boolean,

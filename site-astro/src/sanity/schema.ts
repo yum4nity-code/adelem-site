@@ -170,6 +170,8 @@ export const oeuvre = defineType({
       initialValue: () => new Date().getFullYear(),
       validation: (r) => r.integer().min(1970).max(2100),
     }),
+    // Réservation pendant un paiement en ligne (30 min), posée et retirée automatiquement par le site. Invisible.
+    defineField({ name: 'reserve_jusqua', title: 'Réservée (paiement en cours) jusqu’à', type: 'datetime', hidden: true, readOnly: true }),
     defineField({
       name: 'poids_kg',
       title: 'Poids emballé (kg)',
