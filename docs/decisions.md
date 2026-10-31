@@ -386,3 +386,6 @@
 
 ## 2026-10-30 — Contact tient sans défiler (ordinateur)
 - Espaces resserrés, carte un peu plus petite et collée en bas de la colonne : tout est visible jusqu’à la pointe de la carte sur un écran 1920 × 1080 zoomé à 125 %, avec ou sans rappel de pièce.
+
+## 2026-10-31 — « Emballage sur mesure » retiré partout (demande d’Adèle)
+- Bandeau du bas : remplacé par « Livraison offerte en France ». Fiches, Livraison, CGV, À propos, merci-achat, descriptions Google : plus de « sur mesure » pour l’emballage.

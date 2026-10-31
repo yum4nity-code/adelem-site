@@ -18,7 +18,7 @@ const tri = [...oeuvres].sort((a, b) => a.data.ordre - b.data.ordre);
 const dispo = tri.filter((o) => o.data.statut !== 'vendue');
 const vendues = tri.filter((o) => o.data.statut === 'vendue');
 ---
-<Base title={titre} description={resume(texte ?? `${titre} : pièces uniques Adelem, faites main en France. Livraison offerte en France, emballage sur mesure.`)}>
+<Base title={titre} description={resume(texte ?? `${titre} : pièces uniques Adelem, faites main en France. Livraison offerte en France.`)}>
   <div class="salle-page">
     <div class="wrap entete-page">
       <nav class="discret fil" aria-label="Fil d’Ariane">{fil.map((f, i) => <>{i > 0 && ' / '}<a href={f.href}>{f.nom}</a></>)}</nav>
