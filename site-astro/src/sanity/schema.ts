@@ -172,6 +172,8 @@ export const oeuvre = defineType({
     }),
     // Réservation pendant un paiement en ligne (30 min), posée et retirée automatiquement par le site. Invisible.
     defineField({ name: 'reserve_jusqua', title: 'Réservée (paiement en cours) jusqu’à', type: 'datetime', hidden: true, readOnly: true }),
+    defineField({ name: 'reserve_jeton', title: 'Empreinte du visiteur qui paie', type: 'string', hidden: true, readOnly: true }),
+    defineField({ name: 'reserve_session', title: 'Session de paiement en cours', type: 'string', hidden: true, readOnly: true }),
     defineField({
       name: 'poids_kg',
       title: 'Poids emballé (kg)',

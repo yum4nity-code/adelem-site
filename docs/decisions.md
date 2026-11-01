@@ -432,3 +432,9 @@
 
 - À la demande d'Adèle (via Gwen) : chaque entrée du carnet s'affiche sur une ligne, petite photo à gauche et texte à droite ; un clic agrandit la photo. Remplace la grille de vignettes (3 par rangée) du même jour.
 - Admin : nouveau champ « Photos » (plusieurs photos, glisser pour l'ordre). L'ancien champ « Photo » reste pour les entrées déjà saisies et n'apparaît que s'il est rempli ; il passe en tête des photos.
+
+## 2026-11-01 — Page de paiement intégrée sur adelem.fr (go de Gwen)
+- « Acquérir » ouvre /oeuvres/<pièce>/acquerir : à gauche la pièce (photo, cartel, prix envoi compris, engagements, heure de fin de réservation), à droite le formulaire Stripe intégré (Embedded Checkout, ui_mode embedded_page) dans une carte crème. Le client ne quitte plus le site. Téléphone : pièce en bandeau compact au-dessus.
+- /api/acheter en POST renvoie le secret de session ; le GET (page Stripe classique) reste pour les navigateurs sans JavaScript.
+- Le visiteur qui revient (retour arrière, rechargement) retrouve sa réservation et sa session : jeton gardé dans son navigateur, seule son empreinte SHA-256 est stockée (reserve_jeton, reserve_session), la base étant publique.
+- Clé publique Stripe dans site.ts (stripePublique), à passer en pk_live au lancement.

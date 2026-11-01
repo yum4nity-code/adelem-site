@@ -5,6 +5,7 @@
 // 3. Crée la session de paiement Stripe au prix affiché sur le site (envoi France compris), avec l'option Europe.
 // 4. Redirige l'acheteur vers Stripe. Après paiement, le webhook (stripe-webhook.mjs) passe la pièce en « vendue ».
 // Variables Vercel : STRIPE_API_KEY (clé restreinte : Checkout Sessions en écriture), SANITY_WRITE_TOKEN.
+import crypto from 'node:crypto';
 import { prixAffiche, supplementEurope } from './_prix.mjs';
 
 const SANITY = 'https://b9pobh76.api.sanity.io/v2024-01-01/data';
@@ -39,41 +40,62 @@ function formulaire(obj, prefixe = '', sortie = new URLSearchParams()) {
 
 const heureParis = (iso) => new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
 
-export async function GET(request) {
-  const url = new URL(request.url);
-  const id = (url.searchParams.get('piece') || '').replace(/[^A-Za-z0-9-]/g, '');
-  const r = url.searchParams.get('retour') || '';
-  const retour = /^\/oeuvres\/[a-z0-9-]+$/.test(r) ? r : '/galerie';
+const empreinte = (jeton) => crypto.createHash('sha256').update(String(jeton)).digest('hex');
+
+async function stripe(chemin, cle, corps) {
+  const r = await fetch(`https://api.stripe.com/v1/${chemin}`, {
+    method: corps ? 'POST' : 'GET',
+    headers: { Authorization: `Bearer ${cle}`, ...(corps ? { 'Content-Type': 'application/x-www-form-urlencoded' } : {}) },
+    body: corps,
+  });
+  const json = await r.json().catch(() => ({}));
+  return { ok: r.ok, status: r.status, json };
+}
+
+// Cœur commun : vérifie la pièce, la réserve, crée (ou reprend) la session Stripe.
+// integre = true : page de paiement intégrée sur adelem.fr (ui_mode embedded_page) ; sinon page Stripe classique.
+// jeton : identifiant du visiteur qui a réservé ; s'il revient (retour arrière, rechargement), il retrouve sa session.
+async function preparer({ id, retour, integre, jeton }) {
   const cle = process.env.STRIPE_API_KEY;
   const token = process.env.SANITY_WRITE_TOKEN;
-  if (!id) return page(400, 'Pièce introuvable', 'Le lien de paiement est incomplet.', retour);
-  if (!cle || !token) return page(503, 'Paiement momentanément indisponible', 'Le paiement en ligne n’est pas encore ouvert. Écrivez-nous depuis la page Contact : nous vous répondons rapidement.', '/contact');
+  if (!id) return { erreur: [400, 'Pièce introuvable', 'Le lien de paiement est incomplet.', retour] };
+  if (!cle || !token) return { erreur: [503, 'Paiement momentanément indisponible', 'Le paiement en ligne n’est pas encore ouvert. Écrivez-nous depuis la page Contact : nous vous répondons rapidement.', '/contact'] };
 
-  const q = encodeURIComponent('*[_type == "oeuvre" && _id == $id][0]{ _id, _rev, titre, statut, prix, poids_kg, largeur_cm, hauteur_cm, reserve_jusqua, "photo": photos[defined(asset)][0].asset->url }');
+  const q = encodeURIComponent('*[_type == "oeuvre" && _id == $id][0]{ _id, _rev, titre, statut, prix, poids_kg, largeur_cm, hauteur_cm, reserve_jusqua, reserve_jeton, reserve_session, "photo": photos[defined(asset)][0].asset->url }');
   const lu = await sanity(`query/production?query=${q}&$id=${encodeURIComponent(JSON.stringify(id))}`, token);
   const o = lu.corps?.result;
-  if (!lu.ok || !o) return page(404, 'Pièce introuvable', 'Cette pièce n’existe plus dans la galerie.', '/galerie');
-  if (o.statut !== 'disponible') return page(409, 'Cette pièce a trouvé preneur', 'Elle n’est plus disponible. D’autres pièces vous attendent dans la galerie.', '/galerie');
+  if (!lu.ok || !o) return { erreur: [404, 'Pièce introuvable', 'Cette pièce n’existe plus dans la galerie.', '/galerie'] };
+  if (o.statut !== 'disponible') return { erreur: [409, 'Cette pièce a trouvé preneur', 'Elle n’est plus disponible. D’autres pièces vous attendent dans la galerie.', '/galerie'] };
   const montant = prixAffiche(o.prix, o.poids_kg, o.largeur_cm, o.hauteur_cm);
-  if (!montant) return page(409, 'Prix sur demande', 'Cette pièce ne s’achète pas en ligne. Écrivez-nous depuis la page Contact.', '/contact');
+  if (!montant) return { erreur: [409, 'Prix sur demande', 'Cette pièce ne s’achète pas en ligne. Écrivez-nous depuis la page Contact.', '/contact'] };
   const maintenant = Date.now();
+
   if (o.reserve_jusqua && Date.parse(o.reserve_jusqua) > maintenant) {
-    return page(409, 'Pièce en cours d’acquisition', `Quelqu’un est en train de l’acquérir. Si l’achat n’aboutit pas, elle sera de nouveau disponible à ${heureParis(o.reserve_jusqua)}.`, retour);
+    // Le même visiteur revient : on lui rend sa session si elle est toujours ouverte.
+    if (jeton && o.reserve_jeton === empreinte(jeton) && o.reserve_session) {
+      const s = await stripe(`checkout/sessions/${encodeURIComponent(o.reserve_session)}`, cle);
+      if (s.ok && s.json.status === 'open' && (integre ? s.json.client_secret : s.json.url)) {
+        return { session: s.json, jusqua: o.reserve_jusqua, jeton, montant };
+      }
+    }
+    return { erreur: [409, 'Pièce en cours d’acquisition', `Quelqu’un est en train de l’acquérir. Si l’achat n’aboutit pas, elle sera de nouveau disponible à ${heureParis(o.reserve_jusqua)}.`, retour] };
   }
 
   // Réservation atomique : la modification échoue si la pièce a changé depuis la lecture (autre clic au même moment).
   const expire = Math.floor(maintenant / 1000) + DUREE_MIN * 60;
   const jusqua = new Date(expire * 1000).toISOString();
-  const resa = await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, ifRevisionID: o._rev, set: { reserve_jusqua: jusqua } } }] }) });
-  if (!resa.ok) return page(409, 'Pièce en cours d’acquisition', 'Quelqu’un vient de commencer à l’acquérir. Réessayez dans une demi-heure si l’achat n’aboutit pas.', retour);
+  const nouveauJeton = crypto.randomBytes(18).toString('base64url');
+  const resa = await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, ifRevisionID: o._rev, set: { reserve_jusqua: jusqua, reserve_jeton: empreinte(nouveauJeton) }, unset: ['reserve_session'] } }] }) });
+  if (!resa.ok) return { erreur: [409, 'Pièce en cours d’acquisition', 'Quelqu’un vient de commencer à l’acquérir. Réessayez dans une demi-heure si l’achat n’aboutit pas.', retour] };
 
   const europe = supplementEurope(o.poids_kg, o.largeur_cm, o.hauteur_cm);
   const params = formulaire({
     mode: 'payment',
     locale: 'fr',
     expires_at: expire,
-    success_url: `${SITE}/merci-achat`,
-    cancel_url: `${SITE}${retour}`,
+    ...(integre
+      ? { ui_mode: 'embedded_page', return_url: `${SITE}/merci-achat?session_id={CHECKOUT_SESSION_ID}` }
+      : { success_url: `${SITE}/merci-achat`, cancel_url: `${SITE}${retour}` }),
     line_items: [{
       quantity: 1,
       price_data: {
@@ -81,7 +103,7 @@ export async function GET(request) {
         unit_amount: montant * 100,
         product_data: {
           name: o.titre,
-          description: `Pièce unique · ${String(o.largeur_cm).replace('.', ',')} × ${String(o.hauteur_cm).replace('.', ',')} cm`,
+          description: `Pièce unique, signée · ${String(o.largeur_cm).replace('.', ',')} × ${String(o.hauteur_cm).replace('.', ',')} cm`,
           ...(o.photo ? { images: [`${o.photo}?w=800&h=800&fit=max&bg=1B211B&fm=jpg`] } : {}),
         },
       },
@@ -99,13 +121,36 @@ export async function GET(request) {
     // Elle évite qu'un client lise « à régler » sur le modèle de facture standard de Stripe (retour de Gwen, 2026-10-31).
     invoice_creation: { enabled: true, invoice_data: { description: 'Facture acquittée : réglée en ligne à la commande.', custom_fields: [{ name: 'Règlement', value: 'Payée en ligne' }], footer: 'TVA non applicable, art. 293 B du CGI' } },
   });
-  const s = await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: params });
-  const session = await s.json().catch(() => ({}));
-  if (!s.ok || !session.url) {
-    console.error('Stripe', s.status, session?.error?.message);
+  const s = await stripe('checkout/sessions', cle, params);
+  if (!s.ok || !(integre ? s.json.client_secret : s.json.url)) {
+    console.error('Stripe', s.status, s.json?.error?.message);
     // Échec : on libère la pièce tout de suite.
-    await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, unset: ['reserve_jusqua'] } }] }) });
-    return page(502, 'Paiement momentanément indisponible', 'La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant, ou écrivez-nous depuis la page Contact.', retour);
+    await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, unset: ['reserve_jusqua', 'reserve_jeton', 'reserve_session'] } }] }) });
+    return { erreur: [502, 'Paiement momentanément indisponible', 'La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant, ou écrivez-nous depuis la page Contact.', retour] };
   }
-  return new Response(null, { status: 303, headers: { Location: session.url, 'Cache-Control': 'no-store' } });
+  await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, set: { reserve_session: s.json.id } } }] }) });
+  return { session: s.json, jusqua, jeton: nouveauJeton, montant };
+}
+
+const retourSur = (r) => (/^\/oeuvres\/[a-z0-9-]+$/.test(r || '') ? r : '/galerie');
+const idPropre = (x) => String(x || '').replace(/[^A-Za-z0-9-]/g, '');
+
+// Page Stripe classique (lien direct, ou visiteur sans JavaScript).
+export async function GET(request) {
+  const url = new URL(request.url);
+  const retour = retourSur(url.searchParams.get('retour'));
+  const r = await preparer({ id: idPropre(url.searchParams.get('piece')), retour, integre: false });
+  if (r.erreur) return page(...r.erreur);
+  return new Response(null, { status: 303, headers: { Location: r.session.url, 'Cache-Control': 'no-store' } });
+}
+
+// Page de paiement intégrée (/oeuvres/<pièce>/acquerir) : renvoie le secret de session à Stripe.js.
+export async function POST(request) {
+  const corps = await request.json().catch(() => ({}));
+  const retour = retourSur(corps.retour);
+  const r = await preparer({ id: idPropre(corps.piece), retour, integre: true, jeton: typeof corps.jeton === 'string' ? corps.jeton.slice(0, 64) : null });
+  const json = r.erreur
+    ? { erreur: { titre: r.erreur[1], texte: r.erreur[2], retour: r.erreur[3] } }
+    : { clientSecret: r.session.client_secret, jusqua: r.jusqua, jeton: r.jeton, montant: r.montant };
+  return new Response(JSON.stringify(json), { status: r.erreur ? r.erreur[0] : 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
 }

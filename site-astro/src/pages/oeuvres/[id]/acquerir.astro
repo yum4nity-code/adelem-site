@@ -1,0 +1,146 @@
+---
+// Page de paiement intégrée (2026-11-01, Gwen : « une page de paiement incroyable »).
+// À gauche, la pièce ; à droite, le formulaire Stripe (Embedded Checkout), sans quitter adelem.fr.
+// La session est créée par /api/acheter (POST) : prix du site, réservation 30 min, livraison, facture.
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { prix, dims, site } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const oeuvres = await getCollection('oeuvres');
+  return oeuvres
+    .filter((o) => (o.data.sanity_id || o.data.demo) && o.data.statut === 'disponible' && o.data.prix) // demo : aperçu local seulement
+    .map((o) => ({ params: { id: o.id }, props: { oeuvre: o } }));
+}
+const { oeuvre } = Astro.props;
+const d = oeuvre.data;
+const face = d.photos[0];
+const fiche = `/oeuvres/${oeuvre.id}`;
+const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
+---
+<Base title={`Acquérir ${d.titre}`} description={`Acquérir ${d.titre}, pièce unique Adelem.`} noindex>
+  <section class="wrap paiement-page">
+    <a class="retour" href={fiche}>← Revenir à la pièce</a>
+    <div class="grille">
+      <aside class="piece">
+        <img class="photo" src={face.detoure ?? face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+        <div class="infos">
+          <p class="surtitre">Pièce unique, signée</p>
+          <h1>{d.titre}</h1>
+          {d.sous_titre && <p class="sous-titre">{d.sous_titre}</p>}
+          <div class="cartel">
+            {details.map((t) => <p>{t}</p>)}
+            <p>{dims(d.largeur_cm, d.hauteur_cm)}</p>
+          </div>
+          <p class="prix">{prix(d.prix)}<span>livraison offerte en France</span></p>
+          <ul class="engagements">
+            <li>Emballée à la main et expédiée sous 3 à 5 jours ouvrés</li>
+            <li>14 jours après réception pour changer d’avis</li>
+            <li>Facture envoyée par e-mail</li>
+          </ul>
+          <p class="reservation" data-reservation hidden>Réservée pour vous jusqu’à <strong data-heure></strong></p>
+        </div>
+      </aside>
+      <div class="formulaire-paiement">
+        {site.paiement === 'test' && <p class="mode-test">Mode test · aucun vrai paiement · carte 4242 4242 4242 4242</p>}
+        <div class="carte-paiement">
+          <div id="paiement" data-piece={d.sanity_id ?? oeuvre.id} data-retour={fiche} data-cle={site.stripePublique}>
+            <p class="attente">Préparation du paiement…</p>
+          </div>
+          <div class="erreur" data-erreur hidden>
+            <h2 data-erreur-titre></h2>
+            <p data-erreur-texte></p>
+            <a class="lien" data-erreur-lien href={fiche}>Revenir</a>
+          </div>
+          <noscript><p class="attente">Le paiement intégré a besoin de JavaScript. <a href={`/api/acheter?piece=${d.sanity_id}&retour=${fiche}`}>Payer sur la page sécurisée Stripe</a>.</p></noscript>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline src="https://js.stripe.com/v3/"></script>
+<script>
+  const zone = document.getElementById('paiement') as HTMLElement;
+  const { piece, retour, cle } = zone.dataset as { piece: string; retour: string; cle: string };
+  const memo = `adelem-reservation-${piece}`;
+  let jeton: string | null = null;
+  try { jeton = localStorage.getItem(memo); } catch {}
+
+  const erreur = (e: { titre: string; texte: string; retour?: string }) => {
+    zone.hidden = true;
+    const bloc = document.querySelector<HTMLElement>('[data-erreur]')!;
+    bloc.querySelector('[data-erreur-titre]')!.textContent = e.titre;
+    bloc.querySelector('[data-erreur-texte]')!.textContent = e.texte;
+    if (e.retour) bloc.querySelector<HTMLAnchorElement>('[data-erreur-lien]')!.href = e.retour;
+    bloc.hidden = false;
+  };
+
+  (async () => {
+    try {
+      const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
+      const j = await r.json();
+      if (j.erreur) return erreur(j.erreur);
+      try { localStorage.setItem(memo, j.jeton); } catch {}
+      const resa = document.querySelector<HTMLElement>('[data-reservation]');
+      if (resa && j.jusqua) {
+        resa.querySelector('[data-heure]')!.textContent = new Date(j.jusqua).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).replace(':', ' h ');
+        resa.hidden = false;
+      }
+      // @ts-ignore Stripe.js chargé depuis js.stripe.com
+      const stripe = window.Stripe(cle);
+      const ouvrir = stripe.createEmbeddedCheckoutPage ?? stripe.initEmbeddedCheckout;
+      const checkout = await ouvrir.call(stripe, { fetchClientSecret: async () => j.clientSecret });
+      zone.innerHTML = '';
+      checkout.mount(zone);
+    } catch (e) {
+      console.error(e);
+      erreur({ titre: 'Paiement momentanément indisponible', texte: 'La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant, ou écrivez-nous depuis la page Contact.', retour: '/contact' });
+    }
+  })();
+</script>
+
+<style>
+  .paiement-page { padding-top: clamp(24px, 4vw, 48px); }
+  .retour { display: inline-block; margin-bottom: clamp(20px, 3vw, 36px); color: var(--or); font: 400 .78rem var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+  .retour:hover { color: var(--encre); }
+  .grille { display: grid; gap: clamp(32px, 5vw, 80px); grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 960px) { .grille { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } .piece { position: sticky; top: 32px; } }
+  .piece { display: flex; flex-direction: column; gap: 28px; }
+  .photo {
+    width: min(100%, max(260px, calc(var(--l) * 9px))); max-height: 42vh; object-fit: contain; align-self: center; height: auto;
+    filter: drop-shadow(0 22px 30px rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
+  }
+  .infos { display: flex; flex-direction: column; gap: 10px; }
+  .surtitre { font: 400 .72rem var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--or); }
+  h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.05; }
+  .sous-titre { font: italic 300 1.25rem/1.3 var(--serif); color: var(--encre); }
+  .cartel { font-size: .9rem; line-height: 1.6; color: var(--texte); margin-top: 4px; }
+  .prix { font: 400 1.9rem var(--serif); color: var(--encre); display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+  .prix span { font: 300 .85rem var(--sans); color: var(--discret); }
+  .engagements { list-style: none; margin: 10px 0 0; padding: 18px 0 0; border-top: 1px solid var(--trait); display: grid; gap: 8px; font-size: .9rem; color: var(--texte); }
+  .engagements li { display: flex; gap: 12px; align-items: baseline; }
+  .engagements li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--or); flex: none; transform: translateY(-2px); }
+  .reservation { margin-top: 8px; font: italic 300 1.05rem var(--serif); color: var(--discret); }
+  .reservation strong { font-weight: 400; color: var(--encre); }
+  .reservation[hidden] { display: none; }
+  .formulaire-paiement { display: flex; flex-direction: column; gap: 12px; }
+  .mode-test { font: 500 .66rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
+  .carte-paiement { background: #F3EFE7; color: #2A2620; border-radius: 4px; padding: clamp(12px, 2vw, 28px); min-height: 420px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); }
+  .attente { font: italic 300 1.1rem var(--serif); color: #6b6559; padding: 24px 8px; }
+  .attente a { color: #2A2620; text-decoration: underline; }
+  .erreur { padding: 24px 8px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .erreur[hidden] { display: none; }
+  .erreur h2 { color: #2A2620; font-size: 1.8rem; }
+  .erreur .lien { color: #2A2620; }
+  /* Téléphone : la pièce en bandeau compact au-dessus du formulaire. */
+  @media (max-width: 959px) {
+    .piece { flex-direction: row; align-items: center; gap: 18px; }
+    .photo { width: 96px; max-height: 120px; align-self: flex-start; filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .5)); }
+    h1 { font-size: 1.6rem; }
+    .sous-titre, .cartel, .engagements { display: none; }
+    .prix { font-size: 1.3rem; margin-top: 2px; }
+    .prix span { font-size: .75rem; }
+    .reservation { font-size: .9rem; margin-top: 0; }
+  }
+</style>
