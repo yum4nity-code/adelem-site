@@ -8,6 +8,7 @@ import Vignettes from '../../components/Vignettes.astro';
 import Suggestions from '../../components/Suggestions.astro';
 import { prix, site, dims, resume } from '../../data/site';
 import { pageDe } from '../../data/galerie';
+import { apercuCompose } from '../../data/apercu';
 
 export async function getStaticPaths() {
   const oeuvres = await getCollection('oeuvres');
@@ -28,6 +29,12 @@ const achat = paiementSite ?? (disponible && d.lien_paiement ? d.lien_paiement :
 // Lien Stripe de test (buy.stripe.com/test_…) : bouton caché aux visiteurs, visible seulement en « mode test »
 // (ouvrir une page avec ?test-paiement, désactiver avec ?test-paiement=non). Un vrai lien s'affiche pour tout le monde.
 const achatTest = !!achat && (paiementSite ? site.paiement === 'test' : /\/test_/.test(achat));
+// Aperçu de partage : prix (ou statut) en tête, puis le début du texte ; image composée pour les pièces verticales.
+const enTete = d.statut === 'vendue' ? 'Collection privée · Pièce unique'
+  : d.statut === 'reservee' ? 'Réservée · Pièce unique'
+  : d.prix ? `${prix(d.prix)} · Pièce unique · Livraison offerte en France métropolitaine` : 'Pièce unique';
+const descriptionPartage = `${enTete}. ${resume(d.histoire ?? `${d.titre}, pièce unique d’Adelem.`, Math.max(60, 190 - enTete.length))}`;
+const imagePartage = apercuCompose(d) ? `/partage/${oeuvre.id}.jpg` : face.og ?? face.src;
 const contactPiece = `/contact?piece=${encodeURIComponent(d.titre)}`;
 const jsonld = {
   '@context': 'https://schema.org',
@@ -44,7 +51,7 @@ const jsonld = {
     : {}),
 };
 ---
-<Base title={d.titre} description={resume(d.histoire ?? `${d.titre}, pièce unique d’Adelem.`)} image={face.og ?? face.src} jsonld={jsonld}>
+<Base title={d.titre} description={descriptionPartage} image={imagePartage} jsonld={jsonld}>
   <section class="wrap tete">
     <div class="oeuvre" data-galerie>
       <div class="photo-principale" style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} data-loupe>
