@@ -150,5 +150,13 @@ const largeurAffichee = (l: number, h: number) => {
     }
     .piece:hover .voir { opacity: 1; transform: none; }
     .piece:hover :global(.titre) { color: var(--or); }
+    .piece:hover :global(.fleche) { transform: translateX(4px); }
   }
+  /* Tactile : la pièce s'enfonce légèrement et s'éclaire au toucher, signe qu'elle s'ouvre. */
+  @media (hover: none) {
+    .piece img { -webkit-tap-highlight-color: transparent; }
+    .piece:active img { transform: scale(.975); opacity: .88; transition: transform .12s ease, opacity .12s ease; }
+    .piece:active :global(.titre) { color: var(--or); }
+  }
+  .piece { -webkit-tap-highlight-color: transparent; }
 </style>

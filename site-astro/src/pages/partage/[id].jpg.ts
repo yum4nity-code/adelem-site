@@ -20,15 +20,23 @@ const lire = async (src: string) => {
 };
 
 export const GET: APIRoute = async ({ props }) => {
+  // La pièce occupe le carré central (630 × 630) : WhatsApp découpe ce carré pour ses petites miniatures, la pièce y
+  // reste donc entière. Dans le grand aperçu, deux gros plans l'encadrent (2e et 3e photos, ou deux cadrages de la 2e).
+  // Une photo injoignable ne bloque jamais la mise en ligne : sans gros plan, la pièce reste seule au centre.
   const d = (props as any).oeuvre.data;
-  // Une photo injoignable ne doit jamais bloquer la mise en ligne : sans gros plan, la pièce seule est centrée.
-  const [face, detail] = await Promise.all([lire(d.photos[0].src), lire(d.photos[1].src).catch(() => null)]);
-  const gauche = await sharp(face).resize(540, 570, { fit: 'inside' }).toBuffer({ resolveWithObject: true });
-  const centre = detail ? 300 : 600;
-  const calques: OverlayOptions[] = [
-    { input: gauche.data, left: Math.round(centre - gauche.info.width / 2), top: Math.round(315 - gauche.info.height / 2) },
-  ];
-  if (detail) calques.push({ input: await sharp(detail).resize(600, 630, { fit: 'cover', position: 'attention' }).toBuffer(), left: 600, top: 0 });
+  const [face, d1, d2] = await Promise.all([
+    lire(d.photos[0].src),
+    lire(d.photos[1].src).catch(() => null),
+    d.photos[2] ? lire(d.photos[2].src).catch(() => null) : Promise.resolve(null),
+  ]);
+  const piece = await sharp(face).resize(560, 590, { fit: 'inside' }).toBuffer({ resolveWithObject: true });
+  const calques: OverlayOptions[] = [];
+  const cote = async (src: Buffer, position: string) => sharp(src).resize(285, 630, { fit: 'cover', position }).toBuffer();
+  if (d1) {
+    calques.push({ input: await cote(d1, d2 ? 'attention' : 'left'), left: 0, top: 0 });
+    calques.push({ input: await cote(d2 ?? d1, d2 ? 'attention' : 'right'), left: 915, top: 0 });
+  }
+  calques.push({ input: piece.data, left: Math.round(600 - piece.info.width / 2), top: Math.round(315 - piece.info.height / 2) });
   const img = await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#1B211B' } })
     .composite(calques)
     .jpeg({ quality: 84, mozjpeg: true })
