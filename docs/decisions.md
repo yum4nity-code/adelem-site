@@ -430,5 +430,5 @@
 
 ## 2026-11-01 — Carnet d'atelier : vignette à gauche, plusieurs photos par entrée
 
-- À la demande d'Adèle (via Gwen) : chaque entrée du carnet s'affiche sur une ligne, petite photo à gauche et texte à droite ; un clic agrandit la photo.
+- À la demande d'Adèle (via Gwen) : chaque entrée du carnet s'affiche sur une ligne, petite photo à gauche et texte à droite ; un clic agrandit la photo. Remplace la grille de vignettes (3 par rangée) du même jour.
 - Admin : nouveau champ « Photos » (plusieurs photos, glisser pour l'ordre). L'ancien champ « Photo » reste pour les entrées déjà saisies et n'apparaît que s'il est rempli ; il passe en tête des photos.
