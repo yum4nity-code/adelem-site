@@ -40,7 +40,6 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
           </div>
           <ul class="engagements">
             <li>Emballée à la main et expédiée sous 3 à 5 jours ouvrés</li>
-            <li>14 jours après réception pour changer d’avis</li>
             <li>Facture envoyée par e-mail</li>
           </ul>
         </div>
@@ -58,6 +57,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
           </div>
           <noscript><p class="attente">Le paiement intégré a besoin de JavaScript. <a href={`/api/acheter?piece=${d.sanity_id}&retour=${fiche}`}>Payer sur la page sécurisée Stripe</a>.</p></noscript>
         </div>
+        <p class="cgv">En validant le paiement, vous acceptez les <a href="/cgv">conditions de vente</a>.</p>
       </div>
     </div>
   </section>
@@ -152,6 +152,8 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   .reservation.expiree { border-color: var(--trait); }
   .reservation.expiree .resa-titre { color: var(--discret); }
   .formulaire-paiement { display: flex; flex-direction: column; gap: 12px; }
+  .cgv { font-size: .8rem; color: var(--discret); }
+  .cgv a { color: var(--texte); text-decoration: underline; text-underline-offset: 2px; }
   .mode-test { font: 500 .66rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
   .carte-paiement { background: #f3efe7; color: #2A2620; border-radius: 4px; padding: clamp(12px, 2vw, 28px); min-height: 420px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); }
   .attente { font: italic 300 1.1rem var(--serif); color: #6b6559; padding: 24px 8px; }

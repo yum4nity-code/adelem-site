@@ -442,3 +442,6 @@
 ## 2026-11-01 — Paiement : réservation mise en avant
 - Encadré doré sous le prix : « Réservée pour vous », temps restant (30 min annoncées, mis à jour toutes les 15 s), heure de fin, « Pendant ce temps, personne d’autre ne peut l’acquérir ». Version compacte sur téléphone. À expiration : « Réservation terminée », invitation à recharger. Photo réduite pour que l’encadré soit visible sans défiler.
 - PayPal : à activer au lancement dans Stripe (Moyens de paiement), aucun changement de code (le formulaire intégré l’affiche automatiquement).
+
+## 2026-11-01 — Paiement : « 14 jours pour changer d’avis » retiré de la page (Gwen)
+- Le droit de rétractation reste obligatoire et figure dans les CGV ; la page de paiement porte « En validant le paiement, vous acceptez les conditions de vente » (lien /cgv) sous le formulaire.
