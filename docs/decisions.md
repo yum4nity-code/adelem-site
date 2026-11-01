@@ -445,3 +445,4 @@
 
 ## 2026-11-01 — Paiement : « 14 jours pour changer d’avis » retiré de la page (Gwen)
 - Le droit de rétractation reste obligatoire et figure dans les CGV ; la page de paiement porte « En validant le paiement, vous acceptez les conditions de vente » (lien /cgv) sous le formulaire.
+- Fiche (volet « Livraison et retours ») : mention des 14 jours retirée aussi. Elle reste dans les CGV (obligatoire) et sur la page Livraison.
