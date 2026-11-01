@@ -421,3 +421,6 @@
 ## 2026-10-31 — Facture Stripe : mention « acquittée »
 - Le modèle standard de facture Stripe affiche « à régler / Montant dû » même payée. Ajout sur chaque facture : description « Facture acquittée : réglée en ligne à la commande » et champ « Règlement : Payée en ligne » (la facture n’est créée qu’après paiement réussi).
 - Au lancement : nom « Prénom Nom EI » (obligatoire aussi pour un auto-entrepreneur), adresse et SIRET sur la facture, les mentions légales et les CGV.
+
+## 2026-11-01 — « signée au dos » → « signée » (demande d’Adèle)
+- Inexact pour les sculptures. Fiches (volet Matières) et aide de l’admin : « Pièce unique, signée. » pour tout.

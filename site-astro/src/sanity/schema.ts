@@ -191,7 +191,7 @@ export const oeuvre = defineType({
       name: 'certificat',
       title: 'Certificat ou signature particulière (facultatif)',
       description:
-        'Le site indique déjà que chaque pièce est unique et signée au dos. Remplissez ce champ seulement si cette œuvre a quelque chose en plus : un numéro, un certificat, une dédicace… Sinon, laissez vide.',
+        'Le site indique déjà que chaque pièce est unique et signée. Remplissez ce champ seulement si cette œuvre a quelque chose en plus : un numéro, un certificat, une dédicace… Sinon, laissez vide.',
       type: 'string',
     }),
     defineField({
