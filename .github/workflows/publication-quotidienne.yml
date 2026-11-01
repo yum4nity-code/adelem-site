@@ -38,7 +38,7 @@ jobs:
           echo "nombre=$N" >> "$GITHUB_OUTPUT"
 
       - name: Reconstruire le site
-        if: (steps.carnet.outputs.nombre != '0' || github.event_name != 'schedule')
+        if: github.event_name != 'push' && (steps.carnet.outputs.nombre != '0' || github.event_name == 'workflow_dispatch')
         run: |
           echo "${{ steps.carnet.outputs.jour }}" > site-astro/src/data/derniere-publication.txt
           git config user.name "Gwen"
