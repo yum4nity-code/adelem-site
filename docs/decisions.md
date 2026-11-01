@@ -457,3 +457,9 @@
 
 ## 2026-11-01 — Carnet d’atelier : version A validée par Adèle
 - Grille de vignettes (3 par rangée sur ordinateur) ; au toucher, la pensée s’ouvre en grand (flèches, glissement, Échap). Ordinateur : photo à gauche, date, nom et texte à droite. Téléphone : photo à gauche, date et nom à droite, texte sous la photo. Une seule photo affichée par pensée (la première). Page de maquettes supprimée.
+
+## 2026-11-01 — Carnet : publication programmée
+
+- Une pensée datée dans le futur reste cachée et apparaît ce jour-là (heure de Paris). Filtre dans `site-astro/src/sanity/carnet.ts`.
+- Le site est reconstruit chaque matin par `.github/workflows/publication-quotidienne.yml` (déclencheur Vercel rangé dans le secret GitHub `VERCEL_DEPLOY_HOOK`, saisi par Gwen).
+- Aide sous le champ Date dans l'admin. Demande d'Adèle.

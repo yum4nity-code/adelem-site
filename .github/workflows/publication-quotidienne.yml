@@ -1,0 +1,22 @@
+name: Publication quotidienne
+
+# Reconstruit le site chaque matin pour faire apparaître les pensées du carnet
+# datées du jour (publication programmée). Le lien de déclenchement Vercel est
+# rangé dans le secret VERCEL_DEPLOY_HOOK du dépôt.
+
+on:
+  schedule:
+    - cron: '15 4 * * *' # ~5 h 15 / 6 h 15 à Paris selon l'heure d'été
+  workflow_dispatch:
+
+jobs:
+  reconstruire:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Déclencher le déploiement Vercel
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "Secret VERCEL_DEPLOY_HOOK manquant"; exit 1; fi
+          curl -fsS -X POST "$HOOK" > /dev/null
+          echo "Reconstruction demandée."

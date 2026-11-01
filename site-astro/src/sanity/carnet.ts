@@ -40,6 +40,11 @@ export async function carnetSanity() {
     docs = await client.fetch<SanityCarnet[]>(QUERY);
   }
 
+  // Publication programmée : une pensée datée dans le futur n'apparaît qu'à partir de ce jour-là
+  // (heure de Paris). Le site est reconstruit chaque matin (.github/workflows/publication-quotidienne.yml).
+  const aujourdhui = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
+  docs = docs.filter((c) => !c.date || c.date <= aujourdhui);
+
   const vus = new Map<string, number>();
   return docs.map((c) => {
     const base = slugify(c.titre);

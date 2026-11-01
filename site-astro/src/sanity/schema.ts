@@ -252,6 +252,7 @@ export const carnet = defineType({
     defineField({
       name: 'date',
       title: 'Date',
+      description: 'Une date à venir ? La pensée restera cachée et apparaîtra ce jour-là, en début de matinée.',
       type: 'date',
       initialValue: () => new Date().toISOString().slice(0, 10),
       validation: (r) => r.required(),
