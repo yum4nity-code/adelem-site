@@ -467,3 +467,7 @@
 ## 2026-11-01 — Photo atelier
 
 - Photo de banque d’images (main sur mousse) remplacée par une vraie photo de la main d’Adèle tenant une fougère pourpre (accueil + page Atelier). Ancienne gardée dans `docs/archives-images/`.
+
+## 2026-11-01 — Atelier Instagram
+
+- Page outil non référencée `/outils/instagram` (noindex, hors sitemap, Disallow robots) : carrousel 3:4 d’"'une pièce (couverture pièce entière + titre, photos recadrables, extrait de l’"histoire,

@@ -1,0 +1,360 @@
+---
+// Atelier Instagram (page non référencée) : fabrique les images 3:4 (ou story 9:16) et la légende
+// d'une publication, à partir des pièces et du carnet déjà publiés sur le site. Tout se passe dans le navigateur.
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const oeuvres = (await getCollection('oeuvres'))
+  .sort((a, b) => a.data.ordre - b.data.ordre)
+  .map((o) => ({
+    id: o.id,
+    titre: o.data.titre,
+    sous_titre: o.data.sous_titre ?? '',
+    type: o.data.type,
+    statut: o.data.statut,
+    prix: o.data.prix,
+    l: o.data.largeur_cm,
+    h: o.data.hauteur_cm,
+    matieres: o.data.matieres,
+    histoire: o.data.histoire ?? '',
+    photos: o.data.photos.map((p) => ({ src: p.src, legende: p.legende })),
+  }));
+const carnet = (await getCollection('carnet'))
+  .sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''))
+  .map((c) => ({ titre: c.data.titre, texte: c.data.texte ?? '', date: c.data.date ?? '', src: c.data.images[0]?.grande }))
+  .filter((c) => c.src);
+const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
+---
+<Base title="Atelier Instagram" noindex>
+  <section class="wrap haut-page ig">
+    <h1 class="titre-section">Atelier Instagram</h1>
+    <p class="texte discret">Choisissez une pièce ou une page du carnet : les images et la légende se préparent toutes seules. Faites glisser une photo pour la recadrer.</p>
+
+    <div class="reglages">
+      <label>Publication
+        <select id="genre">
+          <option value="piece">Une pièce (carrousel)</option>
+          <option value="carnet">Carnet d’atelier (photo seule)</option>
+        </select>
+      </label>
+      <label>Sujet <select id="sujet"></select></label>
+      <label>Format
+        <select id="format">
+          <option value="1440">Publication 3:4 (1080 × 1440)</option>
+          <option value="1920">Story / Reel 9:16 (1080 × 1920)</option>
+        </select>
+      </label>
+      <label class="case" id="case-prix"><input type="checkbox" id="avec-prix" checked /> Afficher le prix</label>
+    </div>
+
+    <div id="diapos" class="diapos"></div>
+
+    <div class="actions">
+      <button type="button" class="bouton" id="partager" hidden>Enregistrer / partager les images</button>
+      <button type="button" class="bouton" id="telecharger">Télécharger les images</button>
+    </div>
+
+    <h2 class="sous">Légende</h2>
+    <textarea id="legende" rows="12"></textarea>
+    <div class="actions"><button type="button" class="bouton" id="copier">Copier la légende</button> <span id="copie" class="discret"></span></div>
+  </section>
+
+  <script type="application/json" id="donnees-ig" set:html={JSON.stringify(donnees)} />
+</Base>
+
+<script>
+  type Photo = { src: string; legende: string };
+  type Oeuvre = { id: string; titre: string; sous_titre: string; type: string; statut: string; prix: number | null; l: number; h: number; matieres: string[]; histoire: string; photos: Photo[] };
+  type Carnet = { titre: string; texte: string; date: string; src: string };
+  type Diapo =
+    | { kind: 'photo'; src: string; entiere: boolean; fx: number; fy: number; zoom: number; titre?: string; actif: boolean; nom: string }
+    | { kind: 'texte'; texte: string; actif: boolean; nom: string }
+    | { kind: 'fin'; actif: boolean; nom: string };
+
+  const D = JSON.parse(document.getElementById('donnees-ig')!.textContent!) as { oeuvres: Oeuvre[]; carnet: Carnet[]; atelier: string };
+  const W = 1080;
+  let H = 1440;
+  const MUR = '#1B211B', ENCRE = '#ECE9E0', TEXTE = '#C9C6B8', OR = '#C9AF78', DISCRET = '#A9AEA3';
+  const SERIF = '"Cormorant Garamond", Georgia, serif', SANS = '"IBM Plex Sans", system-ui, sans-serif';
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const genre = $<HTMLSelectElement>('genre'), sujet = $<HTMLSelectElement>('sujet'), format = $<HTMLSelectElement>('format');
+  const avecPrix = $<HTMLInputElement>('avec-prix'), legende = $<HTMLTextAreaElement>('legende'), zone = $('diapos');
+
+  let diapos: Diapo[] = [];
+  const images = new Map<string, Promise<HTMLImageElement>>();
+  const charger = (src: string) => {
+    if (!images.has(src)) {
+      images.set(src, new Promise((ok, ko) => {
+        const im = new Image();
+        im.crossOrigin = 'anonymous';
+        im.onload = () => ok(im);
+        im.onerror = ko;
+        im.src = src;
+      }));
+    }
+    return images.get(src)!;
+  };
+
+  const extrait = (t: string, max = 300) => {
+    const s = t.replace(/\s+/g, ' ').trim();
+    if (s.length <= max) return s;
+    const coupe = s.slice(0, max);
+    const fin = Math.max(coupe.lastIndexOf('. '), coupe.lastIndexOf('! '), coupe.lastIndexOf('? '));
+    return fin > 80 ? coupe.slice(0, fin + 1) : coupe.slice(0, coupe.lastIndexOf(' ')) + '…';
+  };
+  const prixTexte = (p: number) => p.toLocaleString('fr-FR') + ' €';
+  const dateTexte = (iso: string) => (iso ? new Date(iso + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+  const oeuvre = () => D.oeuvres[Number(sujet.value)];
+  const pageCarnet = () => (sujet.value === 'atelier' ? null : D.carnet[Number(sujet.value)]);
+
+  function remplirSujets() {
+    sujet.innerHTML = '';
+    if (genre.value === 'piece') {
+      D.oeuvres.forEach((o, i) => sujet.add(new Option(o.titre + (o.statut === 'vendue' ? ' (vendue)' : ''), String(i))));
+    } else {
+      D.carnet.forEach((c, i) => sujet.add(new Option(`${c.titre}${c.date ? ' · ' + dateTexte(c.date) : ''}`, String(i))));
+      sujet.add(new Option('Photo de l’atelier (la main)', 'atelier'));
+    }
+    $('case-prix').hidden = genre.value !== 'piece';
+  }
+
+  function preparer() {
+    if (genre.value === 'piece') {
+      const o = oeuvre();
+      diapos = [
+        { kind: 'photo', src: o.photos[0].src, entiere: true, fx: 0.5, fy: 0.5, zoom: 1, titre: o.titre, actif: true, nom: 'Couverture' },
+        ...o.photos.slice(1).map((p): Diapo => ({ kind: 'photo', src: p.src, entiere: false, fx: 0.5, fy: 0.5, zoom: 1, actif: true, nom: p.legende })),
+        ...(o.histoire ? [{ kind: 'texte', texte: extrait(o.histoire), actif: true, nom: 'Texte' } as Diapo] : []),
+        { kind: 'photo', src: D.atelier, entiere: false, fx: 0.5, fy: 0.5, zoom: 1, actif: false, nom: 'Main d’atelier' },
+        { kind: 'fin', actif: true, nom: 'Fiche' },
+      ];
+    } else {
+      const c = pageCarnet();
+      diapos = [{ kind: 'photo', src: c ? c.src : D.atelier, entiere: false, fx: 0.5, fy: 0.5, zoom: 1, actif: true, nom: 'Photo' }];
+    }
+    construire();
+    ecrireLegende();
+  }
+
+  // ——— Dessin ———
+  function lignes(ctx: CanvasRenderingContext2D, texte: string, largeur: number) {
+    const res: string[] = [];
+    for (const para of texte.split('\n')) {
+      let l = '';
+      for (const mot of para.split(' ')) {
+        const essai = l ? l + ' ' + mot : mot;
+        if (ctx.measureText(essai).width > largeur && l) { res.push(l); l = mot; } else l = essai;
+      }
+      res.push(l);
+    }
+    return res;
+  }
+  function espace(ctx: CanvasRenderingContext2D, t: string, x: number, y: number, ecart: number) {
+    // Petites capitales espacées, centrées sur x.
+    const total = [...t].reduce((s, c) => s + ctx.measureText(c).width + ecart, -ecart);
+    let cx = x - total / 2;
+    ctx.textAlign = 'left';
+    for (const c of t) { ctx.fillText(c, cx, y); cx += ctx.measureText(c).width + ecart; }
+    ctx.textAlign = 'center';
+  }
+
+  async function dessiner(cv: HTMLCanvasElement, d: Diapo) {
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d')!;
+    ctx.fillStyle = MUR; ctx.fillRect(0, 0, W, H);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    if (d.kind === 'photo') {
+      let im: HTMLImageElement;
+      try { im = await charger(d.src); } catch { ctx.fillStyle = DISCRET; ctx.font = `400 34px ${SANS}`; ctx.fillText('Photo indisponible', W / 2, H / 2); return; }
+      if (d.entiere) {
+        // L'œuvre entière, posée sur le fond du site, titre dessous.
+        const bas = d.titre ? 230 : 90;
+        const s = Math.min((W - 140) / im.width, (H - 90 - bas) / im.height) * d.zoom;
+        const dw = im.width * s, dh = im.height * s;
+        const x = (W - dw) / 2, y = 90 + (H - 90 - bas - dh) / 2;
+        ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 18;
+        ctx.drawImage(im, x, y, dw, dh);
+        ctx.shadowColor = 'transparent';
+        if (d.titre) {
+          ctx.fillStyle = ENCRE; ctx.font = `300 64px ${SERIF}`;
+          ctx.fillText(d.titre, W / 2, H - 120);
+          ctx.fillStyle = OR; ctx.font = `400 22px ${SANS}`;
+          espace(ctx, 'PIÈCE UNIQUE', W / 2, H - 72, 5);
+        }
+      } else {
+        const s = Math.max(W / im.width, H / im.height) * d.zoom;
+        const dw = im.width * s, dh = im.height * s;
+        ctx.drawImage(im, (W - dw) * d.fx, (H - dh) * d.fy, dw, dh);
+      }
+    } else if (d.kind === 'texte') {
+      ctx.fillStyle = OR; ctx.fillRect(W / 2 - 40, H * 0.22, 80, 2);
+      ctx.font = `400 22px ${SANS}`; espace(ctx, 'L’HISTOIRE', W / 2, H * 0.22 - 36, 5);
+      ctx.fillStyle = ENCRE; ctx.font = `italic 300 50px ${SERIF}`;
+      const ls = lignes(ctx, d.texte, 820);
+      const hl = 70, y0 = H / 2 - ((ls.length - 1) * hl) / 2 + 20;
+      ls.forEach((l, i) => ctx.fillText(l, W / 2, y0 + i * hl));
+      ctx.fillStyle = DISCRET; ctx.font = `400 24px ${SANS}`; espace(ctx, 'ADELEM.FR', W / 2, H - 90, 6);
+    } else {
+      const o = oeuvre();
+      const vendue = o.statut === 'vendue';
+      let y = H * 0.3;
+      ctx.fillStyle = ENCRE; ctx.font = `300 76px ${SERIF}`;
+      for (const l of lignes(ctx, o.titre, 900)) { ctx.fillText(l, W / 2, y); y += 84; }
+      if (o.sous_titre) { ctx.fillStyle = TEXTE; ctx.font = `italic 300 40px ${SERIF}`; ctx.fillText(o.sous_titre, W / 2, y); y += 50; }
+      ctx.fillStyle = OR; ctx.fillRect(W / 2 - 40, y + 20, 80, 2); y += 100;
+      ctx.fillStyle = TEXTE; ctx.font = `300 32px ${SANS}`;
+      const infos = [`${o.l} × ${o.h} cm`, o.matieres.slice(0, 3).join(' · '), 'Pièce unique, signée'].filter(Boolean);
+      for (const l of infos) { for (const m of lignes(ctx, l, 880)) { ctx.fillText(m, W / 2, y); y += 52; } }
+      y += 40;
+      ctx.fillStyle = ENCRE; ctx.font = `400 40px ${SERIF}`;
+      if (vendue) ctx.fillText('Collection privée', W / 2, y);
+      else if (o.statut === 'reservee') ctx.fillText('Réservée', W / 2, y);
+      else if (avecPrix.checked && o.prix) {
+        ctx.fillText(prixTexte(o.prix), W / 2, y);
+        ctx.fillStyle = DISCRET; ctx.font = `300 26px ${SANS}`; ctx.fillText('Livraison offerte en France métropolitaine', W / 2, y + 50);
+      }
+      ctx.fillStyle = OR; ctx.font = `400 26px ${SANS}`; espace(ctx, 'ADELEM.FR', W / 2, H - 100, 7);
+    }
+  }
+
+  // ——— Interface ———
+  function construire() {
+    zone.innerHTML = '';
+    diapos.forEach((d, i) => {
+      const carte = document.createElement('div');
+      carte.className = 'diapo' + (d.actif ? '' : ' inactive');
+      const cv = document.createElement('canvas');
+      const tete = document.createElement('div');
+      tete.className = 'tete';
+      tete.innerHTML = `<label class="case"><input type="checkbox" ${d.actif ? 'checked' : ''}/> ${i + 1}. ${d.nom}</label>`;
+      tete.querySelector('input')!.addEventListener('change', (e) => { d.actif = (e.target as HTMLInputElement).checked; carte.classList.toggle('inactive', !d.actif); });
+      carte.append(tete, cv);
+      if (d.kind === 'photo') {
+        const outils = document.createElement('div');
+        outils.className = 'outils';
+        outils.innerHTML = `<label>Zoom <input type="range" min="1" max="2.5" step="0.05" value="${d.zoom}"/></label>` +
+          `<label class="case"><input type="checkbox" ${d.entiere ? 'checked' : ''}/> Pièce entière</label>`;
+        const [zoom, entiere] = outils.querySelectorAll('input');
+        zoom.addEventListener('input', () => { d.zoom = Number(zoom.value); dessiner(cv, d); });
+        entiere.addEventListener('change', () => { d.entiere = entiere.checked; d.zoom = 1; zoom.value = '1'; dessiner(cv, d); });
+        carte.append(outils);
+        // Glisser pour recadrer (photo plein cadre).
+        let dep: { x: number; y: number; fx: number; fy: number } | null = null;
+        cv.addEventListener('pointerdown', (e) => { if (d.entiere) return; dep = { x: e.clientX, y: e.clientY, fx: d.fx, fy: d.fy }; cv.setPointerCapture(e.pointerId); });
+        cv.addEventListener('pointermove', async (e) => {
+          if (!dep) return;
+          const im = await charger(d.src);
+          const k = W / cv.getBoundingClientRect().width;
+          const s = Math.max(W / im.width, H / im.height) * d.zoom;
+          const mx = im.width * s - W, my = im.height * s - H;
+          if (mx > 1) d.fx = Math.min(1, Math.max(0, dep.fx - ((e.clientX - dep.x) * k) / mx));
+          if (my > 1) d.fy = Math.min(1, Math.max(0, dep.fy - ((e.clientY - dep.y) * k) / my));
+          dessiner(cv, d);
+        });
+        cv.addEventListener('pointerup', () => (dep = null));
+        cv.classList.add('deplacable');
+      } else if (d.kind === 'texte') {
+        const ta = document.createElement('textarea');
+        ta.rows = 5; ta.value = d.texte;
+        ta.addEventListener('input', () => { d.texte = ta.value; dessiner(cv, d); });
+        carte.append(ta);
+      }
+      zone.append(carte);
+      dessiner(cv, d);
+    });
+  }
+
+  function ecrireLegende() {
+    if (genre.value === 'piece') {
+      const o = oeuvre();
+      const tags = ['#adelem', '#vegetalstabilise', '#artvegetal', '#pieceunique', '#faitmain', '#decorationinterieure'];
+      if (o.type === 'tableau') tags.push('#tableauvegetal', '#moussestabilisee', '#cadreancien');
+      if (o.type === 'sculpture') tags.push('#sculpturevegetale', '#moussestabilisee');
+      if (o.type === 'fleurs') tags.push('#porcelainefroide', '#fleursenporcelaine');
+      const statut = o.statut === 'vendue'
+        ? 'Cette pièce a rejoint une collection privée. D’autres vous attendent sur adelem.fr.'
+        : o.statut === 'reservee'
+          ? 'Réservée pour le moment.'
+          : `${avecPrix.checked && o.prix ? prixTexte(o.prix) + ', livraison offerte en France métropolitaine. ' : ''}Disponible sur adelem.fr (lien en bio).`;
+      legende.value = [
+        o.titre + (o.sous_titre ? ' — ' + o.sous_titre : ''),
+        o.histoire ? extrait(o.histoire, 700) : '',
+        [`${o.l} × ${o.h} cm`, o.matieres.join(', ')].filter(Boolean).join(' · ') + '\nPièce unique, signée.',
+        statut,
+        tags.join(' '),
+      ].filter(Boolean).join('\n\n');
+    } else {
+      const c = pageCarnet();
+      legende.value = [
+        c ? c.titre : 'À l’atelier',
+        c?.texte ?? '',
+        c?.date ? dateTexte(c.date) : '',
+        'Le carnet d’atelier en entier sur adelem.fr (lien en bio).',
+        '#adelem #carnetdatelier #vegetalstabilise #artvegetal #faitmain #atelier',
+      ].filter(Boolean).join('\n\n');
+    }
+  }
+
+  async function fichiers() {
+    const base = (genre.value === 'piece' ? oeuvre().id : 'carnet') + (H === 1920 ? '-story' : '');
+    const res: File[] = [];
+    let n = 0;
+    for (const d of diapos.filter((x) => x.actif)) {
+      const cv = document.createElement('canvas');
+      await dessiner(cv, d);
+      const blob = await new Promise<Blob>((ok) => cv.toBlob((b) => ok(b!), 'image/jpeg', 0.92));
+      res.push(new File([blob], `${base}-${String(++n).padStart(2, '0')}.jpg`, { type: 'image/jpeg' }));
+    }
+    return res;
+  }
+
+  $('telecharger').addEventListener('click', async () => {
+    for (const f of await fichiers()) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(f); a.download = f.name; a.click();
+      await new Promise((r) => setTimeout(r, 350));
+      URL.revokeObjectURL(a.href);
+    }
+  });
+  const partager = $<HTMLButtonElement>('partager');
+  if (navigator.canShare?.({ files: [new File([''], 'x.jpg', { type: 'image/jpeg' })] })) partager.hidden = false;
+  partager.addEventListener('click', async () => {
+    try { await navigator.share({ files: await fichiers() }); } catch { /* partage annulé */ }
+  });
+  $('copier').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(legende.value); $('copie').textContent = 'Copiée.'; }
+    catch { legende.select(); $('copie').textContent = 'Sélectionnée : faites Copier.'; }
+  });
+
+  genre.addEventListener('change', () => { remplirSujets(); preparer(); });
+  sujet.addEventListener('change', preparer);
+  format.addEventListener('change', () => { H = Number(format.value); construire(); });
+  avecPrix.addEventListener('change', () => { construire(); ecrireLegende(); });
+
+  remplirSujets();
+  Promise.all([
+    document.fonts.load(`300 64px ${SERIF}`), document.fonts.load(`italic 300 50px ${SERIF}`),
+    document.fonts.load(`400 40px ${SERIF}`), document.fonts.load(`300 32px ${SANS}`), document.fonts.load(`400 22px ${SANS}`),
+  ]).finally(preparer);
+</script>
+
+<style is:global>
+  .ig { display: grid; gap: 22px; }
+  .ig .reglages { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: end; }
+  .ig .reglages label, .ig .outils label { display: grid; gap: 6px; font: 400 .8rem/1.2 var(--sans); color: var(--discret); }
+  .ig select, .ig textarea { background: #222a22; color: var(--encre); border: 1px solid var(--trait); padding: 10px 12px; font: 300 .95rem/1.5 var(--sans); }
+  .ig textarea { width: 100%; resize: vertical; }
+  .ig .case { display: flex !important; align-items: center; gap: 8px; cursor: pointer; color: var(--texte) !important; }
+  .ig .diapos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 22px; }
+  .ig .diapo { display: grid; gap: 10px; align-content: start; }
+  .ig .diapo.inactive canvas { opacity: .3; }
+  .ig .diapo canvas { width: 100%; height: auto; display: block; border: 1px solid var(--trait); }
+  .ig .diapo canvas.deplacable { touch-action: none; }
+  .ig .diapo canvas.deplacable { cursor: grab; }
+  .ig .tete { font: 400 .85rem/1.3 var(--sans); }
+  .ig .outils { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+  .ig .outils input[type='range'] { width: 120px; accent-color: var(--or); }
+  .ig .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .ig .sous { font-size: 1.6rem; }
+</style>
