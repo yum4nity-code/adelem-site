@@ -126,7 +126,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   .retour { display: inline-block; margin-bottom: clamp(20px, 3vw, 36px); color: var(--or); font: 400 .78rem var(--sans); letter-spacing: .14em; text-transform: uppercase; }
   .retour:hover { color: var(--encre); }
   .grille { display: grid; gap: clamp(32px, 5vw, 80px); grid-template-columns: 1fr; align-items: start; }
-  @media (min-width: 960px) { .grille { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } .piece { position: sticky; top: 32px; } }
+  @media (min-width: 960px) { .grille { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } } /* plus de colonne « collante » : tout défile ensemble (retour de Gwen, 2026-11-01) */
   .piece { display: flex; flex-direction: column; gap: 28px; }
   .photo {
     width: min(100%, max(260px, calc(var(--l) * 9px))); max-height: 34vh; object-fit: contain; align-self: center; height: auto;
