@@ -62,7 +62,14 @@ const jsonld = {
       {annee && <p class="annee">{annee}</p>}
       <p class="ligne-prix">
         <span class="prix">{d.statut === 'vendue' ? 'Collection privée' : d.statut === 'reservee' ? <>Réservée{d.prix ? <small class="prix-reserve">{prix(d.prix)}</small> : null}</> : prix(d.prix)}</span>
-        <span class="taille">{dims(d.largeur_cm, d.hauteur_cm)}</span>
+        <span class="droite">
+          <span class="taille">{dims(d.largeur_cm, d.hauteur_cm)}</span>
+          <button type="button" class="partager" data-partager data-titre={d.titre} title="Partager" aria-label="Partager cette pièce">
+            <svg class="icone-ios" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 9H6.5v11.5h11V9h-2"/><path d="M12 14.5V3.5"/><path d="M8.5 7 12 3.5 15.5 7"/></svg>
+            <svg class="icone-autre" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="17.5" cy="5.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="17.5" cy="18.5" r="2.5"/><path d="m8.7 10.7 6.6-3.9M8.7 13.3l6.6 3.9"/></svg>
+          </button>
+          <span class="copie-partage" role="status" aria-live="polite"></span>
+        </span>
       </p>
       {d.statut === 'vendue' ? (
         <div class="liens">
@@ -136,6 +143,24 @@ const jsonld = {
 
   {achat && <BarreAchat titre={d.titre} prix={prix(d.prix)} lien={achat} />}
 </Base>
+
+<script>
+  // Partage : menu natif du téléphone (WhatsApp, Messages…), sinon lien copié. Icône adaptée (flèche sur Apple, trois points ailleurs).
+  if (/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)) document.documentElement.classList.add('ios');
+  document.querySelectorAll<HTMLButtonElement>('[data-partager]').forEach((b) => {
+    const statut = b.parentElement?.querySelector('.copie-partage');
+    b.addEventListener('click', async () => {
+      const url = location.origin + location.pathname;
+      if (navigator.share) {
+        try { await navigator.share({ title: b.dataset.titre, url }); } catch { /* partage annulé */ }
+        return;
+      }
+      try { await navigator.clipboard.writeText(url); if (statut) statut.textContent = 'Lien copié'; }
+      catch { if (statut) statut.textContent = url; }
+      setTimeout(() => { if (statut) statut.textContent = ''; }, 2500);
+    });
+  });
+</script>
 
 <script>
   // Loupe : suit la souris sur la photo principale et montre la même photo grossie 2,5 fois.
@@ -229,6 +254,12 @@ const jsonld = {
   .ligne-prix { align-self: stretch; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 4px 0 0; }
   .prix-reserve { margin-left: 14px; font: 400 1rem var(--sans); color: var(--discret); vertical-align: middle; }
   .taille { font-size: .92rem; color: var(--texte); }
+  .droite { position: relative; display: inline-flex; align-items: center; gap: 14px; }
+  .partager { display: inline-grid; place-items: center; width: 40px; height: 40px; margin: -10px -10px -10px 0; padding: 0; border: 0; background: none; color: var(--texte); cursor: pointer; transition: color .2s; }
+  .partager:hover { color: var(--or); }
+  .partager .icone-ios, :global(html.ios) .partager .icone-autre { display: none; }
+  :global(html.ios) .partager .icone-ios { display: block; }
+  .copie-partage { position: absolute; right: 0; bottom: 100%; margin-bottom: 8px; font: 400 .75rem/1 var(--sans); color: var(--discret); white-space: nowrap; }
   .bouton.achat { align-self: stretch; text-align: center; padding: 20px 32px; font-size: .82rem; }
   .atouts { align-self: stretch; text-align: center; margin: -4px 0 0; font-size: .88rem; color: var(--texte); }
   .question { align-self: center; }
