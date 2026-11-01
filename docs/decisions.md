@@ -446,3 +446,7 @@
 ## 2026-11-01 — Paiement : « 14 jours pour changer d’avis » retiré de la page (Gwen)
 - Le droit de rétractation reste obligatoire et figure dans les CGV ; la page de paiement porte « En validant le paiement, vous acceptez les conditions de vente » (lien /cgv) sous le formulaire.
 - Fiche (volet « Livraison et retours ») : mention des 14 jours retirée aussi. Elle reste dans les CGV (obligatoire) et sur la page Livraison.
+
+## 2026-11-01 — « France métropolitaine » partout (Gwen)
+- Bandeau du bas, fiches, page de paiement, Livraison, CGV, description Google, et formulaire Stripe (« France métropolitaine et Monaco : livraison offerte » ; message : outre-mer et autres pays sur demande via Contact). Stripe : FR = métropole + Corse ; les DOM ont leurs propres codes pays et ne sont pas proposés.
+- Livraison/CGV/fiches : « un supplément selon le poids du colis » au lieu des montants 25/30/50 €, qui ne correspondaient plus au supplément réellement facturé (forfait Europe moins l’envoi France inclus).

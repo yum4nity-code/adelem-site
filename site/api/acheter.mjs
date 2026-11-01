@@ -116,10 +116,10 @@ async function preparer({ id, retour, integre, jeton }) {
     phone_number_collection: { enabled: true },
     shipping_address_collection: { allowed_countries: [...PAYS_FRANCE, ...PAYS_EUROPE] },
     shipping_options: [
-      { shipping_rate_data: { type: 'fixed_amount', display_name: 'France et Monaco : livraison offerte (Colissimo)', fixed_amount: { amount: 0, currency: 'eur' } } },
+      { shipping_rate_data: { type: 'fixed_amount', display_name: 'France métropolitaine et Monaco : livraison offerte (Colissimo)', fixed_amount: { amount: 0, currency: 'eur' } } },
       { shipping_rate_data: { type: 'fixed_amount', display_name: 'Ailleurs en Europe (Colissimo)', fixed_amount: { amount: europe * 100, currency: 'eur' } } },
     ],
-    custom_text: { shipping_address: { message: 'Livraison offerte en France et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ».' } },
+    custom_text: { shipping_address: { message: 'Livraison offerte en France métropolitaine et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ». Outre-mer et autres pays : écrivez-nous depuis la page Contact.' } },
     // La facture n'est créée par Stripe qu'une fois le paiement réussi : la mention « Payée » est donc toujours vraie.
     // Elle évite qu'un client lise « à régler » sur le modèle de facture standard de Stripe (retour de Gwen, 2026-10-31).
     invoice_creation: { enabled: true, invoice_data: { description: 'Facture acquittée : réglée en ligne à la commande.', custom_fields: [{ name: 'Règlement', value: 'Payée en ligne' }], footer: 'TVA non applicable, art. 293 B du CGI' } },

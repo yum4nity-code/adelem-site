@@ -32,7 +32,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
             {details.map((t) => <p>{t}</p>)}
             <p>{dims(d.largeur_cm, d.hauteur_cm)}</p>
           </div>
-          <p class="prix">{prix(d.prix)}<span>livraison offerte en France</span></p>
+          <p class="prix">{prix(d.prix)}<span>livraison offerte en France métropolitaine</span></p>
           <div class="reservation" data-reservation hidden>
             <p class="resa-titre">Réservée pour vous</p>
             <p class="resa-compte"><strong data-reste></strong><span class="resa-heure"> pour finaliser, jusqu’à <span data-heure></span></span></p>

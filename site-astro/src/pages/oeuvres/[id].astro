@@ -92,7 +92,7 @@ const jsonld = {
         </div>
       )}
       {d.statut === 'disponible' && (
-        <p class="atouts">Livraison offerte en France{d.type === 'tableau' && <> · Sans arrosage ni entretien</>}</p>
+        <p class="atouts">Livraison offerte en France métropolitaine{d.type === 'tableau' && <> · Sans arrosage ni entretien</>}</p>
       )}
       {d.statut === 'disponible' && <a class="lien secondaire question" href={contactPiece}>Une question sur cette pièce ?</a>}
       {d.histoire && (
@@ -119,7 +119,7 @@ const jsonld = {
         <details>
           <summary>Livraison et retours</summary>
           <div class="volet">
-            <p>Livraison offerte en France et à Monaco. Ailleurs en Europe, forfait selon le poids du colis, affiché au paiement ; reste du monde sur devis.</p>
+            <p>Livraison offerte en France métropolitaine et à Monaco. Ailleurs en Europe, supplément selon le poids du colis, affiché au paiement ; outre-mer et reste du monde sur devis.</p>
             <p>Expédition sous 3 à 5 jours ouvrés.</p>
             <p><a href="/livraison">Emballage et livraison en détail</a></p>
           </div>
