@@ -461,7 +461,7 @@
 ## 2026-11-01 — Carnet : publication programmée
 
 - Une pensée datée dans le futur reste cachée et apparaît ce jour-là (heure de Paris). Filtre dans `site-astro/src/sanity/carnet.ts`.
-- Le site est reconstruit chaque matin par `.github/workflows/publication-quotidienne.yml` (déclencheur Vercel rangé dans le secret GitHub `VERCEL_DEPLOY_HOOK`, saisi par Gwen).
+- Le site est reconstruit chaque matin par `.github/workflows/publication-quotidienne.yml` : chaque matin, s’il existe une pensée datée du jour, un petit commit relance Vercel. Aucun secret nécessaire.
 - Aide sous le champ Date dans l'admin. Demande d'Adèle.
 
 ## 2026-11-01 — Photo atelier

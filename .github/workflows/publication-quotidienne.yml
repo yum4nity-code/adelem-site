@@ -1,22 +1,48 @@
 name: Publication quotidienne
 
-# Reconstruit le site chaque matin pour faire apparaître les pensées du carnet
-# datées du jour (publication programmée). Le lien de déclenchement Vercel est
-# rangé dans le secret VERCEL_DEPLOY_HOOK du dépôt.
+# Chaque matin : si une pensée du carnet est datée d'aujourd'hui (heure de Paris),
+# on pousse un petit commit, ce qui fait reconstruire le site par Vercel.
+# Aucun secret : Sanity est lu en public, le commit utilise le jeton fourni par GitHub.
 
 on:
   schedule:
-    - cron: '15 4 * * *' # ~5 h 15 / 6 h 15 à Paris selon l'heure d'été
+    - cron: '15 4 * * *' # 5 h 15 (hiver) / 6 h 15 (été) à Paris
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publication-quotidienne.yml']
+
+permissions:
+  contents: write
 
 jobs:
-  reconstruire:
+  publier:
     runs-on: ubuntu-latest
     steps:
-      - name: Déclencher le déploiement Vercel
-        env:
-          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+      - uses: actions/checkout@v4
+
+      - name: Pensées datées d'aujourd'hui ?
+        id: carnet
         run: |
-          if [ -z "$HOOK" ]; then echo "Secret VERCEL_DEPLOY_HOOK manquant"; exit 1; fi
-          curl -fsS -X POST "$HOOK" > /dev/null
-          echo "Reconstruction demandée."
+          JOUR=$(TZ=Europe/Paris date +%F)
+          if [ "${{ github.event_name }}" = "push" ]; then
+            REQ='count(*[_type == "carnet"])'          # simple vérification que la lecture marche
+          else
+            REQ='count(*[_type == "carnet" && date == $jour])'
+          fi
+          N=$(curl -fsS -G "https://b9pobh76.api.sanity.io/v2024-01-01/data/query/production" \
+                --data-urlencode "query=$REQ" --data-urlencode "\$jour=\"$JOUR\"" | jq -e '.result')
+          echo "Jour $JOUR : $N"
+          [[ "$N" =~ ^[0-9]+$ ]] || { echo "Réponse Sanity inattendue"; exit 1; }
+          echo "jour=$JOUR" >> "$GITHUB_OUTPUT"
+          echo "nombre=$N" >> "$GITHUB_OUTPUT"
+
+      - name: Reconstruire le site
+        if: github.event_name != 'push' && (steps.carnet.outputs.nombre != '0' || github.event_name == 'workflow_dispatch')
+        run: |
+          echo "${{ steps.carnet.outputs.jour }}" > site-astro/src/data/derniere-publication.txt
+          git config user.name "Gwen"
+          git config user.email "gwennaelsalinas@gmail.com"
+          git add site-astro/src/data/derniere-publication.txt
+          git commit -m "Carnet : publication du ${{ steps.carnet.outputs.jour }}" --allow-empty
+          git push
