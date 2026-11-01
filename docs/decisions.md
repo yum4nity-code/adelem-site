@@ -438,3 +438,7 @@
 - /api/acheter en POST renvoie le secret de session ; le GET (page Stripe classique) reste pour les navigateurs sans JavaScript.
 - Le visiteur qui revient (retour arrière, rechargement) retrouve sa réservation et sa session : jeton gardé dans son navigateur, seule son empreinte SHA-256 est stockée (reserve_jeton, reserve_session), la base étant publique.
 - Clé publique Stripe dans site.ts (stripePublique), à passer en pk_live au lancement.
+
+## 2026-11-01 — Paiement : réservation mise en avant
+- Encadré doré sous le prix : « Réservée pour vous », temps restant (30 min annoncées, mis à jour toutes les 15 s), heure de fin, « Pendant ce temps, personne d’autre ne peut l’acquérir ». Version compacte sur téléphone. À expiration : « Réservation terminée », invitation à recharger. Photo réduite pour que l’encadré soit visible sans défiler.
+- PayPal : à activer au lancement dans Stripe (Moyens de paiement), aucun changement de code (le formulaire intégré l’affiche automatiquement).

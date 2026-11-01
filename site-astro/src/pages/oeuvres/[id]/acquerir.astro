@@ -33,12 +33,16 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
             <p>{dims(d.largeur_cm, d.hauteur_cm)}</p>
           </div>
           <p class="prix">{prix(d.prix)}<span>livraison offerte en France</span></p>
+          <div class="reservation" data-reservation hidden>
+            <p class="resa-titre">Réservée pour vous</p>
+            <p class="resa-compte"><strong data-reste></strong><span class="resa-heure"> pour finaliser, jusqu’à <span data-heure></span></span></p>
+            <p class="resa-texte">Pendant ce temps, personne d’autre ne peut l’acquérir.</p>
+          </div>
           <ul class="engagements">
             <li>Emballée à la main et expédiée sous 3 à 5 jours ouvrés</li>
             <li>14 jours après réception pour changer d’avis</li>
             <li>Facture envoyée par e-mail</li>
           </ul>
-          <p class="reservation" data-reservation hidden>Réservée pour vous jusqu’à <strong data-heure></strong></p>
         </div>
       </aside>
       <div class="formulaire-paiement">
@@ -82,9 +86,26 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       const j = await r.json();
       if (j.erreur) return erreur(j.erreur);
       try { localStorage.setItem(memo, j.jeton); } catch {}
+      // Réservation : un vrai argument (pièce unique, personne ne peut la prendre pendant le paiement), avec le temps restant.
       const resa = document.querySelector<HTMLElement>('[data-reservation]');
       if (resa && j.jusqua) {
-        resa.querySelector('[data-heure]')!.textContent = new Date(j.jusqua).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).replace(':', ' h ');
+        const fin = Date.parse(j.jusqua);
+        resa.querySelector('[data-heure]')!.textContent = new Date(fin).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).replace(':', ' h ');
+        const reste = resa.querySelector<HTMLElement>('[data-reste]')!;
+        const maj = () => {
+          const min = Math.min(30, Math.ceil((fin - Date.now()) / 60000)); // 31 min côté Stripe (minimum imposé), 30 annoncées
+          if (min <= 0) {
+            resa.classList.add('expiree');
+            resa.querySelector('.resa-titre')!.textContent = 'Réservation terminée';
+            reste.textContent = '';
+            resa.querySelector('.resa-heure')!.textContent = 'Rechargez la page pour la réserver de nouveau, si elle est toujours disponible.';
+            resa.querySelector('.resa-texte')!.textContent = '';
+            return clearInterval(minuteur);
+          }
+          reste.textContent = min > 1 ? `${min} minutes` : '1 minute';
+        };
+        const minuteur = setInterval(maj, 15000);
+        maj();
         resa.hidden = false;
       }
       // @ts-ignore Stripe.js chargé depuis js.stripe.com
@@ -108,7 +129,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   @media (min-width: 960px) { .grille { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } .piece { position: sticky; top: 32px; } }
   .piece { display: flex; flex-direction: column; gap: 28px; }
   .photo {
-    width: min(100%, max(260px, calc(var(--l) * 9px))); max-height: 42vh; object-fit: contain; align-self: center; height: auto;
+    width: min(100%, max(260px, calc(var(--l) * 9px))); max-height: 34vh; object-fit: contain; align-self: center; height: auto;
     filter: drop-shadow(0 22px 30px rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
   }
   .infos { display: flex; flex-direction: column; gap: 10px; }
@@ -121,9 +142,15 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   .engagements { list-style: none; margin: 10px 0 0; padding: 18px 0 0; border-top: 1px solid var(--trait); display: grid; gap: 8px; font-size: .9rem; color: var(--texte); }
   .engagements li { display: flex; gap: 12px; align-items: baseline; }
   .engagements li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--or); flex: none; transform: translateY(-2px); }
-  .reservation { margin-top: 8px; font: italic 300 1.05rem var(--serif); color: var(--discret); }
-  .reservation strong { font-weight: 400; color: var(--encre); }
+  /* Réservation mise en avant (2026-11-01, Gwen) : encadré doré, sobre, sans effet d'urgence criard. */
+  .reservation { margin-top: 6px; padding: 16px 20px; border: 1px solid var(--or); display: grid; gap: 4px; }
   .reservation[hidden] { display: none; }
+  .resa-titre { font: italic 400 1.5rem/1.2 var(--serif); color: var(--or); }
+  .resa-compte { font-size: .95rem; color: var(--texte); }
+  .resa-compte strong { font-weight: 500; color: var(--encre); font-variant-numeric: lining-nums; }
+  .resa-texte { font-size: .85rem; color: var(--discret); }
+  .reservation.expiree { border-color: var(--trait); }
+  .reservation.expiree .resa-titre { color: var(--discret); }
   .formulaire-paiement { display: flex; flex-direction: column; gap: 12px; }
   .mode-test { font: 500 .66rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
   .carte-paiement { background: #f3efe7; color: #2A2620; border-radius: 4px; padding: clamp(12px, 2vw, 28px); min-height: 420px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); }
@@ -141,6 +168,10 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
     .sous-titre, .cartel, .engagements { display: none; }
     .prix { font-size: 1.3rem; margin-top: 2px; }
     .prix span { font-size: .75rem; }
-    .reservation { font-size: .9rem; margin-top: 0; }
+    .reservation { margin-top: 6px; padding: 8px 12px; gap: 0; }
+    .resa-titre { font-size: 1.1rem; }
+    .resa-compte { font-size: .82rem; }
+    .resa-heure, .resa-texte { display: none; }
+    .expiree .resa-heure { display: inline; }
   }
 </style>
