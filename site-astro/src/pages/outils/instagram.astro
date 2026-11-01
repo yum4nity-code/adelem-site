@@ -45,6 +45,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
         </select>
       </label>
       <label class="case" id="case-prix"><input type="checkbox" id="avec-prix" checked /> Afficher le prix</label>
+      <label class="case" id="case-qr"><input type="checkbox" id="avec-qr" checked /> QR code vers la pièce</label>
     </div>
 
     <div id="diapos" class="diapos"></div>
@@ -56,13 +57,15 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
 
     <h2 class="sous">Légende</h2>
     <textarea id="legende" rows="12"></textarea>
-    <div class="actions"><button type="button" class="bouton" id="copier">Copier la légende</button> <span id="copie" class="discret"></span></div>
+    <div class="actions"><button type="button" class="bouton" id="copier">Copier la légende</button> <button type="button" class="bouton" id="copier-lien">Copier le lien de la pièce</button> <span id="copie" class="discret"></span></div>
+    <p class="discret">Le lien sert à l’autocollant « Lien » d’une story : il mène directement à la fiche.</p>
   </section>
 
   <script type="application/json" id="donnees-ig" set:html={JSON.stringify(donnees)} />
 </Base>
 
 <script>
+  import QRCode from 'qrcode';
   type Photo = { src: string; legende: string };
   type Oeuvre = { id: string; titre: string; sous_titre: string; type: string; statut: string; prix: number | null; l: number; h: number; matieres: string[]; histoire: string; photos: Photo[] };
   type Carnet = { titre: string; texte: string; date: string; src: string };
@@ -79,6 +82,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
 
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const genre = $<HTMLSelectElement>('genre'), sujet = $<HTMLSelectElement>('sujet'), format = $<HTMLSelectElement>('format');
+  const avecQr = $<HTMLInputElement>('avec-qr');
   const avecPrix = $<HTMLInputElement>('avec-prix'), legende = $<HTMLTextAreaElement>('legende'), zone = $('diapos');
 
   let diapos: Diapo[] = [];
@@ -105,6 +109,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
   };
   const prixTexte = (p: number) => p.toLocaleString('fr-FR') + ' €';
   const dateTexte = (iso: string) => (iso ? new Date(iso + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+  const lienPiece = (o: Oeuvre) => `https://www.adelem.fr/oeuvres/${o.id}`;
   const oeuvre = () => D.oeuvres[Number(sujet.value)];
   const pageCarnet = () => (sujet.value === 'atelier' ? null : D.carnet[Number(sujet.value)]);
 
@@ -116,7 +121,8 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
       D.carnet.forEach((c, i) => sujet.add(new Option(`${c.titre}${c.date ? ' · ' + dateTexte(c.date) : ''}`, String(i))));
       sujet.add(new Option('Photo de l’atelier (la main)', 'atelier'));
     }
-    $('case-prix').hidden = genre.value !== 'piece';
+    $('case-prix').hidden = $('case-qr').hidden = genre.value !== 'piece';
+    $('copier-lien').textContent = genre.value === 'piece' ? 'Copier le lien de la pièce' : 'Copier le lien du carnet';
   }
 
   function preparer() {
@@ -213,6 +219,13 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
       else if (avecPrix.checked && o.prix) {
         ctx.fillText(prixTexte(o.prix), W / 2, y);
         ctx.fillStyle = DISCRET; ctx.font = `300 26px ${SANS}`; ctx.fillText('Livraison offerte en France métropolitaine', W / 2, y + 50);
+      }
+      if (avecQr.checked) {
+        // QR discret mais lisible par tous les téléphones : modules foncés sur un petit carré crème.
+        const qr = document.createElement('canvas'), t = 150, m = 12;
+        await QRCode.toCanvas(qr, lienPiece(o), { margin: 0, width: t, errorCorrectionLevel: 'M', color: { dark: MUR, light: ENCRE } });
+        ctx.fillStyle = ENCRE; ctx.fillRect((W - t) / 2 - m, H - 310 - m, t + 2 * m, t + 2 * m);
+        ctx.drawImage(qr, (W - t) / 2, H - 310, t, t);
       }
       ctx.fillStyle = OR; ctx.font = `400 26px ${SANS}`; espace(ctx, 'ADELEM.FR', W / 2, H - 100, 7);
     }
@@ -330,6 +343,12 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
   genre.addEventListener('change', () => { remplirSujets(); preparer(); });
   sujet.addEventListener('change', preparer);
   format.addEventListener('change', () => { H = Number(format.value); construire(); });
+  avecQr.addEventListener('change', construire);
+  $('copier-lien').addEventListener('click', async () => {
+    const lien = genre.value === 'piece' ? lienPiece(oeuvre()) : 'https://www.adelem.fr/atelier/carnet';
+    try { await navigator.clipboard.writeText(lien); $('copie').textContent = 'Lien copié : ' + lien; }
+    catch { $('copie').textContent = lien; }
+  });
   avecPrix.addEventListener('change', () => { construire(); ecrireLegende(); });
 
   remplirSujets();

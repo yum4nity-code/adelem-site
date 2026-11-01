@@ -470,4 +470,4 @@
 
 ## 2026-11-01 — Atelier Instagram
 
-- Page outil non référencée `/outils/instagram` (noindex, hors sitemap, Disallow robots) : carrousel 3:4 d’"'une pièce (couverture pièce entière + titre, photos recadrables, extrait de l’"histoire,
+- Page outil non référencée `/outils/instagram` (noindex, hors sitemap, Disallow robots) : carrousel 3:4 d’"'une pièce (couverture pièce entière + titre, photos recadrables, extrait de l’"histoire,- 2026-11-01 : outil Instagram — bouton « Copier le lien de la pièce » (autocollant Lien des stories) et QR code optionnel sur la fiche finale (petit carré crème, mène à la fiche de la pièce ; testé lisible).
