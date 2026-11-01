@@ -450,3 +450,7 @@
 ## 2026-11-01 — « France métropolitaine » partout (Gwen)
 - Bandeau du bas, fiches, page de paiement, Livraison, CGV, description Google, et formulaire Stripe (« France métropolitaine et Monaco : livraison offerte » ; message : outre-mer et autres pays sur demande via Contact). Stripe : FR = métropole + Corse ; les DOM ont leurs propres codes pays et ne sont pas proposés.
 - Livraison/CGV/fiches : « un supplément selon le poids du colis » au lieu des montants 25/30/50 €, qui ne correspondaient plus au supplément réellement facturé (forfait Europe moins l’envoi France inclus).
+
+## 2026-11-01 — À propos : textes d’Adèle
+- « Le végétal stabilisé » : « Ce n’est pas du plastique ni de la soie ou du tissu » (le séché est du vrai végétal).
+- « L’entretien » : ajout du sèche-cheveux sur froid, à puissance minimale.
