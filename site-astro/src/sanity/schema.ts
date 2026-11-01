@@ -182,6 +182,13 @@ export const oeuvre = defineType({
       validation: (r) => r.positive().max(200),
     }),
     defineField({
+      name: 'poids_piece_kg',
+      title: 'Poids de la pièce (kg)',
+      description: 'Facultatif. Poids de l’œuvre seule, sans emballage. Affiché dans « Matières et dimensions » (utile pour une sculpture). Ne change pas le prix.',
+      type: 'number',
+      validation: (r) => r.positive().max(200),
+    }),
+    defineField({
       name: 'entretien',
       title: 'Entretien (facultatif)',
       description:

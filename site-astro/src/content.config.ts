@@ -51,6 +51,7 @@ const oeuvres = defineCollection({
     hauteur_cm: z.number().positive(),
     profondeur_cm: z.number().positive().nullable().optional(),
     poids_kg: z.number().nullable().optional(),
+    poids_piece_kg: z.number().nullable().optional(), // poids de l'œuvre seule, affiché sur la fiche
     matieres: z.array(z.string()).default([]),
     cadre: z.string().nullable().optional(),
     provenance: z.string().nullable().optional(),

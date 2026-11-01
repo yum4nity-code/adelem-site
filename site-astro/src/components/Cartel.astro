@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { prix, dims } from '../data/site';
+import { prix, dims, nombre } from '../data/site';
 
 interface Props { oeuvre: CollectionEntry<'oeuvres'>; long?: boolean }
 const { oeuvre, long = false } = Astro.props;
@@ -22,6 +22,7 @@ const nbPhotos = d.photos.length;
   {d.cadre && <p>{d.cadre}</p>}
   {long && d.provenance && <p>{d.provenance}</p>}
   <p>{dims(d.largeur_cm, d.hauteur_cm, long ? d.profondeur_cm : null)}{!long && d.statut === 'disponible' && <> · {prix(d.prix)}</>}</p>
+  {long && d.poids_piece_kg && <p>{nombre(d.poids_piece_kg)} kg</p>}
   {!long && nbPhotos > 1 && <p class="nb-photos">{nbPhotos} photos</p>}
   {!long && <p class:list={['statut', { dispo: d.statut === 'disponible' }]}>{statut}{d.statut === 'disponible' && <span class="fleche" aria-hidden="true">→</span>}</p>}
 </div>
