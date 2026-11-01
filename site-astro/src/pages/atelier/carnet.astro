@@ -36,7 +36,10 @@ function dateLisible(iso: string | null | undefined) {
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
-  .carnet { display: grid; gap: clamp(48px, 7vw, 88px); grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+  /* Colonnes fixes : une entrée seule garde la même taille que dans la grille (sinon elle s'étale sur toute la largeur). */
+  .carnet { display: grid; gap: clamp(48px, 7vw, 88px); grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .carnet { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .entree .texte { white-space: pre-line; }
   .entree { display: flex; flex-direction: column; gap: 20px; }
   .entree img {
     width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px;
