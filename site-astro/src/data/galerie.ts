@@ -57,6 +57,10 @@ const haut = (src: string) => {
 };
 export function photoRubrique(oeuvres: Oeuvre[], filtre: Filtre, ambiance: string, fond?: string, piece?: string, cadrage?: string) {
   if (fond) return { src: fond, oeuvre: true, entier: false };
+  // Une pièce cochée « photo de rubrique » dans l'admin passe avant le choix fixé dans le code (2026-11-01, Gwen :
+  // Douce attente cochée n'apparaissait pas, Rêveuse du soleil levant restait imposée). Une sculpture est montrée entière.
+  const cochee = oeuvres.filter(filtre).find((o) => o.data.photo_rubrique);
+  if (cochee) return { src: cochee.data.photos[0].src, oeuvre: true, entier: cochee.data.type === 'sculpture' };
   const choix = piece ? oeuvres.find((o) => norme(o.data.titre) === norme(piece)) : undefined;
   if (choix) return cadrage === 'tete' ? { src: haut(choix.data.photos[0].src), oeuvre: true, entier: true } : { src: choix.data.photos[0].src, oeuvre: true, entier: false };
   const items = oeuvres.filter(filtre).sort((a, b) => Number(a.data.statut === 'vendue') - Number(b.data.statut === 'vendue') || a.data.ordre - b.data.ordre);
