@@ -81,7 +81,8 @@ function carnetExemple() {
   return Object.entries(exemplesCarnet).map(([chemin, mod]) => {
     const id = chemin.split('/').pop()!.replace(/\.json$/, '');
     const d = mod.default;
-    return { ...d, id, image: `/carnet/${id}/${d.fichier}` };
+    const src = `/carnet/${id}/${d.fichier}`;
+    return { ...d, id, images: [{ vignette: src, grande: src }] };
   });
 }
 
@@ -95,7 +96,7 @@ const carnet = defineCollection({
     titre: z.string(),
     date: z.string().nullable().optional(),
     texte: z.string(),
-    image: z.string(),
+    images: z.array(z.object({ vignette: z.string(), grande: z.string() })).min(1),
     demo: z.boolean().default(false),
   }),
 });

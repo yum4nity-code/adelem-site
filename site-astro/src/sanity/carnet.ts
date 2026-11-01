@@ -10,13 +10,17 @@ type SanityCarnet = {
   titre: string;
   date?: string | null;
   texte: string;
-  photo?: { hotspot?: unknown; crop?: unknown; asset?: { _id: string } | null } | null;
+  photo?: SanityImage | null;
+  photos?: (SanityImage | null)[] | null;
 };
 
-const QUERY = `*[_type == "carnet" && defined(titre) && defined(texte) && defined(photo.asset)]
+type SanityImage = { hotspot?: unknown; crop?: unknown; asset?: { _id: string } | null };
+
+const QUERY = `*[_type == "carnet" && defined(titre) && defined(texte) && (defined(photo.asset) || count(photos[defined(asset)]) > 0)]
   | order(date desc) {
     _id, titre, date, texte,
-    photo{ hotspot, crop, asset-> { _id } }
+    photo{ hotspot, crop, asset-> { _id } },
+    photos[]{ hotspot, crop, asset-> { _id } }
   }`;
 
 const builder = createImageUrlBuilder({ projectId: SANITY_PROJECT_ID, dataset: SANITY_DATASET });
@@ -41,13 +45,21 @@ export async function carnetSanity() {
     const base = slugify(c.titre);
     const n = (vus.get(base) ?? 0) + 1;
     vus.set(base, n);
-    const img = { asset: { _ref: c.photo!.asset!._id }, hotspot: c.photo!.hotspot ?? undefined, crop: c.photo!.crop ?? undefined };
+    // L'ancienne photo unique (entrées saisies avant le champ « Photos ») reste en tête, puis les photos ajoutées.
+    const sources = [c.photo, ...(c.photos ?? [])].filter((p): p is SanityImage => !!p?.asset?._id);
+    const images = sources.map((p) => {
+      const img = { asset: { _ref: p.asset!._id }, hotspot: p.hotspot ?? undefined, crop: p.crop ?? undefined };
+      return {
+        vignette: builder.image(img).width(640).height(480).fit('crop').auto('format').quality(80).url(),
+        grande: builder.image(img).width(1600).fit('max').auto('format').quality(82).url(),
+      };
+    });
     return {
       id: n > 1 ? `${base}-${n}` : base,
       titre: c.titre.trim(),
       date: c.date ?? null,
       texte: c.texte.trim(),
-      image: builder.image(img).width(1200).fit('max').auto('format').quality(82).url(),
+      images,
       demo: false,
     };
   });

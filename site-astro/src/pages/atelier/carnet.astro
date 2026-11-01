@@ -17,35 +17,86 @@ function dateLisible(iso: string | null | undefined) {
   <section class="wrap bloc">
     {entrees.length ? (
       <div class="carnet">
-        {entrees.map((e) => (
-          <article class="entree">
-            <img src={e.data.image} alt={e.data.titre} loading="lazy" width="480" height="360" />
-            <div class="texte-entree">
-              {e.data.date && <p class="date">{dateLisible(e.data.date)}</p>}
-              <h2>{e.data.titre}</h2>
-              <p class="texte">{e.data.texte}</p>
-            </div>
-          </article>
-        ))}
+        {entrees.map((e) => {
+          const [premiere, ...autres] = e.data.images;
+          return (
+            <article class="entree">
+              <div class="photos">
+                <a class="vignette principale" href={premiere.grande} data-agrandir>
+                  <img src={premiere.vignette} alt={e.data.titre} loading="lazy" width="640" height="480" />
+                </a>
+                {autres.length > 0 && (
+                  <div class="autres">
+                    {autres.map((im, i) => (
+                      <a class="vignette" href={im.grande} data-agrandir>
+                        <img src={im.vignette} alt={`${e.data.titre}, photo ${i + 2}`} loading="lazy" width="640" height="480" />
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div class="texte-entree">
+                {e.data.date && <p class="date">{dateLisible(e.data.date)}</p>}
+                <h2>{e.data.titre}</h2>
+                <p class="texte">{e.data.texte}</p>
+              </div>
+            </article>
+          );
+        })}
       </div>
     ) : (
       <p class="discret">Les premières pages du carnet arrivent bientôt.</p>
     )}
   </section>
+
+  <dialog class="agrandi" aria-label="Photo agrandie">
+    <img alt="" />
+    <button type="button" class="fermer" aria-label="Fermer">×</button>
+  </dialog>
 </Base>
+
+<script>
+  // Clic sur une vignette : la photo s'ouvre en grand (sans quitter la page). Sans JavaScript, le lien ouvre l'image.
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.agrandi');
+  const grande = dialog?.querySelector('img');
+  document.querySelectorAll<HTMLAnchorElement>('a[data-agrandir]').forEach((a) => {
+    a.addEventListener('click', (ev) => {
+      if (!dialog || !grande || typeof dialog.showModal !== 'function') return;
+      ev.preventDefault();
+      grande.src = a.href;
+      grande.alt = a.querySelector('img')?.alt ?? '';
+      dialog.showModal();
+    });
+  });
+  dialog?.addEventListener('click', () => dialog.close());
+</script>
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
-  /* Vignettes, comme sur la page d'exemple (2026-11-01, demande d'Adèle) : 3 par rangée sur ordinateur, 2 sur tablette,
-     1 sur téléphone. « auto-fill » garde les colonnes vides : une entrée seule reste une vignette, au lieu de s'étaler. */
-  .carnet { display: grid; gap: clamp(40px, 5vw, 64px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
-  .entree .texte { white-space: pre-line; }
-  .entree { display: flex; flex-direction: column; gap: 20px; }
-  .entree img {
-    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px;
-    box-shadow: 0 24px 40px -20px rgba(0, 0, 0, .65);
+  /* Une entrée par ligne : petite photo à gauche, texte à droite. */
+  .carnet { display: flex; flex-direction: column; gap: clamp(40px, 6vw, 64px); max-width: 920px; }
+  .entree {
+    display: grid; grid-template-columns: clamp(120px, 26vw, 240px) 1fr;
+    gap: clamp(18px, 3vw, 36px); align-items: start;
   }
+  .photos { display: flex; flex-direction: column; gap: 8px; }
+  .autres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .vignette { display: block; cursor: zoom-in; }
+  .vignette img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px;
+    box-shadow: 0 16px 28px -16px rgba(0, 0, 0, .65); transition: opacity .2s;
+  }
+  .vignette:hover img, .vignette:focus-visible img { opacity: .85; }
   .texte-entree { display: flex; flex-direction: column; gap: 8px; }
   .date { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--or); }
-  .entree h2 { font: italic 300 1.5rem var(--serif); }
+  .entree h2 { font: italic 300 1.5rem var(--serif); margin: 0; }
+  .entree .texte { white-space: pre-line; }
+
+  .agrandi { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 92vh; overflow: visible; }
+  .agrandi::backdrop { background: rgba(10, 12, 10, .88); }
+  .agrandi img { display: block; width: min(94vw, 1100px); height: auto; max-height: 92vh; object-fit: contain; border-radius: 3px; }
+  .fermer {
+    position: absolute; top: -44px; right: 0; background: none; border: 0; cursor: pointer;
+    color: var(--encre, #eee); font-size: 2rem; line-height: 1;
+  }
 </style>

@@ -427,3 +427,8 @@
 
 ## 2026-11-01 — Carnet d’atelier en vignettes (demande d’Adèle)
 - Grille « auto-fill » de vignettes d’au moins 320 px : 3 par rangée sur ordinateur, 2 sur tablette, 1 sur téléphone. Une entrée seule reste une vignette (environ 400 px de large sur ordinateur) au lieu d’une grande photo. Remplace la grille fixe à 2 colonnes du même jour.
+
+## 2026-11-01 — Carnet d'atelier : vignette à gauche, plusieurs photos par entrée
+
+- À la demande d'Adèle (via Gwen) : chaque entrée du carnet s'affiche sur une ligne, petite photo à gauche et texte à droite ; un clic agrandit la photo.
+- Admin : nouveau champ « Photos » (plusieurs photos, glisser pour l'ordre). L'ancien champ « Photo » reste pour les entrées déjà saisies et n'apparaît que s'il est rempli ; il passe en tête des photos.

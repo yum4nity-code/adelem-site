@@ -263,19 +263,34 @@ export const carnet = defineType({
       validation: (r) => r.required().error('Ajoutez quelques mots.'),
     }),
     defineField({
+      name: 'photos',
+      title: 'Photos',
+      description:
+        'Une ou plusieurs photos prises avec le téléphone. La 1re s’affiche en vignette à gauche du texte, les suivantes en petit en dessous. Faites-les glisser pour changer l’ordre.',
+      type: 'array',
+      options: { layout: 'grid' },
+      of: [defineArrayMember({ type: 'image', options: { hotspot: true } })],
+      validation: (r) =>
+        r.custom((photos, ctx) => {
+          const ancienne = (ctx.document as { photo?: { asset?: unknown } } | undefined)?.photo?.asset;
+          return (photos && photos.length > 0) || ancienne ? true : 'Ajoutez au moins une photo.';
+        }),
+    }),
+    // Ancien champ (une seule photo) : gardé pour les entrées déjà saisies, masqué quand il est vide.
+    defineField({
       name: 'photo',
-      title: 'Photo',
-      description: 'Une photo prise avec le téléphone suffit.',
+      title: 'Photo (ancienne version)',
+      description: 'Pour ajouter des photos, utilisez le champ « Photos » ci-dessus.',
       type: 'image',
       options: { hotspot: true },
-      validation: (r) => r.required().error('Ajoutez une photo.'),
+      hidden: ({ document }) => !(document as { photo?: { asset?: unknown } } | undefined)?.photo?.asset,
     }),
   ],
   orderings: [{ title: 'Plus récentes', name: 'recentes', by: [{ field: 'date', direction: 'desc' }] }],
   preview: {
-    select: { titre: 'titre', date: 'date', media: 'photo' },
-    prepare({ titre, date, media }) {
-      return { title: titre || 'Nouvelle entrée', subtitle: date, media };
+    select: { titre: 'titre', date: 'date', premiere: 'photos.0', ancienne: 'photo' },
+    prepare({ titre, date, premiere, ancienne }) {
+      return { title: titre || 'Nouvelle entrée', subtitle: date, media: premiere || ancienne };
     },
   },
 });
