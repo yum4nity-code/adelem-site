@@ -36,9 +36,9 @@ function dateLisible(iso: string | null | undefined) {
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
-  /* Colonnes fixes : une entrée seule garde la même taille que dans la grille (sinon elle s'étale sur toute la largeur). */
-  .carnet { display: grid; gap: clamp(48px, 7vw, 88px); grid-template-columns: 1fr; }
-  @media (min-width: 860px) { .carnet { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  /* Vignettes, comme sur la page d'exemple (2026-11-01, demande d'Adèle) : 3 par rangée sur ordinateur, 2 sur tablette,
+     1 sur téléphone. « auto-fill » garde les colonnes vides : une entrée seule reste une vignette, au lieu de s'étaler. */
+  .carnet { display: grid; gap: clamp(40px, 5vw, 64px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
   .entree .texte { white-space: pre-line; }
   .entree { display: flex; flex-direction: column; gap: 20px; }
   .entree img {

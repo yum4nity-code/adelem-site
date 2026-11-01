@@ -424,3 +424,6 @@
 
 ## 2026-11-01 — « signée au dos » → « signée » (demande d’Adèle)
 - Inexact pour les sculptures. Fiches (volet Matières) et aide de l’admin : « Pièce unique, signée. » pour tout.
+
+## 2026-11-01 — Carnet d’atelier en vignettes (demande d’Adèle)
+- Grille « auto-fill » de vignettes d’au moins 320 px : 3 par rangée sur ordinateur, 2 sur tablette, 1 sur téléphone. Une entrée seule reste une vignette (environ 400 px de large sur ordinateur) au lieu d’une grande photo. Remplace la grille fixe à 2 colonnes du même jour.
