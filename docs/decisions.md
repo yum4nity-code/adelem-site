@@ -454,3 +454,6 @@
 ## 2026-11-01 — À propos : textes d’Adèle
 - « Le végétal stabilisé » : « Ce n’est pas du plastique ni de la soie ou du tissu » (le séché est du vrai végétal).
 - « L’entretien » : ajout du sèche-cheveux sur froid, à puissance minimale.
+
+## 2026-11-01 — Carnet d’atelier : version A validée par Adèle
+- Grille de vignettes (3 par rangée sur ordinateur) ; au toucher, la pensée s’ouvre en grand (flèches, glissement, Échap). Ordinateur : photo à gauche, date, nom et texte à droite. Téléphone : photo à gauche, date et nom à droite, texte sous la photo. Une seule photo affichée par pensée (la première). Page de maquettes supprimée.

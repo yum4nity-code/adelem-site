@@ -1,13 +1,12 @@
 ---
+// Carnet d'atelier, version A choisie par Adèle (2026-11-01) : grille de vignettes (3 par rangée sur ordinateur),
+// et chaque pensée s'ouvre en grand au toucher, avec flèches / glissement pour feuilleter.
+// Une seule photo par pensée (la première, si l'admin en contient plusieurs).
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-
 const entrees = (await getCollection('carnet')).sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''));
-
-function dateLisible(iso: string | null | undefined) {
-  if (!iso) return '';
-  return new Date(iso + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-}
+const date = (iso?: string | null) => (iso ? new Date(iso + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+const data = entrees.map((e) => ({ titre: e.data.titre, texte: e.data.texte, date: date(e.data.date), vignette: e.data.images[0].vignette, grande: e.data.images[0].grande }));
 ---
 <Base title="Carnet d’atelier" description="Instantanés du travail à l’atelier : ce qui est trouvé, restauré, tenté.">
   <section class="wrap haut-page pile">
@@ -15,88 +14,102 @@ function dateLisible(iso: string | null | undefined) {
     <p class="texte">Quelques instants du travail, au fil des semaines : un cadre trouvé, une matière qui sèche, un essai qui rate ou qui tient.</p>
   </section>
   <section class="wrap bloc">
-    {entrees.length ? (
-      <div class="carnet">
-        {entrees.map((e) => {
-          const [premiere, ...autres] = e.data.images;
-          return (
-            <article class="entree">
-              <div class="photos">
-                <a class="vignette principale" href={premiere.grande} data-agrandir>
-                  <img src={premiere.vignette} alt={e.data.titre} loading="lazy" width="640" height="480" />
-                </a>
-                {autres.length > 0 && (
-                  <div class="autres">
-                    {autres.map((im, i) => (
-                      <a class="vignette" href={im.grande} data-agrandir>
-                        <img src={im.vignette} alt={`${e.data.titre}, photo ${i + 2}`} loading="lazy" width="640" height="480" />
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div class="texte-entree">
-                {e.data.date && <p class="date">{dateLisible(e.data.date)}</p>}
-                <h2>{e.data.titre}</h2>
-                <p class="texte">{e.data.texte}</p>
-              </div>
-            </article>
-          );
-        })}
+    {data.length ? (
+      <div class="grilleA">
+        {data.map((e, i) => (
+          <button type="button" class="carteA" data-ouvrir={i}>
+            <img src={e.vignette} alt={e.titre} loading="lazy" width="640" height="480" />
+            <span class="date">{e.date}</span>
+            <span class="titreA">{e.titre}</span>
+            <span class="texteA">{e.texte}</span>
+          </button>
+        ))}
       </div>
     ) : (
       <p class="discret">Les premières pages du carnet arrivent bientôt.</p>
     )}
   </section>
 
-  <dialog class="agrandi" aria-label="Photo agrandie">
-    <img alt="" />
-    <button type="button" class="fermer" aria-label="Fermer">×</button>
-  </dialog>
+  <div class="pensee" hidden data-pensee>
+    <div class="pensee-corps">
+      <img alt="" data-p-img />
+      <div class="pensee-entete">
+        <p class="date" data-p-date></p>
+        <p class="pensee-titre" data-p-titre></p>
+      </div>
+      <blockquote data-p-texte></blockquote>
+    </div>
+    <button type="button" class="pensee-nav prec" aria-label="Pensée précédente" data-prec>‹</button>
+    <button type="button" class="pensee-nav suiv" aria-label="Pensée suivante" data-suiv>›</button>
+    <button type="button" class="pensee-fermer" aria-label="Fermer" data-fermer>×</button>
+    <p class="pensee-compte" data-p-compte></p>
+  </div>
 </Base>
 
-<script>
-  // Clic sur une vignette : la photo s'ouvre en grand (sans quitter la page). Sans JavaScript, le lien ouvre l'image.
-  const dialog = document.querySelector<HTMLDialogElement>('dialog.agrandi');
-  const grande = dialog?.querySelector('img');
-  document.querySelectorAll<HTMLAnchorElement>('a[data-agrandir]').forEach((a) => {
-    a.addEventListener('click', (ev) => {
-      if (!dialog || !grande || typeof dialog.showModal !== 'function') return;
-      ev.preventDefault();
-      grande.src = a.href;
-      grande.alt = a.querySelector('img')?.alt ?? '';
-      dialog.showModal();
-    });
-  });
-  dialog?.addEventListener('click', () => dialog.close());
+<script is:inline define:vars={{ data }}>
+  const p = document.querySelector('[data-pensee]');
+  let i = 0;
+  const montrer = () => {
+    const e = data[i];
+    p.querySelector('[data-p-img]').src = e.grande;
+    p.querySelector('[data-p-date]').textContent = e.date;
+    p.querySelector('[data-p-texte]').textContent = e.texte;
+    p.querySelector('[data-p-titre]').textContent = e.titre;
+    p.querySelector('[data-p-compte]').textContent = `${i + 1} / ${data.length}`;
+  };
+  const ouvrir = (k) => { i = k; montrer(); p.hidden = false; document.documentElement.style.overflow = 'hidden'; };
+  const fermer = () => { p.hidden = true; document.documentElement.style.overflow = ''; };
+  const aller = (d) => { i = (i + d + data.length) % data.length; montrer(); };
+  document.querySelectorAll('[data-ouvrir]').forEach((b) => b.addEventListener('click', () => ouvrir(+b.dataset.ouvrir)));
+  p.querySelector('[data-fermer]').onclick = fermer;
+  p.querySelector('[data-prec]').onclick = () => aller(-1);
+  p.querySelector('[data-suiv]').onclick = () => aller(1);
+  addEventListener('keydown', (e) => { if (p.hidden) return; if (e.key === 'Escape') fermer(); if (e.key === 'ArrowLeft') aller(-1); if (e.key === 'ArrowRight') aller(1); });
+  let x0 = null;
+  p.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+  p.addEventListener('touchend', (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) aller(dx < 0 ? 1 : -1); x0 = null; });
 </script>
 
 <style>
   .haut-page { padding-top: clamp(40px, 6vw, 80px); }
-  /* Une entrée par ligne : petite photo à gauche, texte à droite. */
-  .carnet { display: flex; flex-direction: column; gap: clamp(40px, 6vw, 64px); max-width: 920px; }
-  .entree {
-    display: grid; grid-template-columns: clamp(120px, 26vw, 240px) 1fr;
-    gap: clamp(18px, 3vw, 36px); align-items: start;
-  }
-  .photos { display: flex; flex-direction: column; gap: 8px; }
-  .autres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .vignette { display: block; cursor: zoom-in; }
-  .vignette img {
-    display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px;
-    box-shadow: 0 16px 28px -16px rgba(0, 0, 0, .65); transition: opacity .2s;
-  }
-  .vignette:hover img, .vignette:focus-visible img { opacity: .85; }
-  .texte-entree { display: flex; flex-direction: column; gap: 8px; }
-  .date { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--or); }
-  .entree h2 { font: italic 300 1.5rem var(--serif); margin: 0; }
-  .entree .texte { white-space: pre-line; }
+  .texteA { white-space: pre-line; }
+  .pensee blockquote { white-space: pre-line; }
+  button { all: unset; cursor: zoom-in; box-sizing: border-box; }
+  button:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
+  .date { display: block; font: 400 .72rem var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--or); }
 
-  .agrandi { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 92vh; overflow: visible; }
-  .agrandi::backdrop { background: rgba(10, 12, 10, .88); }
-  .agrandi img { display: block; width: min(94vw, 1100px); height: auto; max-height: 92vh; object-fit: contain; border-radius: 3px; }
-  .fermer {
-    position: absolute; top: -44px; right: 0; background: none; border: 0; cursor: pointer;
-    color: var(--encre, #eee); font-size: 2rem; line-height: 1;
+  /* A */
+  .grilleA { display: grid; gap: clamp(32px, 4vw, 56px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+  .carteA { display: flex; flex-direction: column; gap: 12px; }
+  .carteA img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; box-shadow: 0 24px 40px -20px rgba(0, 0, 0, .65); transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
+  @media (hover: hover) { .carteA:hover img { transform: translateY(-4px); } }
+  .titreA { font: italic 300 1.4rem/1.25 var(--serif); color: var(--encre); }
+  .texteA { font-size: .95rem; line-height: 1.7; color: var(--texte); }
+
+
+  /* Pensée en plein écran */
+  .pensee { position: fixed; inset: 0; z-index: 50; background: #141914; display: grid; place-items: center; overflow-y: auto; padding: 64px clamp(20px, 8vw, 120px); }
+  .pensee[hidden] { display: none; }
+  /* Téléphone (demande d'Adèle) : photo à gauche, date et nom à droite, texte sous la photo.
+     Ordinateur : photo à gauche, puis date, texte et nom à droite. */
+  .pensee-corps { display: grid; width: 100%; max-width: 1200px; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-areas: 'photo entete' 'texte texte'; gap: 18px 16px; align-items: center; }
+  .pensee-corps img { grid-area: photo; }
+  .pensee-entete { grid-area: entete; display: flex; flex-direction: column; gap: 10px; }
+  .pensee-corps blockquote { grid-area: texte; }
+  @media (min-width: 900px) {
+    .pensee-corps { grid-template-columns: 1.1fr 1fr; grid-template-areas: 'photo entete' 'photo texte'; gap: 0 72px; align-items: end; }
+    .pensee-entete { align-self: end; }
+    .pensee-corps blockquote { align-self: start; }
   }
+  .pensee img { width: 100%; max-height: 62vh; object-fit: contain; box-shadow: 0 30px 60px -25px rgba(0, 0, 0, .8); }
+  .pensee blockquote { margin: 0; font: italic 300 clamp(1.5rem, 3.2vw, 3rem)/1.25 var(--serif); color: var(--encre); }
+  @media (min-width: 900px) { .pensee blockquote { margin-top: 22px; } }
+  .pensee-titre { font: italic 300 1.25rem/1.25 var(--serif); color: var(--encre); }
+  @media (min-width: 900px) { .pensee-titre { font: 400 .8rem var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--discret); } }
+  .pensee-nav { position: absolute; top: 50%; transform: translateY(-50%); font: 300 3rem var(--serif); color: var(--encre); opacity: .7; padding: 12px; cursor: pointer; }
+  .pensee-nav:hover { opacity: 1; }
+  .prec { left: clamp(4px, 2vw, 32px); } .suiv { right: clamp(4px, 2vw, 32px); }
+  .pensee-fermer { position: absolute; top: 18px; right: clamp(12px, 3vw, 40px); font: 300 2.2rem var(--sans); color: var(--encre); cursor: pointer; padding: 6px 10px; }
+  .pensee-compte { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font: 400 .74rem var(--sans); letter-spacing: .2em; color: var(--discret); }
+  @media (max-width: 899px) { .pensee img { max-height: 34vh; } .pensee-nav { top: auto; bottom: 8px; transform: none; } }
 </style>
