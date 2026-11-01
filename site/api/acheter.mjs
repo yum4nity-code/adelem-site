@@ -108,6 +108,9 @@ async function preparer({ id, retour, integre, jeton }) {
         },
       },
     }],
+    // Style Adelem du formulaire Stripe (crème, bouton vert nuit, Lora, angles droits), fixé ici pour ne pas dépendre
+    // des réglages du tableau de bord Stripe ; le nom affiché est « Adelem » même sur le compte de test.
+    branding_settings: { display_name: 'Adelem', background_color: '#f3efe7', button_color: '#1b211b', font_family: 'lora', border_style: 'rectangular' },
     metadata: { oeuvre: o._id },
     payment_intent_data: { metadata: { oeuvre: o._id }, description: o.titre },
     phone_number_collection: { enabled: true },
