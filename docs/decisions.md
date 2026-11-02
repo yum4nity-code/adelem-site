@@ -480,3 +480,4 @@
 - 2026-11-01 : fiche — photo principale plafonnée à 72 % de la hauteur d'écran (Rêveuse du soleil levant, 6 × 26 cm, faisait 4 écrans de haut sur téléphone).
 - 2026-11-02 : outil Instagram — 5 hashtags maximum par légende (limite d'Instagram), choisis par type de pièce ; sculptures sans hashtag « végétal » ; #cadreancien réservé à la collection Signature.
 - 2026-11-02 : outil Instagram sur ordinateur — bouton de partage masqué (Windows/Mac ne proposent pas Instagram) ; après « Télécharger les images », lien « Ouvrir Instagram → » et mode d'emploi. Téléphone inchangé.
+- 2026-11-02 : admin — « Bilan des ventes » : valeur des pièces en vente (disponibles + réservées) et vendues, au prix du site et au prix d'Adèle, avec la liste des pièces.

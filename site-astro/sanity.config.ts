@@ -3,6 +3,7 @@ import { structureTool } from 'sanity/structure';
 import { frFRLocale } from '@sanity/locale-fr-fr';
 import { schemaTypes } from './src/sanity/schema';
 import { SANITY_PROJECT_ID, SANITY_DATASET } from './src/sanity/env';
+import { Bilan } from './src/sanity/Bilan';
 
 // Espace d'administration, accessible sur /admin.
 export default defineConfig({
@@ -18,6 +19,8 @@ export default defineConfig({
           .items([
             S.documentTypeListItem('oeuvre').title('Œuvres'),
             S.documentTypeListItem('carnet').title('Carnet d’atelier'),
+            // Bilan : valeur des pièces en vente et vendues (2026-11-02).
+            S.listItem().title('Bilan des ventes').id('bilan').child(S.component(Bilan).title('Bilan des ventes')),
             S.divider(),
             // Document unique : les réglages de l'accueil (photo d'ouverture).
             S.listItem().title('Accueil').id('reglages').child(S.document().schemaType('reglages').documentId('reglages')),
