@@ -6,7 +6,7 @@ import sanity from '@sanity/astro';
 export default defineConfig({
   site: 'https://www.adelem.fr',
   trailingSlash: 'never',
-  build: { format: 'directory' },
+  build: { format: 'file' },
   // Redirections (pages statiques de renvoi). Herbier retiré du menu le 2026-10-26 : sa page source est gardée en _herbier.
   redirects: { '/herbier': '/a-propos', '/sur-mesure': '/galerie', '/sculptures': '/galerie/sculptures' },
   integrations: [
