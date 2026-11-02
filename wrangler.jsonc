@@ -1,0 +1,19 @@
+// Cloudflare (Worker avec fichiers statiques) — hébergement prévu à la place de Vercel Hobby, interdit en usage commercial.
+// Construction (réglée dans Cloudflare) : « npm run build » à la racine, puis « npx wrangler deploy ».
+// Les clés secrètes se créent dans Cloudflare (Settings › Variables and Secrets) : STRIPE_API_KEY,
+// STRIPE_WEBHOOK_SECRET, SANITY_WRITE_TOKEN. Ne jamais les écrire ici.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "adelem",
+  "main": "site/worker.mjs",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "site-astro/dist",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": { "enabled": true }
+}
