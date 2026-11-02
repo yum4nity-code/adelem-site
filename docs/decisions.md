@@ -478,3 +478,4 @@
 - 2026-11-01 : tuiles de la galerie — une pièce cochée « photo de rubrique » dans l'admin passe désormais avant la pièce fixée dans le code (Sculptures : Douce attente, montrée entière, à la place de Rêveuse du soleil levant).
 - 2026-11-01 : nouveau champ facultatif « Poids de la pièce (kg) » (œuvre seule), affiché dans « Matières et dimensions » ; distinct du poids emballé qui sert au prix d'envoi. Douce attente : 3 kg.
 - 2026-11-01 : fiche — photo principale plafonnée à 72 % de la hauteur d'écran (Rêveuse du soleil levant, 6 × 26 cm, faisait 4 écrans de haut sur téléphone).
+- 2026-11-02 : outil Instagram — 5 hashtags maximum par légende (limite d'Instagram), choisis par type de pièce ; sculptures sans hashtag « végétal » ; #cadreancien réservé à la collection Signature.

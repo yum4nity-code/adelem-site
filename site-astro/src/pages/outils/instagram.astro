@@ -11,6 +11,7 @@ const oeuvres = (await getCollection('oeuvres'))
     titre: o.data.titre,
     sous_titre: o.data.sous_titre ?? '',
     type: o.data.type,
+    collection: o.data.collection,
     statut: o.data.statut,
     prix: o.data.prix,
     l: o.data.largeur_cm,
@@ -67,7 +68,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
 <script>
   import QRCode from 'qrcode';
   type Photo = { src: string; legende: string };
-  type Oeuvre = { id: string; titre: string; sous_titre: string; type: string; statut: string; prix: number | null; l: number; h: number; matieres: string[]; histoire: string; photos: Photo[] };
+  type Oeuvre = { id: string; collection: string; titre: string; sous_titre: string; type: string; statut: string; prix: number | null; l: number; h: number; matieres: string[]; histoire: string; photos: Photo[] };
   type Carnet = { titre: string; texte: string; date: string; src: string };
   type Diapo =
     | { kind: 'photo'; src: string; entiere: boolean; fx: number; fy: number; zoom: number; titre?: string; actif: boolean; nom: string }
@@ -281,10 +282,12 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
   function ecrireLegende() {
     if (genre.value === 'piece') {
       const o = oeuvre();
-      const tags = ['#adelem', '#vegetalstabilise', '#artvegetal', '#pieceunique', '#faitmain', '#decorationinterieure'];
-      if (o.type === 'tableau') tags.push('#tableauvegetal', '#moussestabilisee', '#cadreancien');
-      if (o.type === 'sculpture') tags.push('#sculpturevegetale', '#moussestabilisee');
-      if (o.type === 'fleurs') tags.push('#porcelainefroide', '#fleursenporcelaine');
+      // Instagram limite à 5 hashtags par publication (2026-11-02, Gwen) : 5 choisis par type de pièce.
+      const tags = ({
+        tableau: ['#adelem', '#vegetalstabilise', '#tableauvegetal', o.collection === 'signature' ? '#cadreancien' : '#decorationinterieure', '#pieceunique'],
+        sculpture: ['#adelem', '#sculpture', '#ceramique', '#faitmain', '#pieceunique'],
+        fleurs: ['#adelem', '#porcelainefroide', '#fleursenporcelaine', '#faitmain', '#pieceunique'],
+      } as Record<string, string[]>)[o.type] ?? ['#adelem', '#faitmain', '#pieceunique'];
       const statut = o.statut === 'vendue'
         ? 'Cette pièce a rejoint une collection privée. D’autres vous attendent sur adelem.fr.'
         : o.statut === 'reservee'
@@ -295,7 +298,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
         o.histoire ? extrait(o.histoire, 700) : '',
         [`${o.l} × ${o.h} cm`, o.matieres.join(', ')].filter(Boolean).join(' · ') + '\nPièce unique, signée.',
         statut,
-        tags.join(' '),
+        tags.slice(0, 5).join(' '),
       ].filter(Boolean).join('\n\n');
     } else {
       const c = pageCarnet();
@@ -304,7 +307,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
         c?.texte ?? '',
         c?.date ? dateTexte(c.date) : '',
         'Le carnet d’atelier en entier sur adelem.fr (lien en bio).',
-        '#adelem #carnetdatelier #vegetalstabilise #artvegetal #faitmain #atelier',
+        '#adelem #carnetdatelier #vegetalstabilise #faitmain #atelier',
       ].filter(Boolean).join('\n\n');
     }
   }
