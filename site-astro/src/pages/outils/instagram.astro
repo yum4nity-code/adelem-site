@@ -54,7 +54,9 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
     <div class="actions">
       <button type="button" class="bouton" id="partager" hidden>Enregistrer / partager les images</button>
       <button type="button" class="bouton" id="telecharger">Télécharger les images</button>
+      <a class="bouton" id="ouvrir-insta" href="https://www.instagram.com/" target="_blank" rel="noopener" hidden>Ouvrir Instagram →</a>
     </div>
+    <p class="discret" id="aide-insta" hidden>Sur Instagram : Créer → Publier, puis sélectionnez les images dans l’ordre (01, 02, 03…) avec Ctrl + clic, et collez la légende.</p>
 
     <h2 class="sous">Légende</h2>
     <textarea id="legende" rows="12"></textarea>
@@ -332,9 +334,13 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
       await new Promise((r) => setTimeout(r, 350));
       URL.revokeObjectURL(a.href);
     }
+    // Sur ordinateur, Instagram ne figure pas dans le partage de Windows/Mac : on propose d'ouvrir le site d'Instagram.
+    if (!telephone) { $('ouvrir-insta').hidden = false; $('aide-insta').hidden = false; }
   });
   const partager = $<HTMLButtonElement>('partager');
-  if (navigator.canShare?.({ files: [new File([''], 'x.jpg', { type: 'image/jpeg' })] })) partager.hidden = false;
+  // Le partage direct (vers l'appli Instagram) n'est proposé que sur téléphone et tablette.
+  const telephone = matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (telephone && navigator.canShare?.({ files: [new File([''], 'x.jpg', { type: 'image/jpeg' })] })) partager.hidden = false;
   partager.addEventListener('click', async () => {
     try { await navigator.share({ files: await fichiers() }); } catch { /* partage annulé */ }
   });
@@ -363,6 +369,7 @@ const donnees = { oeuvres, carnet, atelier: '/images/atelier.webp' };
 
 <style is:global>
   .ig { display: grid; gap: 22px; }
+  .ig [hidden] { display: none !important; }
   .ig .reglages { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: end; }
   .ig .reglages label, .ig .outils label { display: grid; gap: 6px; font: 400 .8rem/1.2 var(--sans); color: var(--discret); }
   .ig select, .ig textarea { background: #222a22; color: var(--encre); border: 1px solid var(--trait); padding: 10px 12px; font: 300 .95rem/1.5 var(--sans); }
