@@ -2,13 +2,11 @@
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 const L = site.legal;
-const T = (s: string) => s; // marqueur des passages à valider
 ---
 <Base title="Conditions générales de vente" noindex>
   <section style="padding-top: clamp(40px, 6vw, 80px)">
     <div class="wrap prose">
       <h1>Conditions générales de vente</h1>
-      <p class="todo">Brouillon : les passages surlignés attendent une réponse (liste de lancement, section « Conditions de vente »). Page non indexée tant qu’elle n’est pas validée.</p>
 
       <h2>1. Vendeuse</h2>
       <p>{L.editrice}, {L.statut}, nom commercial Adelem, SIRET {L.siret}. Coordonnées complètes dans les <a href="/mentions-legales">mentions légales</a>.</p>
@@ -41,7 +39,7 @@ const T = (s: string) => s; // marqueur des passages à valider
       <p>L’article 238 bis AB du Code général des impôts permet, sous conditions, de déduire sur cinq ans le prix d’œuvres originales d’artistes vivants acquises avant le 31 décembre 2028 et exposées dans un lieu accessible au public ou aux salariés, dans la limite de 20 000 € ou de 5 ‰ du chiffre d’affaires. Dispositif réservé aux entreprises soumises à l’impôt sur les sociétés ou à l’impôt sur le revenu et tenant un bilan. L’éligibilité de chaque pièce à la notion d’œuvre originale (article 98 A de l’annexe III du CGI) relève de l’appréciation de l’administration fiscale : à vérifier avec votre expert-comptable. Chaque pièce est livrée avec une facture détaillée et un certificat d’authenticité. Information générale, qui ne constitue pas un conseil fiscal.</p>
 
       <h2>10. Médiation</h2>
-      <p>En cas de litige, l’acheteur particulier peut recourir gratuitement au médiateur de la consommation : <span class="todo">{L.mediateur ?? T('nom et site du médiateur à désigner')}</span>.</p>
+      <p>En cas de litige, l’acheteur particulier peut recourir gratuitement au médiateur de la consommation : {L.mediateur ? <span>{L.mediateur}</span> : <span>ses coordonnées (adhésion en cours) seront indiquées ici</span>}.</p>
     </div>
   </section>
 </Base>
