@@ -489,3 +489,6 @@
 - Téléphone : photo plafonnée à 46 % de l'écran (et écran − 350 px), marges resserrées → l'œuvre, son nom et son prix tiennent sur le même écran (testé iPhone SE, iPhone 13, Pixel 7).
 - Vignettes toujours sur une seule ligne : la rangée défile au doigt, fondu sur le bord quand il y a d'autres photos.
 - Emballage : texte de la mère, mot pour mot : « Chaque pièce est emballée avec le plus grand soin, expédiée quand cela est possible dans des cartons recyclés par souci écologique. » (Livraison, À propos ; CGV adaptées). « Voyage seule » retiré partout. Description de la page Livraison corrigée (« monde entier » → hors Europe sur devis).
+
+## 2026-11-06 — Atelier : renvoi vers le carnet
+- Phrase d'Adèle ajoutée après « …le cœur du travail reste artisanal. » (sa 1re proposition) : « Pour découvrir mes réflexions, mon travail en cours au fil des jours, en bas de page, suivre : carnet d'atelier. » — « carnet d'atelier » est un lien vers /atelier/carnet. Sa 2e proposition (juste « CARNET D'ATELIER en bas de page ») reste possible si elle préfère.
