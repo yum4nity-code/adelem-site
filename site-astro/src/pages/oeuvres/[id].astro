@@ -325,4 +325,17 @@ const jsonld = {
   .entretien h2 { margin-bottom: 16px; }
   .entretien p { font-size: 1.02rem; line-height: 1.8; max-width: 34em; color: var(--texte); }
   .haut { align-items: start; }
+  /* Téléphone (2026-11-06, Gwen) : l'œuvre, son nom et son prix tiennent sur le même écran. Photo plafonnée à 46 % de la
+     hauteur (au lieu de 72 %), marges resserrées ; la loupe et les vignettes restent là pour les détails. */
+  @media (max-width: 819px) {
+    .tete { row-gap: 6px; padding-top: 10px; }
+    .oeuvre { padding: 12px 0 0; gap: 12px; }
+    /* Hauteur max : 46 % de l'écran, et jamais plus que l'écran moins ~350 px (en-tête, vignettes, nom, prix). */
+    .photo-principale { --haut-max: max(200px, min(46svh, 100svh - 350px)); width: min(100%, max(200px, calc(var(--l) * 7px)), calc(var(--haut-max) * var(--l) / var(--h))); }
+    .infos { gap: 12px; }
+    .infos h1 { font-size: 2.4rem; }
+    .sous-titre { font-size: 1.25rem; margin-top: -4px; }
+    .annee { font-size: 1.2rem; margin-top: -6px; }
+    .prix { font-size: 1.7rem; }
+  }
 </style>
