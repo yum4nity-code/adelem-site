@@ -158,9 +158,11 @@ const jsonld = {
     const statut = b.parentElement?.querySelector('.copie-partage');
     b.addEventListener('click', async () => {
       const url = location.origin + location.pathname;
+      // Si le menu de partage du téléphone refuse de s'ouvrir (erreur autre qu'une annulation), on copie le lien
+      // au lieu de ne rien faire (2026-11-07, signalé sur Android).
       if (navigator.share) {
-        try { await navigator.share({ title: b.dataset.titre, url }); } catch { /* partage annulé */ }
-        return;
+        try { await navigator.share({ title: b.dataset.titre, url }); return; }
+        catch (e) { if ((e as DOMException)?.name === 'AbortError') return; }
       }
       try { await navigator.clipboard.writeText(url); if (statut) statut.textContent = 'Lien copié'; }
       catch { if (statut) statut.textContent = url; }

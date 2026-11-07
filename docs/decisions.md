@@ -492,3 +492,6 @@
 
 ## 2026-11-06 — Atelier : renvoi vers le carnet
 - Phrase d'Adèle ajoutée après « …le cœur du travail reste artisanal. » (sa 1re proposition) : « Pour découvrir mes réflexions, mon travail en cours au fil des jours, en bas de page, suivre : carnet d'atelier. » — « carnet d'atelier » est un lien vers /atelier/carnet. Sa 2e proposition (juste « CARNET D'ATELIER en bas de page ») reste possible si elle préfère.
+
+## 2026-11-07 — Bouton de partage : secours si le menu du téléphone ne s'ouvre pas
+- Signalé par Gwen sur Android : rien ne se passait au toucher. Le code fonctionne (testé sur ordinateur et en émulation Pixel 7), mais si le menu de partage du téléphone échoue, l'erreur était avalée en silence. Désormais : annulation → rien ; autre erreur → lien copié avec « Lien copié ».
