@@ -495,3 +495,6 @@
 
 ## 2026-11-07 — Bouton de partage : secours si le menu du téléphone ne s'ouvre pas
 - Signalé par Gwen sur Android : rien ne se passait au toucher. Le code fonctionne (testé sur ordinateur et en émulation Pixel 7), mais si le menu de partage du téléphone échoue, l'erreur était avalée en silence. Désormais : annulation → rien ; autre erreur → lien copié avec « Lien copié ».
+
+## 2026-11-09 — Search Console « Exclue par la balise noindex »
+- Cause : les pages /oeuvres/…/acquerir (étape d'achat, volontairement non indexées) figuraient dans le plan du site. Google signalait la contradiction. Elles sont retirées du plan du site ; elles restent non indexées, c'est voulu. Les autres pages en noindex (merci, CGV, outils, 404, mentions légales tant qu'incomplètes) sont aussi volontaires et déjà hors du plan du site.

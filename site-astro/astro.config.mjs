@@ -20,6 +20,6 @@ export default defineConfig({
     }),
     react(),
     // Pages exclues du sitemap tant qu'elles sont incomplètes (retirer /cgv et /mentions-legales une fois validées)
-    sitemap({ filter: (page) => !['/merci', '/cgv', '/mentions-legales', '/admin', '/herbier', '/maquettes', '/outils'].some((p) => page.includes(p)) }),
+    sitemap({ filter: (page) => !['/merci', '/cgv', '/mentions-legales', '/admin', '/herbier', '/maquettes', '/outils', '/acquerir'].some((p) => page.includes(p)) }),
   ],
 });
