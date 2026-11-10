@@ -86,7 +86,7 @@ const orgLd = {
         <a href="/" class="marque" aria-label="Adelem, accueil">
           <img src="/logo/adelem-signature.svg" alt="Adelem" width="150" height="62" />
         </a>
-        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">Menu</button>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale" aria-label="Ouvrir le menu"><span class="burger" aria-hidden="true"><span></span><span></span><span></span></span></button>
         <nav id="nav-principale" class="menu" aria-label="Navigation principale">
           <ul>
             {nav.map((l, i) => (
@@ -130,7 +130,7 @@ const orgLd = {
       const b = document.querySelector('.menu-btn');
       const n = document.getElementById('nav-principale');
       // Le bouton devient « Fermer » quand le rideau du menu est ouvert (téléphone).
-      const libelle = (o: boolean) => { if (b) b.textContent = o ? 'Fermer' : 'Menu'; };
+      const libelle = (o: boolean) => { b?.setAttribute('aria-label', o ? 'Fermer le menu' : 'Ouvrir le menu'); };
       b?.addEventListener('click', () => {
         // Bande de matière : une photo au hasard, chargée seulement à l'ouverture du menu.
         const m = n?.querySelector<HTMLElement>('.menu-matiere');
@@ -173,7 +173,15 @@ const orgLd = {
   .marque img { width: 150px; height: auto; filter: invert(.92); }
   /* Menu (décision du 2026-10-26, demande d'Adèle) : les mots écrits comme ils s'écrivent (« Galerie », « À propos »),
      dans la même police sur téléphone et sur ordinateur, au lieu de petites capitales espacées sur ordinateur. */
-  .menu-btn { background: none; border: 0; cursor: pointer; font: 400 1.15rem var(--serif); letter-spacing: .01em; min-height: 44px; padding: 0; color: var(--encre); }
+  .menu-btn { background: none; border: 0; cursor: pointer; min-height: 44px; min-width: 44px; padding: 0; margin-right: -10px; display: inline-grid; place-items: center; color: var(--encre); }
+  /* Trois traits fins qui se croisent à l'ouverture (2026-11-10, Gwen, d'après pqhaus.com). */
+  .burger { display: block; width: 26px; }
+  .burger span { display: block; height: 1px; background: currentColor; transition: transform .45s cubic-bezier(.65, 0, .35, 1), opacity .25s ease; }
+  .burger span + span { margin-top: 7px; }
+  .menu-btn[aria-expanded='true'] .burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .menu-btn[aria-expanded='true'] .burger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .menu-btn[aria-expanded='true'] .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  @media (prefers-reduced-motion: reduce) { .burger span { transition: none; } }
   .menu ul { list-style: none; margin: 0; padding: 0; }
   /* Fil d'or (2026-10-30, Gwen) : au survol, un trait doré se trace sous le mot, de gauche à droite, comme une signature.
      La page en cours garde un trait clair, déjà tracé. */

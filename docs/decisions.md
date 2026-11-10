@@ -498,3 +498,6 @@
 
 ## 2026-11-09 — Search Console « Exclue par la balise noindex »
 - Cause : les pages /oeuvres/…/acquerir (étape d'achat, volontairement non indexées) figuraient dans le plan du site. Google signalait la contradiction. Elles sont retirées du plan du site ; elles restent non indexées, c'est voulu. Les autres pages en noindex (merci, CGV, outils, 404, mentions légales tant qu'incomplètes) sont aussi volontaires et déjà hors du plan du site.
+
+## 2026-11-10 — Bouton du menu (téléphone) : trois traits qui se croisent
+- Le mot « Menu » / « Fermer » est remplacé par trois traits fins (couleur du texte) qui glissent en croix à l'ouverture, comme sur pqhaus.com (demande de Gwen). Libellé lu par les lecteurs d'écran : « Ouvrir le menu » / « Fermer le menu ». Animation coupée si l'appareil demande moins de mouvement. Revenir au mot : restaurer le bouton dans Base.astro.
