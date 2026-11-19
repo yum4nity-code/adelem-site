@@ -508,3 +508,7 @@
 
 ## 2026-11-19 — Matière des sculptures
 - Remarque d'une cliente (Cathy, via contact) : la matière des sculptures n'apparaissait pas dans « Matières et dimensions ». Le champ « Matières » de l'admin, masqué pour les sculptures depuis la consigne « pas de matière » (levée le 2026-10-26 pour le grès), est rouvert pour elles. Adèle le remplit ; affichage automatique sur la fiche.
+
+## 2026-11-19 — Formulaire de contact en erreur
+- Constat : une cliente a eu « Le message n'a pas pu être envoyé » ; Formspree n'affiche que 5 envois sur 30 jours (pas de dépassement de quota) et aucun message de contact réussi depuis le retour en formule gratuite (13/10), alors que l'inscription du bas de page (sans champ _next) fonctionnait le 27/10.
+- Cause retenue : le champ caché _next (redirection personnalisée, fonction payante de Formspree) dans le formulaire de contact et dans « Être prévenu ». Retiré ; la redirection vers /merci est faite par le script de la page ; « Être prévenu » passe aussi par un envoi sans quitter la page.

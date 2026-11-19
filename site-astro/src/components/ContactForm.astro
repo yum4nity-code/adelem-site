@@ -10,7 +10,8 @@ const fichiersActifs = site.formFileUploads;
 {endpoint ? (
   <form class="formulaire" method="post" action={endpoint} enctype="multipart/form-data" data-secours={email ?? ''}>
     <input type="hidden" name="_subject" value={oeuvre ? `Demande : ${oeuvre}` : 'Nouvelle demande depuis adelem.fr'} />
-    <input type="hidden" name="_next" value={`${site.url}/merci`} />
+    {/* Pas de champ _next : la redirection personnalisée est réservée aux formules payantes de Formspree et faisait
+        rejeter les envois depuis le retour en gratuit (13/10). Le script ci-dessous mène lui-même à /merci. */}
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
     {oeuvre ? <input type="hidden" name="oeuvre" value={oeuvre} /> : <input type="hidden" name="oeuvre" value="" disabled data-piece-url />}
     {sujets && (
@@ -120,7 +121,7 @@ const fichiersActifs = site.formFileUploads;
           headers: { Accept: 'application/json' },
         });
         if (!reponse.ok) throw new Error(`HTTP ${reponse.status}`);
-        const suite = form.querySelector<HTMLInputElement>('input[name="_next"]')?.value || '/merci';
+        const suite = '/merci';
         window.location.href = suite;
       } catch {
         if (bouton) { bouton.disabled = false; bouton.textContent = libelleInitial; }
