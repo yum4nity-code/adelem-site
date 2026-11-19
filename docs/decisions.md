@@ -505,3 +505,6 @@
 ## 2026-11-19 — Nouveau SIRET après transfert de l'entreprise d'Adèle
 - Formalité Guichet unique J00301810776 validée le 2026-11-19 (INSEE, CMA, greffe) : établissement transféré à Cazes-Mondenard, nom commercial ADELEM, activité principale « créations artisanales en végétaux stabilisés » + vente par internet (activité commerciale → inscription au RCS).
 - Mentions légales et CGV : SIRET 351 073 457 00027 → 351 073 457 00035 (l'ancien établissement est fermé). Nouvelle ligne RCS : « Immatriculation en cours » tant que la mention exacte du Kbis n'est pas reportée dans `legal.rcs` (site-astro/src/data/site.ts). Adresse et mention TVA (art. 293 B) étaient déjà à jour.
+
+## 2026-11-19 — Matière des sculptures
+- Remarque d'une cliente (Cathy, via contact) : la matière des sculptures n'apparaissait pas dans « Matières et dimensions ». Le champ « Matières » de l'admin, masqué pour les sculptures depuis la consigne « pas de matière » (levée le 2026-10-26 pour le grès), est rouvert pour elles. Adèle le remplit ; affichage automatique sur la fiche.

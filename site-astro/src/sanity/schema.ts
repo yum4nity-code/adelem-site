@@ -142,8 +142,8 @@ export const oeuvre = defineType({
     defineField({
       name: 'matieres',
       title: 'Matières',
-      description: 'Tapez une matière puis Entrée. Ex. Mousse coussin, Lichen, Écorce de chêne, Galets. (Masqué pour les sculptures : leur matière n’est pas indiquée sur le site.)',
-      hidden: ({ document }) => document?.type === 'sculpture',
+      // Ouvert aux sculptures le 2026-11-19 (remarque d'une cliente, accord de Gwen ; le grès peut être cité depuis le 2026-10-26).
+      description: 'Tapez une matière puis Entrée. Tableau : Mousse coussin, Lichen, Écorce de chêne, Galets… Sculpture : Grès, Grès émaillé, Patine bronze… Affiché dans « Matières et dimensions ».',
       type: 'array',
       of: [defineArrayMember({ type: 'string' })],
       options: { layout: 'tags' },
