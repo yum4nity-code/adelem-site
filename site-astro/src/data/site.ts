@@ -43,7 +43,10 @@ export const site = {
   legal: {
     editrice: 'Adèle Mette',
     statut: 'Entrepreneur individuel (EI)',
-    siret: '351 073 457 00027',
+    siret: '351 073 457 00035', // nouvel établissement (Cazes-Mondenard), formalité validée le 2026-11-19 ; l'ancien …00027 est fermé
+    // Inscription au RCS (ajout de la vente par internet, validée par le greffe le 2026-11-19).
+    // Mettre ici la mention exacte de l'extrait Kbis, par ex. 'RCS Montauban 351 073 457'. null = « immatriculation en cours ».
+    rcs: null as string | null,
     adresse: '116 rue du Vicariat, 82110 Cazes-Mondenard' as string | null,
     tva: 'TVA non applicable, art. 293 B du CGI' as string | null,
     directeurPublication: 'Gwennaël Salinas',

@@ -14,6 +14,7 @@ const incomplet = [L.adresse, L.tva, L.hebergeur, site.contact.email, site.conta
       <dl>
         <dt>Nom</dt><dd>{L.editrice}, {L.statut}, exerçant sous le nom commercial Adelem</dd>
         <dt>SIRET</dt><dd>{L.siret}</dd>
+        <dt>RCS</dt><dd>{L.rcs ?? 'Immatriculation en cours'}</dd>
         <dt>Adresse</dt><dd class={L.adresse ? '' : 'todo'}>{v(L.adresse, 'Adresse')}</dd>
         <dt>E-mail</dt><dd class={site.contact.email ? '' : 'todo'}>{v(site.contact.email, 'E-mail')}</dd>
         <dt>Téléphone</dt><dd class={site.contact.telephone ? '' : 'todo'}>{v(site.contact.telephone, 'Téléphone')}</dd>

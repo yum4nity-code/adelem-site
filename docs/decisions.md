@@ -501,3 +501,7 @@
 
 ## 2026-11-10 — Bouton du menu (téléphone) : trois traits qui se croisent
 - Le mot « Menu » / « Fermer » est remplacé par trois traits fins (couleur du texte) qui glissent en croix à l'ouverture, comme sur pqhaus.com (demande de Gwen). Libellé lu par les lecteurs d'écran : « Ouvrir le menu » / « Fermer le menu ». Animation coupée si l'appareil demande moins de mouvement. Revenir au mot : restaurer le bouton dans Base.astro.
+
+## 2026-11-19 — Nouveau SIRET après transfert de l'entreprise d'Adèle
+- Formalité Guichet unique J00301810776 validée le 2026-11-19 (INSEE, CMA, greffe) : établissement transféré à Cazes-Mondenard, nom commercial ADELEM, activité principale « créations artisanales en végétaux stabilisés » + vente par internet (activité commerciale → inscription au RCS).
+- Mentions légales et CGV : SIRET 351 073 457 00027 → 351 073 457 00035 (l'ancien établissement est fermé). Nouvelle ligne RCS : « Immatriculation en cours » tant que la mention exacte du Kbis n'est pas reportée dans `legal.rcs` (site-astro/src/data/site.ts). Adresse et mention TVA (art. 293 B) étaient déjà à jour.
