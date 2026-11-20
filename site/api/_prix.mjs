@@ -24,10 +24,19 @@ export function prixAffiche(prixAtelier, poids, largeur, hauteur) {
   if (!prixAtelier || prixAtelier <= 0) return null;
   return Math.ceil((prixAtelier + ajoutEnvoi(poids, largeur, hauteur)) / 5) * 5;
 }
-// Europe (hors France et Monaco) : forfait Europe selon le poids (25 € jusqu'à 2 kg, 30 € jusqu'à 5 kg, 50 € au-delà),
-// moins l'envoi France déjà compris dans le prix. À valider par Adèle (2026-10-31).
+// Europe (hors France et Monaco) : supplément = écart entre le tarif Colissimo International « Union européenne et Suisse »
+// et le tarif Colissimo France (domicile), tarifs en ligne 2026 (laposte.fr/colissimo-en-ligne/tarifs, relevés le 2026-11-20),
+// arrondi à l'euro supérieur. L'emballage est déjà compris dans l'envoi France inclus dans le prix.
+// Avant (2026-10-31) : forfaits 25/30/50 € moins l'envoi France, nettement sous le coût réel au-delà de 5 kg.
+export const SUPPLEMENTS_EUROPE = [
+  { jusqua_kg: 1, supplement: 10 },  // 19,39 - 9,59
+  { jusqua_kg: 2, supplement: 11 },  // 22,19 - 11,19
+  { jusqua_kg: 5, supplement: 12 },  // 28,59 - 17,39
+  { jusqua_kg: 10, supplement: 22 }, // 46,99 - 25,29
+  { jusqua_kg: 15, supplement: 36 }, // 67,99 - 31,99
+  { jusqua_kg: 30, supplement: 49 }, // 87,99 - 39,59
+];
 export function supplementEurope(poids, largeur, hauteur) {
   const p = poidsDe(poids, largeur, hauteur);
-  const forfait = p <= 2 ? 25 : p <= 5 ? 30 : 50;
-  return Math.max(0, forfait - ajoutEnvoi(poids, largeur, hauteur));
+  return (SUPPLEMENTS_EUROPE.find((f) => p <= f.jusqua_kg) ?? SUPPLEMENTS_EUROPE[SUPPLEMENTS_EUROPE.length - 1]).supplement;
 }

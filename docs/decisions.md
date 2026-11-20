@@ -552,3 +552,8 @@
 - Adhésion au CM2C payée par Gwen (48 €, 3 ans, 2026-11-20). CGV § 10 : « CM2C (Centre de la médiation de la consommation de conciliateurs de justice), 49 rue de Ponthieu, 75008 Paris — saisine en ligne sur www.cm2c.net » (coordonnées : liste européenne des organismes de médiation, rapport 2025 du CM2C). Le mail de confirmation du CM2C reste à vérifier (adresse identique).
 - Mentions légales : hébergeur = Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107 (politique de confidentialité Cloudflare, section 19) ; remplace Vercel.
 - Vercel Web Analytics retiré (ne fonctionne plus hors de Vercel). Mesure d'audience = statistiques de l'hébergeur (Cloudflare, sans cookie ni script). Texte des mentions mis à jour, avec la mention des cookies strictement nécessaires de Stripe sur la page de paiement.
+
+## 2026-11-20 — Supplément Europe recalculé sur les vrais tarifs
+- Remarque de Gwen : 6 € de supplément Europe pour Balade d'automne (5 kg) paraissait trop bas. Exact selon l'ancienne règle provisoire (forfait 30 € − 24 € d'envoi France inclus), mais cette règle ne reposait sur aucun tarif réel et sous-estimait fortement au-delà de 5 kg (ex. 15 kg : 8 € au lieu de ~36 €).
+- Nouvelle règle (site/api/_prix.mjs) : supplément = Colissimo International UE/Suisse − Colissimo France domicile, tarifs en ligne 2026 relevés sur laposte.fr le 2026-11-20, arrondi à l'euro supérieur : ≤1 kg 10 €, ≤2 kg 11 €, ≤5 kg 12 €, ≤10 kg 22 €, ≤15 kg 36 €, ≤30 kg 49 €. L'emballage reste couvert par l'envoi France compris dans le prix. Balade d'automne : 6 € → 12 € (coût réel ≈ 28,59 € + emballage, couvert par 24 + 12 €).
+- Les textes du site (« supplément selon le poids du colis, affiché au paiement ») restent justes. À faire valider par Adèle comme l'ancienne.
