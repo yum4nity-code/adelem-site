@@ -57,11 +57,16 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
         <img class="signature" src="/logo/adelem-signature-droite.svg" alt="Adelem" width="380" height="172" />
       </div>
       {modeMur && <p class="accroche">La nature entre chez vous</p>}
-      {/* Légende sous l'accroche, comme un cartel (2026-11-20, Gwen) : titre et dimensions, puis « Voir la pièce ». */}
+      {/* Accroche au-dessus du cadre ; sous le cadre, un cartel : nom et dimensions, puis un lien « Voir la pièce »
+          au style des autres liens du site (2026-11-20, Gwen). Toute la photo reste cliquable. */}
       {oeuvreHero && (
-        <a class="hero-lien" href={`/oeuvres/${oeuvreHero.id}`} aria-label={`Voir l’œuvre ${oeuvreHero.data.titre}`}>
-          <span class="legende"><em>{oeuvreHero.data.titre}</em> · {String(oeuvreHero.data.largeur_cm).replace('.', ',')} × {String(oeuvreHero.data.hauteur_cm).replace('.', ',')} cm <span class="voir">Voir la pièce <span aria-hidden="true">→</span></span></span>
-        </a>
+        <>
+          <a class="hero-lien" href={`/oeuvres/${oeuvreHero.id}`} aria-hidden="true" tabindex="-1"></a>
+          <div class="cartel-hero">
+            <p class="legende"><em>{oeuvreHero.data.titre}</em> · {String(oeuvreHero.data.largeur_cm).replace('.', ',')} × {String(oeuvreHero.data.hauteur_cm).replace('.', ',')} cm</p>
+            <a class="lien" href={`/oeuvres/${oeuvreHero.id}`}>Voir la pièce</a>
+          </div>
+        </>
       )}
       <p class="indice" aria-hidden="true"><span>Découvrir</span></p>
     </div>
@@ -162,15 +167,17 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
   /* Invitation discrète à faire défiler, en bas de l'ouverture. */
   /* Lien de la photo d'ouverture : toute la photo est cliquable, une légende discrète le signale. */
   .hero-lien { position: absolute; inset: 0; z-index: 1; display: block; }
-  .legende { position: absolute; right: var(--gutter); bottom: 30px; font: italic 300 1.05rem/1.2 var(--serif); color: var(--encre); opacity: .82; text-shadow: 0 1px 12px rgba(0, 0, 0, .7); padding: 10px 0; transition: opacity .3s ease; }
-  .hero-lien:hover .legende, .hero-lien:focus-visible .legende { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+  /* Cartel de la photo d'ouverture : nom et dimensions, puis le lien « Voir la pièce » (style .lien du site). */
+  .cartel-hero { position: absolute; left: 0; right: 0; bottom: 92px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 0 24px; text-align: center; pointer-events: none; }
+  .cartel-hero .lien { pointer-events: auto; transition: color .2s ease, opacity .2s ease; }
+  .cartel-hero .lien:active { opacity: .6; }
+  .cartel-hero .lien:focus-visible { outline: 1px solid var(--or); outline-offset: 6px; }
+  .legende { margin: 0; font: italic 300 1.05rem/1.3 var(--serif); color: var(--encre); opacity: .9; text-shadow: 0 1px 12px rgba(0, 0, 0, .7); }
   .hero-lien:focus { outline: none; }
   .hero-lien:focus-visible { outline: 1px solid var(--or); outline-offset: -8px; }
   /* Au toucher : la photo s'éclaircit doucement et la légende se souligne, au lieu d'un rectangle de couleur. */
   .hero-photo { transition: filter .35s ease; }
   .hero-fixe:has(.hero-lien:active) .hero-photo { filter: brightness(1.12); }
-  .hero-lien:active .legende { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
-  @media (max-width: 819px) { .legende { right: 0; left: 0; text-align: center; bottom: 92px; } .hero-mur .legende { bottom: 80px; } }
   .indice { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; color: var(--encre); opacity: .8; }
   .indice::after { content: ''; width: 1px; height: 36px; background: linear-gradient(var(--encre), transparent); }
   /* Invitation à défiler : utile sur téléphone, retirée sur ordinateur (souris), demande du 2026-10-27. */
@@ -203,12 +210,14 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
      Si les images d'ouverture changent de cadrage, ces deux formules sont à recalculer. */
   .hero-mur .hero-fixe {
     --cadre-haut: calc(50dvh - max(20.46vw, 9.44dvh));
+    /* Hauteur réservée à l'accroche entre la signature et le cadre (une ligne + l'air sous elle). */
+    --accroche-h: calc(clamp(1.2rem, 0.9rem + 1vw, 1.75rem) * 1.3 + clamp(14px, 2.2dvh, 24px));
     /* Bas du cadre, même calcul : 426 px sous le centre de l'image mobile (1080 × 2340). */
     --cadre-bas: calc(50dvh + max(39.44vw, 18.21dvh));
   }
   .hero-mur .marque-hero {
     position: absolute; top: 0; left: 0; right: 0;
-    height: calc(var(--cadre-haut) - 40px); /* 40 px d'air sous la signature (22 avant, remontée de 18 px le 27/10 à la demande de Gwen) */
+    height: calc(var(--cadre-haut) - 40px - var(--accroche-h)); /* place libérée pour l’accroche au-dessus du cadre (2026-11-20) ; 40 px d'air sous la signature (22 avant, remontée de 18 px le 27/10 à la demande de Gwen) */
     justify-content: flex-end; padding-top: 0;
   }
   /* Signature redressée (adelem-signature-droite.svg : rotation de 9,16° pour mettre à plat la ligne de base
@@ -223,7 +232,7 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
       --cadre-bas: calc(50dvh + max(15.74vw, 27.99dvh));
     }
     /* Hauteur pilotée par la place disponible entre le menu et le cadre (largeur déduite). */
-    .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - 80px), 240px); }
+    .hero-mur .signature { width: auto; height: clamp(56px, calc(var(--cadre-haut) - 80px - var(--accroche-h)), 220px); }
   }
   .hero-mur .indice { bottom: 14px; }
   /* Tableau posé sur le mur (ordinateur) : même place et même taille que dans le photomontage d'origine.
@@ -244,15 +253,12 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
   /* Accroche posée sous le tableau, comme un cartel de galerie (recalculer --cadre-bas si l'image change). */
   .accroche {
     position: absolute; left: 0; right: 0; z-index: 1; margin: 0; padding: 0 24px;
-    top: calc(var(--cadre-bas) + clamp(18px, 3dvh, 30px));
+    bottom: calc(100dvh - var(--cadre-haut) + clamp(14px, 2.2dvh, 24px)); /* au-dessus du cadre (2026-11-20) */
     text-align: center; color: var(--encre);
     font: italic 300 clamp(1.2rem, 0.9rem + 1vw, 1.75rem)/1.3 var(--serif); letter-spacing: .02em;
   }
-  .legende .voir { margin-left: .9em; font: 400 .7rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
-  .legende em { font-style: italic; }
-  /* Ouverture « mur » : la légende vient juste sous l'accroche, centrée, au lieu du coin bas droit. */
-  .hero-mur .legende { left: 0; right: 0; bottom: auto; text-align: center; padding: 0 24px; font-size: .95rem;
-    top: calc(var(--cadre-bas) + clamp(18px, 3dvh, 30px) + clamp(2.3rem, 1.6rem + 1.6vw, 3.2rem)); }
+  /* Ouverture « mur » : le cartel vient juste sous le cadre. */
+  .hero-mur .cartel-hero { bottom: auto; top: calc(var(--cadre-bas) + clamp(16px, 2.6dvh, 28px)); }
 
   .ouverture { position: relative; z-index: 1; background: var(--mur); padding-top: clamp(56px, 8vw, 96px); }
   .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }
