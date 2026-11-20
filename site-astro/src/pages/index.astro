@@ -232,7 +232,10 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
       --cadre-bas: calc(50dvh + max(15.74vw, 27.99dvh));
     }
     /* Hauteur pilotée par la place disponible entre le menu et le cadre (largeur déduite). */
-    .hero-mur .signature { width: auto; height: clamp(56px, calc(var(--cadre-haut) - 80px - var(--accroche-h)), 220px); }
+    /* Ordinateur (2026-11-20, retour de Gwen : signature trop petite) : la signature monte près du haut de l'écran
+       (le menu est à droite, pas au-dessus) et touche presque l'accroche : 14 px en haut, 10 px avant l'accroche. */
+    .hero-mur .marque-hero { height: calc(var(--cadre-haut) - var(--accroche-h) - 10px); }
+    .hero-mur .signature { width: auto; height: clamp(64px, calc(var(--cadre-haut) - var(--accroche-h) - 24px), 240px); }
   }
   .hero-mur .indice { bottom: 14px; }
   /* Tableau posé sur le mur (ordinateur) : même place et même taille que dans le photomontage d'origine.
