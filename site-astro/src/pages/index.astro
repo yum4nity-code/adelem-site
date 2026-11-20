@@ -69,8 +69,9 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
 
   <section class="ouverture">
     <div class="wrap intro">
-      <h1>Tableaux de mousses et de lichens, sculptures, faits à la main</h1>
-      <p class="discret">Pièces uniques</p>
+      {/* Titre de la sélection (2026-11-20, Gwen, option A) : la grille mêle tableaux et sculptures. */}
+      <h1>Une sélection de l’atelier</h1>
+      <p class="discret">Tableaux végétaux et sculptures · pièces uniques, faites à la main</p>
     </div>
     <div class="wrap">
       {disponibles.length ? <Mur oeuvres={disponibles} eager /> : <p class="discret vide">Les premières œuvres arrivent.</p>}
