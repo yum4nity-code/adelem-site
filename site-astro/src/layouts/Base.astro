@@ -30,7 +30,9 @@ const matieres = (await getCollection('oeuvres'))
   .filter((o) => o.data.type === 'tableau' && o.data.photos.length > 1 && !['éclats de bouleau'].includes(o.data.titre.toLowerCase()))
   .map((o) => (o.data.photos.slice(1).find((ph) => /mati|d[ée]tail/i.test(ph.legende)) ?? o.data.photos[1]).src.replace(/([?&])w=\d+/, '$1w=1000'))
   .slice(0, 12);
-const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
+// Avec build.format 'file', Astro.url.pathname vaut « /index.html » ou « /galerie.html » : on retire « index.html » et
+// « .html » pour retomber sur les adresses réellement servies (« / », « /galerie »), comme dans le plan du site.
+const canonical = new URL(Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/', site.url).href;
 const fullTitle = title === site.nom ? `${site.nom}, tableaux végétaux et sculptures` : `${title}, ${site.nom}`;
 // Image d'aperçu lors d'un partage (WhatsApp, Facebook, SMS…) : celle de la page, sinon l'image Adelem par défaut.
 const ogImage = new URL(image ?? '/partage.jpg', site.url).href;
