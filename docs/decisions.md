@@ -557,3 +557,7 @@
 - Remarque de Gwen : 6 € de supplément Europe pour Balade d'automne (5 kg) paraissait trop bas. Exact selon l'ancienne règle provisoire (forfait 30 € − 24 € d'envoi France inclus), mais cette règle ne reposait sur aucun tarif réel et sous-estimait fortement au-delà de 5 kg (ex. 15 kg : 8 € au lieu de ~36 €).
 - Nouvelle règle (site/api/_prix.mjs) : supplément = Colissimo International UE/Suisse − Colissimo France domicile, tarifs en ligne 2026 relevés sur laposte.fr le 2026-11-20, arrondi à l'euro supérieur : ≤1 kg 10 €, ≤2 kg 11 €, ≤5 kg 12 €, ≤10 kg 22 €, ≤15 kg 36 €, ≤30 kg 49 €. L'emballage reste couvert par l'envoi France compris dans le prix. Balade d'automne : 6 € → 12 € (coût réel ≈ 28,59 € + emballage, couvert par 24 + 12 €).
 - Les textes du site (« supplément selon le poids du colis, affiché au paiement ») restent justes. À faire valider par Adèle comme l'ancienne.
+
+## 2026-11-20 — Bouton d'achat visible sans défiler sur téléphone
+- Demande de Gwen : sur téléphone, pour chaque pièce, « Acquérir cette pièce » visible en entier sans faire défiler. Mesure sur le site réel (393 × 740) : 10 pièces sur 17 dépassaient (jusqu'à 120 px), la marge fixe de 350 px ne tenant pas compte des titres longs, sous-titres et de la mention de test.
+- Correctif : un script calcule la hauteur maximale de la photo d'après la position réelle du bas du bouton (marge 14 px, photo jamais sous 150 px) ; recalcul après chargement des polices et au changement de largeur. Sans script, le plafond CSS (46 % de l'écran) reste la valeur de départ.

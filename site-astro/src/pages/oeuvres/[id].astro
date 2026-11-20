@@ -216,6 +216,32 @@ const jsonld = {
   }
 </script>
 <script>
+  // Téléphone : le bouton « Acquérir » (ou « Demander cette œuvre ») doit être visible en entier sans faire défiler
+  // (demande de Gwen, 2026-11-20). La hauteur de la photo est calculée d'après ce qui se trouve réellement entre le haut
+  // de la page et le bas du bouton (titre long, sous-titre, mention de test…), au lieu d'une marge fixe.
+  {
+    const photo = document.querySelector<HTMLElement>('.photo-principale');
+    const mobile = matchMedia('(max-width: 819px)');
+    const MIN = 150, MARGE = 14;
+    const bouton = () => [...document.querySelectorAll<HTMLElement>('.infos .liens:not([hidden]) .bouton.achat')][0];
+    const ajuster = () => {
+      if (!photo) return;
+      photo.style.removeProperty('--haut-max');
+      const b = bouton();
+      if (!mobile.matches || !b || scrollY > 0) return;
+      const ecran = innerHeight;
+      const depasse = b.getBoundingClientRect().bottom - (ecran - MARGE);
+      const haut = photo.getBoundingClientRect().height;
+      if (depasse > 0) photo.style.setProperty('--haut-max', Math.max(MIN, Math.floor(haut - depasse)) + 'px');
+    };
+    ajuster();
+    document.fonts?.ready.then(ajuster);
+    addEventListener('load', ajuster);
+    let largeur = innerWidth;
+    addEventListener('resize', () => { if (innerWidth !== largeur) { largeur = innerWidth; ajuster(); } });
+  }
+</script>
+<script>
   // Description : coupée à 3 lignes si elle est plus longue, avec « … » et « Lire la suite » / « Réduire ».
   // Coupe faite en script, à un mot entier, ponctuation finale retirée : jamais de « textures.… ».
   const bloc = document.querySelector<HTMLElement>('[data-replie]');
