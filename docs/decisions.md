@@ -521,3 +521,8 @@
 - Typographie : matières des 3 sculptures (« Grès, patine… »), cadres Balade d'automne / L'arbre aux fleurs framboises / Le secret du vieux tronc / Un vase singulier, « Grès émaillé » (Rêveuse), « amarante… » (Cœur de forêt).
 - Formulation (validée par Gwen) : « À poser ou à accrocher » (Le tronc habité, Éclat de prune) ; « Cadre contemporain en bois, bords et angles arrondis » (Cascade d'amarante) ; L'arbre aux reflets de prune : cadre « Cadre ancien » sorti des matières ; Balade d'automne : matières en deux étiquettes ; Rêveuse : sous-titre « Grès émaillé, cuit à plus de 1 100 °C » ; titre « Là où le temps s'arrête » (majuscule).
 - Non renseignés (à compléter par Adèle) : cadre/matières de Couronne prune, Un automne en miniature, Éclats de bouleau, Entre les branches.
+
+## 2026-11-20 — Sélection de l'accueil
+- Avant : les 5 derniers tableaux ajoutés (d'où 3 petits formats 12 × 17 en tête).
+- Maintenant : les pièces cochées « Mettre en avant sur la page d'accueil » (tableaux ou sculptures, 5 au plus), rangées par le nouveau champ « Place sur l'accueil » ; sans case cochée, les plus grands tableaux disponibles. Aucune pièce en double sur la page (œuvre de la photo d'ouverture exclue de la grille ; bloc Sculptures et pièce vedette sans les pièces déjà montrées).
+- Sélection choisie par Gwen (« B avec une sculpture », sans doublon) : 1 Cœur de forêt, 2 Entre les branches, 3 Ado à la capuche, 4 Couronne prune, 5 Éclat de prune (Balade d'automne reste la photo d'ouverture).

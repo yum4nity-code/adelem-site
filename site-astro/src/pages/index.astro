@@ -10,15 +10,11 @@ import { site } from '../data/site';
 // Accueil : un chapitre Tableaux puis un chapitre Sculptures ; la galerie ne montre que les tableaux.
 const collection = (await getCollection('oeuvres')).sort((a, b) => a.data.ordre - b.data.ordre);
 const toutes = collection.filter((o) => o.data.type === 'tableau');
-// Deuxième chapitre de l'accueil : les sculptures disponibles, pour que le récit ne se limite pas aux tableaux.
-const sculptures = collection.filter((o) => o.data.type === 'sculpture' && o.data.statut !== 'vendue').slice(0, 3);
-const disponibles = toutes.filter((o) => o.data.statut !== 'vendue').slice(0, 5);
-const vedette =
-  toutes.find((o) => o.data.accueil && o.data.statut !== 'vendue') ??
-  toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue');
+const taille = (o: (typeof collection)[number]) => o.data.largeur_cm * o.data.hauteur_cm;
+const tableauxParTaille = toutes.filter((o) => o.data.statut !== 'vendue').sort((a, b) => taille(b) - taille(a));
 // Image du grand rideau d'ouverture : celle choisie dans l'administration (Accueil › Photo d'ouverture),
-// sinon, en attendant, la pièce mise en avant ou la première disponible.
-const heroSource = vedette ?? disponibles[0];
+// sinon, en attendant, le plus grand tableau disponible.
+const heroSource = tableauxParTaille[0];
 const choisie = await photoOuvertureSanity();
 const photoHero = choisie?.src ?? site.photoOuverture?.src ?? (heroSource ? (heroSource.data.photos[1] ?? heroSource.data.photos[0]).src : '/images/atelier.webp');
 const positionHero = choisie?.position ?? site.photoOuverture?.position ?? 'center';
@@ -34,6 +30,18 @@ const oeuvreHero = idHero ? collection.find((o) => o.data.sanity_id === idHero) 
 // Ordinateur, ouverture « mur » : le tableau n'est plus incrusté dans la photo du mur (trop peu de pixels en grand écran),
 // il est posé par-dessus, en pleine définition depuis la photo détourée de l'admin. Sans photo détourée : photomontage d'origine.
 const tableauNet = modeMur ? oeuvreHero?.data.photos[0].detoure : undefined;
+// Sélection du haut (2026-11-20, Gwen) : les pièces cochées « Mettre en avant sur la page d'accueil » (tableaux ou
+// sculptures), rangées par « Place sur l'accueil » ; sans case cochée, les plus grands tableaux disponibles.
+// Aucune pièce n'apparaît deux fois sur la page : ni l'œuvre de la photo d'ouverture, ni une pièce déjà montrée plus haut.
+const cochees = collection
+  .filter((o) => o.data.accueil && o.data.statut !== 'vendue')
+  .sort((a, b) => (a.data.accueil_ordre ?? 99) - (b.data.accueil_ordre ?? 99) || taille(b) - taille(a));
+const disponibles = (cochees.length ? cochees : tableauxParTaille).filter((o) => o.id !== oeuvreHero?.id).slice(0, 5);
+const dejaVues = new Set([oeuvreHero?.id, ...disponibles.map((o) => o.id)]);
+// Deuxième chapitre : les sculptures disponibles qui ne sont pas déjà dans la sélection.
+const sculptures = collection.filter((o) => o.data.type === 'sculpture' && o.data.statut !== 'vendue' && !dejaVues.has(o.id)).slice(0, 3);
+sculptures.forEach((o) => dejaVues.add(o.id));
+const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue' && !dejaVues.has(o.id));
 ---
 <Base title="Adelem" accueil>
   <section class={modeMur ? 'hero-pin hero-mur' : 'hero-pin'}>

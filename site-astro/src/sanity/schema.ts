@@ -220,8 +220,17 @@ export const oeuvre = defineType({
     defineField({
       name: 'accueil',
       title: 'Mettre en avant sur la page d’accueil',
+      description: 'Cochée : la pièce fait partie de la sélection en haut de l’accueil (5 au plus, tableaux ou sculptures). Aucune case cochée : le site montre les plus grands formats disponibles.',
       type: 'boolean',
       initialValue: false,
+    }),
+    defineField({
+      name: 'accueil_ordre',
+      title: 'Place sur l’accueil',
+      description: '1 = la première à gauche. Sans numéro, la pièce passe après celles qui en ont un.',
+      type: 'number',
+      hidden: ({ document }) => !document?.accueil,
+      validation: (r) => r.integer().min(1).max(5),
     }),
     defineField({
       name: 'photo_rubrique',
