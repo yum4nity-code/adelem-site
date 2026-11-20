@@ -94,7 +94,7 @@ async function preparer({ id, retour, integre, jeton }) {
     locale: 'fr',
     expires_at: expire,
     ...(integre
-      ? { ui_mode: 'embedded_page', return_url: `${SITE}/merci-achat?session_id={CHECKOUT_SESSION_ID}` }
+      ? { ui_mode: 'elements', return_url: `${SITE}/merci-achat?session_id={CHECKOUT_SESSION_ID}` } // formulaire Adelem (2026-11-20)
       : { success_url: `${SITE}/merci-achat`, cancel_url: `${SITE}${retour}` }),
     line_items: [{
       quantity: 1,
@@ -111,6 +111,11 @@ async function preparer({ id, retour, integre, jeton }) {
     // Style Adelem du formulaire Stripe (crème, bouton vert nuit, Lora, angles droits), fixé ici pour ne pas dépendre
     // des réglages du tableau de bord Stripe ; le nom affiché est « Adelem » même sur le compte de test.
     branding_settings: { display_name: 'Adelem', background_color: '#f3efe7', button_color: '#1b211b', font_family: 'lora', border_style: 'rectangular' },
+    // Moyens de paiement (2026-11-20, Gwen) : carte, Apple Pay, Google Pay, PayPal, Klarna. Link (peu connu en France) masqué ;
+    // Amazon Pay, Bancontact et les moyens étrangers exclus. Prix en euros pour tous (pas de conversion automatique).
+    wallet_options: { link: { display: 'never' } },
+    excluded_payment_method_types: ['amazon_pay', 'bancontact', 'eps', 'ideal', 'giropay', 'p24', 'sepa_debit', 'sofort', 'revolut_pay', 'mobilepay', 'twint', 'satispay', 'billie', 'kakao_pay', 'naver_pay', 'samsung_pay', 'payco', 'kr_card', 'multibanco', 'blik', 'wero', 'mb_way', 'pay_by_bank', 'alma', 'scalapay', 'sequra', 'bizum', 'swish', 'crypto', 'alipay', 'wechat_pay'],
+    adaptive_pricing: { enabled: false },
     metadata: { oeuvre: o._id },
     payment_intent_data: { metadata: { oeuvre: o._id }, description: o.titre },
     phone_number_collection: { enabled: true },

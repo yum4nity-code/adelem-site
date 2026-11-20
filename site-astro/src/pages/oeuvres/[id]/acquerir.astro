@@ -1,7 +1,9 @@
 ---
-// Page de paiement intégrée (2026-11-01, Gwen : « une page de paiement incroyable »).
-// À gauche, la pièce ; à droite, le formulaire Stripe (Embedded Checkout), sans quitter adelem.fr.
-// La session est créée par /api/acheter (POST) : prix du site, réservation 30 min, livraison, facture.
+// Page de paiement Adelem (refonte du 2026-11-20, Gwen : « construis-le en moderne »).
+// Formulaire construit avec les éléments Stripe (Checkout Sessions, ui_mode « elements ») au lieu du formulaire
+// Stripe tout fait : paiement express en premier (Apple Pay, Google Pay, PayPal), puis coordonnées, livraison et
+// carte, aux couleurs du site. Paiement, sécurité, facture et passage en « vendue » restent gérés par Stripe
+// (session créée par /api/acheter : prix du site, réservation 30 min, livraison, facture).
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import { prix, dims, site } from '../../../data/site';
@@ -19,103 +21,278 @@ const fiche = `/oeuvres/${oeuvre.id}`;
 const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
 ---
 <Base title={`Acquérir ${d.titre}`} description={`Acquérir ${d.titre}, pièce unique Adelem.`} noindex>
-  <section class="wrap paiement-page">
-    <a class="retour" href={fiche}>← Revenir à la pièce</a>
+  <section class="wrap caisse">
+    <a class="retour" href={fiche}><span aria-hidden="true">←</span> Revenir à la pièce</a>
+
     <div class="grille">
-      <aside class="piece">
-        <img class="photo" src={face.detoure ?? face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
-        <div class="infos">
+      <!-- Récapitulatif : colonne de gauche sur ordinateur, bandeau repliable en haut sur téléphone. -->
+      <aside class="recap" aria-label="Récapitulatif de la commande">
+        <button type="button" class="recap-bandeau" aria-expanded="false" aria-controls="recap-detail" data-recap>
+          <img src={face.detoure ?? face.src} alt="" width="56" height="56" />
+          <span class="recap-titre">{d.titre}<small data-recap-libelle>Voir le détail</small></span>
+          <span class="recap-total" data-total>{prix(d.prix)}</span>
+        </button>
+        <div class="recap-detail" id="recap-detail">
+          <figure class="recap-photo">
+            <img src={face.detoure ?? face.src} alt={face.alt} width={d.largeur_cm * 10} height={d.hauteur_cm * 10} style={`--l:${d.largeur_cm};--h:${d.hauteur_cm}`} />
+          </figure>
           <p class="surtitre">Pièce unique, signée</p>
           <h1>{d.titre}</h1>
           {d.sous_titre && <p class="sous-titre">{d.sous_titre}</p>}
-          <div class="cartel">
-            {details.map((t) => <p>{t}</p>)}
-            <p>{dims(d.largeur_cm, d.hauteur_cm)}</p>
-          </div>
-          <p class="prix">{prix(d.prix)}<span>livraison offerte en France métropolitaine</span></p>
-          <div class="reservation" data-reservation hidden>
-            <p class="resa-titre">Réservée pour vous</p>
-            <p class="resa-compte"><strong data-reste></strong><span class="resa-heure"> pour finaliser, jusqu’à <span data-heure></span></span></p>
-            <p class="resa-texte">Pendant ce temps, personne d’autre ne peut l’acquérir.</p>
-          </div>
-          <ul class="engagements">
-            <li>Emballée à la main et expédiée sous 3 à 5 jours ouvrés</li>
-            <li>Facture envoyée par e-mail</li>
-          </ul>
+          <p class="cartel">{[...details, dims(d.largeur_cm, d.hauteur_cm)].join(' · ')}</p>
+          <dl class="lignes">
+            <div><dt>Pièce</dt><dd data-sous-total>{prix(d.prix)}</dd></div>
+            <div><dt>Livraison <span data-livraison-nom>Colissimo, France</span></dt><dd data-livraison>Offerte</dd></div>
+            <div class="ligne-total"><dt>Total</dt><dd data-total>{prix(d.prix)}</dd></div>
+          </dl>
+        </div>
+        <div class="reservation" data-reservation hidden>
+          <span class="point" aria-hidden="true"></span>
+          <p><strong>Réservée pour vous</strong> <span data-reste></span><span class="resa-detail"> · personne d’autre ne peut l’acquérir d’ici <span data-heure></span></span></p>
         </div>
       </aside>
-      <div class="formulaire-paiement">
+
+      <!-- Formulaire -->
+      <div class="formulaire">
         {site.paiement === 'test' && (site.stripePublique.startsWith('pk_test_')
           ? <p class="mode-test">Mode test · aucun vrai paiement · carte 4242 4242 4242 4242</p>
-          : <p class="mode-test">Accès réservé · achats pas encore ouverts au public · paiement RÉEL</p>)}
-        <div class="carte-paiement">
-          <div id="paiement" data-piece={d.sanity_id ?? oeuvre.id} data-retour={fiche} data-cle={site.stripePublique}>
-            <p class="attente">Préparation du paiement…</p>
+          : <p class="mode-test">Accès réservé · achats pas encore ouverts au public · paiement réel</p>)}
+
+        <div id="paiement" data-piece={d.sanity_id ?? oeuvre.id} data-retour={fiche} data-cle={site.stripePublique}>
+          <div class="chargement" data-chargement>
+            <span class="barre"></span><span class="barre courte"></span><span class="barre"></span>
+            <p>Préparation du paiement sécurisé…</p>
           </div>
-          <div class="erreur" data-erreur hidden>
-            <h2 data-erreur-titre></h2>
-            <p data-erreur-texte></p>
-            <a class="lien" data-erreur-lien href={fiche}>Revenir</a>
-          </div>
-          <noscript><p class="attente">Le paiement intégré a besoin de JavaScript. <a href={`/api/acheter?piece=${d.sanity_id}&retour=${fiche}`}>Payer sur la page sécurisée Stripe</a>.</p></noscript>
+
+          <form class="etapes" data-formulaire hidden novalidate>
+            <section class="express" data-express hidden aria-label="Paiement express">
+              <p class="etiquette">Paiement express</p>
+              <div id="express"></div>
+              <p class="separateur"><span>ou</span></p>
+            </section>
+
+            <section class="etape" aria-labelledby="t-contact">
+              <h2 id="t-contact"><span class="num">1</span>Coordonnées</h2>
+              <label class="champ">
+                <span>E-mail</span>
+                <input type="email" name="email" autocomplete="email" inputmode="email" required placeholder="vous@exemple.fr" data-email />
+              </label>
+              <label class="champ">
+                <span>Téléphone <small>pour le transporteur</small></span>
+                <input type="tel" name="tel" autocomplete="tel" inputmode="tel" required placeholder="06 12 34 56 78" data-tel />
+              </label>
+            </section>
+
+            <section class="etape" aria-labelledby="t-livraison">
+              <h2 id="t-livraison"><span class="num">2</span>Livraison</h2>
+              <div id="adresse"></div>
+              <p class="envoi" data-envoi><span data-envoi-nom>Colissimo, France métropolitaine et Monaco</span><strong data-envoi-prix>Offerte</strong></p>
+              <p class="note">Outre-mer et hors d’Europe : <a href="/contact">écrivez-nous</a>, nous établissons un devis.</p>
+            </section>
+
+            <section class="etape" aria-labelledby="t-paiement">
+              <h2 id="t-paiement"><span class="num">3</span>Paiement</h2>
+              <div id="moyens"></div>
+            </section>
+
+            <p class="message" role="alert" data-message hidden></p>
+            <button type="submit" class="payer" data-payer disabled>
+              <span data-payer-texte>Payer {prix(d.prix)}</span>
+            </button>
+            <ul class="garanties">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Paiement sécurisé par Stripe</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.5"/><circle cx="17" cy="17.5" r="1.5"/></svg>Emballée à la main, expédiée sous 3 à 5 jours</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg>Facture et certificat d’authenticité</li>
+            </ul>
+            <p class="cgv">En payant, vous acceptez les <a href="/cgv">conditions de vente</a>. Droit de rétractation de 14 jours.</p>
+          </form>
         </div>
-        <p class="cgv">En validant le paiement, vous acceptez les <a href="/cgv">conditions de vente</a>.</p>
+
+        <div class="erreur" data-erreur hidden>
+          <h2 data-erreur-titre></h2>
+          <p data-erreur-texte></p>
+          <a class="lien" data-erreur-lien href={fiche}>Revenir</a>
+        </div>
+        <noscript><p class="note">Le paiement intégré a besoin de JavaScript. <a href={`/api/acheter?piece=${d.sanity_id}&retour=${fiche}`}>Payer sur la page sécurisée Stripe</a>.</p></noscript>
       </div>
     </div>
   </section>
 </Base>
 
-<script is:inline src="https://js.stripe.com/v3/"></script>
+<script is:inline src="https://js.stripe.com/clover/stripe.js"></script>
 <script>
   const zone = document.getElementById('paiement') as HTMLElement;
   const { piece, retour, cle } = zone.dataset as { piece: string; retour: string; cle: string };
+  const $ = <T extends HTMLElement = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+  const $$ = (s: string) => [...document.querySelectorAll<HTMLElement>(s)];
   const memo = `adelem-reservation-${piece}`;
-  let jeton: string | null = null;
-  try { jeton = localStorage.getItem(memo); } catch {}
+  const FRANCE = ['FR', 'MC'];
 
   const erreur = (e: { titre: string; texte: string; retour?: string }) => {
     zone.hidden = true;
-    const bloc = document.querySelector<HTMLElement>('[data-erreur]')!;
+    const bloc = $('[data-erreur]');
     bloc.querySelector('[data-erreur-titre]')!.textContent = e.titre;
     bloc.querySelector('[data-erreur-texte]')!.textContent = e.texte;
     if (e.retour) bloc.querySelector<HTMLAnchorElement>('[data-erreur-lien]')!.href = e.retour;
     bloc.hidden = false;
   };
+  const message = (t: string | null) => { const m = $('[data-message]'); m.textContent = t ?? ''; m.hidden = !t; };
+
+  // Récapitulatif repliable (téléphone).
+  $('[data-recap]').addEventListener('click', (e) => {
+    const b = e.currentTarget as HTMLButtonElement;
+    const ouvert = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', String(ouvert));
+    $('.recap').classList.toggle('ouvert', ouvert);
+    $('[data-recap-libelle]').textContent = ouvert ? 'Masquer le détail' : 'Voir le détail';
+  });
+
+  // Compte à rebours de la réservation.
+  const reservation = (jusqua: string) => {
+    const resa = $('[data-reservation]');
+    const fin = Date.parse(jusqua);
+    resa.querySelector('[data-heure]')!.textContent = new Date(fin).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).replace(':', ' h ');
+    const reste = resa.querySelector<HTMLElement>('[data-reste]')!;
+    const maj = () => {
+      const min = Math.min(30, Math.ceil((fin - Date.now()) / 60000)); // 31 min côté Stripe (minimum imposé), 30 annoncées
+      if (min <= 0) {
+        resa.classList.add('expiree');
+        resa.querySelector('p')!.innerHTML = '<strong>Réservation terminée</strong> · rechargez la page pour la réserver de nouveau, si elle est toujours disponible.';
+        return clearInterval(minuteur);
+      }
+      reste.textContent = `${min} min`;
+    };
+    const minuteur = setInterval(maj, 15000);
+    maj();
+    resa.hidden = false;
+  };
 
   (async () => {
     try {
-      const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
-      const j = await r.json();
-      if (j.erreur) return erreur(j.erreur);
-      try { localStorage.setItem(memo, j.jeton); } catch {}
-      // Réservation : un vrai argument (pièce unique, personne ne peut la prendre pendant le paiement), avec le temps restant.
-      const resa = document.querySelector<HTMLElement>('[data-reservation]');
-      if (resa && j.jusqua) {
-        const fin = Date.parse(j.jusqua);
-        resa.querySelector('[data-heure]')!.textContent = new Date(fin).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).replace(':', ' h ');
-        const reste = resa.querySelector<HTMLElement>('[data-reste]')!;
-        const maj = () => {
-          const min = Math.min(30, Math.ceil((fin - Date.now()) / 60000)); // 31 min côté Stripe (minimum imposé), 30 annoncées
-          if (min <= 0) {
-            resa.classList.add('expiree');
-            resa.querySelector('.resa-titre')!.textContent = 'Réservation terminée';
-            reste.textContent = '';
-            resa.querySelector('.resa-heure')!.textContent = 'Rechargez la page pour la réserver de nouveau, si elle est toujours disponible.';
-            resa.querySelector('.resa-texte')!.textContent = '';
-            return clearInterval(minuteur);
-          }
-          reste.textContent = min > 1 ? `${min} minutes` : '1 minute';
-        };
-        const minuteur = setInterval(maj, 15000);
-        maj();
-        resa.hidden = false;
+      // Aperçu de mise en page uniquement : #cs=<secret>&pk=<clé> évite de créer une vraie session (et de réserver la pièce).
+      const apercu = new URLSearchParams(location.hash.slice(1));
+      let secret = apercu.get('cs');
+      const cleStripe = apercu.get('pk') ?? cle;
+      if (!secret) {
+        let jeton: string | null = null;
+        try { jeton = localStorage.getItem(memo); } catch {}
+        const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
+        const j = await r.json();
+        if (j.erreur) return erreur(j.erreur);
+        try { localStorage.setItem(memo, j.jeton); } catch {}
+        if (j.jusqua) reservation(j.jusqua);
+        secret = j.clientSecret as string;
       }
+
       // @ts-ignore Stripe.js chargé depuis js.stripe.com
-      const stripe = window.Stripe(cle);
-      const ouvrir = stripe.createEmbeddedCheckoutPage ?? stripe.initEmbeddedCheckout;
-      const checkout = await ouvrir.call(stripe, { fetchClientSecret: async () => j.clientSecret });
-      zone.innerHTML = '';
-      checkout.mount(zone);
+      const stripe = window.Stripe(cleStripe);
+      const css = getComputedStyle(document.documentElement);
+      const v = (n: string) => css.getPropertyValue(n).trim();
+      const checkout = stripe.initCheckoutElementsSdk({
+        clientSecret: secret,
+        elementsOptions: {
+          fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&display=swap' }],
+          appearance: {
+            theme: 'night',
+            variables: {
+              fontFamily: '"IBM Plex Sans", system-ui, sans-serif', fontWeightNormal: '300', fontSizeBase: '15px',
+              colorPrimary: v('--or'), colorBackground: '#232B23', colorText: v('--encre'), colorTextSecondary: v('--discret'),
+              colorTextPlaceholder: '#7E857B', colorDanger: '#E59A8A', borderRadius: '2px', spacingUnit: '4px', gridRowSpacing: '14px',
+            },
+            rules: {
+              '.Input': { border: `1px solid ${v('--trait')}`, boxShadow: 'none', padding: '13px 14px' },
+              '.Input:focus': { border: `1px solid ${v('--or')}`, boxShadow: 'none' },
+              '.Label': { fontSize: '12px', letterSpacing: '0.04em', color: v('--texte') },
+              '.AccordionItem': { border: `1px solid ${v('--trait')}`, boxShadow: 'none', backgroundColor: '#1F261F' },
+              '.AccordionItem--selected': { border: `1px solid ${v('--or')}` },
+            },
+          },
+        },
+      });
+
+      const { actions } = await checkout.loadActions();
+      const euros = (s: any) => s.total.total.amount as string;
+
+      // Totaux, libellé du bouton et ligne de livraison, recalculés à chaque changement de la session.
+      const afficher = (s: any) => {
+        $$('[data-total]').forEach((e) => (e.textContent = euros(s)));
+        $('[data-sous-total]').textContent = s.total.subtotal.amount;
+        const opt = s.shipping?.shippingOption;
+        const gratuit = !opt || opt.minorUnitsAmount === 0;
+        $('[data-livraison]').textContent = gratuit ? 'Offerte' : opt.amount;
+        $('[data-envoi-prix]').textContent = gratuit ? 'Offerte' : opt.amount;
+        const france = !opt || /France/.test(opt.displayName);
+        $('[data-livraison-nom]').textContent = france ? 'Colissimo, France' : 'Colissimo, Europe';
+        $('[data-envoi-nom]').textContent = france ? 'Colissimo, France métropolitaine et Monaco' : 'Colissimo, Europe';
+        $('[data-payer-texte]').textContent = `Payer ${euros(s)}`;
+      };
+      afficher(actions.getSession());
+      checkout.on('change', afficher);
+
+      // Paiement express : Apple Pay, Google Pay, PayPal (Link et Amazon Pay masqués ; Klarna reste dans les moyens de paiement).
+      const express = checkout.createExpressCheckoutElement({
+        buttonHeight: 48,
+        buttonTheme: { applePay: 'white', googlePay: 'white', paypal: 'white' },
+        layout: { maxColumns: 2, maxRows: 2, overflow: 'never' },
+        paymentMethods: { applePay: 'auto', googlePay: 'auto', paypal: 'auto', link: 'never', amazonPay: 'never', klarna: 'never' },
+      });
+      express.on('ready', (e: any) => {
+        const dispo = e?.availablePaymentMethods && Object.values(e.availablePaymentMethods).some(Boolean);
+        $('[data-express]').hidden = !dispo;
+      });
+      express.on('confirm', async (e: any) => {
+        const r = await actions.confirm({ expressCheckoutConfirmEvent: e });
+        if (r?.type === 'error') message(r.error.message);
+      });
+      express.mount('#express');
+
+      // Adresse de livraison (suggestions automatiques) : le pays choisit seul le bon tarif d'envoi.
+      const adresse = checkout.createShippingAddressElement();
+      adresse.on('change', async (e: any) => {
+        const pays = e?.value?.address?.country;
+        if (!pays) return;
+        const s = actions.getSession();
+        const voulu = s.shippingOptions.find((o: any) => (FRANCE.includes(pays) ? /France/ : /Europe/).test(o.displayName));
+        if (voulu && s.shipping?.shippingOption?.id !== voulu.id) await actions.updateShippingOption(voulu.id);
+      });
+      adresse.mount('#adresse');
+
+      // Carte bancaire (et Klarna, paiement en plusieurs fois) : Apple Pay et Google Pay sont dans le paiement express.
+      const moyens = checkout.createPaymentElement({ layout: { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: true } });
+      moyens.mount('#moyens');
+
+      // E-mail et téléphone : transmis à Stripe dès qu'ils sont saisis.
+      const email = $<HTMLInputElement>('[data-email]');
+      const tel = $<HTMLInputElement>('[data-tel]');
+      const envoyerEmail = async () => { if (!email.value) return true; const r = await actions.updateEmail(email.value.trim()); email.toggleAttribute('aria-invalid', r?.type === 'error'); return r?.type !== 'error'; };
+      const envoyerTel = async () => { if (!tel.value) return true; const r = await actions.updatePhoneNumber(tel.value.trim()); tel.toggleAttribute('aria-invalid', r?.type === 'error'); return r?.type !== 'error'; };
+      email.addEventListener('change', envoyerEmail);
+      tel.addEventListener('change', envoyerTel);
+
+      const form = $<HTMLFormElement>('[data-formulaire]');
+      const payer = $<HTMLButtonElement>('[data-payer]');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        message(null);
+        if (!email.value || !email.checkValidity()) { email.focus(); return message('Indiquez une adresse e-mail valide pour recevoir la facture.'); }
+        if (!tel.value) { tel.focus(); return message('Indiquez un numéro de téléphone pour le transporteur.'); }
+        payer.disabled = true;
+        payer.classList.add('en-cours');
+        try {
+          if (!(await envoyerEmail())) throw new Error('Adresse e-mail non reconnue.');
+          if (!(await envoyerTel())) throw new Error('Numéro de téléphone non reconnu.');
+          const r = await actions.confirm();
+          if (r?.type === 'error') throw new Error(r.error.message);
+        } catch (err) {
+          message((err as Error).message || 'Le paiement n’a pas abouti. Vérifiez vos informations et réessayez.');
+          payer.disabled = false;
+          payer.classList.remove('en-cours');
+        }
+      });
+
+      $('[data-chargement]').remove();
+      form.hidden = false;
+      payer.disabled = false;
     } catch (e) {
       console.error(e);
       erreur({ titre: 'Paiement momentanément indisponible', texte: 'La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant, ou écrivez-nous depuis la page Contact.', retour: '/contact' });
@@ -124,58 +301,117 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
 </script>
 
 <style>
-  .paiement-page { padding-top: clamp(24px, 4vw, 48px); }
-  .retour { display: inline-block; margin-bottom: clamp(20px, 3vw, 36px); color: var(--or); font: 400 .78rem var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+  .caisse { padding-top: clamp(20px, 3vw, 40px); padding-bottom: clamp(48px, 6vw, 96px); }
+  .retour { display: inline-flex; gap: 8px; margin-bottom: clamp(18px, 3vw, 32px); color: var(--or); font: 400 .74rem var(--sans); letter-spacing: .14em; text-transform: uppercase; }
   .retour:hover { color: var(--encre); }
-  .grille { display: grid; gap: clamp(32px, 5vw, 80px); grid-template-columns: 1fr; align-items: start; }
-  @media (min-width: 960px) { .grille { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } } /* plus de colonne « collante » : tout défile ensemble (retour de Gwen, 2026-11-01) */
-  .piece { display: flex; flex-direction: column; gap: 28px; }
-  .photo {
-    width: min(100%, max(260px, calc(var(--l) * 9px))); max-height: 34vh; object-fit: contain; align-self: center; height: auto;
+  .grille { display: grid; gap: clamp(24px, 5vw, 88px); grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 960px) { .grille { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+
+  /* ---- Récapitulatif ---- */
+  .recap { display: flex; flex-direction: column; gap: 16px; }
+  @media (min-width: 960px) { .recap { position: sticky; top: 24px; } }
+  .recap-bandeau { display: none; }
+  .recap-photo { margin: 0 0 12px; display: flex; justify-content: center; }
+  .recap-photo img {
+    width: min(100%, max(240px, calc(var(--l) * 8px))); max-height: 40vh; height: auto; object-fit: contain;
     filter: drop-shadow(0 22px 30px rgba(0, 0, 0, .6)) drop-shadow(0 1px 2px rgba(0, 0, 0, .5));
   }
-  .infos { display: flex; flex-direction: column; gap: 10px; }
-  .surtitre { font: 400 .72rem var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--or); }
-  h1 { font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.05; }
-  .sous-titre { font: italic 300 1.25rem/1.3 var(--serif); color: var(--encre); }
-  .cartel { font-size: .9rem; line-height: 1.6; color: var(--texte); margin-top: 4px; }
-  .prix { font: 400 1.9rem var(--serif); color: var(--encre); display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
-  .prix span { font: 300 .85rem var(--sans); color: var(--discret); }
-  .engagements { list-style: none; margin: 10px 0 0; padding: 18px 0 0; border-top: 1px solid var(--trait); display: grid; gap: 8px; font-size: .9rem; color: var(--texte); }
-  .engagements li { display: flex; gap: 12px; align-items: baseline; }
-  .engagements li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--or); flex: none; transform: translateY(-2px); }
-  /* Réservation mise en avant (2026-11-01, Gwen) : encadré doré, sobre, sans effet d'urgence criard. */
-  .reservation { margin-top: 6px; padding: 16px 20px; border: 1px solid var(--or); display: grid; gap: 4px; }
+  .surtitre { font: 400 .7rem var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--or); }
+  .recap h1 { font-size: clamp(2.2rem, 3.6vw, 3rem); line-height: 1.05; margin-top: 6px; }
+  .sous-titre { font: italic 300 1.2rem/1.3 var(--serif); color: var(--encre); margin-top: 4px; }
+  .cartel { font-size: .88rem; color: var(--discret); margin-top: 8px; }
+  .lignes { margin: 20px 0 0; display: grid; gap: 10px; border-top: 1px solid var(--trait); padding-top: 18px; font-size: .92rem; }
+  .lignes div { display: flex; justify-content: space-between; gap: 16px; }
+  .lignes dt span { color: var(--discret); font-size: .82rem; margin-left: 6px; }
+  .lignes dd { margin: 0; color: var(--encre); font-variant-numeric: lining-nums tabular-nums; }
+  .ligne-total { border-top: 1px solid var(--trait); padding-top: 14px; margin-top: 4px; align-items: baseline; }
+  .ligne-total dt { font: 400 1rem var(--sans); color: var(--encre); }
+  .ligne-total dd { font: 400 1.9rem var(--serif); }
+  .reservation { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid rgba(201, 175, 120, .45); background: rgba(201, 175, 120, .06); font-size: .86rem; }
   .reservation[hidden] { display: none; }
-  .resa-titre { font: italic 400 1.5rem/1.2 var(--serif); color: var(--or); }
-  .resa-compte { font-size: .95rem; color: var(--texte); }
-  .resa-compte strong { font-weight: 500; color: var(--encre); font-variant-numeric: lining-nums; }
-  .resa-texte { font-size: .85rem; color: var(--discret); }
-  .reservation.expiree { border-color: var(--trait); }
-  .reservation.expiree .resa-titre { color: var(--discret); }
-  .formulaire-paiement { display: flex; flex-direction: column; gap: 12px; }
-  .cgv { font-size: .8rem; color: var(--discret); }
-  .cgv a { color: var(--texte); text-decoration: underline; text-underline-offset: 2px; }
-  .mode-test { font: 500 .66rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
-  .carte-paiement { background: #f3efe7; color: #2A2620; border-radius: 4px; padding: clamp(12px, 2vw, 28px); min-height: 420px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); }
-  .attente { font: italic 300 1.1rem var(--serif); color: #6b6559; padding: 24px 8px; }
-  .attente a { color: #2A2620; text-decoration: underline; }
-  .erreur { padding: 24px 8px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .reservation p { margin: 0; color: var(--texte); }
+  .reservation strong { color: var(--or); font-weight: 500; }
+  .point { width: 8px; height: 8px; border-radius: 50%; background: var(--or); flex: none; animation: pouls 2s ease-in-out infinite; }
+  @keyframes pouls { 50% { opacity: .35; transform: scale(.8); } }
+  .reservation.expiree { border-color: var(--trait); background: none; }
+  .reservation.expiree .point { animation: none; background: var(--discret); }
+  .reservation.expiree strong { color: var(--discret); }
+
+  /* ---- Formulaire ---- */
+  .formulaire { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .mode-test { font: 500 .64rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
+  .etapes { display: flex; flex-direction: column; gap: 30px; }
+  .etapes[hidden] { display: none; }
+  .express[hidden] { display: none; }
+  .etiquette { font: 400 .7rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--discret); text-align: center; margin-bottom: 12px; }
+  .separateur { display: flex; align-items: center; gap: 14px; margin: 22px 0 0; color: var(--discret); font: italic 300 1.05rem var(--serif); }
+  .separateur::before, .separateur::after { content: ''; flex: 1; height: 1px; background: var(--trait); }
+  .etape { display: flex; flex-direction: column; gap: 14px; }
+  .etape h2 { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; }
+  .num { display: inline-grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--or); border-radius: 50%; font: 400 .78rem var(--sans); color: var(--or); }
+  .champ { display: flex; flex-direction: column; gap: 6px; }
+  .champ > span { font-size: 12px; letter-spacing: .04em; color: var(--texte); }
+  .champ small { color: var(--discret); margin-left: 4px; }
+  .champ input {
+    font: 300 15px var(--sans); color: var(--encre); background: #232B23; border: 1px solid var(--trait); border-radius: 2px;
+    padding: 13px 14px; outline: none; transition: border-color .15s; width: 100%; box-sizing: border-box;
+  }
+  .champ input::placeholder { color: #7E857B; }
+  .champ input:focus { border-color: var(--or); }
+  .champ input[aria-invalid] { border-color: #E59A8A; }
+  .envoi { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid var(--trait); background: #1F261F; font-size: .9rem; color: var(--texte); margin: 0; }
+  .envoi strong { color: var(--encre); font-weight: 400; }
+  .note { font-size: .8rem; color: var(--discret); margin: -4px 0 0; }
+  .note a, .cgv a { color: var(--texte); text-decoration: underline; text-underline-offset: 2px; }
+  .message { margin: 0; padding: 12px 14px; border: 1px solid #E59A8A; color: #F2C3B8; font-size: .9rem; }
+  .message[hidden] { display: none; }
+  .payer {
+    position: relative; width: 100%; min-height: 58px; border: 0; border-radius: 2px; cursor: pointer;
+    background: var(--encre); color: var(--mur); font: 500 .86rem var(--sans); letter-spacing: .14em; text-transform: uppercase;
+    transition: background .2s, transform .1s;
+  }
+  .payer:hover:not(:disabled) { background: #fff; }
+  .payer:active:not(:disabled) { transform: translateY(1px); }
+  .payer:disabled { opacity: .55; cursor: default; }
+  .payer.en-cours span { visibility: hidden; }
+  .payer.en-cours::after { content: ''; position: absolute; inset: 0; margin: auto; width: 18px; height: 18px; border: 2px solid var(--mur); border-right-color: transparent; border-radius: 50%; animation: tourne .7s linear infinite; }
+  @keyframes tourne { to { transform: rotate(360deg); } }
+  .garanties { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: .84rem; color: var(--texte); }
+  .garanties li { display: flex; gap: 10px; align-items: center; }
+  .garanties svg { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--or); stroke-width: 1.3; stroke-linejoin: round; }
+  .cgv { font-size: .78rem; color: var(--discret); margin: 0; }
+  .chargement { display: grid; gap: 12px; padding: 8px 0 24px; }
+  .chargement .barre { height: 48px; background: linear-gradient(90deg, #222922 0%, #2a332a 50%, #222922 100%); background-size: 200% 100%; animation: reflet 1.4s ease-in-out infinite; }
+  .chargement .courte { width: 60%; }
+  .chargement p { font: italic 300 1.05rem var(--serif); color: var(--discret); margin: 4px 0 0; }
+  @keyframes reflet { to { background-position: -200% 0; } }
+  .erreur { padding: 24px 0; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
   .erreur[hidden] { display: none; }
-  .erreur h2 { color: #2A2620; font-size: 1.8rem; }
-  .erreur .lien { color: #2A2620; }
-  /* Téléphone : la pièce en bandeau compact au-dessus du formulaire. */
+  .erreur h2 { font-size: 1.9rem; }
+
+  /* ---- Téléphone : récapitulatif en bandeau repliable ---- */
   @media (max-width: 959px) {
-    .piece { flex-direction: row; align-items: center; gap: 18px; }
-    .photo { width: 96px; max-height: 120px; align-self: flex-start; filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .5)); }
-    h1 { font-size: 1.6rem; }
-    .sous-titre, .cartel, .engagements { display: none; }
-    .prix { font-size: 1.3rem; margin-top: 2px; }
-    .prix span { font-size: .75rem; }
-    .reservation { margin-top: 6px; padding: 8px 12px; gap: 0; }
-    .resa-titre { font-size: 1.1rem; }
-    .resa-compte { font-size: .82rem; }
-    .resa-heure, .resa-texte { display: none; }
-    .expiree .resa-heure { display: inline; }
+    .caisse { padding-top: 12px; }
+    .retour { margin-bottom: 14px; }
+    .grille { gap: 22px; }
+    .recap { gap: 10px; }
+    .recap-bandeau {
+      display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 14px; width: 100%; text-align: left;
+      background: #1F261F; border: 1px solid var(--trait); padding: 10px 14px 10px 10px; color: inherit; font: inherit; cursor: pointer;
+    }
+    .recap-bandeau img { width: 56px; height: 56px; object-fit: contain; }
+    .recap-titre { font: 400 1.25rem/1.1 var(--serif); color: var(--encre); display: flex; flex-direction: column; gap: 4px; }
+    .recap-titre small { font: 400 .72rem var(--sans); color: var(--or); letter-spacing: .06em; }
+    .recap-titre small::after { content: ' ▾'; }
+    .ouvert .recap-titre small::after { content: ' ▴'; }
+    .recap-total { font: 400 1.35rem var(--serif); color: var(--encre); font-variant-numeric: lining-nums; }
+    .recap-detail { display: none; padding: 4px 4px 8px; }
+    .ouvert .recap-detail { display: block; }
+    .recap-photo img { max-height: 30vh; }
+    .recap h1 { font-size: 1.9rem; }
+    .resa-detail { display: none; }
+    .reservation { padding: 10px 14px; }
+    .etapes { gap: 26px; }
+    .etape h2 { font-size: 1.45rem; }
   }
 </style>
