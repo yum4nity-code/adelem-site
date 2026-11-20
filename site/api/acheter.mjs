@@ -122,7 +122,20 @@ async function preparer({ id, retour, integre, jeton }) {
     custom_text: { shipping_address: { message: 'Livraison offerte en France métropolitaine et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ». Outre-mer et autres pays : écrivez-nous depuis la page Contact.' } },
     // La facture n'est créée par Stripe qu'une fois le paiement réussi : la mention « Payée » est donc toujours vraie.
     // Elle évite qu'un client lise « à régler » sur le modèle de facture standard de Stripe (retour de Gwen, 2026-10-31).
-    invoice_creation: { enabled: true, invoice_data: { description: 'Facture acquittée : réglée en ligne à la commande.', custom_fields: [{ name: 'Règlement', value: 'Payée en ligne' }], footer: 'TVA non applicable, art. 293 B du CGI' } },
+    // Facture (2026-11-20) : mentions obligatoires d'un entrepreneur individuel (nom + « EI », SIRET, RCS, adresse, régime de TVA)
+    // et un mot de remerciement. Coordonnées reprises de site-astro/src/data/site.ts (legal) : les mettre à jour aux deux endroits.
+    invoice_creation: {
+      enabled: true,
+      invoice_data: {
+        description: 'Facture acquittée : réglée en ligne à la commande. Merci pour votre confiance : cette pièce unique, faite à la main à l’atelier, part chez vous emballée avec le plus grand soin.',
+        custom_fields: [
+          { name: 'Vendeuse', value: 'Adèle Mette EI (Adelem)' },
+          { name: 'SIRET', value: '351 073 457 00035' },
+          { name: 'Règlement', value: 'Payée en ligne' },
+        ],
+        footer: 'Adèle Mette EI · Adelem · 116 rue du Vicariat, 82110 Cazes-Mondenard · SIRET 351 073 457 00035 · RCS Montauban 351 073 457 · TVA non applicable, art. 293 B du CGI · contact@adelem.fr',
+      },
+    },
   });
   const s = await stripe('checkout/sessions', cle, params);
   if (!s.ok || !(integre ? s.json.client_secret : s.json.url)) {
