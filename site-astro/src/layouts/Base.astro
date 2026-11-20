@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
 import { site, nav, indexable } from '../data/site';
-import Analytics from '@vercel/analytics/astro';
 import IconeInstagram from '../components/IconeInstagram.astro';
 import Nouvelles from '../components/Nouvelles.astro';
 
@@ -80,7 +79,6 @@ const orgLd = {
     <script type="application/ld+json" set:html={JSON.stringify(orgLd)} />
     {accueil && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: site.nom, url: site.url + '/' })} />}
     {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
-    <Analytics />
   </head>
   <body>
     <a class="lien-evitement" href="#contenu">Aller au contenu</a>

@@ -51,9 +51,10 @@ export const site = {
     adresse: '116 rue du Vicariat, 82110 Cazes-Mondenard' as string | null,
     tva: 'TVA non applicable, art. 293 B du CGI' as string | null,
     directeurPublication: 'Gwennaël Salinas',
-    // Coordonnées reprises de vercel.com/legal/privacy-notice (rubrique Contact Us), vérifiées le 2026-10-27.
-    hebergeur: 'Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis — vercel.com' as string | null,
-    mediateur: null as string | null,
+    // Hébergement Cloudflare depuis le 2026-11-20 (avant : Vercel). Adresse reprise de cloudflare.com/fr-fr/privacypolicy (section 19), vérifiée le 2026-11-20.
+    hebergeur: 'Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, États-Unis — cloudflare.com' as string | null,
+    // Adhésion CM2C payée le 2026-11-20 (3 ans). Coordonnées : liste européenne des organismes de médiation et rapport 2025 du CM2C.
+    mediateur: 'CM2C (Centre de la médiation de la consommation de conciliateurs de justice), 49 rue de Ponthieu, 75008 Paris — saisine en ligne sur www.cm2c.net' as string | null,
   },
 };
 

@@ -547,3 +547,8 @@
 - À faire : le webhook Sanity appelle encore le Deploy Hook Vercel → remplacer par le Deploy Hook Cloudflare (Settings › Builds), sinon les publications d'Adèle ne mettent plus le site à jour.
 - Constat : le webhook Sanity appelle déjà le Deploy Hook Cloudflare (« sanity - deploy hook »). Sa construction de 12:57 UTC a échoué sur une coupure réseau en téléchargeant une photo pour l'image d'aperçu /partage/le-secret-du-vieux-tronc.jpg. Correctif : 3 essais (30 s max chacun) par photo ; si la photo principale reste injoignable, l'image d'aperçu générale (partage.jpg) est servie au lieu de faire échouer toute la mise à jour.
 - Messagerie vérifiée après bascule : mail reçu sur contact@adelem.fr (Gwen, 2026-11-20).
+
+## 2026-11-20 — Médiateur, hébergeur, mesure d'audience
+- Adhésion au CM2C payée par Gwen (48 €, 3 ans, 2026-11-20). CGV § 10 : « CM2C (Centre de la médiation de la consommation de conciliateurs de justice), 49 rue de Ponthieu, 75008 Paris — saisine en ligne sur www.cm2c.net » (coordonnées : liste européenne des organismes de médiation, rapport 2025 du CM2C). Le mail de confirmation du CM2C reste à vérifier (adresse identique).
+- Mentions légales : hébergeur = Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107 (politique de confidentialité Cloudflare, section 19) ; remplace Vercel.
+- Vercel Web Analytics retiré (ne fonctionne plus hors de Vercel). Mesure d'audience = statistiques de l'hébergeur (Cloudflare, sans cookie ni script). Texte des mentions mis à jour, avec la mention des cookies strictement nécessaires de Stripe sur la page de paiement.
