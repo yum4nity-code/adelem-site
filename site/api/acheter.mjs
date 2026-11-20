@@ -110,7 +110,10 @@ async function preparer({ id, retour, integre, jeton }) {
     }],
     // Style Adelem du formulaire Stripe (crème, bouton vert nuit, Lora, angles droits), fixé ici pour ne pas dépendre
     // des réglages du tableau de bord Stripe ; le nom affiché est « Adelem » même sur le compte de test.
-    branding_settings: { display_name: 'Adelem', background_color: '#f3efe7', button_color: '#1b211b', font_family: 'lora', border_style: 'rectangular' },
+    ...(integre ? {} : { // page Stripe classique seulement : refusés ou sans effet en ui_mode « elements » (vu le 2026-11-20)
+      branding_settings: { display_name: 'Adelem', background_color: '#f3efe7', button_color: '#1b211b', font_family: 'lora', border_style: 'rectangular' },
+      custom_text: { shipping_address: { message: 'Livraison offerte en France métropolitaine et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ». Outre-mer et autres pays : écrivez-nous depuis la page Contact.' } },
+    }),
     // Moyens de paiement (2026-11-20, Gwen) : carte, Apple Pay, Google Pay, PayPal, Klarna. Link (peu connu en France) masqué ;
     // Amazon Pay, Bancontact et les moyens étrangers exclus. Prix en euros pour tous (pas de conversion automatique).
     wallet_options: { link: { display: 'never' } },
@@ -124,7 +127,6 @@ async function preparer({ id, retour, integre, jeton }) {
       { shipping_rate_data: { type: 'fixed_amount', display_name: 'France métropolitaine et Monaco : livraison offerte (Colissimo)', fixed_amount: { amount: 0, currency: 'eur' } } },
       { shipping_rate_data: { type: 'fixed_amount', display_name: 'Ailleurs en Europe (Colissimo)', fixed_amount: { amount: europe * 100, currency: 'eur' } } },
     ],
-    custom_text: { shipping_address: { message: 'Livraison offerte en France métropolitaine et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ». Outre-mer et autres pays : écrivez-nous depuis la page Contact.' } },
     // La facture n'est créée par Stripe qu'une fois le paiement réussi : la mention « Payée » est donc toujours vraie.
     // Elle évite qu'un client lise « à régler » sur le modèle de facture standard de Stripe (retour de Gwen, 2026-10-31).
     // Facture (2026-11-20) : mentions obligatoires d'un entrepreneur individuel (nom + « EI », SIRET, RCS, adresse, régime de TVA)
