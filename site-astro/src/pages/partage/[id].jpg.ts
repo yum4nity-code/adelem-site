@@ -10,11 +10,22 @@ export async function getStaticPaths() {
   return oeuvres.filter((o) => apercuCompose(o.data)).map((o) => ({ params: { id: o.id }, props: { oeuvre: o } }));
 }
 
+// Téléchargement avec 3 essais (coupure réseau passagère pendant la construction : vu le 2026-11-20).
 const lire = async (src: string) => {
   if (/^https?:/.test(src)) {
-    const r = await fetch(src.replace(/([?&])auto=format&?/, '$1'));
-    if (!r.ok) throw new Error(`HTTP ${r.status} ${src}`);
-    return Buffer.from(await r.arrayBuffer());
+    const url = src.replace(/([?&])auto=format&?/, '$1');
+    let erreur: unknown;
+    for (let essai = 1; essai <= 3; essai++) {
+      try {
+        const r = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+        if (!r.ok) throw new Error(`HTTP ${r.status} ${src}`);
+        return Buffer.from(await r.arrayBuffer());
+      } catch (e) {
+        erreur = e;
+        if (essai < 3) await new Promise((ok) => setTimeout(ok, 1500 * essai));
+      }
+    }
+    throw erreur;
   }
   return readFile(new URL(`../../../public${src}`, import.meta.url));
 };
@@ -25,10 +36,15 @@ export const GET: APIRoute = async ({ props }) => {
   // Une photo injoignable ne bloque jamais la mise en ligne : sans gros plan, la pièce reste seule au centre.
   const d = (props as any).oeuvre.data;
   const [face, d1, d2] = await Promise.all([
-    lire(d.photos[0].src),
+    lire(d.photos[0].src).catch(() => null),
     lire(d.photos[1].src).catch(() => null),
     d.photos[2] ? lire(d.photos[2].src).catch(() => null) : Promise.resolve(null),
   ]);
+  // Photo principale toujours injoignable après 3 essais : image d'aperçu générale du site, sans bloquer la mise en ligne.
+  if (!face) {
+    console.warn(`[partage] ${d.photos[0].src} injoignable : image d'aperçu générale utilisée.`);
+    return new Response(new Uint8Array(await lire('/partage.jpg')), { headers: { 'Content-Type': 'image/jpeg' } });
+  }
   const piece = await sharp(face).resize(560, 590, { fit: 'inside' }).toBuffer({ resolveWithObject: true });
   const calques: OverlayOptions[] = [];
   const cote = async (src: Buffer, position: string) => sharp(src).resize(285, 630, { fit: 'cover', position }).toBuffer();
