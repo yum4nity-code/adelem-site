@@ -56,12 +56,13 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
       <div class="marque-hero">
         <img class="signature" src="/logo/adelem-signature-droite.svg" alt="Adelem" width="380" height="172" />
       </div>
+      {modeMur && <p class="accroche">La nature entre chez vous</p>}
+      {/* Légende sous l'accroche, comme un cartel (2026-11-20, Gwen) : titre et dimensions, puis « Voir la pièce ». */}
       {oeuvreHero && (
         <a class="hero-lien" href={`/oeuvres/${oeuvreHero.id}`} aria-label={`Voir l’œuvre ${oeuvreHero.data.titre}`}>
-          <span class="legende">{oeuvreHero.data.titre} <span aria-hidden="true">→</span></span>
+          <span class="legende"><em>{oeuvreHero.data.titre}</em> · {String(oeuvreHero.data.largeur_cm).replace('.', ',')} × {String(oeuvreHero.data.hauteur_cm).replace('.', ',')} cm <span class="voir">Voir la pièce <span aria-hidden="true">→</span></span></span>
         </a>
       )}
-      {modeMur && <p class="accroche">La nature entre chez vous</p>}
       <p class="indice" aria-hidden="true"><span>Découvrir</span></p>
     </div>
   </section>
@@ -246,6 +247,11 @@ const vedette = toutes.find((o) => o.data.histoire && o.data.statut !== 'vendue'
     text-align: center; color: var(--encre);
     font: italic 300 clamp(1.2rem, 0.9rem + 1vw, 1.75rem)/1.3 var(--serif); letter-spacing: .02em;
   }
+  .legende .voir { margin-left: .9em; font: 400 .7rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+  .legende em { font-style: italic; }
+  /* Ouverture « mur » : la légende vient juste sous l'accroche, centrée, au lieu du coin bas droit. */
+  .hero-mur .legende { left: 0; right: 0; bottom: auto; text-align: center; padding: 0 24px; font-size: .95rem;
+    top: calc(var(--cadre-bas) + clamp(18px, 3dvh, 30px) + clamp(2.3rem, 1.6rem + 1.6vw, 3.2rem)); }
 
   .ouverture { position: relative; z-index: 1; background: var(--mur); padding-top: clamp(56px, 8vw, 96px); }
   .intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 88px); }

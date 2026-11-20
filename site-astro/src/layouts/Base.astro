@@ -38,6 +38,8 @@ const fullTitle = title === site.nom ? `${site.nom}, tableaux végétaux et scul
 const ogImage = new URL(image ?? '/partage.jpg', site.url).href;
 const current = Astro.url.pathname.replace(/\/$/, '');
 const demo = (await getCollection('oeuvres')).some((o) => o.data.demo);
+// Mention des fleurs en porcelaine froide seulement si une pièce existe (2026-11-20, Gwen).
+const aDesFleurs = (await getCollection('oeuvres')).some((o) => o.data.type === 'fleurs');
 
 const orgLd = {
   '@context': 'https://schema.org',
@@ -113,7 +115,7 @@ const orgLd = {
       <div class="wrap pied-grille">
         <div class="pied-marque">
           <a href="/" aria-label="Adelem, accueil"><img src="/logo/adelem-signature.svg" alt="Adelem" width="130" height="54" loading="lazy" /></a>
-          <p>Végétaux stabilisés, sculptures et fleurs en porcelaine froide.</p>
+          <p>{aDesFleurs ? 'Végétaux stabilisés, sculptures et fleurs en porcelaine froide.' : 'Végétaux stabilisés et sculptures.'}</p>
         </div>
         <div class="pied-nouvelles"><Nouvelles /></div>
       </div>

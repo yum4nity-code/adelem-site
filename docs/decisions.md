@@ -526,3 +526,7 @@
 - Avant : les 5 derniers tableaux ajoutés (d'où 3 petits formats 12 × 17 en tête).
 - Maintenant : les pièces cochées « Mettre en avant sur la page d'accueil » (tableaux ou sculptures, 5 au plus), rangées par le nouveau champ « Place sur l'accueil » ; sans case cochée, les plus grands tableaux disponibles. Aucune pièce en double sur la page (œuvre de la photo d'ouverture exclue de la grille ; bloc Sculptures et pièce vedette sans les pièces déjà montrées).
 - Sélection choisie par Gwen (« B avec une sculpture », sans doublon) : 1 Cœur de forêt, 2 Entre les branches, 3 Ado à la capuche, 4 Couronne prune, 5 Éclat de prune (Balade d'automne reste la photo d'ouverture).
+
+## 2026-11-20 — Haut de l'accueil et porcelaine froide
+- L'accroche « La nature entre chez vous » est conservée (Gwen). La légende de la photo d'ouverture passe sous l'accroche, centrée : « Balade d'automne · 62 × 49 cm  VOIR LA PIÈCE → » (avant : seule dans le coin bas droit, et lue avant l'accroche).
+- Fleurs en porcelaine froide masquées tant qu'aucune pièce de ce type n'existe : tuile de la galerie, description de la galerie, mention du pied de page, page /galerie/fleurs-en-porcelaine-froide (plus générée, donc absente du plan du site). Le type reste dans l'admin : tout réapparaît automatiquement à la première pièce publiée. Le récit d'Adèle (À propos) qui évoque ses débuts en porcelaine froide est gardé tel quel.

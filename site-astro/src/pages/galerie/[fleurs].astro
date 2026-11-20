@@ -3,6 +3,12 @@ import { getCollection } from 'astro:content';
 import SalleGalerie from '../../components/SalleGalerie.astro';
 import { themes } from '../../data/galerie';
 import { textesGalerieSanity } from '../../sanity/reglages';
+// Page créée seulement quand une pièce en porcelaine froide existe dans l'admin (2026-11-20, Gwen) : sans pièce,
+// pas de page, donc rien dans le plan du site ni dans la galerie.
+export async function getStaticPaths() {
+  const aDesFleurs = (await getCollection('oeuvres')).some((o) => o.data.type === 'fleurs');
+  return aDesFleurs ? [{ params: { fleurs: 'fleurs-en-porcelaine-froide' } }] : [];
+}
 const t = themes[2];
 const textes = await textesGalerieSanity();
 const oeuvres = (await getCollection('oeuvres')).filter((o) => o.data.type === 'fleurs');
