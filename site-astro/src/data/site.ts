@@ -17,7 +17,8 @@ export const site = {
   // 'actif' = pour tous les visiteurs (au lancement, avec le compte Stripe réel) ; 'off' = aucun bouton.
   paiement: 'test' as 'test' | 'actif' | 'off',
   // Clé publique Stripe (faite pour être visible dans les pages). À remplacer par la clé pk_live_… au lancement.
-  stripePublique: 'pk_test_51UL4AuFtZAyxKSq1VInumQ8mK0F8ilDKpGSJmROb4uWqckRfWn7EeHqcqNPtMXDQXrbwRxJiYRTRcbsiYgWC3tng00NikrOHfl',
+  // Compte réel activé le 2026-11-20 (SIRET 351 073 457 00035). Ancienne clé de test : pk_test_51UL4AuFtZAyxKSq1VInumQ8mK0F8ilDKpGSJmROb4uWqckRfWn7EeHqcqNPtMXDQXrbwRxJiYRTRcbsiYgWC3tng00NikrOHfl
+  stripePublique: 'pk_live_51UL4AfC49xow9RvDkA3BIXgogfsQSWBSTKkppTu5voj19CVDbFqsF96eJou4vQqdHWaC4B4CP1rHtUqmVviya0Rr00mK7NZCrn',
   formEndpoint: 'https://formspree.io/f/mgavrzzp' as string | null,
   // Le plan gratuit de Formspree ne gère pas les pièces jointes : ne passer à true qu'après un plan payant (Personal ou plus).
   formFileUploads: false as boolean,

@@ -45,7 +45,9 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         </div>
       </aside>
       <div class="formulaire-paiement">
-        {site.paiement === 'test' && <p class="mode-test">Mode test · aucun vrai paiement · carte 4242 4242 4242 4242</p>}
+        {site.paiement === 'test' && (site.stripePublique.startsWith('pk_test_')
+          ? <p class="mode-test">Mode test · aucun vrai paiement · carte 4242 4242 4242 4242</p>
+          : <p class="mode-test">Accès réservé · achats pas encore ouverts au public · paiement RÉEL</p>)}
         <div class="carte-paiement">
           <div id="paiement" data-piece={d.sanity_id ?? oeuvre.id} data-retour={fiche} data-cle={site.stripePublique}>
             <p class="attente">Préparation du paiement…</p>

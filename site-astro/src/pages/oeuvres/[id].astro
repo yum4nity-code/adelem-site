@@ -91,7 +91,7 @@ const jsonld = {
       ) : achat ? (
         <>
         <div class="liens" data-paiement-test={achatTest ? '' : undefined} hidden={achatTest}>
-          {achatTest && <p class="mode-test">Mode test · aucun vrai paiement</p>}
+          {achatTest && <p class="mode-test">{site.stripePublique.startsWith('pk_test_') ? 'Mode test · aucun vrai paiement' : 'Accès réservé · paiement RÉEL'}</p>}
           <a class="bouton achat" href={achat} data-achat>Acquérir cette pièce</a>
         </div>
         {achatTest && (
