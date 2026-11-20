@@ -512,3 +512,6 @@
 ## 2026-11-19 — Formulaire de contact en erreur
 - Constat : une cliente a eu « Le message n'a pas pu être envoyé » ; Formspree n'affiche que 5 envois sur 30 jours (pas de dépassement de quota) et aucun message de contact réussi depuis le retour en formule gratuite (13/10), alors que l'inscription du bas de page (sans champ _next) fonctionnait le 27/10.
 - Cause retenue : le champ caché _next (redirection personnalisée, fonction payante de Formspree) dans le formulaire de contact et dans « Être prévenu ». Retiré ; la redirection vers /merci est faite par le script de la page ; « Être prévenu » passe aussi par un envoi sans quitter la page.
+
+## 2026-11-20 — RCS
+- Extrait Kbis du 19/11/2026 reçu : immatriculation « 351 073 457 R.C.S. Montauban », nom commercial ADELEM, établissement 116 rue du Vicariat, Cazes-Mondenard, début d'activité 26/10/2026. Mention « RCS Montauban 351 073 457 » ajoutée aux mentions légales et aux CGV (remplace « Immatriculation en cours »). SIRET …00035 inchangé (le Kbis n'affiche pas le SIRET ; à confirmer sur l'avis de situation INSEE si besoin).
