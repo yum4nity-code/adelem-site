@@ -7,7 +7,7 @@ const CLES = ['STRIPE_API_KEY', 'STRIPE_WEBHOOK_SECRET', 'SANITY_WRITE_TOKEN'];
 const ROUTES = { '/api/acheter': acheter, '/api/stripe-webhook': webhook };
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const { pathname } = new URL(request.url);
     const module = ROUTES[pathname];
     if (!module) {
@@ -20,6 +20,6 @@ export default {
     for (const k of CLES) if (env[k] !== undefined) process.env[k] = env[k];
     const handler = module[request.method];
     if (!handler) return new Response('Méthode non autorisée', { status: 405, headers: { Allow: Object.keys(module).filter((m) => /^[A-Z]+$/.test(m)).join(', ') } });
-    return handler(request);
+    return handler(request, ctx); // ctx.waitUntil : travail terminé après la réponse (enregistrement de la session)
   },
 };

@@ -55,7 +55,7 @@ async function stripe(chemin, cle, corps) {
 // Cœur commun : vérifie la pièce, la réserve, crée (ou reprend) la session Stripe.
 // integre = true : page de paiement intégrée sur adelem.fr (ui_mode embedded_page) ; sinon page Stripe classique.
 // jeton : identifiant du visiteur qui a réservé ; s'il revient (retour arrière, rechargement), il retrouve sa session.
-async function preparer({ id, retour, integre, jeton }) {
+async function preparer({ id, retour, integre, jeton, plusTard, chrono = () => {} }) {
   const cle = process.env.STRIPE_API_KEY;
   const token = process.env.SANITY_WRITE_TOKEN;
   if (!id) return { erreur: [400, 'Pièce introuvable', 'Le lien de paiement est incomplet.', retour] };
@@ -63,6 +63,7 @@ async function preparer({ id, retour, integre, jeton }) {
 
   const q = encodeURIComponent('*[_type == "oeuvre" && _id == $id][0]{ _id, _rev, titre, statut, prix, poids_kg, largeur_cm, hauteur_cm, reserve_jusqua, reserve_jeton, reserve_session, "photo": photos[defined(asset)][0].asset->url }');
   const lu = await sanity(`query/production?query=${q}&$id=${encodeURIComponent(JSON.stringify(id))}`, token);
+  chrono('lecture');
   const o = lu.corps?.result;
   if (!lu.ok || !o) return { erreur: [404, 'Pièce introuvable', 'Cette pièce n’existe plus dans la galerie.', '/galerie'] };
   if (o.statut !== 'disponible') return { erreur: [409, 'Cette pièce a trouvé preneur', 'Elle n’est plus disponible. D’autres pièces vous attendent dans la galerie.', '/galerie'] };
@@ -85,7 +86,8 @@ async function preparer({ id, retour, integre, jeton }) {
   const expire = Math.floor(maintenant / 1000) + DUREE_MIN * 60;
   const jusqua = new Date(expire * 1000).toISOString();
   const nouveauJeton = crypto.randomBytes(18).toString('base64url');
-  const resa = await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, ifRevisionID: o._rev, set: { reserve_jusqua: jusqua, reserve_jeton: empreinte(nouveauJeton) }, unset: ['reserve_session'] } }] }) });
+  const resa = await sanity('mutate/production?visibility=async', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, ifRevisionID: o._rev, set: { reserve_jusqua: jusqua, reserve_jeton: empreinte(nouveauJeton) }, unset: ['reserve_session'] } }] }) });
+  chrono('reservation');
   if (!resa.ok) return { erreur: [409, 'Pièce en cours d’acquisition', 'Quelqu’un vient de commencer à l’acquérir. Réessayez dans une demi-heure si l’achat n’aboutit pas.', retour] };
 
   const europe = supplementEurope(o.poids_kg, o.largeur_cm, o.hauteur_cm);
@@ -145,13 +147,16 @@ async function preparer({ id, retour, integre, jeton }) {
     },
   });
   const s = await stripe('checkout/sessions', cle, params);
+  chrono('stripe');
   if (!s.ok || !(integre ? s.json.client_secret : s.json.url)) {
     console.error('Stripe', s.status, s.json?.error?.message);
     // Échec : on libère la pièce tout de suite.
     await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, unset: ['reserve_jusqua', 'reserve_jeton', 'reserve_session'] } }] }) });
     return { erreur: [502, 'Paiement momentanément indisponible', 'La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant, ou écrivez-nous depuis la page Contact.', retour] };
   }
-  await sanity('mutate/production', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, set: { reserve_session: s.json.id } } }] }) });
+  // Enregistrement de la session (sert seulement si le visiteur recharge la page) : fait après la réponse quand c'est possible.
+  const noter = sanity('mutate/production?visibility=async', token, { method: 'POST', body: JSON.stringify({ mutations: [{ patch: { id: o._id, set: { reserve_session: s.json.id } } }] }) });
+  if (plusTard) plusTard(noter); else await noter;
   return { session: s.json, jusqua, jeton: nouveauJeton, montant };
 }
 
@@ -168,12 +173,15 @@ export async function GET(request) {
 }
 
 // Page de paiement intégrée (/oeuvres/<pièce>/acquerir) : renvoie le secret de session à Stripe.js.
-export async function POST(request) {
+export async function POST(request, ctx) {
+  const t0 = Date.now(); let t = t0; const temps = [];
+  const chrono = (nom) => { const n = Date.now(); temps.push(`${nom};dur=${n - t}`); t = n; };
   const corps = await request.json().catch(() => ({}));
   const retour = retourSur(corps.retour);
-  const r = await preparer({ id: idPropre(corps.piece), retour, integre: true, jeton: typeof corps.jeton === 'string' ? corps.jeton.slice(0, 64) : null });
+  const r = await preparer({ id: idPropre(corps.piece), retour, integre: true, jeton: typeof corps.jeton === 'string' ? corps.jeton.slice(0, 64) : null, plusTard: ctx?.waitUntil ? (p) => ctx.waitUntil(p) : null, chrono });
+  temps.push(`total;dur=${Date.now() - t0}`);
   const json = r.erreur
     ? { erreur: { titre: r.erreur[1], texte: r.erreur[2], retour: r.erreur[3] } }
     : { clientSecret: r.session.client_secret, jusqua: r.jusqua, jeton: r.jeton, montant: r.montant, moyens: r.session.payment_method_types ?? [] };
-  return new Response(JSON.stringify(json), { status: r.erreur ? r.erreur[0] : 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
+  return new Response(JSON.stringify(json), { status: r.erreur ? r.erreur[0] : 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Server-Timing': temps.join(', ') } });
 }

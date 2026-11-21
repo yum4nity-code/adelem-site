@@ -120,6 +120,17 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   </section>
 </Base>
 
+<script is:inline>
+  // Vitesse (2026-11-21) : la réservation et la session Stripe sont demandées dès maintenant, pendant que Stripe.js se télécharge.
+  (function () {
+    var z = document.getElementById('paiement');
+    if (!z || location.hash.indexOf('cs=') !== -1) return;
+    var jeton = null;
+    try { jeton = localStorage.getItem('adelem-reservation-' + z.dataset.piece); } catch (e) {}
+    window.__adelemResa = fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece: z.dataset.piece, retour: z.dataset.retour, jeton: jeton }) })
+      .then(function (r) { return r.json(); });
+  })();
+</script>
 <script is:inline src="https://js.stripe.com/clover/stripe.js"></script>
 <script>
   const zone = document.getElementById('paiement') as HTMLElement;
@@ -175,10 +186,13 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       let secret = apercu.get('cs');
       const cleStripe = apercu.get('pk') ?? cle;
       if (!secret) {
-        let jeton: string | null = null;
-        try { jeton = localStorage.getItem(memo); } catch {}
-        const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
-        const j = await r.json();
+        let j = await (window as any).__adelemResa;
+        if (!j) {
+          let jeton: string | null = null;
+          try { jeton = localStorage.getItem(memo); } catch {}
+          const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
+          j = await r.json();
+        }
         if (j.erreur) return erreur(j.erreur);
         try { localStorage.setItem(memo, j.jeton); } catch {}
         if (j.jusqua) reservation(j.jusqua);
@@ -265,20 +279,15 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       adresse.mount('#adresse');
 
       // Carte bancaire et Alma (2, 3 ou 4 fois), plus les portefeuilles absents du paiement express.
-      const dispo = await dispoExpress;
-      const montres = dispo ? Object.entries(dispo).filter(([, v]) => v).map(([k]) => k) : [];
-      $('[data-express]').hidden = montres.length === 0;
       const disposition = { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: true };
-      let moyens;
-      try {
-        moyens = checkout.createPaymentElement({
-          layout: disposition,
-          wallets: { applePay: montres.includes('applePay') ? 'never' : 'auto', googlePay: montres.includes('googlePay') ? 'never' : 'auto' },
-        });
-      } catch (e) {
-        console.warn('[paiement] option « wallets » refusée, formulaire standard', e); // sécurité : le paiement doit toujours s'afficher
-        moyens = checkout.createPaymentElement({ layout: disposition });
-      }
+      const moyens = checkout.createPaymentElement({ layout: disposition });
+      dispoExpress.then((dispo) => {
+        const montres = Object.entries(dispo ?? {}).filter(([, v]) => v).map(([k]) => k);
+        $('[data-express]').hidden = montres.length === 0;
+        if (!montres.length) return;
+        try { moyens.update({ wallets: { applePay: montres.includes('applePay') ? 'never' : 'auto', googlePay: montres.includes('googlePay') ? 'never' : 'auto' } }); }
+        catch (e) { console.warn('[paiement] doublon portefeuille non retiré', e); }
+      });
       moyens.mount('#moyens');
 
       // E-mail et téléphone : transmis à Stripe dès qu'ils sont saisis.
