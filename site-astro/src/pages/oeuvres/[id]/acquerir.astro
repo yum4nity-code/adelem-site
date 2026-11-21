@@ -21,6 +21,16 @@ const fiche = `/oeuvres/${oeuvre.id}`;
 const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
 ---
 <Base title={`Acquérir ${d.titre}`} description={`Acquérir ${d.titre}, pièce unique Adelem.`} noindex>
+  <script is:inline define:vars={{ resaPiece: d.sanity_id ?? oeuvre.id, resaRetour: fiche }}>
+    // Vitesse (2026-11-21) : réservation et session Stripe demandées dès le début de la page, pendant que le reste
+    // (images, polices, Stripe.js) se charge.
+    if (location.hash.indexOf('cs=') === -1) {
+      var resaJeton = null;
+      try { resaJeton = localStorage.getItem('adelem-reservation-' + resaPiece); } catch (e) {}
+      window.__adelemResa = fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece: resaPiece, retour: resaRetour, jeton: resaJeton }) })
+        .then(function (r) { return r.json(); });
+    }
+  </script>
   <section class="wrap caisse">
     <a class="retour" href={fiche}><span aria-hidden="true">←</span> Revenir à la pièce</a>
 
@@ -120,17 +130,6 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   </section>
 </Base>
 
-<script is:inline>
-  // Vitesse (2026-11-21) : la réservation et la session Stripe sont demandées dès maintenant, pendant que Stripe.js se télécharge.
-  (function () {
-    var z = document.getElementById('paiement');
-    if (!z || location.hash.indexOf('cs=') !== -1) return;
-    var jeton = null;
-    try { jeton = localStorage.getItem('adelem-reservation-' + z.dataset.piece); } catch (e) {}
-    window.__adelemResa = fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece: z.dataset.piece, retour: z.dataset.retour, jeton: jeton }) })
-      .then(function (r) { return r.json(); });
-  })();
-</script>
 <script is:inline src="https://js.stripe.com/clover/stripe.js"></script>
 <script>
   const zone = document.getElementById('paiement') as HTMLElement;
