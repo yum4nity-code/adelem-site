@@ -93,6 +93,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
             <section class="etape" aria-labelledby="t-paiement">
               <h2 id="t-paiement"><span class="num">3</span>Paiement</h2>
               <div id="moyens"></div>
+              <p class="note" data-klarna hidden>Klarna permet de payer en plusieurs fois. Les conditions s’affichent quand vous le choisissez, et c’est Klarna qui valide la demande.</p>
             </section>
 
             <p class="message" role="alert" data-message hidden></p>
@@ -181,6 +182,8 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         if (j.erreur) return erreur(j.erreur);
         try { localStorage.setItem(memo, j.jeton); } catch {}
         if (j.jusqua) reservation(j.jusqua);
+        // Phrase d'explication sous Klarna, seulement s'il est proposé (activé dans Stripe).
+        if (Array.isArray(j.moyens) && j.moyens.includes('klarna')) $('[data-klarna]').hidden = false;
         secret = j.clientSecret as string;
       }
 
@@ -362,6 +365,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   .envoi { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid var(--trait); background: #1F261F; font-size: .9rem; color: var(--texte); margin: 0; }
   .envoi strong { font: 400 .9rem var(--sans); color: var(--encre); }
   .note { font-size: .8rem; color: var(--discret); margin: -4px 0 0; }
+  .note[hidden] { display: none; }
   .note a, .cgv a { color: var(--texte); text-decoration: underline; text-underline-offset: 2px; }
   .message { margin: 0; padding: 12px 14px; border: 1px solid #E59A8A; color: #F2C3B8; font-size: .9rem; }
   .message[hidden] { display: none; }

@@ -174,6 +174,6 @@ export async function POST(request) {
   const r = await preparer({ id: idPropre(corps.piece), retour, integre: true, jeton: typeof corps.jeton === 'string' ? corps.jeton.slice(0, 64) : null });
   const json = r.erreur
     ? { erreur: { titre: r.erreur[1], texte: r.erreur[2], retour: r.erreur[3] } }
-    : { clientSecret: r.session.client_secret, jusqua: r.jusqua, jeton: r.jeton, montant: r.montant };
+    : { clientSecret: r.session.client_secret, jusqua: r.jusqua, jeton: r.jeton, montant: r.montant, moyens: r.session.payment_method_types ?? [] };
   return new Response(JSON.stringify(json), { status: r.erreur ? r.erreur[0] : 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
 }
