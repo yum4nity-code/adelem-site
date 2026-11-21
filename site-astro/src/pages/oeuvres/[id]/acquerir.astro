@@ -242,9 +242,10 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         paymentMethods: { applePay: 'auto', googlePay: 'auto', paypal: 'auto', link: 'never', amazonPay: 'never', klarna: 'never' },
       });
       const dispoExpress = new Promise<Record<string, boolean> | null>((ok) => {
-        express.on('ready', (e: any) => { console.info('[paiement] express prêt', e?.availablePaymentMethods); ok(e?.availablePaymentMethods ?? null); });
+        // Sans aucun portefeuille disponible, Stripe ne fournit pas la liste : on considère alors qu'il n'y en a aucun.
+        express.on('ready', (e: any) => { console.info('[paiement] express prêt', e?.availablePaymentMethods); ok(e?.availablePaymentMethods ?? {}); });
         express.on('loaderror', (e: any) => { console.warn('[paiement] express indisponible', e?.error); ok({}); });
-        setTimeout(() => ok(null), 6000);
+        setTimeout(() => ok({}), 6000);
       });
       express.on('confirm', async (e: any) => {
         const r = await actions.confirm({ expressCheckoutConfirmEvent: e });
@@ -266,7 +267,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       // Carte bancaire et Alma (2, 3 ou 4 fois), plus les portefeuilles absents du paiement express.
       const dispo = await dispoExpress;
       const montres = dispo ? Object.entries(dispo).filter(([, v]) => v).map(([k]) => k) : [];
-      $('[data-express]').hidden = dispo !== null && montres.length === 0;
+      $('[data-express]').hidden = montres.length === 0;
       const disposition = { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: true };
       let moyens;
       try {
