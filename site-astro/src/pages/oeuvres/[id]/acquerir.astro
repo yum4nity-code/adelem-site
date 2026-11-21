@@ -182,23 +182,20 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
     try {
       // Aperçu de mise en page uniquement : #cs=<secret>&pk=<clé> évite de créer une vraie session (et de réserver la pièce).
       const apercu = new URLSearchParams(location.hash.slice(1));
-      let secret = apercu.get('cs');
       const cleStripe = apercu.get('pk') ?? cle;
-      if (!secret) {
-        let j = await (window as any).__adelemResa;
-        if (!j) {
-          let jeton: string | null = null;
-          try { jeton = localStorage.getItem(memo); } catch {}
-          const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
-          j = await r.json();
-        }
-        if (j.erreur) return erreur(j.erreur);
-        try { localStorage.setItem(memo, j.jeton); } catch {}
-        if (j.jusqua) reservation(j.jusqua);
-        // Phrase sous Alma, seulement s'il est proposé (activé dans Stripe) et pour 50 € au moins (minimum d'Alma).
-        if (Array.isArray(j.moyens) && j.moyens.includes('alma') && (j.montant ?? 0) >= 50) $('[data-alma]').hidden = false;
-        secret = j.clientSecret as string;
-      }
+      // Réponse du serveur (réservation + session), déjà demandée en haut de page.
+      const reponse: Promise<any> = apercu.get('cs')
+        ? Promise.resolve({ clientSecret: apercu.get('cs') })
+        : Promise.resolve((window as any).__adelemResa).then(async (j) => {
+            if (j) return j;
+            let jeton: string | null = null;
+            try { jeton = localStorage.getItem(memo); } catch {}
+            const r = await fetch('/api/acheter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ piece, retour, jeton }) });
+            return r.json();
+          });
+      // Stripe commence à charger ses composants sans attendre la réponse (le secret lui est passé en promesse).
+      const secret = reponse.then((j) => { if (j.erreur || !j.clientSecret) throw new Error('session indisponible'); return j.clientSecret as string; });
+      secret.catch(() => {});
 
       // @ts-ignore Stripe.js chargé depuis js.stripe.com
       const stripe = window.Stripe(cleStripe);
@@ -225,6 +222,15 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
           },
         },
       });
+
+      const j = await reponse;
+      if (j.erreur) return erreur(j.erreur);
+      if (!apercu.get('cs')) {
+        try { localStorage.setItem(memo, j.jeton); } catch {}
+        if (j.jusqua) reservation(j.jusqua);
+        // Phrase sous Alma, seulement s'il est proposé (activé dans Stripe) et pour 50 € au moins (minimum d'Alma).
+        if (Array.isArray(j.moyens) && j.moyens.includes('alma') && (j.montant ?? 0) >= 50) $('[data-alma]').hidden = false;
+      }
 
       const { actions } = await checkout.loadActions();
       const euros = (s: any) => s.total.total.amount as string;
