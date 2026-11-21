@@ -69,12 +69,8 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
           : <p class="mode-test">Accès réservé · achats pas encore ouverts au public · paiement réel</p>)}
 
         <div id="paiement" data-piece={d.sanity_id ?? oeuvre.id} data-retour={fiche} data-cle={site.stripePublique}>
-          <div class="chargement" data-chargement>
-            <span class="barre"></span><span class="barre courte"></span><span class="barre"></span>
-            <p>Préparation du paiement sécurisé…</p>
-          </div>
 
-          <form class="etapes" data-formulaire hidden novalidate>
+          <form class="etapes" data-formulaire novalidate>
             <section class="express" data-express hidden aria-label="Paiement express">
               <p class="etiquette">Paiement express</p>
               <div id="express"></div>
@@ -95,14 +91,14 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
 
             <section class="etape" aria-labelledby="t-livraison">
               <h2 id="t-livraison"><span class="num">2</span>Livraison</h2>
-              <div id="adresse"></div>
+              <div id="adresse" class="attente-stripe" style="--h:250px"></div>
               <p class="envoi" data-envoi><span data-envoi-nom>Colissimo, France métropolitaine et Monaco</span><strong data-envoi-prix>Offerte</strong></p>
               <p class="note">Outre-mer et hors d’Europe : <a href="/contact">écrivez-nous</a>, nous établissons un devis.</p>
             </section>
 
             <section class="etape" aria-labelledby="t-paiement">
               <h2 id="t-paiement"><span class="num">3</span>Paiement</h2>
-              <div id="moyens"></div>
+              <div id="moyens" class="attente-stripe" style="--h:190px"></div>
               <p class="note" data-alma hidden>Alma : payez en 2, 3 ou 4 fois sans intérêts, après acceptation par Alma.</p>
             </section>
 
@@ -232,6 +228,8 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         if (Array.isArray(j.moyens) && j.moyens.includes('alma') && (j.montant ?? 0) >= 50) $('[data-alma]').hidden = false;
       }
 
+      const form = $<HTMLFormElement>('[data-formulaire]');
+      const payer = $<HTMLButtonElement>('[data-payer]');
       const { actions } = await checkout.loadActions();
       const euros = (s: any) => s.total.total.amount as string;
 
@@ -281,6 +279,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         const voulu = s.shippingOptions.find((o: any) => (FRANCE.includes(pays) ? /France/ : /Europe/).test(o.displayName));
         if (voulu && s.shipping?.shippingOption?.id !== voulu.id) await actions.updateShippingOption(voulu.id);
       });
+      adresse.on('ready', () => $('#adresse').classList.remove('attente-stripe'));
       adresse.mount('#adresse');
 
       // Carte bancaire et Alma (2, 3 ou 4 fois), plus les portefeuilles absents du paiement express.
@@ -293,6 +292,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         try { moyens.update({ wallets: { applePay: montres.includes('applePay') ? 'never' : 'auto', googlePay: montres.includes('googlePay') ? 'never' : 'auto' } }); }
         catch (e) { console.warn('[paiement] doublon portefeuille non retiré', e); }
       });
+      moyens.on('ready', () => { $('#moyens').classList.remove('attente-stripe'); payer.disabled = false; });
       moyens.mount('#moyens');
 
       // E-mail et téléphone : transmis à Stripe dès qu'ils sont saisis.
@@ -303,8 +303,6 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       email.addEventListener('change', envoyerEmail);
       tel.addEventListener('change', envoyerTel);
 
-      const form = $<HTMLFormElement>('[data-formulaire]');
-      const payer = $<HTMLButtonElement>('[data-payer]');
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         message(null);
@@ -324,9 +322,6 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         }
       });
 
-      $('[data-chargement]').remove();
-      form.hidden = false;
-      payer.disabled = false;
     } catch (e) {
       console.error(e);
       erreur({ titre: 'Paiement momentanément indisponible', texte: 'La page de paiement n’a pas pu s’ouvrir. Réessayez dans un instant, ou écrivez-nous depuis la page Contact.', retour: '/contact' });
@@ -415,6 +410,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
   .garanties li { display: flex; gap: 10px; align-items: center; }
   .garanties svg { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--or); stroke-width: 1.3; stroke-linejoin: round; }
   .cgv { font-size: .78rem; color: var(--discret); margin: 0; }
+  .attente-stripe { min-height: var(--h); background: linear-gradient(90deg, #212821 0%, #29322a 50%, #212821 100%); background-size: 200% 100%; animation: reflet 1.4s ease-in-out infinite; }
   .chargement { display: grid; gap: 12px; padding: 8px 0 24px; }
   .chargement .barre { height: 48px; background: linear-gradient(90deg, #222922 0%, #2a332a 50%, #222922 100%); background-size: 200% 100%; animation: reflet 1.4s ease-in-out infinite; }
   .chargement .courte { width: 60%; }
