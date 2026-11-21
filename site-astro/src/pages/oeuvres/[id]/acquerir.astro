@@ -256,7 +256,8 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         buttonHeight: 48,
         buttonTheme: { applePay: 'white', googlePay: 'white', paypal: 'white' },
         layout: { maxColumns: 2, maxRows: 2, overflow: 'never' },
-        paymentMethods: { applePay: 'auto', googlePay: 'auto', paypal: 'auto', link: 'never', amazonPay: 'never', klarna: 'never' },
+        // « always » : bouton visible même sans carte enregistrée dans le portefeuille (Google/Apple proposent alors d'en ajouter) ; 2026-11-21.
+        paymentMethods: { applePay: 'always', googlePay: 'always', paypal: 'auto', link: 'never', amazonPay: 'never', klarna: 'never' },
       });
       const dispoExpress = new Promise<Record<string, boolean> | null>((ok) => {
         // Sans aucun portefeuille disponible, Stripe ne fournit pas la liste : on considère alors qu'il n'y en a aucun.
