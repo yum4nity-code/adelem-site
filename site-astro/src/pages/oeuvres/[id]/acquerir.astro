@@ -93,7 +93,7 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
             <section class="etape" aria-labelledby="t-paiement">
               <h2 id="t-paiement"><span class="num">3</span>Paiement</h2>
               <div id="moyens"></div>
-              <p class="note" data-klarna hidden>Avec Klarna, vous choisissez sur sa page de payer comptant, en 3 fois sans intérêts ou à 30 jours, selon ce que Klarna vous accorde.</p>
+              <p class="note" data-alma hidden>Alma : payez en 2, 3 ou 4 fois sans intérêts, après acceptation par Alma.</p>
             </section>
 
             <p class="message" role="alert" data-message hidden></p>
@@ -182,8 +182,8 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
         if (j.erreur) return erreur(j.erreur);
         try { localStorage.setItem(memo, j.jeton); } catch {}
         if (j.jusqua) reservation(j.jusqua);
-        // Phrase d'explication sous Klarna, seulement s'il est proposé (activé dans Stripe).
-        if (Array.isArray(j.moyens) && j.moyens.includes('klarna')) $('[data-klarna]').hidden = false;
+        // Phrase sous Alma, seulement s'il est proposé (activé dans Stripe) et pour 50 € au moins (minimum d'Alma).
+        if (Array.isArray(j.moyens) && j.moyens.includes('alma') && (j.montant ?? 0) >= 50) $('[data-alma]').hidden = false;
         secret = j.clientSecret as string;
       }
 
@@ -232,16 +232,19 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       afficher(actions.getSession());
       checkout.on('change', afficher);
 
-      // Paiement express : Apple Pay, Google Pay, PayPal (Link et Amazon Pay masqués ; Klarna reste dans les moyens de paiement).
+      // Paiement express : Apple Pay, Google Pay, PayPal en tête (Link et Amazon Pay masqués).
+      // On attend sa réponse avant de créer le formulaire de carte : un portefeuille affiché en express n'est pas
+      // répété dans la liste ; s'il n'y est pas (navigateur, domaine…), il reste proposé dans la liste (2026-11-21).
       const express = checkout.createExpressCheckoutElement({
         buttonHeight: 48,
         buttonTheme: { applePay: 'white', googlePay: 'white', paypal: 'white' },
         layout: { maxColumns: 2, maxRows: 2, overflow: 'never' },
         paymentMethods: { applePay: 'auto', googlePay: 'auto', paypal: 'auto', link: 'never', amazonPay: 'never', klarna: 'never' },
       });
-      express.on('ready', (e: any) => {
-        const dispo = e?.availablePaymentMethods && Object.values(e.availablePaymentMethods).some(Boolean);
-        $('[data-express]').hidden = !dispo;
+      const dispoExpress = new Promise<Record<string, boolean> | null>((ok) => {
+        express.on('ready', (e: any) => { console.info('[paiement] express prêt', e?.availablePaymentMethods); ok(e?.availablePaymentMethods ?? null); });
+        express.on('loaderror', (e: any) => { console.warn('[paiement] express indisponible', e?.error); ok({}); });
+        setTimeout(() => ok(null), 6000);
       });
       express.on('confirm', async (e: any) => {
         const r = await actions.confirm({ expressCheckoutConfirmEvent: e });
@@ -260,8 +263,21 @@ const details = [d.matieres.join(', '), d.cadre].filter(Boolean);
       });
       adresse.mount('#adresse');
 
-      // Carte bancaire (et Klarna, paiement en plusieurs fois) : Apple Pay et Google Pay sont dans le paiement express.
-      const moyens = checkout.createPaymentElement({ layout: { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: true } });
+      // Carte bancaire et Alma (2, 3 ou 4 fois), plus les portefeuilles absents du paiement express.
+      const dispo = await dispoExpress;
+      const montres = dispo ? Object.entries(dispo).filter(([, v]) => v).map(([k]) => k) : [];
+      $('[data-express]').hidden = dispo !== null && montres.length === 0;
+      const disposition = { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: true };
+      let moyens;
+      try {
+        moyens = checkout.createPaymentElement({
+          layout: disposition,
+          wallets: { applePay: montres.includes('applePay') ? 'never' : 'auto', googlePay: montres.includes('googlePay') ? 'never' : 'auto' },
+        });
+      } catch (e) {
+        console.warn('[paiement] option « wallets » refusée, formulaire standard', e); // sécurité : le paiement doit toujours s'afficher
+        moyens = checkout.createPaymentElement({ layout: disposition });
+      }
       moyens.mount('#moyens');
 
       // E-mail et téléphone : transmis à Stripe dès qu'ils sont saisis.

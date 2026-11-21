@@ -114,10 +114,10 @@ async function preparer({ id, retour, integre, jeton }) {
       branding_settings: { display_name: 'Adelem', background_color: '#f3efe7', button_color: '#1b211b', font_family: 'lora', border_style: 'rectangular' },
       custom_text: { shipping_address: { message: 'Livraison offerte en France métropolitaine et à Monaco. Pour une adresse ailleurs en Europe, choisissez « Ailleurs en Europe ». Outre-mer et autres pays : écrivez-nous depuis la page Contact.' } },
     }),
-    // Moyens de paiement (2026-11-20, Gwen) : carte, Apple Pay, Google Pay, PayPal, Klarna. Link (peu connu en France) masqué ;
+    // Moyens de paiement (2026-11-20/21, Gwen) : carte, Apple Pay, Google Pay, PayPal, Alma (2, 3 ou 4 fois ; Klarna remplacé par Alma le 2026-11-21). Link (peu connu en France) masqué ;
     // Amazon Pay, Bancontact et les moyens étrangers exclus. Prix en euros pour tous (pas de conversion automatique).
     wallet_options: { link: { display: 'never' } },
-    excluded_payment_method_types: ['amazon_pay', 'bancontact', 'eps', 'ideal', 'giropay', 'p24', 'sepa_debit', 'sofort', 'revolut_pay', 'mobilepay', 'twint', 'satispay', 'billie', 'kakao_pay', 'naver_pay', 'samsung_pay', 'payco', 'kr_card', 'multibanco', 'blik', 'wero', 'mb_way', 'pay_by_bank', 'alma', 'scalapay', 'sequra', 'bizum', 'swish', 'crypto', 'alipay', 'wechat_pay'],
+    excluded_payment_method_types: ['amazon_pay', 'bancontact', 'eps', 'ideal', 'giropay', 'p24', 'sepa_debit', 'sofort', 'revolut_pay', 'mobilepay', 'twint', 'satispay', 'billie', 'kakao_pay', 'naver_pay', 'samsung_pay', 'payco', 'kr_card', 'multibanco', 'blik', 'wero', 'mb_way', 'pay_by_bank', 'klarna', 'scalapay', 'sequra', 'bizum', 'swish', 'crypto', 'alipay', 'wechat_pay'],
     adaptive_pricing: { enabled: false },
     metadata: { oeuvre: o._id },
     payment_intent_data: { metadata: { oeuvre: o._id }, description: o.titre },
